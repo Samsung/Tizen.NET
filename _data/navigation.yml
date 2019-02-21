@@ -1,0 +1,83 @@
+# main links
+main:
+
+# quick guides links
+quickguides-nav:
+  - title: About Tizen .NET
+    children:
+      - title: "Tizen .NET"
+        url: "/guides/about"
+  - title: Installation
+    children:
+      - title: "Development Environment"
+        url: "/guides/environment"
+  - title: Samsung Wearables
+    children:
+      - title: "Creating an Application"
+        url: "/guides/create-wearableapp"
+      - title: "Publishing an Application"
+        url: "/guides/publish-wearableapp"
+  - title: Samsung Smart TV
+    children:
+      - title: "Creating an Application"
+        url: "/guides/create-tvapp"
+      - title: "Publishing an Application"
+        url: "/guides/publish-tvapp"
+
+# issues links
+issues-nav:
+  - title: "Samsung Wearables"
+    children:
+      - title: "API Limitations"
+        url: "issues/wearable/limitations"
+      - title: "Watch Face"
+        url: "issues/wearable/watchface"
+      - title: "Tizen Baseline SDK"
+        url: "/issues/wearable/tizen-baseline-sdk"
+      - title: "Visual Studio Code"
+        url: "/issues/wearable/tools-vscode/"
+  - title: "Samsung Smart TV"
+    children:
+      - title: "2018 Smart TV"
+        url: "/issues/tv/2018SmartTV/"
+      - title: "API Limitations"
+        url: "/issues/tv/limitations"
+      - title: "Visual Studio Code"
+        url: "/issues/tv/tools-vscode/"
+
+
+# Resource links
+resource-nav:
+  - title: "Documents"
+    children:
+      - title: "Tizen .NET APIs"
+        url : "/resources/tizendotnet"
+      - title: "Samsung Wearables"
+        url: "/resources/SamsungWearables"
+      - title: "Samsung Smart TV"
+        url: "/resources/SamsungSmartTV"
+  - title: "Samples"
+    children:
+      - title: "Tizen .NET"
+        url: "/resources/samples_tizendotnet"
+      - title: "Samsung Wearables"
+        url: "/resources/samples_wearables"
+      - title: "Samsung Smart TV"
+        url: "/resources/samples_smart_tv"
+
+# FAQ
+faq-nav:
+  - title: "General"
+    children:
+      - title: "How to Contribute"
+        url: "/faq/contribution"
+      - title: "Tizen Baseline SDK"
+        url: "/faq/baseline-sdk"
+      - title: "Using Mac"
+        url: "/faq/mac"
+  - title: "Samsung Wearables"
+    children:
+  - title: "Samsung Smart TV"
+    children:
+      - title: "How to Debug"
+        url: "/faq/tv/howtodebug"

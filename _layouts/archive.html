@@ -1,0 +1,62 @@
+---
+layout: default
+---
+
+{% if page.header.overlay_color or page.header.overlay_image or page.header.image %}
+  {% include page__hero.html %}
+{% elsif page.header.video.id and page.header.video.provider %}
+  {% include page__hero_video.html %}
+{% endif %}
+
+{% if page.url != "/" and site.breadcrumbs %}
+  {% unless paginator %}
+    {% include breadcrumbs.html %}
+  {% endunless %}
+{% endif %}
+
+{% assign categories_max = 0 %}
+{% for category in site.categories %}
+  {% if category[1].size > categories_max %}
+    {% assign categories_max = category[1].size %}
+  {% endif %}
+{% endfor %}
+
+
+<div id="main" role="main">
+  {% include sidebar.html %}
+
+  <div class="archive">
+    {% unless page.header.overlay_color or page.header.overlay_image %}
+      <h1 id="page-title" class="page__title">{{ page.title }}</h1>
+    {% endunless %}
+
+    {% if page.category_bar %}
+    <aside class="sidebar__right {% if page.category_bar_sticky %}sticky{% endif %}">
+      <div class="category_bar_table">
+        <ul>
+          <li>
+            <a href="{{site.url}}/categories/" style="{% if page.title == 'All Posts' %} background-color: #0092CA; font-weight: bold; color: #FFFFFF;
+        {% endif %}">
+              All Posts
+            </a>
+          </li>
+          {% for i in (1..categories_max) reversed %}
+            {% for category in site.categories %}
+              {% if category[1].size == i %}
+                <li>
+                  <a href="{{site.url}}/categories/{{ category[0] | slugify }}" style="{% if page.title == category[0] %} background-color: #0092CA; font-weight: bold; color: #FFFFFF;
+              {% endif %}">
+                    {{ category[0] }}
+                  </a>
+                </li>
+              {% endif %}
+            {% endfor %}
+          {% endfor %}
+        </ul>
+      </div>
+    </aside>
+    {% endif %}
+
+    {{ content }}
+  </div>
+</div>
