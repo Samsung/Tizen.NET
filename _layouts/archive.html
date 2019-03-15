@@ -35,7 +35,7 @@ layout: default
       <div class="category_bar_table">
         <ul>
           <li>
-            <a href="{{site.url}}/categories/" style="{% if page.title == 'All Posts' %} background-color: #0092CA; font-weight: bold; color: #FFFFFF;
+            <a href="{{site.url}}{{site.baseurl}}/categories/" style="{% if page.title == 'All Posts' %} background-color: #0092CA; font-weight: bold; color: #FFFFFF;
         {% endif %}">
               All Posts
             </a>
@@ -44,7 +44,7 @@ layout: default
             {% for category in site.categories %}
               {% if category[1].size == i %}
                 <li>
-                  <a href="{{site.url}}/categories/{{ category[0] | slugify }}" style="{% if page.title == category[0] %} background-color: #0092CA; font-weight: bold; color: #FFFFFF;
+                  <a href="{{site.url}}{{site.baseurl}}/categories/{{ category[0] | slugify }}" style="{% if page.title == category[0] %} background-color: #0092CA; font-weight: bold; color: #FFFFFF;
               {% endif %}">
                     {{ category[0] }}
                   </a>

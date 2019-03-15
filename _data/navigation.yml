@@ -1,5 +1,18 @@
 # main links
 main:
+  - title: "About"
+    url: /about
+  - title: "Quick Guides"
+    url: /guides/
+  - title: "Posts"
+    url: /categories/
+  - title: "Known Issues"
+    url: /issues/
+  - title: "Resources"
+    url: /resources/
+  - title: "FAQ"
+    url: /faq/
+
 
 # quick guides links
 quickguides-nav:
@@ -69,6 +82,8 @@ resource-nav:
 faq-nav:
   - title: "General"
     children:
+      - title: "Issues and Questions"
+        url: "/faq/questions"
       - title: "How to Contribute"
         url: "/faq/contribution"
       - title: "Tizen Baseline SDK"
