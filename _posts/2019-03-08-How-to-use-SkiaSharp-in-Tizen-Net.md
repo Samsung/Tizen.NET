@@ -7,16 +7,16 @@ author: Rina You
 ---
 
 SkiaSharp is a cross-platform 2D graphics API for .NET platforms powered by the Skia Library of Google. 
-It provides a comprehensive API that is used on mobiles, TV, watch and desktop. 
+It provides a comprehensive API that is used on mobile, TV, watch and desktop. 
 So, you can easily make your own application with multifarious graphics such as texts, graphs and images using SkiaSharp. 
 For more information about the SkiaSharp APIs, see the official [SkiaSharp API](https://docs.microsoft.com/en-us/dotnet/api/skiasharp?view=skiasharp-1.60.3) document. 
 
-This post is made for instroducing how to use SkiaSharp in Tizen .Net. 
+This post is made for introducing how to use SkiaSharp in Tizen .NET. 
 
 
-## Creatinng Tizen .NET application
+## Creating Tizen .NET application
 At first, create Tizen .NET UI application. 
-If you are not familiar Tizen .NET application, several posts on [Quick Guides]({{site.url}}/guides) help you to understand how to create Tizen .NET application.
+If you are not familiar with Tizen .NET application, several posts on [Quick Guides]({{site.url}}/guides) help you to understand how to create Tizen .NET application.
 This post will share an example code using ElmSharp. The sample application references the TizenFX package which contains ElmSharp.
 
 ## Change the target framework
@@ -56,8 +56,10 @@ And then, select these packages in the list, and click `Install` button.
 
 
 ## Draw the Text
-For drawing the simple text such as `SkiSharp in Tizen`. Create the `SKCanvasView` that is a View that can be draw using SkiaSharp drawing command. 
-And add `PaintSurface` Event Handler of `SKCanvasView`. Reference the following example code.  
+Create the `SKCanvasView` to draw the simple text such as `SkiSharp in Tizen`. 
+The `SKCanvasView` is a View that can be drawn on using SkiaSharp drawing commands. 
+Add `PaintSurface` Event Handler of `SKCanvasView`, and then implement some code inside `PaintSurface` Event Handler to draw the text using SKCanvas's `DrawText` method.
+Reference the following example code. 
 
 ```c#
 using Tizen.Applications;
@@ -133,7 +135,7 @@ Build the application project, install and run this application.
 
 ## Draw the star polygon
 
-For drawing the start polygon, add `PaintSurface` Event Handler of `SKCanvasView` just like the above example for drawing the simple text.
+Add PaintSurface Event Handler of SKCanvasView to draw the star polygon, just like the above example does for drawing the simple text. 
 Below is an example to draw star polygon.
 
 ```c#
@@ -173,7 +175,7 @@ private void OnPaintSurface(object sender, SKPaintSurfaceEventArgs e)
 ![][app_polygon]
 
 
-[manage_nuget_package]: {{site.url}}/assets/images/posts/how-to-use-skiasharp-in-tizen-net/manage_nuget_packages.png
-[install_nuget_package]: {{site.url}}/assets/images/posts/how-to-use-skiasharp-in-tizen-net/install_nuget_packages.png
-[app_text]: {{site.url}}/assets/images/posts/how-to-use-skiasharp-in-tizen-net/app_text.png
-[app_polygon]: {{site.url}}/assets/images/posts/how-to-use-skiasharp-in-tizen-net/app_polygon.png
+[manage_nuget_package]: {{site.url}}{{site.baseurl}}/assets/images/posts/how-to-use-skiasharp-in-tizen-net/manage_nuget_packages.png
+[install_nuget_package]: {{site.url}}{{site.baseurl}}/assets/images/posts/how-to-use-skiasharp-in-tizen-net/install_nuget_packages.png
+[app_text]: {{site.url}}{{site.baseurl}}/assets/images/posts/how-to-use-skiasharp-in-tizen-net/app_text.png
+[app_polygon]: {{site.url}}{{site.baseurl}}/assets/images/posts/how-to-use-skiasharp-in-tizen-net/app_polygon.png
