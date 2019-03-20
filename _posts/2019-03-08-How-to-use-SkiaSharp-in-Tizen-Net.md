@@ -1,9 +1,11 @@
 ---
 title: "How to use SkiaSharp in Tizen .NET"
-last_modified_at: 2019-03-08
+last_modified_at: 2019-03-20
 categories:
   - Tizen .NET
 author: Rina You
+toc: true
+toc_sticky: true
 ---
 
 SkiaSharp is a cross-platform 2D graphics API for .NET platforms powered by the Skia Library of Google. 
@@ -14,9 +16,9 @@ For more information about the SkiaSharp APIs, see the official [SkiaSharp API](
 This post is made for introducing how to use SkiaSharp in Tizen .NET. 
 
 
-## Creating Tizen .NET application
+## Create Tizen .NET application
 At first, create Tizen .NET UI application. 
-If you are not familiar with Tizen .NET application, several posts on [Quick Guides]({{site.url}}/guides) help you to understand how to create Tizen .NET application.
+If you are not familiar with Tizen .NET application, several posts on [Quick Guides]({{site.url}}{{site.baseurl}}/guides) help you to understand how to create Tizen .NET application.
 This post will share an example code using ElmSharp. The sample application references the TizenFX package which contains ElmSharp.
 
 ## Change the target framework
@@ -174,6 +176,8 @@ private void OnPaintSurface(object sender, SKPaintSurfaceEventArgs e)
 
 ![][app_polygon]
 
+Please also checkout the [SkiaSharp2DSample](https://github.com/Samsung/Tizen-CSharp-Samples/tree/master/Wearable/SkiaSharp2DSample) on the github.
+{: .notice--info}
 
 [manage_nuget_package]: {{site.url}}{{site.baseurl}}/assets/images/posts/how-to-use-skiasharp-in-tizen-net/manage_nuget_packages.png
 [install_nuget_package]: {{site.url}}{{site.baseurl}}/assets/images/posts/how-to-use-skiasharp-in-tizen-net/install_nuget_packages.png
