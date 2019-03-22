@@ -82,6 +82,8 @@ resource-nav:
 faq-nav:
   - title: "General"
     children:
+      - title: "Tizen .NET Portal"
+        url: "/faq/portal"
       - title: "Issues and Questions"
         url: "/faq/questions"
       - title: "How to Contribute"

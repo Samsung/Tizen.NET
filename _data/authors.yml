@@ -28,11 +28,16 @@ Juwon(Julia) Ahn:
 
 Kangho Hur:
   name: "Kangho Hur"
+  bio: "Principal Engineer / Tizen .NET <br/> Samsung Research  :fire: :fire: :fire:"
   avatar: "/assets/images/bio/bio-KanghoHur.png"
+  location: "Seoul, Korea"
+  email: "rookiejava@gmail.com"
   github: "rookiejava"
+  twitter: "rookiejava"
 
 Rina You:
   name: "Rina You"
+  bio: "Staff Engineer / <br/> Samsung Research"
   avatar: "/assets/images/bio/bio-RinaYou.png"
 
 SeungHyun Choi:

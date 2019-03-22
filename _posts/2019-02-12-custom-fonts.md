@@ -10,6 +10,8 @@ toc_label: Custom Fonts in Tizen .Net Apps
 ---
 
 ## Xamarin.Forms application
+[Sample code](https://github.com/Samsung/Tizen-CSharp-Samples/tree/master/Wearable/CustomFonts/src/WorkingWithFonts){: .btn .btn--info}
+
 First of all, you can get general information regarding fonts in Xamarin.Forms from the following websites:
   - [Fonts in Xamarin.Forms][xamarin_fonts]
   - [Custom Fonts in Xamarin.Forms][custom_fonts]
@@ -67,6 +69,9 @@ This code shows how to specify the global path of fonts.
 ![][xamarin_forms_screenshot]
 
 ## NUI application
+
+[Sample code](https://github.com/Samsung/Tizen-CSharp-Samples/tree/master/Wearable/CustomFonts/src/NUIFontTest){: .btn .btn--info}
+
 Since Tizen 5.0, you can use custom fonts for NUI applications.
 
 ### Install Fonts and Specify the Font Folder
