@@ -30,4 +30,6 @@ Tizen is a linux based open source platform, and the most of the Tizen .NET rela
  + [Tizen.CircularUI for Samsung Wearables](https://github.com/Samsung/Tizen.CircularUI/)
  + [Tizen.TV.UIControls for Samsung Smart TV](https://github.com/Samsung/Tizen.TV.UIControls)
  + [OpenTK for Tizen](https://github.com/TizenAPI/opentk)
+ + [Tizen.Appium](https://github.com/samsung/Tizen.Appium)
+ + [Tizen.NET.MaterialComponents](https://github.com/TizenAPI/Tizen.NET.MaterialComponents)
  + [Tizen Docs](https://github.com/Samsung/tizen-docs)

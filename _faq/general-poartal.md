@@ -21,5 +21,5 @@ Tizen .NET Portal
 - communicates with the developers.
 
 ### Who is behind the portal?
-The portal is ran by the Tizen .NET platform team. The portal may not be perfect or containing insufficient part unlike other official developer sites. However, we would like to provide all the information you feel enough. <br/>
+The portal is ran by the Tizen .NET platform team. The portal may be not perfect or containing insufficient part unlike other official developer sites. However, we would like to provide all the information you feel enough. <br/>
 We are all developers. Please be focused on the contents, not the beauty of the portal.

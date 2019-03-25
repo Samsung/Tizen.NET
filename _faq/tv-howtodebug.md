@@ -5,7 +5,7 @@ permalink: /faq/tv/howtodebug
 
 Debug mode for [2018 Samsung Smart TV models](https://developer.samsung.com/tv/develop/specifications/tv-model-groups) is not supported.
 
-The following are the known issues for [2018 Samsung Smart TV models](https://developer.samsung.com/tv/develop/specifications/tv-model-groups), which are also listed in the [Known issues on 2018 Smart TV]({{site.url}}{{site.baseurl}}/issues/SmartTV/).
+The following are the known issues for [2018 Samsung Smart TV models](https://developer.samsung.com/tv/develop/specifications/tv-model-groups), which are also listed in the [Known issues on 2018 Smart TV]({{site.url}}{{site.baseurl}}/issues/tv/2018SmartTV/).
 
 -  `sdb shell` is not available
 - Cannot check the log messages
