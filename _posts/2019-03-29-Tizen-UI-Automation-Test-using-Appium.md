@@ -39,7 +39,7 @@ If you have installed the nodejs, follow the steps below.
    ~$ nodejs .
 ```
 
-If Appium is running well, you can see the below command.
+If Appium is running well, you can see the result like below.
 ![appium](https://user-images.githubusercontent.com/16184582/55209344-6697c200-5225-11e9-92d6-69c422be74bf.png)
 
 ## Adding Tizen.Appium to Tizen .NET Applications
@@ -145,24 +145,24 @@ Button button = new Button
 Visual Studio has a template to help add a Tizen .NET UI Test project to your application solution:
 > Upcoming [Visual Studio Tools for Tizen](https://marketplace.visualstudio.com/items?itemName=tizen.VisualStudioToolsforTizen) will provide this template. Until then, you can manually create and use the UI test project.
 
-1. Right click on the solution, and select File > New Project
+1. Right click on the solution, and select `File` > `New Project`.
 
-2. From the Tizen Templates, select the UI Test App template
+2. From the Tizen Templates, select the `UI Test App` template.
 
 ### How to Manually Create a UI Test Project
 
-1. Create a test project in Visual Studio<br>
-   Select Visual C# -> Test -> Nunit Test Project
+1. Create a test project in Visual Studio.<br>
+   Select `Visual C#` -> `Test` -> `Nunit Test Project`
    > If you know how to use other test projects, you can use it.
    
    ![image](https://user-images.githubusercontent.com/16184582/54807302-2cc43a00-4cc0-11e9-82fc-ebdbdff3d7ae.png)
 
-2. Add `Appium.WebDriver` as a package reference to your project (*.csporj)
+2. Add `Appium.WebDriver` as a package reference to your project (*.csporj).
 >Tizen driver is supported from `Appium.WebDriver 4.0.0.2-beta`. Therefore, we recommend you to use this version or later.
 
     <img src="https://github.com/Samsung/Tizen.Appium/wiki/images/appium_webdriver_nuget.png">
 
-3. Add the following code to initialize the `TizenDriver` and set the `AppiumOptions`
+3. Add the following code to initialize the `TizenDriver` and set the `AppiumOptions`.
 ```cs
 public class UITest
 {
@@ -200,11 +200,11 @@ public class UITest
 Make sure you set the appium server ip(ex:127.0.0.1:4723) and port number. You should set the same server port number. (appium default port number is '4723')
 > If you want to find a device name, use 'sdb devices' command. You can find a device list and their name.
 
-4. Install `Nunit3 Test Adapter`<br>
+4. Install `Nunit3 Test Adapter`.<br>
    Go to `Tools` -> `Extesion and Updates` -> Select `Online` -> Search `Nunit 3 Test Adapter`
    ![image](https://user-images.githubusercontent.com/16184582/54807753-94c75000-4cc1-11e9-9f3d-20f6f41b3d73.png)
    
-5. Open `Test Explorer`<br>
+5. Open `Test Explorer`.<br>
    Go to `Test` -> `Windows` -> `Test Explorer` -> Right-click on your test, and select `Run Test`.<br>
    ![image](https://user-images.githubusercontent.com/16184582/55212507-5686df00-5233-11e9-94af-dc4858b2d01a.png)
 
