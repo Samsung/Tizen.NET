@@ -94,7 +94,9 @@ faq-nav:
         url: "/faq/mac"
   - title: "Samsung Wearables"
     children:
+      - title: "How to Debug?"
+        url: "/faq/wearable/howtodebug"
   - title: "Samsung Smart TV"
     children:
-      - title: "How to Debug"
+      - title: "How to Debug?"
         url: "/faq/tv/howtodebug"

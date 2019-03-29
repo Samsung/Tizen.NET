@@ -5,7 +5,7 @@ header:
   overlay_color: "#5e616c"
 excerpt: >
   Welcome to the Tizen .NET Portal!<br/>
-  All the information for developing your Tizen .NET application will be available here.<br/>
+  All about developing Tizen .NET application will be available here.<br/>
   Start with [Setting Up the Environment](guides/environment).
 feature_row:
   - image_path: /assets/images/home/samsung-developers-logo.png
