@@ -43,6 +43,8 @@ Rina You:
 SeungHyun Choi:
   name: "SeungHyun Choi"
   avatar: "/assets/images/bio/bio-SeungHyunChoi.png"
+  location: "Seoul, Korea"
+  github: "flyofsky"
 
 Seungkeun Lee:
   name: "Seungkeun Lee"
@@ -55,3 +57,9 @@ Sunghyun Min:
 Sungsu Kim:
   name: "Sungsu Kim"
   avatar: "/assets/images/bio/bio-SungsuKim.png"
+
+Chang-Seok Oh:
+  name: Chang-Seok Oh
+
+SANGWOOK LEE:
+  name: SangWook LEE
