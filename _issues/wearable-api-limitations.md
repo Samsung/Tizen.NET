@@ -5,8 +5,6 @@ search: true
 toc: true
 toc_label: API Limitations
 toc_sticky: true
-categories: 
-  - Wearable Limitations
 ---
 
 ## Xamarin Forms

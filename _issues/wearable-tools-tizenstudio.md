@@ -5,8 +5,6 @@ search: true
 toc: true
 toc_sticky: true
 toc_label: Known Issues & Workarounds
-categories: 
-  - Tizen Baseline SDK
 ---
 
 

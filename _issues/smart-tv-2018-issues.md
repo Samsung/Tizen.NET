@@ -5,8 +5,6 @@ search: true
 toc: true
 toc_sticky: true
 toc_label: Known Issues & Workarounds
-categories: 
-  - Smart TV
 ---
 
 This section lists up the problems that you might encounter while working with a Tizen TV emulator or a Samsung Smart TV.

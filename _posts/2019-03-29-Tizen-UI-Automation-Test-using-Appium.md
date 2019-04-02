@@ -197,11 +197,11 @@ public class UITest
 ```
 > Refer [Supported Commands](https://github.com/Samsung/Tizen.Appium/wiki/Supported-Commands) to write test scripts.
 
-Make sure you set the appium server ip(ex:127.0.0.1:4723) and port number. You should set the same server port number. (appium default port number is '4723')
+    Make sure you set the appium server ip(ex:127.0.0.1:4723) and port number. You should set the same server port number. (appium default port number is '4723')
 > If you want to find a device name, use 'sdb devices' command. You can find a device list and their name.
 
 4. Install `Nunit3 Test Adapter`.<br>
-   Go to `Tools` -> `Extesion and Updates` -> Select `Online` -> Search `Nunit 3 Test Adapter`
+   Go to `Tools` -> `Extesion and Updates` -> Select `Online` -> Search `Nunit 3 Test Adapter`<br>
    ![image](https://user-images.githubusercontent.com/16184582/54807753-94c75000-4cc1-11e9-9f3d-20f6f41b3d73.png)
    
 5. Open `Test Explorer`.<br>

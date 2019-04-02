@@ -42,9 +42,9 @@ issues-nav:
   - title: "Samsung Wearables"
     children:
       - title: "API Limitations"
-        url: "issues/wearable/limitations"
+        url: "/issues/wearable/limitations"
       - title: "Watch Face"
-        url: "issues/wearable/watchface"
+        url: "/issues/wearable/watchface"
       - title: "Tizen Baseline SDK"
         url: "/issues/wearable/tizen-baseline-sdk"
       - title: "Visual Studio Code"
