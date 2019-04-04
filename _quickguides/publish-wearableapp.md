@@ -53,6 +53,7 @@ Let's find out how you can distribute your applications to Samsung watch users s
    
    - Full list of supported devices
       - Galaxy Watch
+      - Galaxy Watch Active
       - Gear S3 upgraded with Tizen 4.0 version
       - Gear Sport upgraded with Tizen 4.0 version
 {: .notice--info}

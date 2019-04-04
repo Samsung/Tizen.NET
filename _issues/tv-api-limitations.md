@@ -3,12 +3,17 @@ title:  "TV API Limitations"
 permalink: /issues/tv/limitations
 search: true
 toc: true
+toc_label: TV API Limitations
 toc_sticky: true
-toc_label: Known Issues & Workarounds
 ---
 
-There are some limitations for developing a Tizen .NET TV application.
+## .NET Standard
 
+The following standard APIs are not fully compatible with the platform implementation of .NET Core on Tizen. Using these APIs in your applications or libraries may cause unexpected behavior.
+
+- [Limitations of .NET Standard API on Tizen](https://developer.tizen.org/development/api-reference/.net-application/limitations-.net-standard-api-on-tizen)
+
+## Xamarin Forms
 ### Xamarin.Forms 3.0+
 
 There are some Xamarin.Forms limitations on the Tizen platform.<br/>
