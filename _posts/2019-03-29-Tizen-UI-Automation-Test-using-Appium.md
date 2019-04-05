@@ -225,3 +225,13 @@ You can test not only the simple application, but also the complex application.
 <b>Start it now.</b>
 
 ![calculator](https://user-images.githubusercontent.com/16184582/55212717-17a55900-5234-11e9-9be1-7fb1c4621800.gif){: .align-center}
+
+## Current Support
+<b>Wearable</b> <br>
+&nbsp;&nbsp;&nbsp;&nbsp;4.0 or later version of Wearable devices and Emulator.
+
+<b>Mobile</b><br>
+&nbsp;&nbsp;&nbsp;&nbsp;4.0 or later version of Emulator.
+
+<b>TV</b><br>
+&nbsp;&nbsp;&nbsp;&nbsp;Not supported due to security policy at the moment.
