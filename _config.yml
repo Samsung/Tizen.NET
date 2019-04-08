@@ -337,3 +337,4 @@ defaults:
       author_profile: false
       sidebar:
         nav: "faq-nav"
+github: [metadata]

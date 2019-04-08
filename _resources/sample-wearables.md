@@ -8,7 +8,8 @@ toc_sticky: true
 Here are some helpful resources to develop a Tizen .NET application for Samsung Wearables.
 
 ### Tizen .NET APIs
-- [Tizen .NET samples for the Wearables](https://github.com/Samsung/Tizen-CSharp-Samples/tree/master/Wearable)
+- [Samples](https://developer.tizen.org/development/sample/.net-application)
+- [Sample codes](https://github.com/Samsung/Tizen-CSharp-Samples/tree/master/Wearable)
 
 ### Companion Type Applications
  You can figure out how to use [`Samsung Accessory Protocol (SAP) API`](https://developer.samsung.com/galaxy-watch/develop/tech-doc/tizen-wearable-extension-programming-guide/net/programming-NET) via these samples.
