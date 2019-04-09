@@ -1,6 +1,6 @@
 ---
 title:  "Wearable API Limitations"
-permalink: /issues/wearable/limitations
+permalink: /issues/wearable/limitations/
 search: true
 toc: true
 toc_label: Wearable API Limitations

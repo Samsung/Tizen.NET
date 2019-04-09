@@ -1,6 +1,6 @@
 ---
 title: "Environment"
-permalink: /guides/environment
+permalink: /guides/environment/
 toc: true
 toc_sticky: true
 ---

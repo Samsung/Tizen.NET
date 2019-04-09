@@ -1,6 +1,6 @@
 ---
 title:  "Samsung Smart TV"
-permalink: /resources/SamsungSmartTV
+permalink: /resources/SamsungSmartTV/
 toc: true
 toc_sticky: true
 toc_label: For Samsung Smart TV

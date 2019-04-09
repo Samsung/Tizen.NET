@@ -1,6 +1,6 @@
 ---
 title:  "Samsung Wearables"
-permalink: /resources/SamsungWearables
+permalink: /resources/SamsungWearables/
 toc: true
 toc_sticky: true
 toc_label: For Samsung Wearables

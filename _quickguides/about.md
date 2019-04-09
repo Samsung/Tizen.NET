@@ -1,6 +1,6 @@
 ---
 title:  "About Tizen .NET"
-permalink: /guides/about
+permalink: /guides/about/
 toc: true
 toc_sticky: true
 ---

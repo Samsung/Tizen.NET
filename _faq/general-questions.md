@@ -1,6 +1,6 @@
 ---
 title: "Issues and Questions"
-permalink: /faq/questions
+permalink: /faq/questions/
 ---
 
 Any Questions on Tizen .NET? Found an issue? <br/><br/>

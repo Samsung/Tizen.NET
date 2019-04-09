@@ -1,6 +1,6 @@
 ---
 title:  "Tizen .NET Portal"
-permalink: /faq/portal
+permalink: /faq/portal/
 ---
 
 ### What is Tizen .NET Portal?

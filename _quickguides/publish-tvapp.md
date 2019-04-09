@@ -1,6 +1,6 @@
 ---
 title: "Samsung Seller Office"
-permalink: /guides/publish-tvapp
+permalink: /guides/publish-tvapp/
 toc: true
 toc_sticky: true
 ---

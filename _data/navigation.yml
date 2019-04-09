@@ -77,6 +77,10 @@ resource-nav:
         url: "/resources/samples_wearables"
       - title: "Samsung Smart TV"
         url: "/resources/samples_smart_tv"
+  - title: "Apps on Store"
+    children:
+      - title: "Wearable apps on Galaxy Store"
+        url: "/resources/dotnet_wearable_apps_on_galaxy_store"
 
 # FAQ
 faq-nav:

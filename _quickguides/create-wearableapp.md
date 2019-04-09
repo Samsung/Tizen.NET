@@ -1,6 +1,6 @@
 ---
 title: "Creating Tizen .NET Application"
-permalink: /guides/create-wearableapp
+permalink: /guides/create-wearableapp/
 toc: true
 toc_sticky: true
 gallery:

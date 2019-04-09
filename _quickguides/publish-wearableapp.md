@@ -1,6 +1,6 @@
 ---
 title: "Publish your application"
-permalink: /guides/publish-wearableapp
+permalink: /guides/publish-wearableapp/
 toc: true
 toc_sticky: true
 ---

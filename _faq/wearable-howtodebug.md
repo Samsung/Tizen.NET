@@ -1,6 +1,6 @@
 ---
 title:  "How to Debug?"
-permalink: /faq/wearable/howtodebug
+permalink: /faq/wearable/howtodebug/
 ---
 
 ## Debugging Tizen .NET Application

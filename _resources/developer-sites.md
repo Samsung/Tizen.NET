@@ -1,6 +1,6 @@
 ---
 title: "Developer Sites"
-permalink: /resources/developer-sites
+permalink: /resources/developer-sites/
 toc: true
 toc_sticky: true
 ---

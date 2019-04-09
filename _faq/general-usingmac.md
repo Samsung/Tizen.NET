@@ -1,6 +1,6 @@
 ---
 title:  "Using Mac"
-permalink: /faq/mac
+permalink: /faq/mac/
 toc: true
 toc_sticky: true
 ---

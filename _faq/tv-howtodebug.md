@@ -1,6 +1,6 @@
 ---
 title:  "How to Debug?"
-permalink: /faq/tv/howtodebug
+permalink: /faq/tv/howtodebug/
 ---
 
 Debug mode for [2018 Samsung Smart TV models](https://developer.samsung.com/tv/develop/specifications/tv-model-groups) is not supported.

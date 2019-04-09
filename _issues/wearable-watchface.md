@@ -1,6 +1,6 @@
 ---
 title:  "Watch Face"
-permalink: /issues/wearable/watchface
+permalink: /issues/wearable/watchface/
 toc: true
 toc_sticky: true
 ---

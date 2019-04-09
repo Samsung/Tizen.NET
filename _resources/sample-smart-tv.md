@@ -1,6 +1,6 @@
 ---
 title: "Sample Apps for Samsung Smart TVs"
-permalink: /resources/samples_smart_tv
+permalink: /resources/samples_smart_tv/
 toc: true
 toc_sticky: true
 ---

@@ -1,6 +1,6 @@
 ---
 title:  "Tizen Baseline SDK"
-permalink: /issues/wearable/tizen-baseline-sdk
+permalink: /issues/wearable/tizen-baseline-sdk/
 search: true
 toc: true
 toc_sticky: true

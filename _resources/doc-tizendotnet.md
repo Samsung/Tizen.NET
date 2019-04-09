@@ -1,6 +1,6 @@
 ---
 title:  "Tizen .NET APIs"
-permalink: /resources/tizendotnet
+permalink: /resources/tizendotnet/
 toc: true
 toc_sticky: true
 toc_label: Tizen .NET

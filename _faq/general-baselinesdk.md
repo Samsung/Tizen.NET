@@ -1,6 +1,6 @@
 ---
 title:  "Tizen Baseline SDK"
-permalink: /faq/baseline-sdk
+permalink: /faq/baseline-sdk/
 toc: true
 toc_sticky: true
 ---

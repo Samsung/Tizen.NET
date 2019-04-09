@@ -1,6 +1,6 @@
 ---
 title:  "TV API Limitations"
-permalink: /issues/tv/limitations
+permalink: /issues/tv/limitations/
 search: true
 toc: true
 toc_label: TV API Limitations

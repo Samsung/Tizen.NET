@@ -1,6 +1,6 @@
 ---
 title: "Sample Apps for Samsung Wearables"
-permalink: /resources/samples_wearables
+permalink: /resources/samples_wearables/
 toc: true
 toc_sticky: true
 ---

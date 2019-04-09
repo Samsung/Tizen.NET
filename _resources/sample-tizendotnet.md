@@ -1,6 +1,6 @@
 ---
 title: "Sample Applications"
-permalink: /resources/samples_tizendotnet
+permalink: /resources/samples_tizendotnet/
 toc: true
 toc_sticky: true
 ---

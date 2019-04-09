@@ -1,6 +1,6 @@
 ---
 title:  "How to Contribute"
-permalink: /faq/contribution
+permalink: /faq/contribution/
 classes: wide
 ---
 

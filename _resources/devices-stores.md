@@ -1,6 +1,6 @@
 ---
 title: "Tizen Devices & Stores"
-permalink: /resources/devices-stores
+permalink: /resources/devices-stores/
 toc: true
 toc_sticky: true
 ---
