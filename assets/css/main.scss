@@ -91,3 +91,15 @@ html {
 .masthead__menu .site-nav sub, sup {
   color: #989ba0;
 }
+
+// Style for the category tag on each Post card
+.archive__item-tag {
+  float: right;
+  width: auto;
+  background-color: #0092CA;
+  padding: 2px 5px;
+  border-radius: 5px;
+  font-size: $type-size-7;
+  color: white;
+  font-weight: bold;
+}

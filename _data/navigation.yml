@@ -5,7 +5,7 @@ main:
   - title: "Quick Guides"
     url: /guides/
   - title: "Posts"
-    url: /categories/
+    url: /posts/
   - title: "Known Issues"
     url: /issues/
   - title: "Resources"
