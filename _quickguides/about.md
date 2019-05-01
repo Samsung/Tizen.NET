@@ -39,6 +39,6 @@ The brief explanation for each namespace of TizenFX is provided on the bottom of
 
 You can efficiently build your Tizen .NET application UI and its supporting logic using the Xamarin.Forms APIs. Extended details for these APIs are available on the [Xamarin Web site](https://docs.microsoft.com/en-us/dotnet/api/Xamarin.Forms?view=xamarin-forms).
 
-There are also the helpful extentions of Xamarin Forms. 
- - [Tizen Circular UI]({{site.url}}{{site.baseurl}}/resources/SamsungWearables#tizen-circular-ui-apis) help you easily and efficiently create the Tizen wearable-specific user interfaces.
- - [Tizen TV UIControl]({{site.url}}{{site.baseurl}}/resources/SamsungSmartTV#tizen-tv-uicontrols) provides many UI controls that you would like to use when developing TV applications.
+Here are some helpful Xamarin Forms extensions: 
+ - [Tizen Circular UI]({{site.url}}{{site.baseurl}}/resources/SamsungWearables#tizen-circular-ui-apis) help you easily and efficiently create Tizen wearable-specific user interfaces.
+ - [Tizen TV UIControl]({{site.url}}{{site.baseurl}}/resources/SamsungSmartTV#tizen-tv-uicontrols) provides many UI controls that you can use when developing TV applications.
