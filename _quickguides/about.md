@@ -14,7 +14,7 @@ Existing Tizen frameworks are either C-based with no advantages of a managed run
     <img src="{{site.url}}{{site.baseurl}}/assets/images/guides/cs_overview.png">
 </figure>
 
-You can develop and run Tizen .NET applications on both wearable devices and TVs. <br/>
+You can develop and run Tizen .NET applications on both wearable devices and TVs: <br/>
   - Wearables: Galaxy Watch, Galaxy Watch Active, Gear S3, Gear Sport
   - TV: [2018 Smart TV models](https://developer.samsung.com/tv/develop/specifications/tv-model-groups) or higher.
   {: .notice--info}
@@ -29,7 +29,7 @@ One of the major components of .NET Core is the .NET Standard. The .NET APIs pro
 There are limitations of .NET Standard API on Tizen. For more information, see [Limitations of .NET Standard API on Tizen](https://developer.tizen.org/development/api-reference/.net-application/limitations-.net-standard-api-on-tizen).
 
 ### TizenFX
-[TizenFX](https://github.com/Samsung/TizenFX) contains a variety of features that allow your applications to access the platform-specific functionalities. This API enables [Xamarin.Forms](https://docs.microsoft.com/en-us/xamarin/xamarin-forms/get-started/) applications to perform functions that a native application can perform.
+[TizenFX](https://github.com/Samsung/TizenFX) contains a variety of features that allow your applications to access platform-specific functionalities. This API enables [Xamarin.Forms](https://docs.microsoft.com/en-us/xamarin/xamarin-forms/get-started/) applications to perform functions that a native application can perform.
 
 The brief explanation for each namespace of TizenFX is provided on the bottom of [this linked page](https://developer.tizen.org/development/api-reference/.net-application). <br/>
 - [TizenFX 4.0 API Reference](https://samsung.github.io/TizenFX/API4/) for the `Galaxy Watch` and [`Samsung Smart TV 2018 TV models`](https://developer.samsung.com/tv/develop/specifications/tv-model-groups).
@@ -40,5 +40,5 @@ The brief explanation for each namespace of TizenFX is provided on the bottom of
 You can efficiently build your Tizen .NET application UI and its supporting logic using the Xamarin.Forms APIs. Extended details for these APIs are available on the [Xamarin Web site](https://docs.microsoft.com/en-us/dotnet/api/Xamarin.Forms?view=xamarin-forms).
 
 Here are some helpful Xamarin Forms extensions: 
- - [Tizen Circular UI]({{site.url}}{{site.baseurl}}/resources/SamsungWearables#tizen-circular-ui-apis) help you easily and efficiently create Tizen wearable-specific user interfaces.
+ - [Tizen Circular UI]({{site.url}}{{site.baseurl}}/resources/SamsungWearables#tizen-circular-ui-apis) helps you easily and efficiently create Tizen wearable-specific user interfaces.
  - [Tizen TV UIControl]({{site.url}}{{site.baseurl}}/resources/SamsungSmartTV#tizen-tv-uicontrols) provides many UI controls that you can use when developing TV applications.
