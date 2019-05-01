@@ -5,17 +5,17 @@ toc: true
 toc_sticky: true
 ---
 
-## What is Tizen .NET
-**Tizen .NET** is an exciting new way to develop applications for the Tizen operating system, running on 50 million Samsung devices, including TV, wearable, and more devices around the world.
+## What is Tizen .NET?
+**Tizen .NET** is an exciting new way to develop applications for the Tizen operating system, which runs on 50 million Samsung devices, including TVs and wearables, worldwide.
 
-The existing Tizen frameworks are either C-based with no advantages of a managed runtime, or HTML5-based with fewer features and lower performance than the C-based solution. With Tizen .NET, you can use the C# programming language, the Common Language Infrastructure standards, and benefits from a managed runtime for faster application development and code execution, which is efficient and secure.
+Existing Tizen frameworks are either C-based with no advantages of a managed runtime, or HTML5-based with fewer features and lower performance than the C-based solution. With Tizen .NET, you can use the C# programming language, the Common Language Infrastructure standards, and benefits from a managed runtime for faster application development and code execution that is efficient and secure.
 
 <figure>
     <img src="{{site.url}}{{site.baseurl}}/assets/images/guides/cs_overview.png">
 </figure>
 
-You can develop and run Tizen .NET applications on the both wearable and TV devices. <br/>
-  - Wearables: Gear S3, Gear Sport, Galaxy Watch, Galaxy Watch Active
+You can develop and run Tizen .NET applications on both wearable devices and TVs. <br/>
+  - Wearables: Galaxy Watch, Galaxy Watch Active, Gear S3, Gear Sport
   - TV: [2018 Smart TV models](https://developer.samsung.com/tv/develop/specifications/tv-model-groups) or higher.
   {: .notice--info}
 
