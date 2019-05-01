@@ -29,7 +29,7 @@ One of the major components of .NET Core is the .NET Standard. The .NET APIs pro
 There are limitations of .NET Standard API on Tizen. For more information, see [Limitations of .NET Standard API on Tizen](https://developer.tizen.org/development/api-reference/.net-application/limitations-.net-standard-api-on-tizen).
 
 ### TizenFX
-[TizenFX](https://github.com/Samsung/TizenFX) contains a variety of features that allow your applications to access the platform-specific functionalities. This functionality enables [Xamarin.Forms](https://docs.microsoft.com/en-us/xamarin/xamarin-forms/get-started/) applications to do things a native application can do.
+[TizenFX](https://github.com/Samsung/TizenFX) contains a variety of features that allow your applications to access the platform-specific functionalities. This API enables [Xamarin.Forms](https://docs.microsoft.com/en-us/xamarin/xamarin-forms/get-started/) applications to perform functions that a native application can perform.
 
 The brief explanation for each namespace of TizenFX is provided on the bottom of [this linked page](https://developer.tizen.org/development/api-reference/.net-application). <br/>
 - [TizenFX 4.0 API Reference](https://samsung.github.io/TizenFX/API4/) for the `Galaxy Watch` and [`Samsung Smart TV 2018 TV models`](https://developer.samsung.com/tv/develop/specifications/tv-model-groups).
