@@ -12,12 +12,12 @@ gallery:
     title: "Xamarin.Forms"
 ---
 
-This guide shows how to create and run the basic Tizen .NET application.<br/>
-Visit [Creating Your First Tizen Wearable .NET Application](https://developer.tizen.org/development/training/.net-application/getting-started/creating-your-first-tizen-wearable-.net-application) for the full instruction and more information.<br/>
+This guide describes how to create and run the basic Tizen .NET application.<br/>
+Visit [Creating Your First Tizen Wearable .NET Application](https://developer.tizen.org/development/training/.net-application/getting-started/creating-your-first-tizen-wearable-.net-application) for full instructions.<br/>
 
-Follow the step by step instructions and familiarize yourself with the Tizen .NET application development process.
+Follow the step-by-step instructions to familiarize yourself with the Tizen .NET application development process.
 
-1. Before you get started with developing Tizen applications, set up the [development environment]({{site.url}}{{site.baseurl}}/guides/environment).
+1. Before you start developing Tizen applications, set up the [development environment]({{site.url}}{{site.baseurl}}/guides/environment).
 2. [Creating a Project]({{site.url}}{{site.baseurl}}/guides/create-wearableapp#creating-a-project) using Visual Studio.
 3. [Building the Application]({{site.url}}{{site.baseurl}}/guides/create-wearableapp#building-the-application).
 4. [Deploying and Running the Application]({{site.url}}{{site.baseurl}}/guides/create-wearableapp#deploying-and-running-the-application).
