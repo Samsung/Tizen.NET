@@ -10,12 +10,12 @@ gallery:
 ---
 
 
-This guide shows how to create and run the basic Tizen .NET application.<br/>
+This guide describes how to create and run the basic Tizen .NET application.<br/>
 Visit [Creating Your First Tizen TV .NET Application](https://developer.tizen.org/development/training/.net-application/getting-started/creating-your-first-tizen-tv-.net-application) for full instructions.<br/>
 
 Follow the step-by-step instructions to familiarize yourself with the Tizen .NET application development process.
 
-1. Before you get started with developing Tizen applications, set up the [development environment]({{site.url}}{{site.baseurl}}/guides/environment).
+1. Before you start developing Tizen applications, set up the [development environment]({{site.url}}{{site.baseurl}}/guides/environment).
 2. [Creating a Project]({{site.url}}{{site.baseurl}}/guides/create-tvapp#creating-a-project) using Visual Studio.
 3. [Building the Application]({{site.url}}{{site.baseurl}}/guides/create-tvapp#building-the-application).
 4. [Deploying and Running the Application]({{site.url}}{{site.baseurl}}/guides/create-tvapp#deploying-and-running-the-application).
