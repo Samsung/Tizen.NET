@@ -30,27 +30,23 @@ To create a new Tizen .NET project:
 ![]({{site.url}}{{site.baseurl}}/assets/images/guides/creating_project.png)
 <br/>A New Project window appears.
 
-3. Select **Installed > Other Languages > Visual C# > Tizen4.0 or Tizen 5.0** and select the application template.
+3. Select **Installed > Other Languages > Visual C# > Tizen 4.0 or Tizen 5.0** and select the application template.
 ![]({{site.url}}{{site.baseurl}}/assets/images/guides/new_project.png)
 
-Three Application templates are provided for the basic blank application.
-  - Blank App (ElmSharp-Beta)
-  - Blank App (Tizen.NUI)
-  - Blank App (Xamarin.Forms)
-
-  > **Blank App (ElmSharp-Beta)** is a single project template for building Tizen applications with [ElmSharp](https://samsung.github.io/TizenFX/API4/api/ElmSharp.html). The [ElmSharp](https://samsung.github.io/TizenFX/API4/api/ElmSharp.html) is a simple c# wrapper of native EFL elementary which provides all the widgets you need to build a full application.<br/>
-  > **Blank App (Tizen.NUI)** is a single project template for building Tizen applications with [Tizen.NUI](https://samsung.github.io/TizenFX/API4/api/Tizen.NUI.html).<br/>
-  > **Blank App (Xamarin.Forms)** is a multiproject template for building applications with [Xamarin.Forms]({{site.url}}{{site.baseurl}}/guides/about#xamarin-forms), sharing code using a .NET Standard library. Use this template to make a cross-platform application.<br/>
+Three application templates are provided for the basic blank application:
+  > - **Blank App (ElmSharp-Beta)** is a single project template for building Tizen applications with [ElmSharp](https://samsung.github.io/TizenFX/API4/api/ElmSharp.html). The [ElmSharp](https://samsung.github.io/TizenFX/API4/api/ElmSharp.html) is a simple c# wrapper of native EFL elementary, which provides all the widgets you need to build a full application.<br/>
+  > - **Blank App (Tizen.NUI)** is a single project template for building Tizen applications with [Tizen.NUI](https://samsung.github.io/TizenFX/API4/api/Tizen.NUI.html).<br/>
+  > - **Blank App (Xamarin.Forms)** is a multiproject template for building applications with [Xamarin.Forms]({{site.url}}{{site.baseurl}}/guides/about#xamarin-forms), sharing code using a .NET Standard library. Use this template to make a cross-platform application.<br/>
 
 Select the template you want to create and enter the **Name**, **Location**, and **Solution name**.
 
-If you selected the **Blank App (Xamarin.Forms)** template, you will see the `Tizen Project Wizard`. Select the **Wearable (preview)** profile and Click **OK**.
+If you selected the **Blank App (Xamarin.Forms)** template, you will see the `Tizen Project Wizard`. Select the **Wearable (preview)** profile, and click **OK**.
 ![]({{site.url}}{{site.baseurl}}/assets/images/guides/project_wizard_wearable.png)
 
 ## Building the Application
 The building process performs a validation check and compiles your files. You must sign the application package with an author certificate when building the application. If you have not yet registered a Tizen certificate in Visual Studio, see [Certificate Manager](https://developer.tizen.org/development/visual-studio-tools-tizen/tools/certificate-manager).
 
-There are 2 different ways to build the application:
+There are two different ways to build the application:
 
   - In the Visual Studio menu, select **Build > Build Solution**.
   - In the **Solution Explorer view**, right-click the solution name and select **Build**.
@@ -80,11 +76,12 @@ To deploy and run the application on the emulator:
 ## Watch Face Application
 A [watch face](https://developer.samsung.com/galaxy-watch/design/watch-face) is one of the greatest advantages of a smartwatch.<br/>
 
-Use the `Tizen Watchface App` template which you can find when you create a new project.<br/>
+Use the `Tizen Watchface App` template when you create a new project:<br/>
 ![]({{site.url}}{{site.baseurl}}/assets/images/guides/new_project_watchface.png)
 
-Build and Run same as how you learn from the above contents.<br/>
-The template simply shows the current time on your watch like below.<br/>
+The template shows the current time on your watch, as shown in the following figure: <br/>
 ![]({{site.url}}{{site.baseurl}}/assets/images/guides/launch_watchface.png)
 
-There is also a sample application called [`SimpleTextWatchface`](https://github.com/Samsung/Tizen.CircularUI/tree/master/test/SimpleTextWatchface) you can check.
+Build and run as described in [Build the Application]({{site.url}}{{site.baseurl}}/guides/create-wearableapp#building-the-application) and [Deploy and Run the Application]({{site.url}}{{site.baseurl}}/guides/create-wearableapp#deploying-and-running-the-application).<br/>
+
+There is also a sample application called [`SimpleTextWatchface` (https://github.com/Samsung/Tizen.CircularUI/tree/master/test/SimpleTextWatchface) that you can check.
