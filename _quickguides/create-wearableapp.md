@@ -74,7 +74,7 @@ To deploy and run the application on the emulator:
 
 
 ## Watch Face Application
-A [watch face](https://developer.samsung.com/galaxy-watch/design/watch-face) is one of the greatest advantages of a smartwatch.<br/>
+A well-designed [watch face](https://developer.samsung.com/galaxy-watch/design/watch-face) is a distinctive smartwatch feature.<br/>
 
 Use the `Tizen Watchface App` template when you create a new project:<br/>
 ![]({{site.url}}{{site.baseurl}}/assets/images/guides/new_project_watchface.png)
