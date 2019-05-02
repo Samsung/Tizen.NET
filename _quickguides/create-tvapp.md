@@ -28,7 +28,7 @@ To create a new Tizen .NET project:
 ![]({{site.url}}{{site.baseurl}}/assets/images/guides/creating_project.png)
 <br/>A New Project window appears.
 
-3. Select **Installed > Other Languages > Visual C# > Tizen4.0 or Tizen 5.0** and select the application template.
+3. Select **Installed > Other Languages > Visual C# > Tizen 4.0 or Tizen 5.0** and select the application template.
 ![]({{site.url}}{{site.baseurl}}/assets/images/guides/new_project.png)
 
 Three application templates are provided for the basic blank application:
