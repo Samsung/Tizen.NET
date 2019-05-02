@@ -53,6 +53,9 @@ Seungkeun Lee:
 Sunghyun Min:
   name: "Sunghyun Min"
   avatar: "/assets/images/bio/bio-SunghyunMin.png"
+  location: "Seoul, Korea"
+  email: "shyun.min@gsamsung.com"
+  github: "shyunmin"
 
 Sungsu Kim:
   name: "Sungsu Kim"
