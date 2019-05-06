@@ -7,11 +7,11 @@ toc_sticky: true
 
 Prepare to start developing Tizen .NET applications.
 
-Tizen .NET applications can be developed on the both **Windows** and **macOS**. Using `Windows` and the `Visual Studio` is recommended, or you can use another process that works better for you.
+Tizen .NET applications can be developed on the both **Windows** and **macOS**. We recommend using `Windows` and the `Visual Studio`.
 
 ## Windows
 ### Visual Studio
-Using the `Visual Studio 2017` on `Windows` is the official and the most popular development environment.<br/>
+`Visual Studio 2017` on `Windows` is the official and the most popular development environment.<br/>
 Visit [Installing Visual Studio Tools for Tizen](https://developer.tizen.org/development/visual-studio-tools-tizen/installing-visual-studio-tools-tizen) for detailed prerequisites and step-by-step instructions. <br/>
 
 #### Prerequisites
@@ -27,13 +27,13 @@ Visit [Installing Visual Studio Tools for Tizen](https://developer.tizen.org/dev
 
 ### Visual Studio Code
 Visit [Installing Visual Studio Code Extension for Tizen](https://developer.tizen.org/development/visual-studio-code-extension-tizen/installing-visual-studio-code-extension-tizen) for the installation guide.<br/>
-Check out the [Known issues for the Visual Studio Code]({{site.url}}{{site.baseurl}}/issues/wearable/tools-vscode/).
+Check [Known issues for the Visual Studio Code]({{site.url}}{{site.baseurl}}/issues/wearable/tools-vscode/).
 
 ## Mac
 ### Visual Studio Code
 macOS 10.12 (Sierra) or later is required to install `Visual Studio Code Extension for Tizen`. <br/>
 Visit [Installing Visual Studio Code Extension for Tizen](https://developer.tizen.org/development/visual-studio-code-extension-tizen/installing-visual-studio-code-extension-tizen) for the installation guide.<br/>
-Check out the [Known issues for the Visual Studio Code]({{site.url}}{{site.baseurl}}/issues/wearable/tools-vscode/).
+Check [Known issues for the Visual Studio Code]({{site.url}}{{site.baseurl}}/issues/wearable/tools-vscode/).
 
 ### Visual Studio for Mac
 No official extension is provided for `Visual Studio for Mac`. <br/>
