@@ -10,10 +10,9 @@ toc_sticky: true
 - Check out [.NET Application Registration](https://developer.samsung.com/tv/distribute/seller-office/applications/net-application-registration) for official information about registering .NET applications.
 
 ## Overview
-Publishing your application will be the most rewarding moment of developing an application.
-This guide will help you to safely register your .NET application on the [Samsung Apps TV Seller Office](http://seller.samsungapps.com/tv/).
+This guide will help you safely register your .NET application on the [Samsung Apps TV Seller Office](http://seller.samsungapps.com/tv/).
 
-[Samsung Apps TV Seller Office](http://seller.samsungapps.com/tv/) is the official system for TV applications certification and management. Sign in with your Samsung account or sign up now to start.
+[Samsung Apps TV Seller Office](http://seller.samsungapps.com/tv/) is the official system for TV applications certification and management. Sign in with your Samsung account or sign up to start.
 
 > When you first sign up, you are a Public Seller automatically. The public seller can distribute applications only in the United States. <br/> If you are more interested in registering applications outside of the US, visit [here](https://developer.samsung.com/tv/distribute/seller-office/membership/partnership-request/) to see how to request the partnership.
 
