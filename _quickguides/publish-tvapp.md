@@ -23,7 +23,7 @@ On the Seller Office main page, navigate to `.NET App Registration`.
 
 - Click `App Registration`.
 - Enter the application name.
-- Perform the following four registration steps o. <br/>
+- Perform the following four registration steps. <br/>
 
   ### 1) Basic Information
   ![image](https://user-images.githubusercontent.com/14328614/44501291-a6af2900-a6c7-11e8-9e28-f833cb14182a.png)
