@@ -46,7 +46,7 @@ Here are step-by-step instructions to distribute your applications to Samsung wa
 
    You can add your application information and register application binary (.tpk file) for submission.
 
-   After adding your application binary, you can see all wearable devices are selected as follows.
+   After adding your application binary, you can see all wearable devices are selected as follows:
 
    ![][selected_devices]
 
