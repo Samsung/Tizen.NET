@@ -5,23 +5,23 @@ toc: true
 toc_sticky: true
 ---
 
-What to prepare to start developing a Tizen .NET application.
+Prepare to start developing a Tizen .NET application.
 
-Tizen .NET applications can be developed on the both **Windows** and **macOS**. Using `Windows` and the `Visual Studio` is highly recommended, or you can also use the other way that fits your situation.
+Tizen .NET applications can be developed on the both **Windows** and **macOS**. Using `Windows` and the `Visual Studio` is recommended, or you can use another process that works better for you.
 
 ## Windows
 ### Visual Studio
 Using the `Visual Studio 2017` on `Windows` is the official and the most popular development environment.<br/>
-Visit [Installing Visual Studio Tools for Tizen](https://developer.tizen.org/development/visual-studio-tools-tizen/installing-visual-studio-tools-tizen) to see the step by step instruction including detailed prerequisites. <br/>
+Visit [Installing Visual Studio Tools for Tizen](https://developer.tizen.org/development/visual-studio-tools-tizen/installing-visual-studio-tools-tizen) to see detailed prerequisites and step-by-step instructions. <br/>
 
 #### Prerequisites
 - 1.5 GB of available disk space
 - Visual Studio 2017
-  - Recommended to be installed with the `.NET desktop development` and `.NET Core cross-platform development` toolsets.
+  - Install with the `.NET desktop development` and `.NET Core cross-platform development` toolsets.
 - Java Development Kit (JDK) 8
   - JDK 8 is required to use the Tizen Baseline SDK. 
-  - Download the JDK 8 from the official [Oracle Web site](https://www.oracle.com/technetwork/java/javase/downloads/index.html).
-  - JDK 9 is not supported yet.
+  - Download JDK 8 from the official [Oracle Web site](https://www.oracle.com/technetwork/java/javase/downloads/index.html).
+  - **Note**: JDK 9 is not yet supported.
   - OpenJDK 10 is supported from [Tizen Studio 3.1](https://developer.tizen.org/development/tizen-studio/download/release-notes).
 
 
