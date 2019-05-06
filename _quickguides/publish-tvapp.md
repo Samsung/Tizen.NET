@@ -6,7 +6,8 @@ toc_sticky: true
 ---
 
 ## Official Pages
-Visit [here](https://developer.samsung.com/tv/distribute/seller-office) to know more about the `TV Seller Office` and check out [.NET Application Registration](https://developer.samsung.com/tv/distribute/seller-office/applications/net-application-registration) for the official information about registering .NET application.
+- Visit [here](https://developer.samsung.com/tv/distribute/seller-office) to learn more about `TV Seller Office`.
+- Check out [.NET Application Registration](https://developer.samsung.com/tv/distribute/seller-office/applications/net-application-registration) for official information about registering .NET applications.
 
 ## Overview
 Publishing your application will be the most rewarding moment of developing an application.
