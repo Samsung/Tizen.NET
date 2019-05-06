@@ -61,7 +61,7 @@ Here are step-by-step instructions to distribute your applications to Samsung wa
 
    In other words, do not select older devices such as Gear S2 as recommended devices.
 
-Visit [here](https://developer.samsung.com/galaxy-watch/distribute/how-to-distribute) to learn more about application distribution.
+Go [here](https://developer.samsung.com/galaxy-watch/distribute/how-to-distribute) to learn more about application distribution.
 
 [add_new_app]: {{site.url}}{{site.baseurl}}/assets/images/guides/galaxy_apps_seller_office_register_button.png
 [app_type]: {{site.url}}{{site.baseurl}}/assets/images/guides/galaxy_apps_seller_office_watch_app.png
