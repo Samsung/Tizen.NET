@@ -26,22 +26,21 @@ Visit [Installing Visual Studio Tools for Tizen](https://developer.tizen.org/dev
 
 
 ### Visual Studio Code
-Visit [Installing Visual Studio Code Extension for Tizen](https://developer.tizen.org/development/visual-studio-code-extension-tizen/installing-visual-studio-code-extension-tizen) for the installation guide.<br/>
-Check [Known issues for the Visual Studio Code]({{site.url}}{{site.baseurl}}/issues/wearable/tools-vscode/).
+- Visit [Installing Visual Studio Code Extension for Tizen](https://developer.tizen.org/development/visual-studio-code-extension-tizen/installing-visual-studio-code-extension-tizen) for the installation guide.<br/>
+- Check [Known issues for the Visual Studio Code]({{site.url}}{{site.baseurl}}/issues/wearable/tools-vscode/).
 
 ## Mac
 ### Visual Studio Code
 macOS 10.12 (Sierra) or later is required to install `Visual Studio Code Extension for Tizen`. <br/>
-Visit [Installing Visual Studio Code Extension for Tizen](https://developer.tizen.org/development/visual-studio-code-extension-tizen/installing-visual-studio-code-extension-tizen) for the installation guide.<br/>
-Check [Known issues for the Visual Studio Code]({{site.url}}{{site.baseurl}}/issues/wearable/tools-vscode/).
+- Visit [Installing Visual Studio Code Extension for Tizen](https://developer.tizen.org/development/visual-studio-code-extension-tizen/installing-visual-studio-code-extension-tizen) for the installation guide.<br/>
+- Check [Known issues for the Visual Studio Code]({{site.url}}{{site.baseurl}}/issues/wearable/tools-vscode/).
 
 ### Visual Studio for Mac
 No official extension is provided for `Visual Studio for Mac`. <br/>
-You cannot create a Tizen project and you do not see the Tizen tools on your `Visual Studio for Mac`.<br/>
-
+You cannot create a Tizen project and you will not see the Tizen tools on your `Visual Studio for Mac`.<br/>
 If you already have your Tizen .NET project on your machine, you can open and build the project to generate the `tpk` file.
 
-If you want to try installing and launching this `tpk` file on the emulator, install [Tizen Studio](https://developer.tizen.org/development/tizen-studio/download) or [Tizen Baseline SDK]({{site.url}}{{site.baseurl}}/guides/environment#tizen-baseline-sdk) on your macOS to use  Tizen tools such as `Package Manager`, `Emulator manager`, and `Certification Manager`.<br/>
+If you want to try installing and launching this `tpk` file on the emulator, install [Tizen Studio](https://developer.tizen.org/development/tizen-studio/download) or [Tizen Baseline SDK]({{site.url}}{{site.baseurl}}/guides/environment#tizen-baseline-sdk) on your macOS to use Tizen tools such as `Package Manager`, `Emulator manager`, and `Certification Manager`.<br/>
 Then:
 - Install the emulator image on the `package-manager`
 - Create and start the emulator on the `emulator-manager`
@@ -73,7 +72,7 @@ Once the extension has been activated, it asks if you want to use an existing Ti
 </figure>
 Click `NO` to perform a fresh installation.<br/>
 Click `YES` to use the existing Tizen SDK.<br/>
-Check out [here](https://developer.tizen.org/development/visual-studio-code-extension-tizen/installing-visual-studio-code-extension-tizen#setting-baseline-config) for more information.
+Check [here](https://developer.tizen.org/development/visual-studio-code-extension-tizen/installing-visual-studio-code-extension-tizen#setting-baseline-config) for more information.
 
 You can manually download and install the `Tizen Baseline SDK` [here](http://download.tizen.org/sdk/Installer/Latest).
 {: .notice--info}
