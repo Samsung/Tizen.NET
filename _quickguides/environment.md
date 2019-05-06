@@ -5,7 +5,7 @@ toc: true
 toc_sticky: true
 ---
 
-This section describes how to prepare to start developing Tizen .NET applications.
+Prepare to start developing Tizen .NET applications.
 
 Tizen .NET applications can be developed on the both **Windows** and **macOS**. Using `Windows` and the `Visual Studio` is recommended, or you can use another process that works better for you.
 
