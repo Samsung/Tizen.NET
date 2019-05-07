@@ -7,7 +7,7 @@ tag: SDK
 ---
 
 ## Overview
-When you install the extension for either `Visual Studio 2017` or `Visual Studio Code`, you reach [the step]({{site.url}}{{site.baseurl}}/guides/environment#tizen-baseline-sdk) you need to install the `Tizen baseline SDK`.
+Install the extension for either `Visual Studio 2017` or `Visual Studio Code` to reach [the step]({{site.url}}{{site.baseurl}}/guides/environment#tizen-baseline-sdk) you need to install the `Tizen baseline SDK`.
 
 ## Tizen Baseline SDK
 You must install `Tizen baseline SDK` or `Tizen Studio` to develop Tizen applications, because they include Tizen tools such as `Package Manager`, `Emulator Manager`, `Certificate Manager`, `Device Manager`, `sdb`, and more.
