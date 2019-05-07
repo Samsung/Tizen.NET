@@ -24,7 +24,7 @@ author: Juwon(Julia) Ahn
 
 ![][add_project_for_service_app]
 
-## Add a reference to a Service Application in Xamarin.Forms
+## Add a reference to a service application in Xamarin.Forms
 1. In `Solution Explorer`, right-click on the project name of your UI application, and click `Add` -> `Reference`. 
 
 ![][right-click-on-ui-app]
@@ -64,7 +64,7 @@ To fix the error, edit the project file (.csproj) of your service application to
 After modification, navigate to `Build` -> `Rebuild Solution`.
 
 ## Launch the applications
-The UI (that is, Xamarin.Forms) application explicitly invokes your Service application, because it does not launch automatically.
+The UI (that is, Xamarin.Forms) application explicitly invokes your service application, because it does not launch automatically.
 
 Define the mandatory privilege for application launch in the `tizen-manifest.xml` file as follows:
 
