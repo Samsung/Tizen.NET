@@ -10,12 +10,12 @@ gallery:
 ---
 
 
-This guide shows how to create and run the basic Tizen .NET application.<br/>
-Visit [Creating Your First Tizen TV .NET Application](https://developer.tizen.org/development/training/.net-application/getting-started/creating-your-first-tizen-tv-.net-application) for the full instruction and more information.<br/>
+This guide describes how to create and run the basic Tizen .NET application.<br/>
+Visit [Creating Your First Tizen TV .NET Application](https://developer.tizen.org/development/training/.net-application/getting-started/creating-your-first-tizen-tv-.net-application) for full instructions.<br/>
 
-Follow the step by step instructions and familiarize yourself with the Tizen .NET application development process.
+Follow the step-by-step instructions to familiarize yourself with the Tizen .NET application development process.
 
-1. Before you get started with developing Tizen applications, set up the [development environment]({{site.url}}{{site.baseurl}}/guides/environment).
+1. Before you start developing Tizen applications, set up the [development environment]({{site.url}}{{site.baseurl}}/guides/environment).
 2. [Creating a Project]({{site.url}}{{site.baseurl}}/guides/create-tvapp#creating-a-project) using Visual Studio.
 3. [Building the Application]({{site.url}}{{site.baseurl}}/guides/create-tvapp#building-the-application).
 4. [Deploying and Running the Application]({{site.url}}{{site.baseurl}}/guides/create-tvapp#deploying-and-running-the-application).
@@ -28,27 +28,23 @@ To create a new Tizen .NET project:
 ![]({{site.url}}{{site.baseurl}}/assets/images/guides/creating_project.png)
 <br/>A New Project window appears.
 
-3. Select **Installed > Other Languages > Visual C# > Tizen4.0 or Tizen 5.0** and select the application template.
+3. Select **Installed > Other Languages > Visual C# > Tizen 4.0 or Tizen 5.0** and select the application template.
 ![]({{site.url}}{{site.baseurl}}/assets/images/guides/new_project.png)
 
-Three Application templates are provided for the basic blank application.
-  - Blank App (ElmSharp-Beta)
-  - Blank App (Tizen.NUI)
-  - Blank App (Xamarin.Forms)
+Three application templates are provided for the basic blank application:
+  >- **Blank App (ElmSharp-Beta)** is a single project template for building Tizen applications with [ElmSharp](https://samsung.github.io/TizenFX/API4/api/ElmSharp.html). The [ElmSharp](https://samsung.github.io/TizenFX/API4/api/ElmSharp.html) is a simple c# wrapper of native EFL Elementary, which provides all the widgets you need to build a full application.<br/>
+  >- **Blank App (Tizen.NUI)** is a single project template for building Tizen applications with [Tizen.NUI](https://samsung.github.io/TizenFX/API4/api/Tizen.NUI.html).<br/>
+  >- **Blank App (Xamarin.Forms)** is a multiproject template for building applications with [Xamarin.Forms]({{site.url}}{{site.baseurl}}/guides/about#xamarin-forms), sharing code using a .NET Standard library. Use this template to make a cross-platform application.<br/>
 
-  > **Blank App (ElmSharp-Beta)** is a single project template for building Tizen applications with [ElmSharp](https://samsung.github.io/TizenFX/API4/api/ElmSharp.html). The [ElmSharp](https://samsung.github.io/TizenFX/API4/api/ElmSharp.html) is a simple c# wrapper of native EFL Elementary which provides all the widgets you need to build a full application.<br/>
-  > **Blank App (Tizen.NUI)** is a single project template for building Tizen applications with [Tizen.NUI](https://samsung.github.io/TizenFX/API4/api/Tizen.NUI.html).<br/>
-  > **Blank App (Xamarin.Forms)** is a multiproject template for building applications with [Xamarin.Forms]({{site.url}}{{site.baseurl}}/guides/about#xamarin-forms), sharing code using a .NET Standard library. Use this template to make a cross-platform application.<br/>
+Select the template you want to create, and enter the **Name**, **Location**, and **Solution name**.
 
-Select the template you want to create and enter the **Name**, **Location**, and **Solution name**.
-
-If you selected the **Blank App (Xamarin.Forms)** template, you will see the `Tizen Project Wizard`. Select the **TV** profile and Click **OK**.
+If you selected the **Blank App (Xamarin.Forms)** template, you will see the `Tizen Project Wizard`. Select the **TV** profile, and click **OK**.
 ![]({{site.url}}{{site.baseurl}}/assets/images/guides/project_wizard_tv.png)
 
 ## Building the Application
 The building process performs a validation check and compiles your files. You must sign the application package with an author certificate when building the application. If you have not yet registered a Tizen certificate in Visual Studio, see [Certificate Manager](https://developer.tizen.org/development/visual-studio-tools-tizen/tools/certificate-manager).
 
-There are 2 different ways to build the application:
+There are two different ways to build the application:
 
   - In the Visual Studio menu, select **Build > Build Solution**.
   - In the **Solution Explorer view**, right-click the solution name and select **Build**.
