@@ -5,7 +5,7 @@ categories:
   - Tizen .NET
 ---
 
-Welcome to Tizen .NET Posts!
+Welcome to Tizen .NET posts!
 
 We will keep updated posts here.<br/>
 The posts will include various content of interest and use for Tizen .NET developers.
