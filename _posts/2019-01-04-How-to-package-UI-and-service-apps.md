@@ -63,7 +63,7 @@ To fix the error, edit the project file (.csproj) of your service application to
 
 After modification, navigate to `Build` -> `Rebuild Solution`.
 
-## Launch the Applications
+## Launch the applications
 The UI (that is, Xamarin.Forms) application explicitly invokes your Service application, because it does not launch automatically.
 
 Define the mandatory privilege for application launch in the `tizen-manifest.xml` file as follows:
