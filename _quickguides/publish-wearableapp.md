@@ -29,7 +29,7 @@ Here are step-by-step instructions to distribute your applications to Samsung wa
   - [developer.tizen.org - Get certificates](https://developer.tizen.org/development/training/.net-application/getting-certificates)
   - [developer.samsung.com - Get certificates](https://developer.samsung.com/galaxy-watch/develop/getting-certificates)
 
-  Do not sure lose your **author certificate file (author.p12)**. If you do, it will not be possible to update your application built with that certificate.
+  Do not lose your **author certificate file (author.p12)**. If you do, it will not be possible to update your application built with that certificate.
   {: .notice--danger}
 
 ### 3. Open Samsung Galaxy Apps Seller Office site and sign in with Samsung Account
