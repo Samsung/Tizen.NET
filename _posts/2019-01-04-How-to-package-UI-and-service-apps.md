@@ -1,5 +1,5 @@
 ---
-title:  "How to Package UI and Service Applications Together and Execute Them"
+title:  "How to Package UI and Service Applications Together and Use Them"
 search: true
 toc: true
 toc_sticky: true
@@ -10,41 +10,36 @@ author: Juwon(Julia) Ahn
 ---
 
 
-## Creating a new Tizen project for Xamarin.Forms application
-You can create a new project by going to `File` -> `New` -> `Project...`.
-
-And then select any `Tizen App` template except the `Service App` template under the Visual C# selector (Tizen).
-
-Put the name of your project and specify its location, then click `OK` button.
+## Create a new Tizen project for Xamarin.Forms application
+1. You can create a new project by navigating to `File` -> `New` -> `Project...`.
+1. Select any `Tizen App` template except `Service App` under the Visual C# selector (Tizen).
+1. Name of your project and specify its location, then click `OK`.
 
 ![][create_project]
 
-## Adding a new project for Service Application
-In Solution Explorer, right-click the solution node and click `Add` -> `New Project...`
-
-And then, select the `Service App` template (Tizen) under the Visual C# selector.
-
-Put the name of your Service application and click `OK` button.
+## Add a new project for a Service Application
+1. In `Solution Explorer`, right-click the solution node and click `Add` -> `New Project...`
+1. Select the `Service App` template (Tizen) under the Visual C# selector.
+1. Enter the name of your service application, and click `OK`.
 
 ![][add_project_for_service_app]
 
-## Adding a reference of Service Application in Xamarin.Forms application
-In the `Solution Explorer`, right-click on the project name of your UI application and click `Add` -> `Reference`. 
+## Add a reference to a service application in Xamarin.Forms
+1. In `Solution Explorer`, right-click on the project name of your UI application, and click `Add` -> `Reference`. 
 
 ![][right-click-on-ui-app]
 
-In the Reference Manager dialog box, select the name of project you want to reference, and then click OK button.
+2. In the Reference Manager dialog box, select the name of project you want to reference, and click `OK`.
 
 ![][service_reference_for_ui_app]
 
-## Building the entire Solution
+## Build the entire solution
 
-You may face the following error message when you try to build the solution.
+You may see the following error message when you try to build the solution.
 
 ![][build_error_for_ui_and_service_apps]
 
-
-To solve it, you need to edit project file (.csproj) of your Service application to change the Target Framework.
+To fix the error, edit the project file (.csproj) of your service application to change the target framework.
 
 ### AS-IS
 ~~~html
@@ -64,18 +59,18 @@ To solve it, you need to edit project file (.csproj) of your Service application
   </PropertyGroup>
 ```
 
-**Note:** It's based on Tizen 5.0. If your application is based on Tizen 4.0, `TargetFramework` should be `tizen40` instead of `tizen50`.
+**Note:** This solution is based on Tizen 5.0. If your application is based on Tizen 4.0, `TargetFramework` should be `tizen40` instead of `tizen50`.
 
-After modification, you can clean and build all projects by going to `Build` -> `Rebuild Solution`.
+After modification, navigate to `Build` -> `Rebuild Solution`.
 
-## Launching the Applications
-UI (e.g. Xamarin.Forms) application should explicitly invoke your Service application because it does not launch automatically.
+## Launch the applications
+The UI (that is, Xamarin.Forms) application explicitly invokes your service application, because it does not launch automatically.
 
-To do this, the mandatory privilege for application launch should be defined in the `tizen-manifest.xml` file as follows:
+Define the mandatory privilege for application launch in the `tizen-manifest.xml` file as follows:
 
 ![][app_launch_priv]
 
-Then, UI application can launch Service applicati on (e.g. application id: org.tizen.example.ServiceApp) by executing the following code.
+The UI application can then launch the service application (for example, application id: org.tizen.example.ServiceApp) by executing the following code:
 
 ```c#
 AppControl appcontrol = new AppControl
@@ -109,7 +104,7 @@ AppControl appcontrol = new AppControl
 
 ```
 
-On the other hand, service application can respond to the launch request as follows:
+Alternatively, a service application can respond to the launch request as follows:
 
 ```c#
         protected override void OnAppControlReceived(AppControlReceivedEventArgs e)
@@ -126,7 +121,7 @@ On the other hand, service application can respond to the launch request as foll
 ```
 
 
-You can get the sample code from [XamarinFormsAndServiceApps][sample_code] and then see the below message when you execute it on a Tizen wearable emulator or a device.
+You can get the sample code from [XamarinFormsAndServiceApps][sample_code] and view the following message when you execute the code on a Tizen wearable emulator or a device.
 
 ![][screenshot]
 

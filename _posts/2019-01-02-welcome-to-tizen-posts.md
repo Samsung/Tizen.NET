@@ -5,9 +5,9 @@ categories:
   - Tizen .NET
 ---
 
-Welcome to Tizen .NET Posts!
+Welcome to Tizen .NET posts!
 
-We will keep updating posts in this place.<br/>
-The posts will include rich, various and sometimes casual contents which would be very helpful for Tizen .NET developers.
+We will keep updated posts here.<br/>
+The posts will include various content of interest and use for Tizen .NET developers.
 
-Find a keyword you are interested in on the [search tab]({{site.url}}{{site.baseurl}}/search) or take a look around the posts by [categories]({{site.url}}{{site.baseurl}}/categories).
+To locate posts you are interested in, enter a keyword on the [search tab]({{site.url}}{{site.baseurl}}/search) or browse posts by [categories]({{site.url}}{{site.baseurl}}/categories).
