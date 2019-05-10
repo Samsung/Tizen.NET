@@ -61,7 +61,7 @@ Now Available: Tizen.NET 6.0.0.14763
 
 ## Launch Your Application on Latest Tizen Emulator
 
-If you've done updating your application, you might need the Tizen emulator that fits on your nightly build for testing.
+If you've done updating your application, you may want to create the Tizen emulator that fits on your nightly build for testing.
 
 1. Download latest Tizen Platform Image File.<br/>
 You can get the file at 
@@ -105,7 +105,7 @@ You can find the following files after extracting.
     ![][emul13]
 
 
-<i>* There might be an issue on emulator with raw format image when you install big size application. </i>
+<i>* There could be an issue on emulator with raw format image when you install big size application. </i>
 
 [emul1]: {{site.url}}{{site.baseurl}}/assets/images/posts/try-latest-in-tizen-net/emul1.png
 [emul2]: {{site.url}}{{site.baseurl}}/assets/images/posts/try-latest-in-tizen-net/emul2.png
