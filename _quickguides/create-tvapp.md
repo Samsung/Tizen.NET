@@ -9,7 +9,6 @@ gallery:
   - image_path: "/assets/images/guides/launch_xf_tv.png"
 ---
 
-
 This guide describes how to create and run the basic Tizen .NET application.<br/>
 Visit [Creating Your First Tizen TV .NET Application](https://developer.tizen.org/development/training/.net-application/getting-started/creating-your-first-tizen-tv-.net-application) for full instructions.<br/>
 
