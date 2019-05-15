@@ -1,6 +1,6 @@
 ---
 title: "Creating Tizen .NET Application"
-permalink: /guides/create-tvapp/
+permalink: /guides/create-tvapp
 toc: true
 toc_sticky: true
 gallery:

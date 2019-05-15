@@ -1,5 +1,5 @@
 ---
-permalink: /about
+permalink: /about/
 title: "Welcome to Tizen .NET Portal"
 ---
 
