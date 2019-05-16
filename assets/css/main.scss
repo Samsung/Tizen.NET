@@ -103,3 +103,21 @@ html {
   color: white;
   font-weight: bold;
 }
+
+// Override for not letting cursor change to zoom-out
+.mfp-zoom-out-cur, .mfp-zoom-out-cur .mfp-image-holder .mfp-close {
+  cursor: default
+}
+
+// Override logo size from 2rem to 3rem to make text more visible
+.site-logo img {
+  max-height: 3rem
+}
+
+// Make sidebar position static for IE which does not support the sticky position
+@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none)
+{
+  .sidebar__right.sticky {
+    position: static
+  }
+}

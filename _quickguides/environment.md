@@ -22,7 +22,7 @@ Visit [Installing Visual Studio Tools for Tizen](https://developer.tizen.org/dev
   - JDK 8 is required to use the Tizen Baseline SDK. 
   - Download JDK 8 from the official [Oracle Web site](https://www.oracle.com/technetwork/java/javase/downloads/index.html).
   - **Note**: JDK 9 is not yet supported.
-  - OpenJDK 10 is supported from [Tizen Studio 3.1](https://developer.tizen.org/development/tizen-studio/download/release-notes).
+  - OpenJDK 10 is supported from [Tizen Studio 3.1](https://developer.tizen.org/development/tizen-studio/download/release-notes-3.2/3.1-jan-17-2019).
 
 
 ### Visual Studio Code
@@ -80,7 +80,7 @@ You can manually download and install the `Tizen Baseline SDK` [here](http://dow
 
 ## Download Links
 
- + [JDK 1.8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+ + [JDK 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
  + [Tizen Studio](https://developer.tizen.org/development/tizen-studio/download)
- + [Visual Studio 2017](https://visualstudio.microsoft.com/downloads/)   +   [Visual Studio Tools for Tizen](https://developer.tizen.org/development/visual-studio-tools-tizen/installing-visual-studio-tools-tizen#install) 
+ + [Visual Studio](https://visualstudio.microsoft.com/downloads/)   +   [Visual Studio Tools for Tizen](https://developer.tizen.org/development/visual-studio-tools-tizen/installing-visual-studio-tools-tizen#install)
  + [Visual Studio Code](https://code.visualstudio.com/download)  +   [Visual Studio Code Extension for Tizen](https://developer.tizen.org/development/visual-studio-code-extension-tizen/installing-visual-studio-code-extension-tizen)
