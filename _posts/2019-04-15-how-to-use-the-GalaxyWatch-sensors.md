@@ -1,5 +1,5 @@
 ---
-title: "How to use sensors on the GalaxyWatch"
+title: "How to Use Sensors on Galaxy Watch"
 search: true
 last_modified_at: 2019-04-15
 categories: Wearables
@@ -9,42 +9,35 @@ toc_sticky: true
 toc_label: Contents
 ---
 
-Many developers have been asking how to use the sensor feature on the `GalaxyWatch`.
-There may be not enough information about using sensors.
-Therefore, I would like to introduce what sensors are supported for the `GalaxyWatch` and how the developers can use them easily.
+Many developers have asked how to use sensor features on Galaxy Watch. This post introduces sensors that are supported for Galaxy Watch and how developers can use them.
 
 ## Environment
 
-### Target Devices
-The following `Samsung wearables` are available for using the `Tizen.NET` nuget package which includes the sensor feature.
+### Target devices
+The following Samsung wearables can be used with the Tizen.NET NuGet package:
 
-> [Gear S3][link_gear_s3] (4.0 or later)<br/>
-> [Gear Sport][link_gear_sport] (4.0 or later)<br/>
-> [Galaxy Watch][link_watch]<br/>
-> [Galaxy Watch Active][link_watch_active]
+- [Galaxy Watch][link_watch]<br/>
+- [Galaxy Watch Active][link_watch_active]
+- [Gear S3][link_gear_s3] (4.0 or later)<br/>
+- [Gear Sport][link_gear_sport] (4.0 or later)<br/>
 
-According to the device specification, the following 5 sensors are supported.
+According to the device specification, the Accelerometer, Barometer, Gyro, HR, and Light sensors are supported.
 
-> Accelerometer, Barometer, Gyro, HR, and Light sensors
+### Tizen .NET NuGet package
 
-### Nuget Package
-
-[Tizen.NET][link_tizenfx] nuget package which is a set of device APIs is what you want to refer on your application to use the sensor feature.
-When developing wearable applications, you just need to refer [Tizen.Wearable.CircularUI][link_circlular] nuget package because it is already referring `Tizen.NET`.
-`Tizen.Wearable.CircularUI` provides the Xamarin.Forms extension controls which fit perfectly for the wearables.
-
-> Installing `Tizen.Wearable.CircularUI` is enough for your wearable application.
+To use sensor features on Galaxy Watch and other wearable applications, refer to the [Tizen.NET][link_tizenfx] NuGet package. The `Tizen.Wearable.CircularUI` provides the Xamarin.Forms extension controls, which are used for wearables.
 
 ```cs
 <PackageReference Include="Tizen.Wearable.CircularUI" Version="1.1.0" />
 ```
 
-![nuget][img_nuget]
+![NuGet][img_nuget]
 
 ### APIs
 
-The `Tizen.NET` nuget package contains the `Tizen.Sensor` namespace which provides the sensor API.
-You can find the API class that matches the sensor you want to use on the following table.
+The Tizen.NET NuGet package contains the `Tizen.Sensor` namespace, which provides the sensor API.
+
+In the following table, find the API class that matches the sensor you want to use:
 
 |  Sensor name  |    Class name    |
 |:-------------:|:----------------:|
@@ -54,14 +47,7 @@ You can find the API class that matches the sensor you want to use on the follow
 |       HR      | [HeartRateMonitor][link_hr] |
 |     Light     |    [LightSensor][link_light]   |
 
-`Tizen.NET` also contains sensor APIs for [GravitySensor][link_gravity], [HumiditySensor][link_humidity], [Magnetometer][link_magnetometer], [OrientationSensor][link_orientation], [ProximitySensor][link_proximity], [RotationVectorSensor][link_rotation], [TemperatureSensor][link_temperature], and [UltravioletSensor][link_ultraviolet],<br/>
-but they are not supported on the wearables.
-
 ## Usage
-
-The way to use the sensor API for all sensors are pretty much same.
-
-### Steps
 
 1. Declare namespace
 ```cs
@@ -82,7 +68,7 @@ Accelerometer.DataUpdated += (s, e) => { }; //event
 
 ### Example
 
-Below example shows how to use accelerometer on the application.
+The following example shows how to use the accelerometer on the application.
 
 ```cs
 using Tizen.Sensor;
@@ -120,10 +106,9 @@ public class AccelerometerPage : CirclePage
 
 ### Checking permission for HR sensor
 
-In case of HR sensor, the developer needs to declare privilege and check permission.
-Please refer to [Privacy-related Permissions][link_ppm] and the sample code below.
+For HR sensors, the developer needs to declare privilege and check permission. Refer to [Privacy-related Permissions][link_ppm] and the following sample code.
 
-- Declaring privilege `http://tizen.org/privilege/healthinfo`.
+- Declaring privilege: http://tizen.org/privilege/healthinfo
 
 ![manifest][img_manifest]
 
@@ -166,9 +151,7 @@ public partial class HRMPage : CirclePage
 ![light][img_light]
 ![barometer][img_barometer]
 
-We provide a lot of sample applications for the wearables [here][link_samples] including the [Sensor sample][link_sensors] which is referred by this post.
-
-Hope this post helps when you use the sensors in your application.
+We provide several sample applications for wearables [here][link_samples], including the [Sensor sample][link_sensors] used in this post.
 
 [link_gear_s3]: https://www.samsung.com/global/galaxy/gear-s3/
 [link_gear_sport]: https://www.samsung.com/global/galaxy/gear-sport/specs/
@@ -199,4 +182,3 @@ Hope this post helps when you use the sensors in your application.
 [img_light]: {{site.url}}{{site.baseurl}}/assets/images/posts/how-to-use-the-GalaxyWatch-sensors/5light.gif
 [img_barometer]: {{site.url}}{{site.baseurl}}/assets/images/posts/how-to-use-the-GalaxyWatch-sensors/6barometer.gif
 [img_manifest]: {{site.url}}{{site.baseurl}}/assets/images/posts/how-to-use-the-GalaxyWatch-sensors/7manifest.png
-
