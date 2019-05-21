@@ -53,6 +53,9 @@ Seungkeun Lee:
 Sunghyun Min:
   name: "Sunghyun Min"
   avatar: "/assets/images/bio/bio-SunghyunMin.png"
+  location: "Seoul, Korea"
+  email: "shyun.min@gsamsung.com"
+  github: "shyunmin"
 
 Sungsu Kim:
   name: "Sungsu Kim"
@@ -61,8 +64,7 @@ Sungsu Kim:
   email: "sung-su.kim@gsamsung.com"
   github: "sung-su"
 
-Chang-Seok Oh:
-  name: Chang-Seok Oh
-
-SANGWOOK LEE:
-  name: SangWook LEE
+Reni Mathew:
+  name: Reni Mathew
+  avatar: "/assets/images/bio/bio-person.png"
+  email: "reni.mathew@partner.samsung.com"

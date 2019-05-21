@@ -6,7 +6,7 @@ toc_sticky: true
 categories:
   - Tizen .NET
 last_modified_at: 2019-01-04
-author: Juwon (Julia) Ahn
+author: Juwon(Julia) Ahn
 ---
 
 ## Create a new Tizen project for Xamarin.Forms application

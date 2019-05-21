@@ -15,7 +15,7 @@ feature_row:
     url: "https://developer.samsung.com/"
     btn_class: "btn--inverse"
     btn_label: "Learn more"
-  - image_path: /assets/images/home/samsung-seller-office-logo.png
+  - image_path: /assets/images/home/samsung-galaxy-store-logo.png
     alt: "Seller Office"
     title: "Seller Office"
     excerpt: "Official site for Samsung wearable application publication and promotion."

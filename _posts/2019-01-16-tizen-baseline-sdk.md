@@ -8,7 +8,7 @@ tag: SDK
 
 ## Overview
 Set up the development environment to begin using Tizen .NET.
-When you install the extension for either Visual Studio 2017 or Visual Studio Code, you reach [the step you need]({{site.url}}{{site.baseurl}}/guides/environment#tizen-baseline-sdk) to install Tizen Baseline SDK.
+When you install the extension for either Visual Studio 2017 or Visual Studio Code, you reach [the step]({{site.url}}{{site.baseurl}}/guides/environment#tizen-baseline-sdk) you need to install Tizen Baseline SDK.
 
 ## Tizen Baseline SDK
 To develop Tizen applications, you must install either Tizen Baseline SDK or Tizen Studio. Both include Tizen tools you need, such as Package Manager, Emulator Manager, Certificate Manager, Device Manager, sdb, and more.
