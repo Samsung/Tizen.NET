@@ -50,7 +50,6 @@ Change the `TargetFramework` of the UI application project file (.`csproj`) usin
 1. Select the **Browse** tab
 1. Choose **nuget.org** as the Package source, and search for **SkiaSharp** and **SkiaSharp.Views**.
 1. Select these packages in the list, and click **Install**.
-
 ![][install_nuget_package]
 
 

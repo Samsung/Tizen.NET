@@ -39,12 +39,9 @@ You can get its solution [here](#certificate_error_-12) {: .btn .btn--success}.
  ![][create_new_cert]
 1. Select **Create a new author certificate** and click **Next**. Enter author name and password.
  ![][create_new_author_cert]
-
  ![][author_name_pw]
 1. Sign into Samsung Account. After a few seconds, you get a link to the author certificate.
-
  ![][samsung_account_popup]
-
  ![][author_cert_done]
 
   **Important**: Keep the author certificate in a safe location for future updates of your applications. If you lose your author certificate, you will not be able to modify your apps registered in Samsung Seller Office.

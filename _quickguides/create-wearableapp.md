@@ -79,4 +79,4 @@ The template shows the current time on your watch:
 
 Build and run as described in [Build the Application]({{site.url}}{{site.baseurl}}/guides/create-wearableapp#build-the-application) and [Deploy and Run the Application]({{site.url}}{{site.baseurl}}/guides/create-wearableapp#deploy-and-run-the-application).
 
-For more details, you can review the SimpleTextWatchface sample application (https://github.com/Samsung/Tizen.CircularUI/tree/master/test/SimpleTextWatchface).
+For more details, you can review the [SimpleTextWatchface sample application](https://github.com/Samsung/Tizen.CircularUI/tree/master/test/SimpleTextWatchface).

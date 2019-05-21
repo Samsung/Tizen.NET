@@ -9,4 +9,4 @@ Welcome to Tizen .NET Posts!
 
 This is the place for updated posts with rich and varied content helpful to Tizen .NET developers.
 
-To find post topics, enter a keyword on the [search tab]({{site.url}}{{site.baseurl}}/search) or browse posts by [categories]({{site.url}}{{site.baseurl}}/categories).
+To find post topics, enter a keyword on the [search tab]({{site.url}}{{site.baseurl}}/search) or browse posts by [categories]({{site.url}}{{site.baseurl}}/posts/).

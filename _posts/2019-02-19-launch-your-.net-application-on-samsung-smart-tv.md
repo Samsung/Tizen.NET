@@ -46,22 +46,16 @@ You can connect your SDK to a TV device as a remote device. Before you connect t
 1. Enable Developer mode on your TV device
     1. Open the **Smart Hub**.
     2. Select the **Apps** panel.
-
-        ![image]({{site.url}}{{site.baseurl}}/assets/images/posts/launch-your-.net-application-on-samsung-smart-tv/apps_panel.png)
-
+      ![image]({{site.url}}{{site.baseurl}}/assets/images/posts/launch-your-.net-application-on-samsung-smart-tv/apps_panel.png)
     3. In the **Apps** panel, enter **12345** using the remote control or the onscreen number keypad. The following popup appears.
-
-       ![image]({{site.url}}{{site.baseurl}}/assets/images/posts/launch-your-.net-application-on-samsung-smart-tv/dev_mode_popup.png)
+      ![image]({{site.url}}{{site.baseurl}}/assets/images/posts/launch-your-.net-application-on-samsung-smart-tv/dev_mode_popup.png)
     4. Switch **Developer mode** to **On**.
     5. Enter the host PC IP you want to connect to the TV, and click **OK**.
     6. Reboot the TV.
+      ![image]({{site.url}}{{site.baseurl}}/assets/images/posts/launch-your-.net-application-on-samsung-smart-tv/reboot_popup.png)
 
-       ![image]({{site.url}}{{site.baseurl}}/assets/images/posts/launch-your-.net-application-on-samsung-smart-tv/reboot_popup.png)
-
-After the TV reboots, open the **APPS** panel. **Developer Mode** is indicated at the top of the screen.
-
-![image]({{site.url}}{{site.baseurl}}/assets/images/posts/launch-your-.net-application-on-samsung-smart-tv/dev_mode.png)
-
+    After the TV reboots, open the **APPS** panel. **Developer Mode** is indicated at the top of the screen.
+    ![image]({{site.url}}{{site.baseurl}}/assets/images/posts/launch-your-.net-application-on-samsung-smart-tv/dev_mode.png)
 
 2. Connect the TV to the SDK
     1. In Visual Studio, navigate to **Tools > Tizen > Tizen Device Manager**.
@@ -96,8 +90,8 @@ On Windows, you can launch your application directly through Visual Studio using
 After building the Tizen project, go to Terminal, move to the output folder and execute the following commands:
 
 ```sh
-MacBook:~ jay$ sdb install org.tizen.example.Hello.Tizen-1.0.0.tpk
-MacBook:~ jay$ sdb shell 0 execute <APP_ID>
+acBook:~ jay$ sdb install org.tizen.example.Hello.Tizen-1.0.0.tpk
+acBook:~ jay$ sdb shell 0 execute <APP_ID>
 ```
 - The `sdb` tool is located where the Tizen Studio is installed; for example `~/tizen-studio/tools/`.
 - You can check the `<APP_ID>` in the `tizen-manifest.xml` file.

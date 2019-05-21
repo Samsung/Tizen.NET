@@ -7,7 +7,7 @@ comments: true
 
 Welcome to Tizen .NET World!
 
-This section provides basic information about developing Tizen .NET applications. And don't miss the [Posts]({{site.url}}{{site.baseurl}}/categories) section, which includes more details and information.
+This section provides basic information about developing Tizen .NET applications. And don't miss the [Posts]({{site.url}}{{site.baseurl}}/posts/) section, which includes more details and information.
 
 ## Official developer training and guides
 - [.NET Developer Training](https://developer.tizen.org/development/training/.net-application)

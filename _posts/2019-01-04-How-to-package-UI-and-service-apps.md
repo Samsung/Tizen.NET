@@ -6,7 +6,7 @@ toc_sticky: true
 categories:
   - Tizen .NET
 last_modified_at: 2019-01-04
-author: Juwon(Julia) Ahn
+author: Juwon (Julia) Ahn
 ---
 
 ## Create a new Tizen project for Xamarin.Forms application
@@ -25,11 +25,8 @@ author: Juwon(Julia) Ahn
 
 ## Add a Service Application reference in Xamarin.Forms application
 1. In Solution Explorer, right-click on the project name of your UI application, and click **Add > Reference**.
-
 ![][right-click-on-ui-app]
-
 2. In the Reference Manager dialog box, select the project you want to reference, and click **OK**.
-
 ![][service_reference_for_ui_app]
 
 ## Build the entire solution

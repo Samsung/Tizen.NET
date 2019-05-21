@@ -23,7 +23,7 @@ When you first sign up, you are automatically designated a public seller. Public
 1. Enter the application name.
 1. Complete the following four registration steps:
 
-  ### 1. Basic information
+### 1. Basic information
   ![image](https://user-images.githubusercontent.com/14328614/44501291-a6af2900-a6c7-11e8-9e28-f833cb14182a.png)
 
   Define basic information about the application, country, and seller.
@@ -33,7 +33,7 @@ When you first sign up, you are automatically designated a public seller. Public
 
   - Icon images and screenshots are required.
 
-  ### 2. Application upload
+### 2. Application upload
   ![image](https://user-images.githubusercontent.com/14328614/44501323-c5152480-a6c7-11e8-9529-8ac7472b8fbf.png)
 
   Upload the application package, and complete **2. Pre-Test**.
@@ -45,13 +45,13 @@ When you first sign up, you are automatically designated a public seller. Public
   - Navigate to the `tizen-manifest.xml` and add the screen-size feature:
   ![image](https://user-images.githubusercontent.com/14328614/44458394-0adada00-a641-11e8-83b4-fbb415dfa4b1.png)
 
-  ### 3. Test information
+### 3. Test information
   ![image](https://user-images.githubusercontent.com/14328614/44501506-6ac89380-a6c8-11e8-8231-e6aca95a5f93.png)
 
   Next, input information necessary for certification and verification.
   - Provide information for the App Description file. A template file with UI structure, usage scenario, and other information is provided for you to download.
 
-  ### 4. Preview and submit
+### 4. Preview and submit
   ![image](https://user-images.githubusercontent.com/14328614/44501554-af542f00-a6c8-11e8-85c5-160d4bd03aa4.png)
 
   Preview the application registration information, and click **Submit**.
