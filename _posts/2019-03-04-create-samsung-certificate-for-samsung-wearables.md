@@ -3,98 +3,82 @@ title: "Samsung Certificate Profile for Samsung Wearables"
 last_modified_at: 2019-02-27
 categories:
   - Wearables
-author: Juwon(Julia) Ahn
+author: Juwon (Julia) Ahn
 toc: true
 toc_sticky: true
 ---
 
-You often face the following error while developing Tizen .NET applications:
+You may face the following error when you develop Tizen .NET applications:
 
 ```sh
    processing result : Check certificate error [-12] failed
 ```
 
-This error occurs when you install the default certificate signed .NET app on Samsung Wearables or install the Samsung certificate-signed app on a Tizen emulator.
+This error occurs when you install the default certificate signed .NET app on Samsung wearables or install the Samsung certificate-signed app on a Tizen emulator.
 
 <a id="top"></a>
-You can get its solution [here](#certificate_error_-12){: .btn .btn--success}.
+You can get its solution [here](#certificate_error_-12) {: .btn .btn--success}.
 
-## Samsung Certificate Profile
+## Samsung certificate profile
 
 ### Install Samsung Certificate Extension
 
- To create Samsung certificate profile, [Samsung Certificate Extension][samsung_cert_extension] is required. You can install it through `Tizen Studio Package Manager`.
+ To create a Samsung certificate profile, you must have [Samsung Certificate Extension][samsung_cert_extension] installed. You can install it through Tizen Studio Package Manager.
 
  ![][install_samsung_cert_extension]
 
-### Create Samsung Certificate Profile
- 
-- Launch `Tizen Certificate Manager` and click **+** button to create a new certificate profile.
+### Create a Samsung certificate profile
 
+1. Launch Tizen Certificate Manager, and click the **+** button to create a new certificate profile.
  ![][tizen-certificate-manager_first_page]
-
-- Select **Samsung** to create a certificate profile to develop and test your application for Samsung Wearables and publish it to **Samsung Seller Office**.
-
+1. Select **Samsung** to create a certificate profile to develop and test your application for Samsung Wearables.
  ![][select_samsung_cert]
-
-- In Step 1, select **Mobile / Wearable** as the device type and click **Next>**.
-
+1. In Step 1, select **Mobile/Wearable** as the device type and click **Next**.
  ![][mobile_wearable_type]
-
-- Select **Create a new certificate profile** and put the file name to create a new one.
-
+1. Select **Create a new certificate profile** and enter the file name.
  ![][create_new_cert]
-
-- Select **Create a new author certificate** and click **Next>**, and then, put Author name and password.
-
+1. Select **Create a new author certificate** and click **Next**. Enter author name and password.
  ![][create_new_author_cert]
 
  ![][author_name_pw]
-
-- At the Next step, to sign in Samsung Account, registration window pops up. After a few seconds from signing-in you can get the author certificate.
+1. Sign into Samsung Account. After a few seconds, you get a link to the author certificate.
 
  ![][samsung_account_popup]
- 
+
  ![][author_cert_done]
 
-  > You should keep author certificate for future updates of your applications.
-  >
-  > If you lose your author certificate, you will not be able to modify your apps registered in Samsung Seller Office.
+  **Important**: Keep the author certificate in a safe location for future updates of your applications. If you lose your author certificate, you will not be able to modify your apps registered in Samsung Seller Office.
 
-- The next step is creating the distributor certificate.
+Next, create the distributor certificate.
 
  ![][create_new_distributor_cert]
 
-- If your device or wearable emulator is connected, DUID value is automatically added.
+If your device or wearable emulator is connected, the DUID value is automatically added.
 
  ![][duid_of_device]
 
-- Now, you can get the distributor certificate.
+You can now get your distributor certificate.
 
  ![][distributor_cert_done]
 
 <a id="certificate_error_-12"></a>
 ### Handle Error `'certificate error [-12]'`
-        
+
 [Top](#top){: .btn .btn--success}
 
-To install your Tizen .NET application on Samsung Wearables such as Galaxy Watch, Samsung Gear S3, etc, and publish it on Samsung Seller Office, you need to create Samsung certificate profile and sign your application with it.
+To install your Tizen .NET application on Samsung wearables such as Galaxy Watch, you need to create a Samsung certificate profile and sign your application with it.
 
-You have to ensure that .NET application is signed with the desired Samsung certificate profile, not the Tizen default certificate.
+You must ensure that the .NET application is signed with your Samsung certificate profile, not the Tizen default certificate. To use your Samsung certificate profile:
 
-First of all, make sure you make Samsung Certificate Profile.
-
-If so, check whether your Samsung Certificate Profile is used or not by checking the following option
-
-Visual Studio > Tools > Option > Tizen > Certification >
-- Select the **Sign the .TPK file using the following option** `check box`.
-- Select your Samsung certificate profile from **Profile** `drop-down menu`
+1. Navigate to **Visual Studio > Tools > Option > Tizen > Certification**.
+1. Select the **Sign the .TPK file using the following option** checkbox.
+1. Select your Samsung certificate profile from the **Profile** dropdown.
 
  ![][app_samsung_cert]
 
-## Tizen Certificate Profile
+## Tizen certificate profile
 
-If you want to use Tizen default certificate profile, uncheck the  **Sign the .TPK file using the following option** `check box` as follows:
+To use the Tizen default certificate profile, uncheck the  **Sign the .TPK file using the following option** checkbox:
 
  ![][apply_default_cert]
 

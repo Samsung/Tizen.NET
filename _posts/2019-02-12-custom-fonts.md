@@ -1,10 +1,10 @@
 ---
-title:  "Using Custom Fonts in Tizen .NET apps"
+title:  "Use Custom Fonts in Tizen .NET Apps"
 search: true
 categories:
   - Tizen .NET
 last_modified_at: 2019-02-12
-author: Juwon(Julia) Ahn
+author: Juwon (Julia) Ahn
 toc: true
 toc_label: Custom Fonts in Tizen .Net Apps
 ---
@@ -12,16 +12,16 @@ toc_label: Custom Fonts in Tizen .Net Apps
 ## Xamarin.Forms application
 [Sample code](https://github.com/Samsung/Tizen-CSharp-Samples/tree/master/Wearable/CustomFonts/src/WorkingWithFonts){: .btn .btn--info}
 
-First of all, you can get general information regarding fonts in Xamarin.Forms from the following websites:
+For general information regarding Xamarin.Forms fonts, see the following websites:
   - [Fonts in Xamarin.Forms][xamarin_fonts]
   - [Custom Fonts in Xamarin.Forms][custom_fonts]
 
-### Install Fonts and Specify the Font Folder
-You can add a font file (.ttf or .otf files) you want to use to your `res` directory and specify the global font path.
+### Install fonts and specify the font folder
+You can add font files (.`ttf` or .`otf` files) to your `res` directory and specify the global font path.
 
 ![][font_dir]
 
-This code shows how to specify the global path of fonts.
+This code shows how to specify the fonts' global path.
    - API Spec: [ElmSharp.Utility.AppendGlobalFontPath][AppendGlobalFontPath]
 
 ```c#
@@ -37,8 +37,8 @@ This code shows how to specify the global path of fonts.
     }
 ```
 
-### Use Custom Fonts
-   Now, you can use custom fonts by setting the `FontFamily` attribute.
+### Use custom fonts
+To use custom fonts, set the `FontFamily` attribute.
    The following example shows how to apply a custom font to a label.
 
 ```c#
@@ -72,22 +72,22 @@ This code shows how to specify the global path of fonts.
 
 [Sample code](https://github.com/Samsung/Tizen-CSharp-Samples/tree/master/Wearable/CustomFonts/src/NUIFontTest){: .btn .btn--info}
 
-Since Tizen 5.0, you can use custom fonts for NUI applications.
+As of Tizen 5.0, you can use custom fonts for NUI applications.
 
-### Install Fonts and Specify the Font Folder
-You can add a font file (.ttf or .otf files) you want to use to your `res` directory and specify the global font path.
+### Install fonts and specify the font folder
+You can add font files (.`ttf` or .`otf` files) to your `res` directory and specify the global font path.
 
 ![][nui_font_dir]
 
-This code shows how to specify the global path of fonts.
+This code shows how to specify the font global path.
    - API Spec: [FontClient.Instance.AddCustomFontDirectory][AddCustomFontDirectory]
 
 ```c#
     FontClient.Instance.AddCustomFontDirectory(this.DirectoryInfo.Resource);
 ```
 
-### Use Custom Fonts
-   Now, you can use custom fonts by setting the `FontFamily` attribute.
+### Use custom fonts
+   Use custom fonts by setting the `FontFamily` attribute.
    The following example shows how to apply a custom font to a text label.
 
 ```c#
