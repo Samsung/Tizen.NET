@@ -65,7 +65,6 @@ animation.Play();
 ### LottieAnimationView
 `LottieAnimationView` is a `EvasObject (TizenFX)` subclass that displays animation content.
 
-#
 #### Creating Animation Views
 ```cs
 var animation = new LottieAnimationView(window)
@@ -86,7 +85,6 @@ Properties:
 - **MinumumProgress**: The start progress of the animation (0 ~ 1.0). The default value is `0`.
 - **MaximumProgress**: The end progress of the animation (0 ~ 1.0). The default value is `1.0`.
 
-#
 #### Loading from a File Path
 ```cs
 animation.SetAnimation(Path.Combine(DirectoryInfo.Resource, "lottie.json"));
@@ -97,35 +95,30 @@ Parameters:
 : **filepath**: The absolute filepath of the animation to load.
 
 
-#
 #### Play the Animation
 ```cs
 animation.Play();
 ```
 Plays the animation from its current state to the end of its timeline. `Started` event occurs when the animation is started. And `Finished` event occurs when the animation is finished.
 
-#
 #### Stop the Animation
 ```cs
 animation.Stop();
 ```
 Stops the animation. `Stopped` event occurs when the animation is stopped.
 
-#
 #### Pause the Animation
 ```cs
 animation.Pause();
 ```
 Pauses the animation. `Paused` event occurs when the animation is paused.
 
-#
 #### Is Animation Playing
 ```cs
 bool isPlaying = anumation.IsPlaying;
 ```
 Returns `true` if the animation is currently playing, `false` if it is not.
 
-#
 #### Current Frame
 ```cs
 int currentFrame = anumation.CurrentFrame;
@@ -133,7 +126,6 @@ int currentFrame = anumation.CurrentFrame;
 Returns the current animation frame count. 
 ==Note==: It returns -1, if animation is not playing.
 
-#
 #### Total Frame
 ```cs
 int totalFrame = anumation.TotalFrame;
@@ -141,7 +133,6 @@ int totalFrame = anumation.TotalFrame;
 Returns the total animation frame count. 
 ==Note==: You should load the animation file before using it.
 
-#
 #### Duration Time
 ```cs
 double duration = anumation.DurationTime;
