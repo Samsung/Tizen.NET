@@ -22,7 +22,7 @@ The feed is located here:
 
 https://tizen.myget.org/F/dotnet/api/v3/index.json
 
-1. In the NuGet Package Manager, open the settings panel and configure a new package source: </br>
+1. In the NuGet Package Manager, open the settings panel and configure a new package source: <br/>
 **Tools > Options > NuGet Package Manager > Package Sources**<br/>
     ![][ref1]
 
@@ -46,7 +46,7 @@ https://tizen.myget.org/F/dotnet/api/v3/index.json
 
 If you're finished updating your application, you can create the Tizen emulator that fits on your nightly build for testing.
 
-1. Download latest Tizen platform image file. You can get the file at: </br>
+1. Download latest Tizen platform image file. You can get the file at: <br/>
 http://download.tizen.org/snapshots/tizen/unified/latest/
 
 2. Extract the *.`tar.gz` file. After extracting, you can find the following files:
@@ -82,7 +82,7 @@ http://download.tizen.org/snapshots/tizen/unified/latest/
 11. Launch the application on the new emulator.
     ![][emul13]
 
-**Note**: You might encounter an issue on the emulator with raw-format image when you install a large application.</i>
+**Note**: You might encounter an issue on the emulator with raw-format image when you install a large application.
 
 [emul1]: {{site.url}}{{site.baseurl}}/assets/images/posts/try-latest-in-tizen-net/emul1.png
 [emul2]: {{site.url}}{{site.baseurl}}/assets/images/posts/try-latest-in-tizen-net/emul2.png

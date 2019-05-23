@@ -47,6 +47,8 @@ issues-nav:
         url: "/issues/wearable/watchface/"
       - title: "Tizen Baseline SDK"
         url: "/issues/wearable/tizen-baseline-sdk/"
+      - title: "Visual Studio"
+        url: "/issues/wearable/tools-vs/"
       - title: "Visual Studio Code"
         url: "/issues/wearable/tools-vscode/"
   - title: "Samsung Smart TV"
@@ -55,6 +57,8 @@ issues-nav:
         url: "/issues/tv/2018SmartTV/"
       - title: "API Limitations"
         url: "/issues/tv/limitations/"
+      - title: "Visual Studio"
+        url: "/issues/tv/tools-vs/"
       - title: "Visual Studio Code"
         url: "/issues/tv/tools-vscode/"
 
