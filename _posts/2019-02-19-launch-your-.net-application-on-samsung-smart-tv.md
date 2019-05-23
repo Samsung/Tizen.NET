@@ -20,7 +20,7 @@ If you are new to developing Tizen .NET applications, we suggest that you browse
 
 ## Development environment
 ### Windows
-You must have Visual Studio Tools for Tizen installed. If you do not, [install the extension tool](https://developer.tizen.org/development/visual-studio-tools-tizen/installing-visual-studiotools-tizen) first. Tizen baseline SDK automatically installs after the extension tool is installed.
+You must have Visual Studio Tools for Tizen installed. If you do not, [install the extension tool](https://developer.tizen.org/development/visual-studio-tools-tizen/installing-visual-studio-tools-tizen) first. Tizen baseline SDK automatically installs after the extension tool is installed.
 ### Mac
 No extension tool for Visual Studio for Mac is provided. You can download and [install the Tizen Baseline SDK]({{site.url}}{{site.baseurl}}/environment/tizen-baseline-sdk/) or install the full Tizen Studio [here](https://developer.tizen.org/development/tizen-studio/download).
 
@@ -58,7 +58,7 @@ You can connect your SDK to a TV device as a remote device. Before you connect t
     ![image]({{site.url}}{{site.baseurl}}/assets/images/posts/launch-your-.net-application-on-samsung-smart-tv/dev_mode.png)
 
 2. Connect the TV to the SDK
-    1. In Visual Studio, navigate to **Tools > Tizen > Tizen Device Manager**.
+    1. In Visual Studio, navigate to **Tools > Tizen > Tizen Device Manager** to open Device Manager.<br/>
        **Note**: For Mac users, launch Device Manager on Mac.
 
        ![image]({{site.url}}{{site.baseurl}}/assets/images/posts/launch-your-.net-application-on-samsung-smart-tv/device_manager1.png)

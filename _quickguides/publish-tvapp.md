@@ -18,7 +18,7 @@ When you first sign up, you are automatically designated a public seller. Public
 
 ## Register the application
 1. On the Seller Office main page, navigate to **.NET App Registration**.
-![image](https://user-images.githubusercontent.com/14328614/44450927-305de880-a62d-11e8-83e5-81fbd29874b6.png)
+![image]({{site.url}}{{site.baseurl}}/assets/images/guides/tv_app_registration.png)
 1. Click **App Registration**.
 1. Enter the application name.
 1. Complete the following four registration steps:
@@ -39,7 +39,7 @@ When you first sign up, you are automatically designated a public seller. Public
   Upload the application package, and complete **2. Pre-Test**.
   ![image](https://user-images.githubusercontent.com/14328614/44505465-76be5080-a6dc-11e8-907b-bb2e773827eb.png)
 
-  - If "Fail Error" appears at the **2. Pre-Test** step, scroll down to see the error message in the Pre-Test result details. The **screen-size** error message is shown below:
+  - If "Fail Error" appears at the **2. Pre-Test** step, scroll down to see the error message in the `Pre-Test Result Details`. The **screen-size** error message is shown like below:
   ![image]({{site.url}}{{site.baseurl}}/assets/images/guides/screensize_error.png)
 
   - Navigate to the `tizen-manifest.xml` and add the screen-size feature:

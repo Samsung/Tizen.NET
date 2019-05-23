@@ -47,7 +47,7 @@ To automate your Tizen .NET applications, add NuGet `Tizen.Appium` to your appli
 1. Install Tizen.Appium for ElmSharp or NUI projects.
 1. Install Tizen.Appium.Forms for Xamarin.Forms projects.
 
-![image](https://user-images.githubusercontent.com/16184582/55209484-36045800-5226-11e9-8ca6-991873ccb072.png)
+![image]({{site.url}}/{{site.baseurl}}/assets/images/posts/tizen-ui-automation-test-using-appium/install_appium.png)
 
 - ElmSharp and NUI applications require [Tizen.NET package](https://tizen.myget.org/feed/dotnet/package/nuget/Tizen.NET) version 6.0 or higher.
 - Xamarin.Forms application requires [Tizen.NET 4.0.0](https://www.nuget.org/packages/Tizen.NET/4.0.0).
@@ -197,12 +197,12 @@ public class UITest
 4. Install NUnit3 Test Adapter.
    1. Go to **Tools > Extension and Updates**.
    1. Select **Online**. Search and select **NUnit 3 Test Adapter**.<br>
-   ![image](https://user-images.githubusercontent.com/16184582/54807753-94c75000-4cc1-11e9-9f3d-20f6f41b3d73.png)
+   ![image]({{site.url}}/{{site.baseurl}}/assets/images/posts/tizen-ui-automation-test-using-appium/install_nunit3_test_adapter.png)
 
 5. Open **Test Explorer**.
    1. Go to **Test > Windows > Test Explorer**.
-   1. Right-click on your test, and select **Run Test**.
-   ![image](https://user-images.githubusercontent.com/16184582/55212507-5686df00-5233-11e9-94af-dc4858b2d01a.png)
+   1. Right-click on your test, and select **Run Selected Test**.
+   ![image]({{site.url}}/{{site.baseurl}}/assets/images/posts/tizen-ui-automation-test-using-appium/run_test.png)
 
 ## Run a UI automation test
 If you run the Appium project, you can control the application according to the created script.

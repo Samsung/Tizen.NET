@@ -26,7 +26,7 @@ In order to debug, launch an emulator or connect to a target device.
 
 * In the toolbar, click **Launch Tizen Emulator**.
 
-    ![Image]({{site.url}}{{site.baseurl}}/assets/images/posts/how-to-debug-TizenNET-application/launch-emulator.png)
+![Image]({{site.url}}{{site.baseurl}}/assets/images/posts/how-to-debug-TizenNET-application/launch-emulator.png)
 
 ## Set breakpoint
 Breakpoint is an essential feature of the debugging process. It acts as a stop sign. If you need to inspect workflow issues in your program, you can set breakpoints wherever required. While debugging, the breakpoint indicates to the debugger to stop the program automatically. This helps you inspect your code to verify the variables values, the memory allocation, and the execution sequence.

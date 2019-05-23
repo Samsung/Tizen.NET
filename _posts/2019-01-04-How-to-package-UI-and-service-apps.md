@@ -32,8 +32,7 @@ author: Juwon (Julia) Ahn
 ## Build the entire solution
 
 When you try to build the solution, you may see the following error message:
-
-![][build_error_for_ui_and_service_apps]
+> Project ServiceApp is not compatible with tizen50 (Tizen,Version=v5.0). Project ServiceApp supports: netcoreapp2.0(.NETCoreApp, Version=v2.0)
 
 To resolve, you need to edit the project file (.`csproj`) of your service application to change the `TargetFramework`.
 
