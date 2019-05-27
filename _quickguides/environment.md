@@ -21,7 +21,7 @@ Visual Studio 2017 on Windows is the official and the most popular development e
      **Note**: JDK 9 is not yet supported.
   - JDK 8 is required to use the Tizen Baseline SDK.
   - Download JDK 8 from the official [Oracle Web site](https://www.oracle.com/technetwork/java/javase/downloads/index.html).
-  - OpenJDK 10 is supported from [Tizen Studio 3.1](https://developer.tizen.org/development/tizen-studio/download/release-notes).
+  - OpenJDK 10 is supported from [Tizen Studio 3.1 or above](https://developer.tizen.org/development/tizen-studio/download/release-notes).
 
 
 ### Visual Studio Code

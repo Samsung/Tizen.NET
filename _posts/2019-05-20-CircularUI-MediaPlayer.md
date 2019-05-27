@@ -4,7 +4,7 @@ search: true
 categories:
   - Wearables
 last_modified_at: 2019-05-20
-author: Juwon(Julia) Ahn
+author: Juwon (Julia) Ahn
 toc: true
 toc_sticky: true
 toc_label: Video Player for Wearables
@@ -21,7 +21,7 @@ In general, [Tizen.Multimedia API][Tizen.Multimedia] in TizenFX API is available
 
 This is recommended for detailed control of media content.
 
-Since [Tizen.CircularUI 1.1 version][Tizen.CircularUI_1.1], MediaView/MediaPlayer APIs are provided in Tizen.CircularUI API to make it easier to use. Please check out the following documents to learn how to use it.
+Since [Tizen.CircularUI 1.1.0 version][Tizen.CircularUI_1.1], MediaView and MediaPlayer APIs are provided in Tizen.CircularUI API to make it easier to use. Please check out the following documents to learn how to use it.
 
  - API specification
 
