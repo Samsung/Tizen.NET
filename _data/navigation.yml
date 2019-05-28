@@ -43,6 +43,8 @@ issues-nav:
     children:
       - title: "API Limitations"
         url: "/issues/wearable/limitations/"
+      - title: "Behaviors"
+        url: "/issues/wearable/behaviors/"
       - title: "Watch Face"
         url: "/issues/wearable/watchface/"
       - title: "Tizen Baseline SDK"
@@ -57,6 +59,8 @@ issues-nav:
         url: "/issues/tv/2018SmartTV/"
       - title: "API Limitations"
         url: "/issues/tv/limitations/"
+      - title: "Behaviors"
+        url: "/issues/tv/behaviors/"
       - title: "Visual Studio"
         url: "/issues/tv/tools-vs/"
       - title: "Visual Studio Code"
