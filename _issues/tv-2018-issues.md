@@ -15,8 +15,8 @@ This section lists problems you might encounter while working with a Tizen TV em
  - Cannot use debug mode
 
 ## Issues on the Smart TV device
- - Any applications loading third-party libraries (including .`so` files) are not allowed due to Samsung Smart TV's security policy.
- - Interoperability is not allowed on Samsung Smart TV due to the security risk.
+ - Any applications loading third-party libraries (including .`so` files) are not allowed, because of Samsung Smart TV's security policy.
+ - Interoperability is not allowed on Samsung Smart TV, because of security risks.
  - Test automation (such as with Appium) for the application is not available, because `sdb shell` is not available.
  - The application installed through your SDK will not be shown and is deleted when the TV device is rebooted.
 
@@ -28,6 +28,6 @@ The following TizenFX TV APIs are not supported on the TV emulator:
 - [Tizen.TV.Service.Billing](https://developer.samsung.com/tv/tizen-net-tv/api-references/tizenfx-tv-api-references/Tizen.TV.Service.Billing)
 - [Tizen.TV.Service.Sso](https://developer.samsung.com/tv/tizen-net-tv/api-references/tizenfx-tv-api-references/Tizen.TV.Service.Sso/Sso-Class)
 
-You can get detailed information about the TV Extension 5.0 emulator [here](https://developer.samsung.com/tv/develop/tools/tv-extension/download).
-
 No workaround is available. We will keep you posted on further updates.
+
+For details about the TV Extension 5.0 emulator, go [here](https://developer.samsung.com/tv/develop/tools/tv-extension/download).
