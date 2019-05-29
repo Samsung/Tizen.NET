@@ -6,17 +6,15 @@ toc_sticky: true
 ---
 
 
-### App Template's Build Error
+## App Template Build Error
 
-The following issue has already been fixed in `Visual Studio Tools for Tizen 2.4 version`.<br/> (It's released in March 2019.)
+The following issue was fixed in Visual Studio Tools for Tizen, version 2.4 (released in March 2019).
 {: .notice--danger}
 
-When you create a Tizen Watchface application with the *Tizen Watchface App template* in Visual Studio 2017, you may face an error during the build process.
+### Error in Visual Studio Tools for Tizen, version 2.3.1
+When you create a Tizen watch face application with the Tizen watch face app template, you may face an error during the build process because of an error in the `tizen-manifest.xml` file of the watch face app template.
 
-It is because there is an error in `tizen-manifest.xml` file of the watchface app template.
-(There is an issue in watchface app template distributed in `Visual Studio Tools for Tizen 2.3.1 version`.)
-
-It will be fixed in the next release. Until then, please modify the `tizen-manifest.xml` file as follows:
+To fix this error, modify the `tizen-manifest.xml` file as follows:
 
 <blockquote>
 <b>[AS-IS]</b>
@@ -29,11 +27,13 @@ It will be fixed in the next release. Until then, please modify the `tizen-manif
 
 </blockquote>
 
-### Watchface App execution with debugger on Samsung Wearables
+### Watch face app execution with debugger on Samsung wearables
 
-The following issue doesn't happen on Tizen wearable emulator.<br/> (The update for the patch will be globally released around May 2019.)
+The following issue does not occur on the Tizen wearable emulator. An update will be globally released in May 2019.
 {: .notice--danger}
 
-There is an issue when you execute a watchface application in debug mode (by pressing `F5` key). Changing the watchface may fail on Samsung Wearables based on Tizen 4.0.
+An issue occurs when you execute a watch face application in debug mode (by pressing `F5` key). Changing the watch face may fail on Samsung wearables that are based on Tizen 4.0.
 
-It will be fixed soon. Until then, you can execute the watchface application without debugger (by pressing `ctrl + F5` key) or change the watchface after running your application in debug mode and rebooting your Samsung smartwatch.
+This error will be fixed soon. Until then, use one the following workarounds:
+- Press `ctrl + F5` to execute the watch face application without debugger
+- Change the watch face after running your application in debug mode and rebooting your Samsung smart watch.

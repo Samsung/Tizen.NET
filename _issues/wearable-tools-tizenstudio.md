@@ -8,15 +8,15 @@ toc_label: Known Issues & Workarounds
 ---
 
 
-## Connection Issue Between a Watch and Device Manager
+## Connection issue between a watch and Device Manager
 
-Please refer to [Testing Your App on Gear][testing_app_on_watch] to learn about developing your application and testing it on your watch.
+Refer to [Testing Your App on Galaxy Watch][testing_app_on_watch] for information about developing your application and testing it on your watch.
 
-Even though you have followed every steps correctly, you could face the following error:
+Even if you follow every step correctly, you may face the following error:
 
 ![][device_mgr_connection]
 
-```sh
+```
  ERROR: failed to connect to remote target '192.168.0.X'
 
  You may get this message for following reasons:
@@ -26,8 +26,8 @@ Even though you have followed every steps correctly, you could face the followin
 ```
 
 ### Workaround
- - Check if both devices are connected to the same Wi-Fi network.
- - Try rebooting your PC and the Watch and connecting to the network.
+ - Check whether both devices are connected to the same Wi-Fi network.
+ - Reboot your PC and the watch, and connect to the network.
 
 
 [device_mgr_connection]: {{site.url}}{{site.baseurl}}/assets/images/issues/tools/device-manager-connection-issue.png

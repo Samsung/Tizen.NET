@@ -5,18 +5,18 @@ toc: true
 toc_sticky: true
 ---
 
-Using `Visual Studio 2017` on Windows is definitely the number one choice for developing Tizen .NET applications. However, if you are a Mac user, `Visual Studio Code` can be one of the options to develop Tizen .NET applications.
+Visual Studio 2017 on Windows is the number one choice for developing Tizen .NET applications. However, if you are a Mac user, you have the option of using Visual Studio Code to develop Tizen .NET applications.
 
-Check out [Installing Visual Studio Code Extension for Tizen](https://developer.tizen.org/development/visual-studio-code-extension-tizen/installing-visual-studio-code-extension-tizen) to know more about Tizen .NET extension.
+See [Installing Visual Studio Code Extension for Tizen](https://developer.tizen.org/development/visual-studio-code-extension-tizen/installing-visual-studio-code-extension-tizen) for information about the Tizen .NET extension.
 {: .notice--info}
 
-The following known issues are based on the `1.1.0` version of the `Visual Studio Code Extension for Tizen` which is the latest at this moment. Check out the [Change Log](https://marketplace.visualstudio.com/items/tizen.vscode-tizen-csharp/changelog) to see the history.
+The following known issues are based on Visual Studio Code Extension for Tizen version 1.1.0. For issue histories, see [Change Log](https://marketplace.visualstudio.com/items/tizen.vscode-tizen-csharp/changelog).
 
 ## Version 1.1.0 (2019-01-08)
 ### Creating a Tizen .NET Project
   - command: `Tizen .NET: Create a Tizen .NET project`
-    - Incomplete Xamarin.Forms Template (`Tizen.NET.Template.Cross.NETStandard`) is generated.<br/>
-    You have to manually add a code line `LoadApplication(new App());` in the file `[Name].[profile]/[Name].[profile].cs` to show your application contents on the device screen.
+    - An incomplete Xamarin.Forms template (`Tizen.NET.Template.Cross.NETStandard`) is generated.
+    You must manually add the line `LoadApplication(new App());` in the file `[Name].[profile]/[Name].[profile].cs` to show your application contents on the device screen.
     ```c#
     protected override void OnCreate()
     {
@@ -26,30 +26,30 @@ The following known issues are based on the `1.1.0` version of the `Visual Studi
     }
     ```
 
-### Debugging an Application in the Emulator
-  - Run Debug mode may be not stable enough.
+### Debugging an application in the emulator
+- Run debug mode may be not stable enough to use.
 
 ## Version 1.0.0 (2017-12-13)
-### Creating a Tizen .NET Project
+### Creating a Tizen .NET project
   - command: `Tizen .NET: Create a Tizen .NET project`
-    - Templates including Xamarin Forms are Missing
-    - Provides only followings at the moment
+    - Templates including Xamarin.Forms are missing.
+    - Only the following templates are provided:
       - Tizen.NET.Template.ElmSharp
       - Tizen.NET.Template.NSClassLib
       - Tizen.NUI.Template.Single
 
-### Running an Application 
+### Running an application
   - command: `Tizen .NET: Run a Tizen .NET application on the Tizen device`
-    - OK to install on Tizen 4.0 Wearable emulator
-    - FAILS to install on Tizen 4.0 TV emulator
+    - OK to install on Tizen 4.0 wearable emulator
+    - Fails to install on Tizen 4.0 TV emulator
 
   - command: `Tizen .NET: Run debug mode`
-    - 'Run debug mode' is not working properly.
-    - FAILS with the message
-      - "Failed to install the Tizen debug package, (Make sure the path info of the LLDB package is correct.)"
+    - Run debug mode is not working properly.
+    -  Fails with the message: </br>
+      `Failed to install the Tizen debug package (make sure the path info of the LLDB package is correct).`
 
-### Debugging an Application in the Emulator
-  - Debug in the Debug Tab on VS Code Activity Bar
-    - FAILS with the following error occurs
-        - Popup: "Cannot read property 'message' of null"
-        - Log: "No path info specified for LLDB packages in the settings." 
+### Debugging an application in the emulator
+  - Debug in the **Debug** ab on VS Code Activity Bar
+    - Fails with the following messages:
+        - Popup: `Cannot read property 'message' of null`
+        - Log: `No path info specified for LLDB packages in the settings.`

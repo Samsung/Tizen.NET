@@ -16,9 +16,6 @@ The following standard APIs are not fully compatible with the platform implement
 ## Xamarin Forms
 ### Xamarin.Forms 3.0+
 
-There are some Xamarin.Forms limitations on the Tizen platform.<br/>
-The limitations depend on the version of Xamarin.Forms.
+There are some Xamarin.Forms limitations on the Tizen platform. Limitations depend on the version of Xamarin.Forms.
 
 The shared list of limitations is available at [Current Xamarin.Forms limitations](https://developer.tizen.org/development/api-reference/.net-application/current-xamarin.forms-limitations).
-
-
