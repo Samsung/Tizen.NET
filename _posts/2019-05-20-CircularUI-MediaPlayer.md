@@ -10,71 +10,57 @@ toc_sticky: true
 toc_label: Video Player for Wearables
 ---
 
-You can play media files stored in Galaxy Watch
-or present over the Internet in your application.
+You can play media files stored in Galaxy Watch, or present over the Internet in your application. In this post, we discuss how to create a video player for Tizen wearables.
 
-In this post, we are going to discuss about how to create a video player for Tizen Wearables.
+## [An Introduction to Circular UI MediaView and MediaPlayer APIs](#circular-ui-media-player-api)
 
-## [An Introduction to Circular UI MediaView & MediaPlayer APIs](#circular-ui-media-player-api)
+[Tizen.Multimedia API][Tizen.Multimedia] in TizenFX API is available to make certain apps, such as video players. We recommend using this API for detailed control of media content.
 
-In general, [Tizen.Multimedia API][Tizen.Multimedia] in TizenFX API is available to make certain apps such as video player. 
+Since [Tizen.CircularUI version 1.1.0][Tizen.CircularUI_1.1], MediaView and MediaPlayer APIs are provided in the Tizen.CircularUI API to make it easier to use. The following documents provide further information on how to use:
 
-This is recommended for detailed control of media content.
-
-Since [Tizen.CircularUI 1.1.0 version][Tizen.CircularUI_1.1], MediaView and MediaPlayer APIs are provided in Tizen.CircularUI API to make it easier to use. Please check out the following documents to learn how to use it.
-
- - API specification
+ - API specifications
 
       -- [Tizen.Wearable.CircularUI.Forms.MediaView][MediaView]
 
       -- [Tizen.Wearable.CircularUI.Forms.MediaPlayer][MediaPlayer]
-      
+
       -- [Tizen.Wearable.CircularUI.Forms.MediaSource][MediaSource]
 
  - Developer guide
 
       -- [MediaView and MediaPlayer][MediaViewGuide]
 
-## [The Necessary Privileges](#privilege-for-viedo-player)
+## [Necessary privileges](#privilege-for-video-player)
 
-Basically the screen should remain on while playing a video content.
+The screen must remain on while playing video content.
 
-Also, your app should be allowed to access the Internet to use online content. Internet connectivity is additionally required.
+ Internet connectivity is required. Your app must be allowed to access the Internet to use online content.
 
- - To access the Internet, `http://tizen.org/privilege/internet` should be declared
+In the `tizen-manifest.xml` file:
 
- - To keep the screen stay on during video play, `http://tizen.org/privilege/display` should be declared
+ - To access the Internet, declare `http://tizen.org/privilege/internet`.
 
- in `tizen-manifest.xml` file.
+ - To keep the screen on while playing a video, declare `http://tizen.org/privilege/display`.
 
- In particular, `http://tizen.org/privilege/internet` privilege is one of the privacy-related privileges. Then, a user's permission should be granted.
+ The `http://tizen.org/privilege/internet` privilege is a privacy-related privileges. A user's permission must be granted.
 
-### [User Permission for Privacy Privilege](#privacy-related-privilege)
-  
-  When you use privacy related functionality, an app user's permission should be granted.
-  
-  You can get more information about how your app can be granted permission to allow privacy related features by an app user.
+### [User permission for privacy privileges](#privacy-related-privilege)
 
-  Go and check [the posting `Galaxy Watch: working with user privacy related permissions in Tizen .NET Applications`][UsePrivacyPrivilage]
-  
+An app user's permission must granted to use privacy-related functionality. For more information about how your app can be granted permission to allow use of  privacy-related features, see [`Galaxy Watch: working with user privacy related permissions in Tizen .NET Applications`][UsePrivacyPrivilage]
 
-  In addition, you can check [the list of the privacy-related privileged APIs][Privacy-related_privileged_API].
+In addition, check [the list of the privacy-related privileged APIs][Privacy-related_privileged_API].
 
-## Keep the Screen On During Video Play
+## Keep the screen on during video play
 
-Certain apps such as video apps need to keep the screen stay on.
+Video apps need to have the screen on while playing. To do this, use Power class APIs, which allow your application to control the screen state of the watch device.
 
-To do this, we can use Power API that allows your application to control the screen state of the watch device.
+These APIs have a significant effect on a Galaxy watch's battery life. We recommend you use them only when really necessary and hold the display lock for as short a time as possible.
 
-However, it can have a significant effect on Galaxy Watch's battery life. Thus you should use it only when it is really necessary and you hold display lock for as short a time as possible.
+[Power.RequestLock()][Power_RequestLock] and [Power.ReleaseLock()][Power_ReleaseLock] have been provided since Tizen 5.0 and therefore are unavailable for use on Tizen 4.0-based Galaxy watches. As an alternative, use [Tizen Native Power API][Native_Power_API] using [DllImport][DllImport].
 
-Unfortunately, [Power.RequestLock()][Power_RequestLock] and [Power.ReleaseLock()][Power_ReleaseLock] cannot be used on Tizen 4.0 based Galaxy Watch because it has been provided since Tizen 5.0.
+### Use DllImport to call native APIs
 
-As an alternative, we can use [Tizen Native Power API][Native_Power_API] using [DllImport][DllImport].
-
-### Use DllImport to call Native APIs
-
-The following code shows how to use Tizen Native Power API in Tizen .NET App.
+The following code shows how to use Tizen native Power APIs in Tizen .NET apps.
 
 ``` c#
   using System.Runtime.InteropServices;
@@ -99,7 +85,7 @@ The following code shows how to use Tizen Native Power API in Tizen .NET App.
 
 ```
 
-For Tizen 5.0 and above based devices, using Tizen .NET Power API is recommended instead of using DllImport.
+For devices based on Tizen 5.0 and above, use Tizen .NET Power API instead of DllImport.
 {: .notice--info}
 
 ## [Simple Video Player App](#video_player_for_wearables)

@@ -25,29 +25,29 @@ The following known issues are based on Visual Studio Code Extension for Tizen v
     }
     ```
 
-### Debugging an application in the emulator
+### Debug an application in the emulator
 - Run debug mode may be not stable enough to use.
 
 ## Version 1.0.0 (2017-12-13)
-### Creating a Tizen .NET project
+### Create a Tizen .NET project
   - command: `Tizen .NET: Create a Tizen .NET project`
-    - Templates including Xamarin.Forms are missing.
+    - Templates, including Xamarin.Forms, are missing.
     - Only the following templates are provided:
       - Tizen.NET.Template.ElmSharp
       - Tizen.NET.Template.NSClassLib
       - Tizen.NUI.Template.Single
 
-### Running an application
+### Run an application
   - command: `Tizen .NET: Run a Tizen .NET application on the Tizen device`
-    - Fails to install on Tizen 4.0 TV emulator.
+    - Fails to install on the Tizen 4.0 TV emulator.
 
   - command: `Tizen .NET: Run debug mode`
     - Run debug mode is not working properly.
     - Fails with the message: </br>
       `Failed to install the Tizen debug package (make sure the path info of the LLDB package is correct).`
 
-### Debugging an application in the emulator
-  - Debug at the **Debug** tab on VS Code Activity Bar
+### Debug an application in the emulator
+  - **Debug** tab on VS Code Activity Bar
     - Fails with the following messages:
         - Popup: `Cannot read property 'message' of null`
         - Log: `No path info specified for LLDB packages in the settings.`

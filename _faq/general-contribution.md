@@ -4,12 +4,10 @@ permalink: /faq/contribution/
 classes: wide
 ---
 
-## Contribution
-We can make Tizen .NET better together.<br/>
+## Contributions
+Together, we can make Tizen .NET better.
 
-Tizen .NET has been mostly developed on the public GitHub.<br/>
-You can start contributing on the following projects.
-Or opening an issue at any GitHub repository is also a great idea.
+Tizen .NET has been developed mostly on the public GitHub. You can start contributing to the following projects, or open an issue in any GitHub repository:
 
   - [Tizen .NET Portal](https://github.com/Samsung/Tizen.NET/)
   - [TizenFX](https://github.com/Samsung/TizenFX/)
@@ -19,5 +17,5 @@ Or opening an issue at any GitHub repository is also a great idea.
   - [Tizen.NET.MaterialComponents](https://github.com/TizenAPI/Tizen.NET.MaterialComponents)
   - [Tizen Developer Site](https://github.com/Samsung/tizen-docs/)
 
-We will also keep an eye on the [Xamarin Forms repository](https://github.com/xamarin/Xamarin.Forms) to help on the issues that belong to the Tizen Platform.
+We will also keep an eye on the [Xamarin.Forms repository](https://github.com/xamarin/Xamarin.Forms) to help with Tizen platform issues.
   - [Xamarin.Forms](https://github.com/xamarin/Xamarin.Forms)

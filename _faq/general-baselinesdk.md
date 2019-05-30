@@ -6,25 +6,24 @@ toc_sticky: true
 ---
 
 ## JDK version error
-Java Development Kit(JDK) `8` is mandatory for `Tizen Baseline SDK`. JDK 9 will be supported soon.
+You must have Java Development Kit (JDK) version 8 to use Tizen Baseline SDK.
 
-**Note:** `OpenJDK 10` is supported from [Tizen Studio 3.1](https://developer.tizen.org/development/tizen-studio/download/release-notes).
+**Note:** [Tizen Studio 3.1](https://developer.tizen.org/development/tizen-studio/download/release-notes) supports OpenJDK 10.
 
-## Cannot Boot Up Tizen Emulator
-`Hyper-V` feature should be disabled in Windows 10 or higher to run the `Tizen Emulator`.
+## Cannot run the Tizen emulator
+To run the Tizen emulator in Windows 10 or higher, you must disable the Hyper-V feature.
 
+## The distributor certificate for Galaxy Watch cannot be updated
+You cannot add another Galaxy Watch device unique identifier (DUID) to the existing distributor certificate file.
 
-## Distributor Certificate for GalaxyWatch Cannot be Updated
-Unfortunately, there is no way to add an additional DUID of a GalaxyWatch device to the existing distributor certificate file.
-
-## App Installation Error
-### Invalid Certificate
-There are two types of certificate profiles. One for the Tizen Platform devices and one for the Samsung Device.
-When you use the certificate that is not suitable for your target device at application build time, the following error occurs:
+## App installation error
+### Invalid certificate
+There are two types of certificate profiles: one for Tizen platform devices and one for Samsung devices.
+When you build the application using the incorrect certificate for your target device, the following error occurs:
 
 ![][invalid_cert]
 
-The certificate file should match the running device as follows:
+The certificate file must match the running device:
 
 | Device         | Certificate                 |
 | -------------  |:---------------------------:|
@@ -33,12 +32,8 @@ The certificate file should match the running device as follows:
 
 ------------
 
-### Version Conflict between App's API and Platform
-The following error will occur when the API version of the application is higher than the version of the platform to install.
-
-Let's try to install an application using 5.0 API version on the Tizen 4.0 platform device.
-
-You will see the following error.
+### Version conflict between the application API and platform
+This error occurs when the API version of the application is higher than the version of the platform to install. For example, when you try to install an application using 5.0 API version on the Tizen 4.0 platform device, the following error occurs:
 
 ![][version_conflict]
 
@@ -56,32 +51,26 @@ Error during processing
 Failure occurs in step: CheckTizenVersion
 ```
 
-To solve this error, you should modify the `Api Version` written in the `tizen-manifest.xml` from `5` to `4` and reinstall the application.
+To resolve this error, change the API version in the `tizen-manifest.xml` from `5` to `4`, and reinstall the application.
 
-## 'Permit to install applications' Error
-When you create a Samsung Certificate for Samsung wearable devices, the DUID of a device is required.
+## 'Permit to install applications' error
+When you create a Samsung certificate for Samsung wearable devices, the device DUID is required.
 
-For devices with a DUID starting with `1.0#`, you have to get permission for app installation through the Tizen Studio Device Manager. (Tizen Studio Device Manager > Remote Device Manager > make connections with a device > execute `Permit to install applications` by right-click)
+For devices with DUIDs that start with `1.0#`, get permission for app installation through the Tizen Studio Device Manager:
+
+**Tizen Studio Device Manager > Remote Device Manager > make connections with a device** > Right-click **Permit to install applications**.
 
 ![][permission_popup]
 
-You can get the detailed information about this from [here][site_permission_for_app_install].
+For more details, go [here][site_permission_for_app_install].
 
 ------
 
-If your device has the DUID starting with `2.0#` (e.g. Galaxy Watch), 
-the following error message will be shown when you select `Permit to install applications`.
+For devices with DUIDs that start with  `2.0#` (for example, Galaxy Watch), the following error message appears when you select **Permit to install applications**.
 
 ![][permission_to_install_app]
-```
- ERROR
-   No certificate profile for permit to install was found in workspace.
-   
-   Please open the Certificate Manager through the link below.
-   After creating and activating a samsung certificate profile.
-   close the Certificate Manager and click the Retry button.
-```
-You can ignore this error, if there is no issue when installing an application.
+
+ If no issues occur when installing an application, you can ignore this error.
 
 [site_permission_for_app_install]: https://developer.samsung.com/galaxy-watch/develop/getting-certificates/permit
 [permission_popup]: {{site.url}}{{site.baseurl}}/assets/images/issues/tools/device_manager_popup_menu.png

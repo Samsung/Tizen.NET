@@ -3,13 +3,12 @@ title:  "How to Debug?"
 permalink: /faq/wearable/howtodebug/
 ---
 
-## Debugging Tizen .NET Application
-You can use the debug mode for Samsung Wearables in the Visual Studio.
-Tizen Log Viewer tool shows the log details that help a developer to understand the status of the application.
+## Debug a Tizen .NET application
+You can use the debug mode for Samsung wearables in Visual Studio.
+The Tizen Log Viewer tool shows log details that help a developer understand an application's status.
 
-Here is the video demonstrating how to debug.
+This video demonstrates how to debug:
 {% include video id="wDIY79knWXE" provider="youtube" %}
 
 {: .notice--info}
-The demo in the video uses the outdated Tizen project which refers `Xamarin.Forms.Platform.Tizen` nuget package.<br/>
-That is just an outdated reference which does not affect to the debug mode.
+The demo in the video uses an outdated Tizen project, which refers to the `Xamarin.Forms.Platform.Tizen` NuGet package. It does not affect debug mode.
