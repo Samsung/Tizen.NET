@@ -123,21 +123,21 @@ Returns `true` if the animation is currently playing, `false` if it is not.
 ```cs
 int currentFrame = anumation.CurrentFrame;
 ```
-Returns the current animation frame count. 
+Returns the current animation frame count.<br/>
 ==Note==: It returns -1, if animation is not playing.
 
 #### Total Frame
 ```cs
 int totalFrame = anumation.TotalFrame;
 ```
-Returns the total animation frame count. 
+Returns the total animation frame count.<br/>
 ==Note==: You should load the animation file before using it.
 
 #### Duration Time
 ```cs
 double duration = anumation.DurationTime;
 ```
-Returns the duration time of animation. 
+Returns the duration time of animation.<br/>
 ==Note==: You should load the animation file before using it.
 
 
