@@ -7,6 +7,7 @@ toc_sticky: true
 
 ## Parallels
 
-We do not recommend that you use Parallels currently.
+It is not recommanded to use `Parallels` at the moment.
 
-You can try developing in the Parallels environment with the `Nested Virtualization` option enabled. However, we have a number of cases in which the emulator fails to boot at the kernel stage.
+You can try developing on `Parallels` environment with the `Nested Virtualization` option enabled.
+<br/>However, we have some number of cases that the emulator fails to boot on the kernel stage.

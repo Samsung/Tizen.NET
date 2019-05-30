@@ -8,10 +8,10 @@ toc: true
 toc_sticky: true
 ---
 
-Debugging the Tizen .NET application is available as of Tizen 5.0.
+Debugging Tizen .NET application is available as of the Tizen 5.0 release.
 {: .notice--info}
 
-Debugging is a process of recognizing and resolving potential errors from your source code and allowing your source code to perform efficiently under stipulated conditions. To resolve potential errors in your source code, you must identify what went wrong, why it went wrong, and where it went wrong. To simplify this process, available debugger tools navigate you through the code, help you view the execution process, and identify the problems in your source code.
+Debugging is a process of recognizing and resolving potential errors from your source code and allowing your source code to perform efficiently under stipulated conditions. To resolve potential errors in your source code, you must identify what went wrong, why it went wrong, and where it went wrong. To make this process easy, available debugger tools navigate you through the code, help you view the execution process, and identify the problems in your source code efficiently.
 
 Debugging a Tizen .NET application is the same as debugging a C# application in Visual Studio. This document explains how to debug a Tizen .NET application. To debug, you must:
 
@@ -22,16 +22,14 @@ Debugging a Tizen .NET application is the same as debugging a C# application in 
 - [Inspect code](#inspect-code)
 
 ## Launch Tizen emulator
-Launch an emulator or connect to a target device.
+In order to debug, launch an emulator or connect to a target device.
 
 * In the toolbar, click **Launch Tizen Emulator**.
 
 ![Image]({{site.url}}{{site.baseurl}}/assets/images/posts/how-to-debug-TizenNET-application/launch-emulator.png)
 
 ## Set breakpoint
-Breakpoint is an essential feature of the debugging process. It acts as a stop sign. If you need to inspect workflow issues in your program, you can set breakpoints wherever required.
-
-While debugging, the breakpoint indicates to the debugger to stop the program automatically. This helps you inspect your code to verify the variables values, the memory allocation, and the execution sequence.
+Breakpoint is an essential feature of the debugging process. It acts as a stop sign. If you need to inspect workflow issues in your program, you can set breakpoints wherever required. While debugging, the breakpoint indicates to the debugger to stop the program automatically. This helps you inspect your code to verify the variables values, the memory allocation, and the execution sequence.
 
 Click to the left of the line number of your code to set a breakpoint. A red dot appears at the left.
 
@@ -46,9 +44,9 @@ When you start the debugger, the application program enters debugging mode, and 
 The debugger monitors the execution of your code in detail. You can pause the debugger and examine your code systematically to see what happens when each statement is executed.
 
 ## Step-around code
-The breakpoint stops the program so you can hover the mouse over a variable in the current scope of execution to check its value. You can verify whether the variable stores the exact values that you expect it to store.
+The breakpoint stops the program, and you can hover the mouse over a variable in the current scope of execution to check its value. You can verify whether the variable stores the exact values that you expect it to store.
 
-To verify the values, use the following tool windows:
+To verify the variable values, use the following tool windows:
 
 * **Locals** tool window shows variables that are currently in scope.
 * **Autos** tool window shows the type and current value of the variable used.
@@ -60,15 +58,15 @@ These windows appear in the bottom left of Visual Studio while debugging. If the
 ![Image]({{site.url}}{{site.baseurl}}/assets/images/posts/how-to-debug-TizenNET-application/set-around1.png)
 
 ## Inspect code
-When you go through your code line by line, you will see an arrow ![Image]({{site.url}}{{site.baseurl}}/assets/images/posts/how-to-debug-TizenNET-application/inspect-code1.png) that shows the statement on which the debugger is paused. The arrow indicates that this statement will be executed next.
+When you go through your code line by line, you will see a yellow arrow ![Image]({{site.url}}{{site.baseurl}}/assets/images/posts/how-to-debug-TizenNET-application/inspect-code1.png) that shows the statement on which the debugger is paused. The arrow indicates that this statement will be executed next.
 
-While debugging, use the following to examine code line by line:
+While debugging, you can use the following to examine the code line by line:
 
 * **Step Into** when you want to debug a method in the current line of code. To step into the code, press **F11**.
 * **Step Over** when you do not want to step through the code in detail. To step over the code, press **F10**.
 
 ![Image]({{site.url}}{{site.baseurl}}/assets/images/posts/how-to-debug-TizenNET-application/inspect-code.png)
 
- You can use the same steps to debug a Tizen .NET application. For more information, see [Debugging](https://tutorials.visualstudio.com/vs-get-started/debugging) in Visual Studio.
+ You can use the same steps to debug a Tizen .NET application. For more information, see [Debugging](https://tutorials.visualstudio.com/vs-get-started/debugging) with Visual Studio.
 
-If you have any questions during debugging, use [Issues](https://github.com/Samsung/Tizen.NET/issues) to contact us.
+If you have any questions during debugging, contact us through [Issues](https://github.com/Samsung/Tizen.NET/issues).

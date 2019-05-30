@@ -5,7 +5,6 @@ toc: true
 toc_sticky: true
 ---
 
-## MediaView support
-The [MediaView](https://samsung.github.io/Tizen.CircularUI/api/Tizen.Wearable.CircularUI.Forms.MediaView.html) feature displays video output on wearables screens.
-
-- 720p is the maximum resolution that can be displayed on wearables.
+### MediaView Support
+[MediaView](https://samsung.github.io/Tizen.CircularUI/api/Tizen.Wearable.CircularUI.Forms.MediaView.html) feature is provided to display the video output on the screen for Wearables. <br/>
+- 720p is the maximun resolution that can be displayed on the wearables.

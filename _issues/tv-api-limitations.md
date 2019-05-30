@@ -13,7 +13,7 @@ The following standard APIs are not fully compatible with the platform implement
 
 - [Limitations of .NET Standard API on Tizen](https://developer.tizen.org/development/api-reference/.net-application/limitations-.net-standard-api-on-tizen)
 
-## Xamarin.Forms
+## Xamarin Forms
 ### Xamarin.Forms 3.0+
 
 There are some Xamarin.Forms limitations on the Tizen platform. Limitations depend on the version of Xamarin.Forms.
