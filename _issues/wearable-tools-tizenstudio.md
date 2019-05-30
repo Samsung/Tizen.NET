@@ -9,17 +9,19 @@ toc_label: Known Issues and Workarounds
 
 
 ## Connection issue between a watch and Device Manager
-
+g
 Refer to [Testing Your App on Galaxy Watch][testing_app_on_watch] for information about developing your application and testing it on your watch.
 
 Even if you follow every step correctly, you may face the following error:
 
+![][device_mgr_connection]
+
 ```
  ERROR: failed to connect to remote target '192.168.0.X'
 
- You may get this message for one of the following reasons:
-  - This remote device is already connected to another target.
-  - This remote device is running on a nonstandard port.
+You may get this message for following reasons:
+  - This remote device is already connected by another one.
+  - This remote device is running on a non-standard port.
   - There is no IP address. Please check the physical connection.
 ```
 
@@ -29,3 +31,4 @@ Even if you follow every step correctly, you may face the following error:
 
 
 [testing_app_on_watch]: https://developer.samsung.com/galaxy-watch/develop/testing-your-app-on-gear
+[device_mgr_connection]: {{site.url}}{{site.baseurl}}/assets/images/issues/tools/device-manager-connection-issue.png
