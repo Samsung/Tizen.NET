@@ -16,7 +16,7 @@ After updating Visual Studio 2019 to version 16.1.0, the following build error f
 ### This issue will be fixed soon
 - [This issue](https://github.com/dotnet/project-system/issues/4854) has been [fixed](https://github.com/dotnet/project-system/pull/4859).
 - A fixed version of Visual Studio will be released soon.
-- The Tizen.NET SDK will be fixed and released soon.
+- The Tizen.NET.Sdk package will be fixed and released soon.
 
 ### Workaround
 To avoid this problem, add following two lines in .`csproj` to define the `TargetFramework` `FullName`.
