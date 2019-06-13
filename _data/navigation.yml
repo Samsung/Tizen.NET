@@ -98,6 +98,8 @@ faq-nav:
         url: "/faq/portal/"
       - title: "Issues and Questions"
         url: "/faq/questions/"
+      - title: "Technical Support"
+        url: "/faq/tech-support/"
       - title: "How to Contribute"
         url: "/faq/contribution/"
       - title: "Tizen Baseline SDK"
