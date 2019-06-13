@@ -2,18 +2,19 @@
 
 Jeonghyun Yun:
   name: "Jeonghyun Yun"
-  bio: "Hello, All~"
+  bio: "Staff Engineer / Tizen .NET <br/> Samsung Research"
   avatar: "/assets/images/bio/bio-JeonghyunYun.png"
   location: "Seoul, Korea"
   email: "jh0506.yun@samsung.com"
 
 Jeongkyun Pu:
   name: "Jeongkyun Pu"
+  bio: "Staff Engineer / Tizen .NET <br/> Samsung Research"
   avatar: "/assets/images/bio/bio-JeongkyunPu.png"
 
 Jay Cho:
   name: "Jay Cho"
-  bio: "Hello! <br/> Let me know anything for enhancing Tizen .NET Portal. :smile:"
+  bio: "Engineer :smile: / Tizen .NET <br/> Samsung Research"
   avatar: "/assets/images/bio/bio-JayCho.png"
   location: "Seoul, Korea"
   email: "chojoong@gmail.com"
@@ -42,16 +43,19 @@ Rina You:
 
 SeungHyun Choi:
   name: "SeungHyun Choi"
+  bio: "Engineer / Tizen .NET <br/> Samsung Research"
   avatar: "/assets/images/bio/bio-SeungHyunChoi.png"
   location: "Seoul, Korea"
   github: "flyofsky"
 
 Seungkeun Lee:
   name: "Seungkeun Lee"
+  bio: "Staff Engineer / Tizen .NET <br/> Samsung Research"
   avatar: "/assets/images/bio/bio-SeungkeunLee.png"
 
 Sunghyun Min:
   name: "Sunghyun Min"
+  bio: "Staff Engineer / Tizen .NET <br/> Samsung Research"
   avatar: "/assets/images/bio/bio-SunghyunMin.png"
   location: "Seoul, Korea"
   email: "shyun.min@gsamsung.com"
@@ -59,6 +63,7 @@ Sunghyun Min:
 
 Sungsu Kim:
   name: "Sungsu Kim"
+  bio: "Engineer / Tizen .NET <br/> Samsung Research"
   avatar: "/assets/images/bio/bio-SungsuKim.png"
   location: "Seoul, Korea"
   email: "sung-su.kim@gsamsung.com"
@@ -68,3 +73,9 @@ Reni Mathew:
   name: Reni Mathew
   avatar: "/assets/images/bio/bio-person.png"
   email: "reni.mathew@partner.samsung.com"
+
+Wonyoung Choi:
+  name: Wonyoung Choi
+  bio: "Staff Engineer / Tizen .NET <br/> Samsung Research"
+  avatar: "/assets/images/bio/bio-WonyoungChoi.png"
+  email: "wy80.choi@samsung.com"
