@@ -2,7 +2,7 @@
 title:  "Using Tizen.NET.Sdk as SDK-style"
 search: true
 categories:
-  - Tizen.NET
+  - Tizen .NET
 last_modified_at: 2019-06-13
 author: Wonyoung Choi
 toc: true
