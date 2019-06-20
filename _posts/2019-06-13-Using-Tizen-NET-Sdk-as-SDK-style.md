@@ -3,7 +3,7 @@ title:  "Using Tizen.NET.Sdk as SDK-style"
 search: true
 categories:
   - Tizen .NET
-last_modified_at: 2019-06-13
+last_modified_at: 2019-06-20
 author: Wonyoung Choi
 toc: true
 toc_sticky: true
@@ -44,16 +44,36 @@ In [Tizen.NET.Sdk 1.0.3], [Tizen.NET 5.0.0.14629] is implicitly added as `Packag
 ```
 ![example2](https://user-images.githubusercontent.com/1029205/59406973-d2cc9f80-8dea-11e9-9b1c-655347fb3806.png)
 
+
+## Migration from the old way
+If you are using the `Tizen.NET.Sdk` in a `PackageReference` style, you can migrate your .csproj file manually as shown below:
+```diff
+- <Project Sdk="Microsoft.NET.Sdk">
++ <Project Sdk="Tizen.NET.Sdk/1.0.3">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>tizen40</TargetFramework>
+  </PropertyGroup>
+
+-  <ItemGroup>
+-    <PackageReference Include="Tizen.NET" Version="5.0.0.14629" />
+-    <PackageReference Include="Tizen.NET.Sdk" Version="1.0.1" />
+-  </ItemGroup>
+
+</Project>
+```
+
+
 ## Use in old way
-Of course, `Tizen.NET.Sdk` can also be used in the old way.
+Of course, `Tizen.NET.Sdk` can also be used in the old way. However this old way has a problem in the latest VS2019. See [dotnet/project-system#4854]. To avoid this problem, you should add the `TargetFrameworkIdentifier` property explicitly.
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>tizen40</TargetFramework>
-    <!- Workaround: Set TargetFrameworkIdentifier to avoid Tizen TFM issue on VS2019 -->
-    <TargetFrameworkIdentifier>Tizen</TargetFrameworkIdentifier> 
+    <!- Workaround for dotnet/project-system#4854 -->
+    <TargetFrameworkIdentifier>Tizen</TargetFrameworkIdentifier>
   </PropertyGroup>
 
   <ItemGroup>
@@ -64,11 +84,13 @@ Of course, `Tizen.NET.Sdk` can also be used in the old way.
 </Project>
 ```
 
+
 ## References
 1. [Tizen.NET.Sdk Documents](https://github.com/Samsung/build-task-tizen/blob/master/doc/tizen.net.sdk-intro-tpk.md)
 2. [NuGet-based SDK resolver design spec](https://github.com/Microsoft/msbuild/issues/2803)
-
+3. [dotnet/project-system#4854]
 
 
 [Tizen.NET.Sdk 1.0.3]: https://www.nuget.org/packages/Tizen.NET.Sdk/1.0.3
 [Tizen.NET 5.0.0.14629]: https://www.nuget.org/packages/Tizen.NET/5.0.0.14629
+[dotnet/project-system#4854]: (https://github.com/dotnet/project-system/issues/4854)
