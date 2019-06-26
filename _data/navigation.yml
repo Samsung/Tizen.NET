@@ -110,6 +110,8 @@ faq-nav:
     children:
       - title: "How to Debug?"
         url: "/faq/wearable/howtodebug/"
+      - title: "Design Review Process"
+        url: "/faq/wearable/design-review/"
   - title: "Samsung Smart TV"
     children:
       - title: "How to Debug?"
