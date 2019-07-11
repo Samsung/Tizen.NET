@@ -10,27 +10,26 @@ toc_sticky: true
 toc_label: Lottie for Tizen .NET
 ---
 
-As everyone knows, [Lottie](https://github.com/airbnb/lottie) is a library for various platforms that parses [Adobe After Effects](http://www.adobe.com/products/aftereffects.html) animations exported as json with [Bodymovin](https://github.com/bodymovin/bodymovin) and renders them natively on mobile and on the web. 
-Perhaps you can easily find out how to use Lottie on Android, iOS, Windows,web, even Xamarin apps. 
+[Lottie](https://github.com/airbnb/lottie) is a library for Android, iOS, Web, and Windows that parses [Adobe After Effects](http://www.adobe.com/products/aftereffects.html) animations exported as JSON with [Bodymovin](https://github.com/bodymovin/bodymovin) and renders them natively on mobile devices and on the web.
 
 <img src="https://github.com/airbnb/lottie/raw/master/images/Introduction_00_sm.gif">
 <img src="https://github.com/airbnb/lottie/raw/master/images/Introduction_01_sm.gif">
 
-In this blog post, I'd like to introduce how to use the Lottie animation to create beautiful animations for your Galaxy Watch by using Tizen .NET.
+In this blog post, I'll introduce how to use Lottie animation with Tizen .NET to create beautiful animations for your Galaxy Watch apps.
 
 ## What is ElottieSharp
 
-[ElottieSharp](https://github.com/TizenAPI/ElottieSharp) is a library for Tizen .NET that parses and renders Lottie animation natively on Galaxy Watch. 
-ElottiSharp is distributed via NuGet. To use Lottie animation in your apps, simply add the [ElottieSharp package](https://www.nuget.org/packages/ElottieSharp) to your projects.
+[ElottieSharp](https://github.com/TizenAPI/ElottieSharp) is a library for Tizen .NET that parses and renders Lottie animation natively on Galaxy Watch.
+ElottieSharp is distributed through NuGet. To use Lottie animation in your apps, simply add the [ElottieSharp package](https://www.nuget.org/packages/ElottieSharp) to your projects.
 
-> As the platform version of [Galaxy Watch](https://www.samsung.com/global/galaxy/galaxy-watch/) and [Gear S-series](https://www.samsung.com/global/galaxy/gear-s3/) has been upgraded to version 4.0.0.4, [ElottieSharp 0.9.0-preview](https://www.nuget.org/packages/ElottieSharp/0.9.0-preview) is now cow compatible with  [Galaxy Watch Active](https://www.samsung.com/global/galaxy/galaxy-watch-active/), [Galaxy Watch](https://www.samsung.com/global/galaxy/galaxy-watch/) and [Gear S-series](https://www.samsung.com/global/galaxy/gear-s3/). Other products, including previous Gear S-series and Samsung Smart TV,are not yet compatible.
+> Because the platform version of [Galaxy Watch](https://www.samsung.com/global/galaxy/galaxy-watch/) and [Gear S-series](https://www.samsung.com/global/galaxy/gear-s3/) has been upgraded to version 4.0.0.4, [ElottieSharp 0.9.0-preview](https://www.nuget.org/packages/ElottieSharp/0.9.0-preview) is now compatible with  [Galaxy Watch Active](https://www.samsung.com/global/galaxy/galaxy-watch-active/), [Galaxy Watch](https://www.samsung.com/global/galaxy/galaxy-watch/), and [Gear S-series](https://www.samsung.com/global/galaxy/gear-s3/). Other products, including previous Gear S series and Samsung Smart TV, are not yet compatible.
 
 <img src="https://user-images.githubusercontent.com/1029134/58157778-061c8280-7cb4-11e9-93ff-06a879949a06.gif">
 
-## Getting Started
-Now it’s time to add the animations to Tizen .NET applications on your Galaxy Watch.
+## Get Started
+Let's add animations to Tizen .NET applications on your Galaxy Watch.
 
-### Installing package 
+### Install the ElottieSharp package
 #### nuget.exe
 ```
 nuget.exe install ElottieSharp -Version 0.9.0-preview
@@ -39,9 +38,9 @@ nuget.exe install ElottieSharp -Version 0.9.0-preview
 ```xml
 <PackageReference Include="ElottieSharp" Version="0.9.0-preview" />
 ```
- 
+
 ### Quick Start
-ElottieSharp support Tizen 4.0 (tizen40) and above. 
+ElottieSharp supports Tizen 4.0 (tizen40) and above.
 The simplest way to use it is with LottieAnimationView:
 ```cs
 // Create the LottieAnimationView
@@ -65,7 +64,7 @@ animation.Play();
 ### LottieAnimationView
 `LottieAnimationView` is a `EvasObject (TizenFX)` subclass that displays animation content.
 
-#### Creating Animation Views
+#### Create animation views
 ```cs
 var animation = new LottieAnimationView(window)
 {
@@ -76,69 +75,66 @@ var animation = new LottieAnimationView(window)
     MaximumProgress = 1.0
 };
 ```
-Animation views can be allocated with or without animation data. There are a handful of convenience initializers for initializing with animations. 
+Animation views can be allocated with or without animation data. Some convenience initializers are available for initializing with animations.
 
 Properties:
-- **AutoPlay**: Indicates whether this animation is play automatially or not.  The default value is `false`.
+- **AutoPlay**: Indicates whether this animation is played automatially or not. The default value is `false`.
 - **AutoRepeat**: The loop behavior of the animation. The default value is `false`.
 - **Speed**: The speed of the animation playback. Higher speed equals faster time. The default value is `1.0`.
-- **MinumumProgress**: The start progress of the animation (0 ~ 1.0). The default value is `0`.
+- **MinimumProgress**: The start progress of the animation (0 ~ 1.0). The default value is `0`.
 - **MaximumProgress**: The end progress of the animation (0 ~ 1.0). The default value is `1.0`.
 
-#### Loading from a File Path
+#### Load from a filepath
 ```cs
 animation.SetAnimation(Path.Combine(DirectoryInfo.Resource, "lottie.json"));
 ```
-Loads an animation model from a filepath. After loading a animation successfully, you can get the duration time and total frame count by using `TotalFrame` and `DurationTime` properties.
+Loads an animation model from a filepath. After loading an animation successfully, you can get the duration time and total frame count by using the `TotalFrame` and `DurationTime` properties.
 
 Parameters:
 : **filepath**: The absolute filepath of the animation to load.
 
 
-#### Play the Animation
+#### Play the animation
 ```cs
 animation.Play();
 ```
-Plays the animation from its current state to the end of its timeline. `Started` event occurs when the animation is started. And `Finished` event occurs when the animation is finished.
+Plays the animation from its current state to the end of its timeline. The `Started` event occurs when the animation starts, and the `Finished` event occurs when the animation finishes.
 
-#### Stop the Animation
+#### Stop the animation
 ```cs
 animation.Stop();
 ```
-Stops the animation. `Stopped` event occurs when the animation is stopped.
+Stops the animation. The `Stopped` event occurs when the animation stops.
 
-#### Pause the Animation
+#### Pause the animation
 ```cs
 animation.Pause();
 ```
-Pauses the animation. `Paused` event occurs when the animation is paused.
+Pauses the animation. The `Paused` event occurs when the animation is paused.
 
-#### Is Animation Playing
+#### Is animation playing
 ```cs
 bool isPlaying = anumation.IsPlaying;
 ```
 Returns `true` if the animation is currently playing, `false` if it is not.
 
-#### Current Frame
+#### Current frame
 ```cs
 int currentFrame = anumation.CurrentFrame;
 ```
 Returns the current animation frame count.<br/>
-==Note==: It returns -1, if animation is not playing.
+**Note**: -1 is returned if the animation is not playing.
 
-#### Total Frame
+#### Total frame
 ```cs
 int totalFrame = anumation.TotalFrame;
 ```
 Returns the total animation frame count.<br/>
-==Note==: You should load the animation file before using it.
+**Note**: Load the animation file before using it.
 
-#### Duration Time
+#### Duration
 ```cs
 double duration = anumation.DurationTime;
 ```
-Returns the duration time of animation.<br/>
-==Note==: You should load the animation file before using it.
-
-
-Feel free to reach out to us directly at GitHub with your thoughts, feedback, and issues.
+Returns the animation duration time.<br/>
+**Note**: Load the animation file before using it.

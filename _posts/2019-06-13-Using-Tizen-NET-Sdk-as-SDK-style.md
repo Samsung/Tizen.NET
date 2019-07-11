@@ -10,10 +10,10 @@ toc_sticky: true
 toc_label: Using Tizen.NET.Sdk as SDK-style
 ---
 
-`Tizen.NET.Sdk` is a nuget package that provides the features for creating and signing a .tpk package file. In the past, this package was added to .csproj file as a PackageReference. However, in this post I will introduces a new method.
+`Tizen.NET.Sdk` is a NuGet package that provides the features for creating and signing a .tpk package file. Previously, this package was added to .csproj file as a PackageReference. However, in this post I introduce a new method.
 
 ## Using SDK-style
-Since [Tizen.NET.Sdk 1.0.3], It can be used as a custom SDK of `MSBuild`.
+[Tizen.NET.Sdk 1.0.3] can be used as a custom `MSBuild` SDK.
 ```xml
 <Project Sdk="Tizen.NET.Sdk/1.0.3">
 
@@ -24,13 +24,13 @@ Since [Tizen.NET.Sdk 1.0.3], It can be used as a custom SDK of `MSBuild`.
 
 </Project>
 ```
-`Tizen.NET.Sdk` resolves the `Tizen` target frameworks and adds a `PackageReference` for `Tizen.NET` implicitly. There is no need to declare any `PackageReference` to use `Tizen.NET` and `Tizen.NET.Sdk`. But `Tizen.NET.Sdk` should be used in the `Sdk` attribute of top-level `Project` element instead of `Microsoft.NET.Sdk`.
+`Tizen.NET.Sdk` resolves the `Tizen` target frameworks and adds a `PackageReference` for `Tizen.NET` implicitly, so there is no need to declare any `PackageReference` to use `Tizen.NET` and `Tizen.NET.Sdk`. But use `Tizen.NET.Sdk` instead of `Microsoft.NET.Sdk` in the `Sdk` attribute of the top-level `Project` element.
 
 ![example1](https://user-images.githubusercontent.com/1029205/59406955-c3e5ed00-8dea-11e9-8850-e77ba1432d0c.png)
 
 
-## Specify Tizen.NET package version
-In [Tizen.NET.Sdk 1.0.3], [Tizen.NET 5.0.0.14629] is implicitly added as `PackageReference`. If you want to specify the version of `Tizen.NET`, use `TizenNetPackageVersion` property.
+## Specify the Tizen.NET package version
+In [Tizen.NET.Sdk 1.0.3], [Tizen.NET 5.0.0.14629] is implicitly added as `PackageReference`. If you want to specify the version of `Tizen.NET`, use the  `TizenNetPackageVersion` property.
 ```xml
 <Project Sdk="Tizen.NET.Sdk/1.0.3">
 
@@ -45,8 +45,8 @@ In [Tizen.NET.Sdk 1.0.3], [Tizen.NET 5.0.0.14629] is implicitly added as `Packag
 ![example2](https://user-images.githubusercontent.com/1029205/59406973-d2cc9f80-8dea-11e9-9b1c-655347fb3806.png)
 
 
-## Migration from the old way
-If you are using the `Tizen.NET.Sdk` in a `PackageReference` style, you can migrate your .csproj file manually as shown below:
+## Manual migration
+If you are using the `Tizen.NET.Sdk` in a `PackageReference` style, you can migrate your .csproj file manually, as shown below:
 ```diff
 - <Project Sdk="Microsoft.NET.Sdk">
 + <Project Sdk="Tizen.NET.Sdk/1.0.3">
@@ -64,8 +64,8 @@ If you are using the `Tizen.NET.Sdk` in a `PackageReference` style, you can migr
 ```
 
 
-## Use in old way
-Of course, `Tizen.NET.Sdk` can also be used in the old way. However this old way has a problem in the latest VS2019. See [dotnet/project-system#4854]. To avoid this problem, you should add the `TargetFrameworkIdentifier` property explicitly.
+## Use as in previous versions
+Of course, you can use `Tizen.NET.Sdk` as you did prior to version 1.0.3. However, there is problem in VS2019; see [dotnet/project-system#4854]. To avoid this problem, add the `TargetFrameworkIdentifier` property explicitly.
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
 
