@@ -10,7 +10,7 @@ toc_sticky: true
 toc_label: Using Tizen.NET.Sdk as SDK-style
 ---
 
-`Tizen.NET.Sdk` is a NuGet package that provides the features for creating and signing a .tpk package file. Previously, this package was added to .csproj file as a PackageReference. However, in this post I introduce a new method.
+`Tizen.NET.Sdk` is a NuGet package that provides the features for creating and signing a .tpk package file. Previously, this package was added to the `.csproj` file as a `PackageReference`. However, in this post I introduce a new method.
 
 ## Using SDK-style
 [Tizen.NET.Sdk 1.0.3] can be used as a custom `MSBuild` SDK.
@@ -46,7 +46,7 @@ In [Tizen.NET.Sdk 1.0.3], [Tizen.NET 5.0.0.14629] is implicitly added as `Packag
 
 
 ## Manual migration
-If you are using the `Tizen.NET.Sdk` in a `PackageReference` style, you can migrate your .csproj file manually, as shown below:
+If you are using the `Tizen.NET.Sdk` in a `PackageReference` style, you can migrate your `.csproj` file manually, as shown below:
 ```diff
 - <Project Sdk="Microsoft.NET.Sdk">
 + <Project Sdk="Tizen.NET.Sdk/1.0.3">
