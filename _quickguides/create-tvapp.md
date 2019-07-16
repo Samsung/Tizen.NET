@@ -54,6 +54,7 @@ Tizen .NET applications are always deployed as installed packages. The package f
 
 To run the application, you must first deploy it to the target: either a device or an emulator. Deploying means transferring the package file (`.tpk`) to the target and invoking the Tizen package manager to install it.
 
+### Emulator
 To deploy and run the application on the emulator:
 
   1. In the Visual Studio menu, select **Tools > Tizen > Tizen Emulator Manager**.
@@ -68,3 +69,6 @@ To deploy and run the application on the emulator:
   ![]({{site.url}}{{site.baseurl}}/assets/images/guides/launch_elmsharp_tv.png)
   ![]({{site.url}}{{site.baseurl}}/assets/images/guides/launch_nui_tv.png)
   ![]({{site.url}}{{site.baseurl}}/assets/images/guides/launch_xf_tv.png)
+
+### TV device
+Checkout the [post]({{site.url}}{{site.baseurl}}/smart%20tvs/Connecting-TV-and-VisualStudio/) to deploy and run the application on the TV device.
