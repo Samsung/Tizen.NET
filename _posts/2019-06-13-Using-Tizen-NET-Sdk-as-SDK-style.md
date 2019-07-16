@@ -93,4 +93,4 @@ Of course, you can use `Tizen.NET.Sdk` as you did prior to version 1.0.3. Howeve
 
 [Tizen.NET.Sdk 1.0.3]: https://www.nuget.org/packages/Tizen.NET.Sdk/1.0.3
 [Tizen.NET 5.0.0.14629]: https://www.nuget.org/packages/Tizen.NET/5.0.0.14629
-[dotnet/project-system#4854]: (https://github.com/dotnet/project-system/issues/4854)
+[dotnet/project-system#4854]: https://github.com/dotnet/project-system/issues/4854
