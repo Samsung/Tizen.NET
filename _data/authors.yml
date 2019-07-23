@@ -79,3 +79,11 @@ Wonyoung Choi:
   bio: "Staff Engineer / Tizen .NET <br/> Samsung Research"
   avatar: "/assets/images/bio/bio-WonyoungChoi.png"
   email: "wy80.choi@samsung.com"
+
+Swift Kim:
+  name: "Swift Kim"
+  bio: "Engineer<br />Tizen .NET Runtime<br />Samsung Research"
+  avatar: "/assets/images/bio/bio-person.png"
+  email: "swift.kim@samsung.com"
+  github: "swift-kim"
+
