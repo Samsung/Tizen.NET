@@ -1,5 +1,5 @@
 ---
-title:  "Xamarin.Forms 4.1.0 Available On Tizen"
+title:  "What's new for Tizen on Xamarin.Forms 4.1.0"
 search: true
 categories:
   - Tizen .NET
@@ -9,11 +9,13 @@ toc: true
 toc_sticky: true
 ---
 
-A few days ago, `Xamarin.forms 4.1.0` has been released on Nuget. 
-As you already know, many powerful features including Shell are added in 4.0, and we have been trying to support for the latest Xamarin.Forms.
 
-Tizen supports pretty much all features of latest Xamarin.Forms except a few limitations which are not critical.<br/>
-In this post, I'd like to introduce what features are supported in Tizen.
+`Xamarin.Forms 4.1.0` has been recently released on Nuget, and I'd like to introduce what's new for Tizen on `Xamarin.Forms 4.1.0`. <br/>
+As you already know, many cool new features are added on `Xamarin.Forms 4.0`, and you may be wondered if those features are available on Tizen platform.
+
+
+I am pleased to tell the major new UI features including Shell, CollectionView and Material Visual are supported on Tizen platform.<br/>
+`Xamarin.Forms 4.1.0` includes Tizen support for the new UI features, and I'd like to show each features running on Tizen platform.
 
 
 ## 1.Shell
@@ -64,8 +66,8 @@ The supported controls in Tizen are:
 Other controls will also be added soon.
 
 
-[shell]: {{site.url}}{{site.baseurl}}/assets/images/posts/xamarin-410-available-on-tizen/shell.gif
-[collectionview1]: {{site.url}}{{site.baseurl}}/assets/images/posts/xamarin-410-available-on-tizen/collectionView.gif
-[collectionview2]: {{site.url}}{{site.baseurl}}/assets/images/posts/xamarin-410-available-on-tizen/collectionView2.gif
-[collectionview3]: {{site.url}}{{site.baseurl}}/assets/images/posts/xamarin-410-available-on-tizen/collectionView3.gif
-[visual]: {{site.url}}{{site.baseurl}}/assets/images/posts/xamarin-410-available-on-tizen/visual.gif
+[shell]: {{site.url}}{{site.baseurl}}/assets/images/posts/whats-new-for-tizen-on-forms-410/shell.gif
+[collectionview1]: {{site.url}}{{site.baseurl}}/assets/images/posts/whats-new-for-tizen-on-forms-410/collectionView.gif
+[collectionview2]: {{site.url}}{{site.baseurl}}/assets/images/posts/whats-new-for-tizen-on-forms-410/collectionView2.gif
+[collectionview3]: {{site.url}}{{site.baseurl}}/assets/images/posts/whats-new-for-tizen-on-forms-410/collectionView3.gif
+[visual]: {{site.url}}{{site.baseurl}}/assets/images/posts/whats-new-for-tizen-on-forms-410/visual.gif
