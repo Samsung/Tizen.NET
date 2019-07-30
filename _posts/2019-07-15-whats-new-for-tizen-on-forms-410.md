@@ -10,7 +10,7 @@ toc_sticky: true
 ---
 
 
-`Xamarin.Forms 4.1.0` has been released on NuGet, and this post introduces new Tizen features on `Xamarin.Forms 4.1.0`. <br/>
+`Xamarin.Forms 4.1.0` has been released on NuGet, and this post introduces the new Tizen features on `Xamarin.Forms 4.1.0`. <br/>
 Many new features were added on `Xamarin.Forms 4.0`, and the major new `Xamarin.Forms 4.1.0` UI features, including Shell, CollectionView and Material Visual, are supported on the Tizen platform.
 
 ## 1.Shell
