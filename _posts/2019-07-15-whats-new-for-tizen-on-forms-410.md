@@ -10,24 +10,18 @@ toc_sticky: true
 ---
 
 
-`Xamarin.Forms 4.1.0` has been recently released on Nuget, and I'd like to introduce what's new for Tizen on `Xamarin.Forms 4.1.0`. <br/>
-As you already know, many cool new features are added on `Xamarin.Forms 4.0`, and you may be wondered if those features are available on Tizen platform.
-
-
-I am pleased to tell the major new UI features including Shell, CollectionView and Material Visual are supported on Tizen platform.<br/>
-`Xamarin.Forms 4.1.0` includes Tizen support for the new UI features, and I'd like to show each features running on Tizen platform.
-
+`Xamarin.Forms 4.1.0` has been released on NuGet, and this post introduces new Tizen features on `Xamarin.Forms 4.1.0`. <br/>
+Many new features were added on `Xamarin.Forms 4.0`, and the major new `Xamarin.Forms 4.1.0` UI features, including Shell, CollectionView and Material Visual, are supported on the Tizen platform.
 
 ## 1.Shell
-Shell is the main feature of new Xamarin.Forms. It seeks to reduce the complexity of building mobile apps by providing fundamental app architecture features.
+The `Xamarin.Forms` Shell feature reduces the complexity of building mobile apps by providing fundamental app architecture features.
 
-For more details on Shell, you can check out [Shell navigation documentation](https://docs.microsoft.com/en-us/xamarin/xamarin-forms/app-fundamentals/shell/introduction)
+For more details on Shell, see [Shell navigation documentation](https://docs.microsoft.com/en-us/xamarin/xamarin-forms/app-fundamentals/shell/introduction)
 
-
-Shell provides 3 types of common mobile navigation UI:
+Shell provides three types of common mobile navigation:
  - Flyout
  - Bottom Tabs
- - Top Tabs <br/>
+ - Top Tabs
 
 ![][shell]
  
