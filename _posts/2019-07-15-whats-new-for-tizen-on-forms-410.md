@@ -45,7 +45,7 @@ For more details on CollectionView, see [Material Visual documentation](https://
 Because `Xamarin.forms 4.1.0` includes material renderers for Tizen, you can implement a Material look and feel in your Tizen .NET app without any custom renderers.
 
 Supported controls in Tizen are:
- - ActivityIndicaotr
+ - ActivityIndicator
  - Button
  - Frame
  - Entry
