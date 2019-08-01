@@ -9,9 +9,9 @@ toc: true
 toc_sticky: true
 ---
 
-
-`Xamarin.Forms 4.1.0` has been released on NuGet. This post introduces the new Tizen features on `Xamarin.Forms 4.1.0`. <br/>
-Many new UI features were added on `Xamarin.Forms 4.0`, including Shell, CollectionView and Material Visual, which are supported on the Tizen platform.
+Many new UI features were added on `Xamarin.Forms 4.0`, including Shell, CollectionView and Material Visual.<br/>
+Tizen support for these features was added on `Xamarin.Forms 4.1.0` which has been released on NuGet.
+This post introduces each of new features.
 
 ## 1. Shell
 The `Xamarin.Forms` Shell feature reduces the complexity of building mobile apps by providing fundamental app architecture features.
@@ -38,7 +38,7 @@ For more details on CollectionView, see [CollectionView documentation](https://d
 
 Material Design is an opinionated design system created by Google, which prescribes the size, color, spacing, and other aspects of how views and layouts should look and behave.
 
-Xamarin.Forms provides the way to apply material design across the platforms to controls in Xamarin.Forms apps. Material renderers apply the Material Design rules.
+Xamarin.Forms provides the way to apply material design across the platforms to controls in Xamarin.Forms apps. This is achieved with material renderers that apply the Material Design rules.
 
 For more details on CollectionView, see [Material Visual documentation](https://docs.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/visual/material-visual)
 
