@@ -4,6 +4,7 @@ search: true
 categories:
   - Tizen.NET
 author: Kangho Hur
+last_modified_at: 2019-08-08
 toc: true
 toc_sticky: true
 toc_label: Adding a splash screen to your Tizen .NET application
