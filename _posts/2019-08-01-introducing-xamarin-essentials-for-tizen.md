@@ -105,7 +105,7 @@ Xamarin Essentials for Tizen has the following limitations: <br>
 | Preferences|o|o|o|o|o| |
 | SecureStorage|o|o|o|o|o| |
 | Share|o|o|X|X|X|Policy limitation|
-| Sms|o|o|o|o|X|HW limitation|
+| SMS|o|o|o|o|X|HW limitation|
 | TextToSpeech|o|o|o|o|o| |
 | Vibration|o|o|o|o|X|HW limitation|
 
