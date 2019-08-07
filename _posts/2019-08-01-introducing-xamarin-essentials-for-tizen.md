@@ -10,7 +10,7 @@ toc_label: Contents
 ---
 
 <br/>
-Last July, there has been the `Xamarin Developer Summit` in Houston.<br/>
+In July, there was a `Xamarin Developer Summit` in Houston, Texas.<br/>
 The `Xamarin Developer Summit` is the biggest `Xamarin` community event, and the event was filled with lots of exciting news.<br/>
 Above all, one of the most important announcement was about `Xamarin Essentials for Tizen`.<br/>
 
