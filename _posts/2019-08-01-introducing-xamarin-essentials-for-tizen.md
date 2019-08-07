@@ -10,29 +10,25 @@ toc_label: Contents
 ---
 
 <br/>
-In July, there was a `Xamarin Developer Summit` in Houston, Texas.<br/>
-The `Xamarin Developer Summit` is the biggest `Xamarin` community event, and the event was filled with lots of exciting news.<br/>
-Above all, one of the most important announcement was about `Xamarin Essentials for Tizen`.<br/>
+In July 2019, the Xamarin Developer Summit was held in Houston, Texas.
 
-## What is the Xamarin Essentials
+The Xamarin Developer Summit, which is the biggest Xamarin community event, was filled with lots of exciting news. One of the most important announcements was about Xamarin Essentials for Tizen.
 
-`Xamarin Essentials` is a project for common set of cross platform APIs.<br/>
-This API library can replace the platform specific API.<br/>
+## What is Xamarin Essentials
+
+`Xamarin Essentials` is a common set of cross-platform APIs, which can replace platform-specific APIs.
 
 > [Xamarin Essentials project][link_github]
 
-In other words,<br/>
-When you create a cross platform mobile application with `Xamarin`, most of them are shared code.<br/>
-However, some features require the platform specific API.<br/>
-At this time, the `Xamarin Essentials` API reduces the use of platform specific API and replaces it with shared code.<br/>
-Now `Xamarin Essentials` can replace the `Android`, `iOS`, `UWP` and `Tizen` platform APIs.<br/>
+When you create cross-platform mobile applications with Xamarin, most of the code is shared. However, some features require platform-specific APIs.
+
+Xamarin Essentials APIs reduce the use of platform-specific APIs and replaces them with shared code. Xamarin Essentials can replace the Android, iOS, UWP, and Tizen platform APIs.
 
 ## Xamarin Essentials APIs
 
-Currently, `Xamarin Essentials` provides many features.<br/>
-It is not enought to replace every platform APIs, but it will grow more.<br/>
+The Xamarin Essentials API set provides many features. It does not replace every platform API, but more APIs are being created.
 
-> [Accelerometer][link_accelerometer] : Retrieve acceleration data of the device in three dimensional space. <br/>
+> [Accelerometer][link_accelerometer]: Retrieve acceleration data of the device in three dimensional space. <br/>
 > [ApplicationInformation][link_appinfo] : Find out information about the application. <br/>
 > [Barometer][link_barometer] : Monitor the device's barometer sensor, which measures pressure. <br/>
 > [Battery][link_battery] : Easily detect battery level, source, and state. <br/>
