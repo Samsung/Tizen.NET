@@ -7,7 +7,7 @@ author: Swift Kim
 toc: true
 ---
 
-Although C# is the only language officially supported by Tizen .NET, you can write applications in other languages such as F# and VB.NET. Ideally, applications written in interoperable .NET languages are compiled into common _IL (intermediate language)_ code, which can be executed by any CLI-compliant runtime.
+Although C# is the only language officially supported by Tizen .NET, you can write applications in other languages such as F# and VB.NET. Ideally, applications written in interoperable .NET languages are compiled into common IL (intermediate language) code, which can be executed by any CLI-compliant runtime.
 
 **Note**: Any examples in this article are for tech demo purposes only. Further tests and investigation on limitations are required to ensure operability in general cases.
 
@@ -20,11 +20,11 @@ Find the projects in the following repository and compare them with the original
 - [CrossXamlTemplate.FSharp](https://github.com/swift-kim/FSharpSamples/tree/master/CrossXamlTemplate.FSharp)
 - [NUITemplate.FSharp](https://github.com/swift-kim/FSharpSamples/tree/master/NUITemplate.FSharp)
 
-The first three applications target _Xamarin.Forms_ UI frameworks, and the fourth is built on the _Tizen.NUI_ framework. You can copy the `.fsproj` or `.vbproj` project files, the ` tizen-manifest.xml` , and other resources directly from the original projects.
+The first three applications target Xamarin.Forms UI frameworks, and the fourth is built on the Tizen.NUI framework. You can copy the `.fsproj` or `.vbproj` project files, the ` tizen-manifest.xml` , and other resources directly from the original projects.
 
 I converted C# code into F# manually, line by line. F# comes with wide support for imperative programming features out of its functional features, so C# code can be readily switched into F#.
 
-When it comes to XAML-based applications, however, it becomes a bit complicated, because the XAML code generator of Xamarin.Forms only supports generating code (`.g.cs`) in C#. I had to manually load XAML pages at runtime using [`LoadFromXaml()`](https://docs.microsoft.com/en-us/dotnet/api/xamarin.forms.xaml.extensions.loadfromxaml) instead of `InitializeComponent()`, as follows.
+When it comes to XAML-based applications, however, it becomes a bit complicated, because the XAML code generator of Xamarin.Forms only supports generating code (`.g.cs`) in C#. I had to load XAML pages manually at runtime using [`LoadFromXaml()`](https://docs.microsoft.com/en-us/dotnet/api/xamarin.forms.xaml.extensions.loadfromxaml) instead of `InitializeComponent()`, as follows:
 
 <small>**C# (MainPage.xaml.cs in TizenXamlApp)**</small>
 ```csharp
@@ -50,27 +50,27 @@ type MainPage() as this = inherit ContentPage()
 |-|-|-|-|
 | ![CrossTemplate.FSharp]({{site.url}}{{site.baseurl}}/assets/images/posts/writing-tizen-net-applications-in-fsharp/crosstemplate_fsharp.jpg) | ![CrossTemplate.VB]({{site.url}}{{site.baseurl}}/assets/images/posts/writing-tizen-net-applications-in-fsharp/crosstemplate_vb.jpg) | ![CrossXamlTemplate.FSharp]({{site.url}}{{site.baseurl}}/assets/images/posts/writing-tizen-net-applications-in-fsharp/crossxamltemplate_fsharp.jpg) | ![NUITemplate.FSharp]({{site.url}}{{site.baseurl}}/assets/images/posts/writing-tizen-net-applications-in-fsharp/nuitemplate_fsharp.jpg) |
 
-It becomes complicated when you have any reference in your program code to XAML elements. Such a case is investigated in the XStopWatch F# example.
+It becomes complicated when you have any reference in your program code to XAML elements. I investigate such a case in the following XStopWatch F# example.
 
 ## XStopWatch (F#)
 
-XStopWatch is one of my favorite applications for testing .NET on Tizen. It's a good example for demonstrating the compatibility of Xamarin.Forms features with F#.
+XStopWatch is one of my favorite applications for testing .NET on Tizen. It's a good example for demonstrating Xamarin.Forms feature compatibility with F#.
 
 - [XStopWatch (C# version)](https://github.com/Samsung/Tizen-CSharp-Samples/tree/master/Wearable/XStopWatch)
 - [XStopWatch (F# version)](https://github.com/swift-kim/FSharpSamples/tree/master/XStopWatch.FSharp)
 
-**Note**: Only the comments in  F# code were removed from the original C# code. Otherwise, the two projects have the same logic and resources.
+**Note**: Only the comments in F# code were removed from the original C# code. Otherwise, the two projects have the same logic and resources.
 
 How XStopWatch is different from the previous helloworld examples:
 
 - [Use of P/Invoke](https://github.com/swift-kim/FSharpSamples/blob/master/XStopWatch.FSharp/XStopWatch/WindowExtension.fs) to access native platform functions
 - Access to XAML elements from application code
-- Data binding with _BindableProperty_
+- Data binding with `BindableProperty`
 - Events
 
 For the P/Invoke usage in F# code, see the instructions [here](https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/functions/external-functions).
 
-To reference XAML elements in the program logic, we must first inflate the layout of the XAML code. In C#, `InitializeComponent()` did it for us, so we didn't even need something like `findViewById()` in Android.
+To reference XAML elements in the program logic, we must first inflate the layout of the XAML code. In C#, `InitializeComponent()` worked for us, so we didn't need something such as `findViewById()` in Android.
 
 <small>**StopWatch.xaml.cs**</small>
 ```csharp
@@ -85,7 +85,7 @@ public StopWatch()
 }
 ```
 
-In F#, we have to manually instantiate every single element.
+In F#, we have to instantiate every single element manually:
 
 <small>**StopWatch.xaml.fs**</small>
 ```fsharp
@@ -108,7 +108,7 @@ type StopWatch() as this = inherit CirclePage()
         this.Stop()
 ```
 
-No problem so far. However, what if we have to use _data binding_ for dynamic interaction with XAML elements? Don't worry. We can use _BindableProperty_ to create any data binding, as we did in C#.
+No problem so far. However, what if we have to use data binding for dynamic interaction with XAML elements? Don't worry. We can use `BindableProperty` to create any data binding, as we did in C#.
 
 <small>**StopWatch.xaml.cs**</small>
 ```csharp
@@ -145,7 +145,7 @@ type StopWatch() as this = inherit CirclePage()
     ...
 ```
 
-However, I didn't manage to make the following element parse properly  with the XAML compiler. The compiler was unable to locate a property (`Time`) in another page (`LapsPage`). (It could be a bug, or I was doing something wrong.)
+However, I was unable to make the following element parse properly with the XAML compiler. The compiler was unable to locate a property (`Time`) in another page (`LapsPage`).
 
 <small>**StopWatchApplication.xaml**</small>
 ```xml
@@ -166,7 +166,7 @@ type StopWatchApplication() as this = inherit Application()
         Laps.BindingContext <- StopWatch
 ```
 
-Finally, we can also use _Events_ in F#. To create a custom event handler and invoke it, follow the instructions in [this guide](https://docs.microsoft.com/ko-kr/dotnet/fsharp/language-reference/members/events) or refer to the following code.
+Finally, we can also use Events in F#. To create and then invoke a custom event handler, follow the instructions in [this guide](https://docs.microsoft.com/ko-kr/dotnet/fsharp/language-reference/members/events) or refer to the following code.
 
 <small>**C# (StopWatch.xaml.cs)**</small>
 ```csharp
@@ -201,14 +201,14 @@ Now, let's install the application on a device. It works just like the original 
 
 ## Advantages and Disadvantages
 
-I went over a simple benchmark of the above XStopWatch application on my _TW2_ (_Gear S3_) device. Every assembly was fully compiled into a native image. The result is as follows:
+I went over a simple benchmark of the above XStopWatch application on my TW2 (Gear S3) device. Every assembly was fully compiled into a native image. The result is as follows:
 
 | Application | Mean startup time |
 | - | -:|
 | **XStopWatch (C#)** | **1120** ms |
 | **XStopWatch (F#)** | **1896** ms |
 
-The F# version of XStopWatch had a significant overhead when launching (_169%_ of the original application). Unfortunately, I have no real evidence about the root cause. There also was a large memory regression (up to _5 Mbytes_), although it's not mentioned in the above table. Therefore, I believe that F# in Tizen development has the following pros and cons:
+The F# version of XStopWatch had a significant overhead when launching (169% of the original application). Unfortunately, I have no real evidence about the root cause. There also was a large memory regression (up to 5 Mbytes), although it's not mentioned in the above table. Therefore, I believe that F# in Tizen development has the following pros and cons:
 
 <small>**Pros**</small>
 - More development options (opportunity for F# developers)
@@ -220,7 +220,7 @@ The F# version of XStopWatch had a significant overhead when launching (_169%_ o
 
 ## Conclusion
 
-Although it's possible to use F# in Tizen application development, I don't recommend that you do so unless you are expert in F# use and are not familiar with C#.
+Although it's possible to use F# in Tizen application development, I don't recommend that you do so unless you are expert in F# use.
 
 If you need help, please don't hesitate to contact me.
 

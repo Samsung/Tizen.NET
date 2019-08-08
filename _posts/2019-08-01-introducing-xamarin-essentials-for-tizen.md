@@ -10,65 +10,57 @@ toc_label: Contents
 ---
 
 <br/>
-Last July, there has been the `Xamarin Developer Summit` in Houston.<br/>
-The `Xamarin Developer Summit` is the biggest `Xamarin` community event, and the event was filled with lots of exciting news.<br/>
-Above all, one of the most important announcement was about `Xamarin Essentials for Tizen`.<br/>
+In July 2019, the Xamarin Developer Summit was held in Houston, Texas.
 
-## What is the Xamarin Essentials
+The Xamarin Developer Summit, which is the biggest Xamarin community event, was filled with lots of exciting news. One of the most important announcements was about Xamarin Essentials for Tizen, available on the Tizen 4.0 release.
 
-`Xamarin Essentials` is a project for common set of cross platform APIs.<br/>
-This API library can replace the platform specific API.<br/>
+## What is Xamarin Essentials
+
+The Xamarin Essentials project is a common set of cross-platform APIs, which can replace platform-specific APIs.
 
 > [Xamarin Essentials project][link_github]
 
-In other words,<br/>
-When you create a cross platform mobile application with `Xamarin`, most of them are shared code.<br/>
-However, some features require the platform specific API.<br/>
-At this time, the `Xamarin Essentials` API reduces the use of platform specific API and replaces it with shared code.<br/>
-Now `Xamarin Essentials` can replace the `Android`, `iOS`, `UWP` and `Tizen` platform APIs.<br/>
+When you create cross-platform mobile applications with Xamarin, most of the code is shared. However, some features require platform-specific APIs. Xamarin Essentials reduces the use of platform-specific APIs and replaces them with shared code. Xamarin Essentials can replace Android, iOS, UWP, and Tizen platform APIs.
 
 ## Xamarin Essentials APIs
 
-Currently, `Xamarin Essentials` provides many features.<br/>
-It is not enought to replace every platform APIs, but it will grow more.<br/>
+The Xamarin Essentials API set does not replace every platform API, but it does provide many features:
 
-> [Accelerometer][link_accelerometer] : Retrieve acceleration data of the device in three dimensional space. <br/>
-> [ApplicationInformation][link_appinfo] : Find out information about the application. <br/>
-> [Barometer][link_barometer] : Monitor the device's barometer sensor, which measures pressure. <br/>
-> [Battery][link_battery] : Easily detect battery level, source, and state. <br/>
-> [Browser][link_browser] : Quickly and easily open a browser to a specific website. <br/>
-> [Clipboard][link_clipboard] : Quickly and easily set or read text on the clipboard. <br/>
-> [Compass][link_compass] : Monitor compass for changes. <br/>
-> [Connectivity][link_connectivity]: Check connectivity state and detect changes. <br/>
-> [DeviceDisplay][link_devicedisplay] : Get the device’s screen metrics and orientation. <br/>
-> [DeviceInformation][link_deviceinfo] : Find out about the device with ease. <br/>
-> [Email][link_email] : Easily send email messages. <br/>
-> [Filesystem][link_filesystem] : Easily save files to app data. <br/>
-> [Flashlight][link_flashlight] : A simple way to turn the flashlight on/off. <br/>
-> [Geocoding][link_geocoding] : Easily geocode and reverse geocoding. <br/>
-> [Geolocation][link_geolocation] : Retrieve the device’s GPS location. <br/>
-> [Gyroscope][link_gyroscope] : Retrieve rotation around the device’s three primary axes. <br/>
-> [Launcher][link_launcher] : Enables an application to open a URI by the system. <br/>
-> [Magnetometer][link_magnetometer] : Detect device’s orientation relative to Earth’s magnetic field. <br/>
-> [Maps][link_maps] : Enables an application to open the installed map application to a specific location or placemark. <br/>
-> [OrientationSensor][link_orientationsensor] : Monitor the orientation of a device in three dimensional space. <br/>
-> [PhoneDialer][link_dialer] : Open the phone dialer. <br/>
-> [Preferences][link_preferences] : Quickly and easily add persistent preferences. <br/>
-> [SecureStorage][link_securestorage] : Securely store data. <br/>
-> [Share][link_share] : Send text and website Uris to other apps. <br/>
-> [SMS][link_sms] : Easily send SMS messages. <br/>
-> [TextToSpeech][link_texttospeech] : Vocalize text on the device. <br/>
-> [Vibrate][link_vibrate] : Make the device vibrate. <br/>
+> [Accelerometer][link_accelerometer]: Retrieves the devices' acceleration data in three-dimensional space. <br/>
+> [ApplicationInformation][link_appinfo]: Finds information about the application. <br/>
+> [Barometer][link_barometer]: Monitors the device's barometer sensor, which measures pressure. <br/>
+> [Battery][link_battery]: Easily detects battery level, source, and state. <br/>
+> [Browser][link_browser]: Quickly and easily opens a browser to a specific website.<br/>
+> [Clipboard][link_clipboard]: Quickly and easily places or reads text on the clipboard.<br/>
+> [Compass][link_compass]: Monitors compass for changes. <br/>
+> [Connectivity][link_connectivity]: Checks connectivity state and detect changes. <br/>
+> [DeviceDisplay][link_devicedisplay]: Gets the device’s screen metrics and orientation. <br/>
+> [DeviceInformation][link_deviceinfo]: Easily finds information about the device. <br/>
+> [Email][link_email]: Easily sends email messages. <br/>
+> [Filesystem][link_filesystem]: Easily saves files to app data. <br/>
+> [Flashlight][link_flashlight]: A simple way to turn the flashlight on/off. <br/>
+> [Geocoding][link_geocoding]: Easily geocodes and reverses geocoding. <br/>
+> [Geolocation][link_geolocation]: Retrieves the device’s GPS location. <br/>
+> [Gyroscope][link_gyroscope]: Retrieves rotation around the device’s three primary axes. <br/>
+> [Launcher][link_launcher]: Enables an application to open a URI by the system. <br/>
+> [Magnetometer][link_magnetometer]: Detects device’s orientation relative to Earth’s magnetic field. <br/>
+> [Maps][link_maps]: Enables an application to open the installed map application to a specific location or placemark. <br/>
+> [OrientationSensor][link_orientationsensor]: Monitors the device's orientation in three-dimensional space. <br/>
+> [PhoneDialer][link_dialer]: Opens the phone dialer. <br/>
+> [Preferences][link_preferences]: Quickly and easily adds persistent preferences. <br/>
+> [SecureStorage][link_securestorage]: Securely stores data. <br/>
+> [Share][link_share]: Sends text and website URIs to other apps. <br/>
+> [SMS][link_sms]: Easily sends SMS messages. <br/>
+> [TextToSpeech][link_texttospeech]: Vocalizes text on the device. <br/>
+> [Vibrate][link_vibrate]: Makes the device vibrate. <br/>
 
 ## Xamarin Essentials for Tizen
 
-`Xamarin Essentials for Tizen` will be included on `Xamarin Essentials` version 1.3.0.<br/>
-
-If you want to try using it right now, you can install pre-released nuget package.<br/>
+Xamarin Essentials for Tizen will be included on Xamarin Essentials version 1.3.0. To try using it now, install the prereleased NuGet package.
 
 > [Xamarin.Essentials nuget][link_nuget]
 
-You can also test the sample application included in the `Xamarin Essentials` project.<br/>
+You can also test the sample application included in the Xamarin Essentials project.
 
 > [Xamarin Essentials sample][link_sample]
 
@@ -78,9 +70,9 @@ You can also test the sample application included in the `Xamarin Essentials` pr
 
 ![img_tv]
 
-`Tizen` supports multi-profiles such as Mobile, Wearable, and TV.<br/>
-Therefore, `Xamarin Essentials for Tizen` is also available for multi-profile.<br/>
-Currently, there are some limitations on `Xamarin Essentials for Tizen`. <br/>
+Tizen supports multi-profiles, such as Mobile, Wearables, and TV. Xamarin Essentials for Tizen is also available for multi-profile.
+
+Xamarin Essentials for Tizen has the following limitations: <br>
 
 | |Mobile Device|Mobile Emulator|Wearable Device|Wearable Emulator|TV Emulator|
 |:-----------------:|:-----------------:|:-----------------:|:-----------------:|:-----------------:|:-----------------:|
@@ -113,18 +105,16 @@ Currently, there are some limitations on `Xamarin Essentials for Tizen`. <br/>
 | Preferences|o|o|o|o|o| |
 | SecureStorage|o|o|o|o|o| |
 | Share|o|o|X|X|X|Policy limitation|
-| Sms|o|o|o|o|X|HW limitation|
+| SMS|o|o|o|o|X|HW limitation|
 | TextToSpeech|o|o|o|o|o| |
 | Vibration|o|o|o|o|X|HW limitation|
 
 ## Summary
 
-1. `Xamarin.Essentials for Tizen` is available with `Xamarin Essentials` version 1.3.0.
-2. `Xamarin.Essentials for Tizen` works on Tizen 4.0 based devices.
-3. Not supported for `Battery`, `Clipboard`, and `DeviceDisplay` on Tizen platform 4.0.
+1. Xamarin.Essentials for Tizen is available with Xamarin Essentials version 1.3.0.
+2. Xamarin.Essentials for Tizen works on Tizen 4.0-based devices.
+3. Not supported for Battery, Clipboard, and DeviceDisplay features on Tizen platform 4.0.
 4. Depending on the profiles, there are limitations due to hardware and policy differences.
-
-It will make easier for developer to create Tizen applications more easily and effectively.<br/>
 
 [link_accelerometer]: https://docs.microsoft.com/en-us/xamarin/essentials/accelerometer
 [link_appinfo]: https://docs.microsoft.com/en-us/xamarin/essentials/app-information
