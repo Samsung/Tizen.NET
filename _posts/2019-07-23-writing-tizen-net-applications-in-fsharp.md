@@ -220,7 +220,7 @@ The F# version of XStopWatch had a significant overhead when launching (_169%_ o
 
 ## Conclusion
 
-Although it's possible to use F# in Tizen application development, I don't recommend that you do so unless you are expert in F# use and are not familiar with C#.
+Although it's possible to use F# in Tizen application development, I don't recommend that you do so unless you are expert in F# use.
 
 If you need help, please don't hesitate to contact me.
 
