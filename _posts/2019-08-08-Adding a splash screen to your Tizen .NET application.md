@@ -19,7 +19,8 @@ We used StopWatch sample application for testing. The source code can be downloa
 
 - **Step 1.** Edit `tizen-manifest.xml` (recommend to use XML editor)
   - Adds `<splash-screens>` into `<ui-application>` element. (The image file should be located in `shared/res`)
-    <img src="https://user-images.githubusercontent.com/1029134/62266973-6f173800-b465-11e9-9fbc-5338b5032f06.png">
+
+  <img src="https://user-images.githubusercontent.com/1029134/62266973-6f173800-b465-11e9-9fbc-5338b5032f06.png">
   - Please refer to attribute description section, if you want to get more information.
   
 - **Step 2.** Build, packaging and install the application
@@ -28,7 +29,7 @@ We used StopWatch sample application for testing. The source code can be downloa
 
 | **No splash image** | **With splash image** |
 |-|-|
-|<img src="https://user-images.githubusercontent.com/1029134/62266998-88b87f80-b465-11e9-8d81-d317c6e2e365.gif" width=320/> | <img src="https://user-images.githubusercontent.com/1029134/62267001-8a824300-b465-11e9-85bf-5feed6181b1f.gif" width=320/>|
+|<img src="https://user-images.githubusercontent.com/1029134/62266998-88b87f80-b465-11e9-8d81-d317c6e2e365.gif" width="320"/> | <img src="https://user-images.githubusercontent.com/1029134/62267001-8a824300-b465-11e9-85bf-5feed6181b1f.gif" width="320"/>|
 
 > Splash image is only shown when you launch the application by choosing from application lists. (Do not launching directly from visual studio).<br><br>
 > Also, it will only be shown when the app is launched for the first time. Make sure that if the app is running in the background and is re-activating (resume), splash image will not be shown.
