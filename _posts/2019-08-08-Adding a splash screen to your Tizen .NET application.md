@@ -18,10 +18,11 @@ We'll use the StopWatch sample application for testing. The source code can be d
 ## Quick Guide 
 
 - **Step 1.** Edit the `tizen-manifest.xml` file (we recommend you use the XML editor).
-  - Adds `<splash-screens>` into the `<ui-application>` element. The image file is located in `shared/res`.
+  - The following code adds `<splash-screens>` into the `<ui-application>` element. The image file is located in `shared/res`.
 
   <img src="https://user-images.githubusercontent.com/1029134/62266973-6f173800-b465-11e9-9fbc-5338b5032f06.png">
-  - For further information, refer to the attribute description section.
+  
+  - For further information, refer to the [Attribute Description](#Attribute Description).
   
 - **Step 2.** Build, package, and install the application.
 
