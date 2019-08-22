@@ -22,7 +22,7 @@ We'll use the StopWatch sample application for testing. The source code can be d
 
   <img src="https://user-images.githubusercontent.com/1029134/62266973-6f173800-b465-11e9-9fbc-5338b5032f06.png">
   
-  - For further information, refer to the [Attribute Description](#Attribute Description).
+  - For further information, refer to the [Attribute Description](#Attribute Description) section.
   
 - **Step 2.** Build, package, and install the application.
 
