@@ -22,7 +22,7 @@ We'll use the StopWatch sample application for testing. The source code can be d
 
   <img src="https://user-images.githubusercontent.com/1029134/62266973-6f173800-b465-11e9-9fbc-5338b5032f06.png">
   
-  - For further information, refer to the [Attribute Description](#Attribute Description) section.
+  - For further information, refer to the **Attribute Description** section.
   
 - **Step 2.** Build, package, and install the application.
 
@@ -32,36 +32,35 @@ We'll use the StopWatch sample application for testing. The source code can be d
 |-|-|
 |<img src="https://user-images.githubusercontent.com/1029134/62266998-88b87f80-b465-11e9-8d81-d317c6e2e365.gif" width="320"/> | <img src="https://user-images.githubusercontent.com/1029134/62267001-8a824300-b465-11e9-85bf-5feed6181b1f.gif" width="320"/>|
 
-> The splash screen image is shown only when you launch the application by choosing from an application list (not when launching directly from Visual Studio).<br><br>
-> Also, it is shown only when the app is launched for the first time. Make sure that the splash image is not shown if the app is running in the background and re-activates (resumes).
+> The splash screen image is shown only when you launch the application by choosing from an application list (not when launching directly from Visual Studio). Also, it is shown only when the app is launched for the first time. Make sure that the splash image is not shown if the app is running in the background and re-activates (resumes).
 
 ## Attribute Description
 
 ### `ui-application` Element
 - `splash-screen-display` Attribute (Optional)
-  - Value : `true` or `false`
-  - Description : Specify whether splash screen is displayed or not. The default value is `true`.
+  - Value: `true` or `false`
+  - Description: Specify whether or not the splash screen is displayed. The default value is `true`.
 
 ### `splash-screen` Element 
-- `src` Attribute (Mandatory)
-  - Value : the file name of splash image (`*.png`, `*.jpg` or `*.edj`)
-  - Description : Specify the resource file for splash screen.
-- `type` Attribute (Mandatory)
-  - Value : `img` or `edj`
-  - Description : Specify the resource type.
-- `orientation` Attribute (Mandatory)
-  - Value : `portrait` or `landscape`
-  - Description : Specify the orientation of splash image.
-- `dpi` Attribute (Optional)
-  - Value : `ldpi`, `mdpi`, `hdpi`, `xhdpi`, or `xxhdpi`
-  - Description : Specify the resource resolution.
-- `indicator-display` Attribute (Optional)
-  - Value : `true` or `false`
-  - Description : Specify whether indicator is displayed or not while splash image is showing (mobile only). The default value is `true`.
-- `app-control-operation` Attribute (Optional)
-  - Value : (string)
-  - Description : Specify the specific `app-control` operation. Refer to [here](https://developer.tizen.org/development/guides/.net-application/application-management/application-controls?langredirect=1), if you want to get more information about `app-control` operations.
+- `src` Attribute (mandatory)
+  - Value: The file name of splash image (`*.png`, `*.jpg`, or `*.edj`)
+  - Description: Specifies the resource file for the splash screen.
+- `type` Attribute (mandatory)
+  - Value: `img` or `edj`
+  - Description: Specifies the resource type.
+- `orientation` Attribute (mandatory)
+  - Value: `portrait` or `landscape`
+  - Description: Specifies the orientation of the splash image.
+- `dpi` Attribute (optional)
+  - Value: `ldpi`, `mdpi`, `hdpi`, `xhdpi`, or `xxhdpi`
+  - Description: Specifies the resource resolution.
+- `indicator-display` Attribute (optional)
+  - Value: `true` or `false`
+  - Description: Specifies whether or not the indicator is displayed while the splash image is showing (mobile only). The default value is `true`.
+- `app-control-operation` Attribute (optional)
+  - Value: (string)
+  - Description: Specifies the specific `app-control` operation. Refer to (https://developer.tizen.org/development/guides/.net-application/application-management/application-controls?langredirect=1) for further information about `app-control` operations.
  
- > `<splash-screens>` element can be have multiple `<splash-screen>` element.
+ > The `<splash-screens>` element can have multiple `<splash-screen>` elements.
  
   
