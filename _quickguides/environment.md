@@ -7,11 +7,11 @@ toc_sticky: true
 
 The guide describes how to set up an environment in which to develop Tizen .NET applications.
 
-Tizen .NET applications can be developed on both **Windows** and **macOS**. We recommend using Visual Studio on Windows.
+Tizen .NET applications can be developed on both **Windows** and **macOS**. We recommend that you use Visual Studio on Windows.
 
 ## Windows
 ### Visual Studio
-Visual Studio 2017 on Windows is the official and the most popular development environment. Visit [Installing Visual Studio Tools for Tizen](https://developer.tizen.org/development/visual-studio-tools-tizen/installing-visual-studio-tools-tizen) for detailed prerequisites and step-by-step instructions.
+Visual Studio 2017 on Windows is the official and most popular development environment. See [Installing Visual Studio Tools for Tizen](https://developer.tizen.org/development/visual-studio-tools-tizen/installing-visual-studio-tools-tizen) for detailed prerequisites and step-by-step instructions.
 
 #### Prerequisites
 - 1.5 GB of available disk space
@@ -25,19 +25,20 @@ Visual Studio 2017 on Windows is the official and the most popular development e
 
 
 ### Visual Studio Code
-- Visit [Installing Visual Studio Code Extension for Tizen](https://developer.tizen.org/development/visual-studio-code-extension-tizen/installing-visual-studio-code-extension-tizen) for the installation guide.
+- See [Installing Visual Studio Code Extension for Tizen](https://developer.tizen.org/development/visual-studio-code-extension-tizen/installing-visual-studio-code-extension-tizen) for the installation guide.
 - Check [Known issues for the Visual Studio Code]({{site.url}}{{site.baseurl}}/issues/wearable/tools-vscode/).
 
 ## Mac
 ### Visual Studio Code
 macOS 10.12 (Sierra) or later is required to install Visual Studio Code Extension for Tizen.
-- Visit [Installing Visual Studio Code Extension for Tizen](https://developer.tizen.org/development/visual-studio-code-extension-tizen/installing-visual-studio-code-extension-tizen) for the installation guide.
+- See [Installing Visual Studio Code Extension for Tizen](https://developer.tizen.org/development/visual-studio-code-extension-tizen/installing-visual-studio-code-extension-tizen) for the installation guide.
 - Check [Known issues for the Visual Studio Code]({{site.url}}{{site.baseurl}}/issues/wearable/tools-vscode/).
 
 ### Visual Studio for Mac
-No official extension is provided for Visual Studio for Mac. However, if you already have your Tizen .NET project on your machine, you can open and build the project to generate the `tpk` file.
+No official extension is provided for Visual Studio for Mac. However, if you already have your Tizen .NET project on your machine, you can open and build the project to generate the .`tpk` file.
 
-To launch this `tpk` file on the emulator, install [Tizen Studio](https://developer.tizen.org/development/tizen-studio/download) or [Tizen Baseline SDK]({{site.url}}{{site.baseurl}}/guides/environment#tizen-baseline-sdk) on your macOS to use Tizen tools such as Package Manager, Emulator Manager, and Certification Manager.
+To launch this .`tpk` file on the emulator, install [Tizen Studio](https://developer.tizen.org/development/tizen-studio/download) or [Tizen Baseline SDK]({{site.url}}{{site.baseurl}}/guides/environment#tizen-baseline-sdk) on your macOS to use Tizen tools such as Package Manager, Emulator Manager, and Certification Manager.
+
 Then:
 1. Install the emulator image on Package Manager.
 1. Create and start the emulator on Emulator Manager.
