@@ -44,3 +44,5 @@ When the TV is successfully connected, you can see it on the Visual Studio toolb
 ![image]({{site.url}}{{site.baseurl}}/assets/images/posts/connecting-tv-and-visualstudio/connected-tv-on-vs.png)<br>
 Now you can launch applications on the TV directly from the Visual Studio.
 
+BUT, if the TV target device is Tizen 4.0, the debug run is not supported. Make sure you run application using `Start Without Debugging` (Ctrl+F5).
+
