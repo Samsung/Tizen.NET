@@ -24,7 +24,7 @@ See the following figures for a visual explanation:<br/>
 
 ## How to set image borders
 
-To make a image borders, you should use `ElmSharp.Image.SetBorder()` method after image loading.<br/>
+To make image borders, you should use `ElmSharp.Image.SetBorder()` method after image loading.<br/>
 
 About using nativa controls in Xamain.Forms, you can check [Xamarin.Forms Custom Renderers](https://docs.microsoft.com/en-us/xamarin/xamarin-forms/app-fundamentals/custom-renderer/)<br/>
 
