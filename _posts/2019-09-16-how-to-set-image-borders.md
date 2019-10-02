@@ -9,24 +9,19 @@ toc_sticky: true
 toc_label: How to set image borders
 ---
 
-Sometimes app developers want to set a resizable image as background to fit their contents.<br/>
+Sometimes app developers want to set a resizable image as background to better fit the contents. However, if you resize the image as it is, you may not get the shape you want.<br/>
 
-However, if you resize the image as it is, you may not get the shape you want.<br/>
+Tizen provides an API to set `border`, a region of the image to be resized by scale to keep the correct aspect ratio. The following figures provide a visual explanation.
 
-Tizen provides an API to set `border`, a regions of the image to be treated specially on resizing scales, be keeping their aspect.<br/>
-
-Using this API, you can set areas which keep their aspect even though you resize the image.<br/>
-
-See the following figures for a visual explanation:<br/>
 ![][img1]
 ![][img2]
 
 
 ## How to set image borders
 
-To make image borders, you should use `ElmSharp.Image.SetBorder()` method after image loading.<br/>
+To create image borders, use the `ElmSharp.Image.SetBorder()` method after image loading.<br/>
 
-About using nativa controls in Xamain.Forms, you can check [Xamarin.Forms Custom Renderers](https://docs.microsoft.com/en-us/xamarin/xamarin-forms/app-fundamentals/custom-renderer/)<br/>
+For information about using native controls in Xamarin.Forms, see [Xamarin.Forms Custom Renderers](https://docs.microsoft.com/en-us/xamarin/xamarin-forms/app-fundamentals/custom-renderer/)<br/>
 
 ### Create custom renderer
 
@@ -103,8 +98,7 @@ class CustomImageRenderer : ImageRenderer
     }
 }
 ```
-<strong>Note</strong> : Since `ElmSharp.Image` allows to override `UpdateAfterLoading()` method for post processing, you can call `SetBorder()` method after image loading. 
-
+<strong>Note</strong>: Because `ElmSharp.Image` allows you to use the override `UpdateAfterLoading()` method for post processing, you can call the `SetBorder()` method after image loading.
 
 ### Example
 
@@ -143,10 +137,10 @@ public class App : Application
 ```
 
 ![][img3]<br/>
-The sample application with original image(100x100).<br/><br/>
+The sample application with original image (100x100).<br/><br/>
 ![][img5]<br/>
-The sample application with resized image(300x100).<br/>
-You can check the image is resized keepping the borders.<br/>
+The sample application with resized image (300x100).<br/>
+You can check the image is resized, keeping the borders.<br/>
 
 [img1]: {{site.url}}{{site.baseurl}}/assets/images/posts/how-to-set-image-borders/image-borders.png
 [img2]: {{site.url}}{{site.baseurl}}/assets/images/posts/how-to-set-image-borders/border-effect.png
