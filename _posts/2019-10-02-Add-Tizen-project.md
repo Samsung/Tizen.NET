@@ -8,43 +8,39 @@ toc: true
 toc_sticky: true
 ---
 
-We see more people start developing Tizen .NET applications and this tip hopefully provides the better start.
-Many of cases, you would want to add a Tizen project to the exising Xamarin.Forms cross-platform applications,
-or you would want to implement Tizen renderers for Xamarin.Forms 3rd party libraries which also already have included other platforms.
+This article provide helpful information for new Tizen .NET application developers to get started.
 
-In those cases, you can simply add a Tizen project to the existing solution.
+In many cases, you'll want to add a Tizen project to existing Xamarin.Forms cross-platform applications or implement Tizen renderers for Xamarin.Forms third-party libraries, which  already include other platforms. In these cases, you can simply add a Tizen project to the existing solution.
 
+## Add a Tizen Project to Visual Studio
+The following example shows a cross-platform app named SimpleText, which shows a line of text in the center. The text varies depending on the platform:
 
-## Add a Tizen Project on Visual Studio
-As an example, below is a sample cross-platform app named SimpleText, which shows a simple line of text in the center. The text varies depending on the Platform:
-
-On an Android Emulator, you’ll see the text displayed as “Welcome to Xamarin.Forms.Android!”. <br/>
-On an iOS Simulator, the text is replaced with, “Welcome to Xamarin.Forms.iOS!”.
+- On an Android Emulator, the text appears as “Welcome to Xamarin.Forms.Android!” <br/>
+- On an iOS Simulator, the text appears as “Welcome to Xamarin.Forms.iOS!”
 
 ![][emulators]
 
- 
 Now, let's add a Tizen project to run on the Tizen platform in Visual Studio:
 
-- Go to <b>File -> Add -> New Project.</b>
-- Select the Tizen cross-platform template <b>Tizen XAML App (Xamarin.Forms)</b>
+- Go to **File > Add > New Project**.
+- Select the Tizen cross-platform template **Tizen XAML App (Xamarin.Forms)**
 - Give your project the name `SimpleText.Tizen`.
 
 <br/>
 
-On the Tizen project Wizard:
+On the Tizen project wizard:
   ![][project-wizard]
-- Select “Common” as the Profile. For future projects, the available profiles are Mobile, TV, and Wearable.
-- Choose <b>Select Project in Solution.</b>
-- Select `SimpleText` as the reference.
-- Add code `LoadApplication(new SimpleText.App())` to the `SimpleText.Tizen/SimpleText.Tizen.cs` file
+1. Select “Common” as the profile. Other available profiles are Mobile, TV, and Wearable.
+1. Choose **Select Project in Solution**.
+1. Select `SimpleText` as the reference.
+1. Add code `LoadApplication(new SimpleText.App())` to the `SimpleText.Tizen/SimpleText.Tizen.cs` file.
 
-Following is the quick through of the whole process.
-![][adding-tizen]
+The following shows a quick runthrough of the process:
+![][adding-tizen-project]
 
-## Run on Tizen platform
+## Run on the Tizen platform
 Now you are ready to build and run the application on Tizen platform.
-I added the text for Tizen on `Label.Text` on the main page of application.
+I added the text for Tizen on `Label.Text` on the main page of the application.
 
 ```c#
 <?xml version="1.0" encoding="utf-8" ?>
@@ -67,7 +63,7 @@ I added the text for Tizen on `Label.Text` on the main page of application.
 </ContentPage>
 ```
 
-Checkout how it looks on the Wearable target emulator.
+You can check out how it looks on the Wearable target emulator.
 ![][tizen-emulator]
 
 
