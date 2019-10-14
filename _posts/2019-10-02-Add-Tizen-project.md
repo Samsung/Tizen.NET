@@ -1,5 +1,5 @@
 ---
-title: "Add Tizen project to Xamarin.Forms Applications"
+title: "Add a Tizen project to Xamarin.Forms applications"
 last_modified_at: 2019-10-02
 categories:
   - Tizen .NET
