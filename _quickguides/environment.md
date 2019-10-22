@@ -5,7 +5,7 @@ toc: true
 toc_sticky: true
 ---
 
-The guide describes how to set up an environment in which to develop Tizen .NET applications.
+The guide describes how to set up an environment where you can develop Tizen .NET applications.
 
 Tizen .NET applications can be developed on both **Windows** and **macOS**. We recommend that you use Visual Studio on Windows.
 
