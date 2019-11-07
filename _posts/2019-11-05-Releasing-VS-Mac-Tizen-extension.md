@@ -19,7 +19,7 @@ The extension is provided through an `Extension Manager` in Visual Studio for Ma
 ## Installation guide
 Check out <b>[this guide](https://developer.tizen.org/development/visual-studio-mac-extension-tizen)</b> for info about prerequisites and installation.
 <br/><br/>
-In `Prerequisites`, you see an important notice about installing Oracle Java Development Kit (JDK) 8 or OpenJDK 12 to use Tizen Baseline SDK. Make sure you use the correct versions, because this is where most developers get in trouble.
+In `Prerequisites`, you see an important notice about installing Oracle Java Development Kit (JDK) 8 or OpenJDK 12 to use Tizen Baseline SDK. Make sure you use the correct versions, or you may have trouble installing and using the extension.
 
 ## Give us feedback
 All of your feedback is valuable to us. Please leave any feedback to [Issues](https://github.com/samsung/Tizen.NET/issues) or send us an email (tizen.net@samsung.com).
