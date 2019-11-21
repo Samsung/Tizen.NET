@@ -23,11 +23,10 @@ Visit [Samsung Developer Conference](https://www.samsungdeveloperconference.com/
 
 <b>[What's New in Tizen? 5.5 Platform Update and Developer Environment](https://www.samsungdeveloperconference.com/schedule/session/1089296)</b>
 
-Hobum (Vincent) Kwon, who leads the Tizen .NET framework team, led the session explaning about new features on Tizen 5.5 platform including new on Tizen .NET. This year we have been very honored to invite David Ortinau, Principal Program Manager at Microsoft, in the session sharing .NET 5 and Xamarin.Forms.
-At the end, Diego Lizarazo Rivera, Sr. Developer Evangelist at Samsung Electronics, showed a live coding demo.
+Hobum (Vincent) Kwon, who heads the Tizen .NET framework team, led a session that introduced and explained new features on the Tizen 5.5 platform, including new features on Tizen .NET. This year, we were very honored to invite David Ortinau, Principal Program Manager at Microsoft, to the session to share information about .NET 5 and Xamarin.Forms. At the end of the session, Diego Lizarazo Rivera, Sr., Developer Evangelist at Samsung Electronics, showed a live coding demo.
 
 ## Tizen .NET
-Our main booth exhibited Tizen .NET on Samsung products including Smart TV, Galaxy Watches and a Family Hub. <br/>
+Our main booth exhibited Tizen .NET on Samsung products, including SmartTV, Galaxy Watches, and Family Hub. <br/>
 
 <img src="{{site.url}}{{site.baseurl}}/assets/images/posts/sdc2019/tizenbooth1.jpg" alt="Tizen Booth" width="300">
 <img src="{{site.url}}{{site.baseurl}}/assets/images/posts/sdc2019/tizenbooth2.jpg" alt="Tizen Booth" width="300">
