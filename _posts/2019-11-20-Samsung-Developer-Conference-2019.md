@@ -63,7 +63,7 @@ Inviting our partners made our conference even more special.
 ![]({{site.url}}{{site.baseurl}}/assets/images/posts/sdc2019/cozyma.png) ![]({{site.url}}{{site.baseurl}}/assets/images/posts/sdc2019/cozymaController.png)
 
 ## Code Lab - C# on Galaxy Watch
-The Code Lab providedhelp for developing Tizen .NET applications. Visit [Tizen School](http://tizenschool.org/) to experience Code Lab.
+The Code Lab provided help for developing Tizen .NET applications. Visit [Tizen School](http://tizenschool.org/) to experience Code Lab.
 ![]({{site.url}}{{site.baseurl}}/assets/images/posts/sdc2019/codeLab1.png)
 - How to create a digital watch face
   : This tutorial teaches how to create digital watch faces using Xamarin.Forms
