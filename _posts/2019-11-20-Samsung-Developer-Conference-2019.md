@@ -13,7 +13,7 @@ Samsung Developer Conference 2019 was held in San Jose, California, on Oct. 29 a
 ![]({{site.url}}{{site.baseurl}}/assets/images/posts/sdc2019/sdc19_banner.png)
 
 ## Samsung Developer Conference 2019
-Samsung Developer Conference brings together thousands of developers, creators, and technology experts to explore the latest Samsung technologies and imagine future possibilities with Samsung.
+The Samsung Developer Conference brings together thousands of developers, creators, and technology experts to explore the latest Samsung technologies and imagine the future with Samsung.
 
 Visit [Samsung Developer Conference](https://www.samsungdeveloperconference.com/) to see conference happenings, including the keynote, and take a look at [SDC19 top themes](https://news.samsung.com/global/sdc19-top-themes-from-samsungs-developer-event) to catch up on conference events.
 
@@ -23,7 +23,7 @@ Visit [Samsung Developer Conference](https://www.samsungdeveloperconference.com/
 
 <b>[What's New in Tizen? 5.5 Platform Update and Developer Environment](https://www.samsungdeveloperconference.com/schedule/session/1089296)</b>
 
-Hobum (Vincent) Kwon, the leader of Tizen .NET framework, led the session explaning about new features on Tizen 5.5 platform including new on Tizen .NET. This year we have been very honored to invite David Ortinau, Principal Program Manager at Microsoft, in the session sharing .NET 5 and Xamarin.Forms.
+Hobum (Vincent) Kwon, who leads the Tizen .NET framework team, led the session explaning about new features on Tizen 5.5 platform including new on Tizen .NET. This year we have been very honored to invite David Ortinau, Principal Program Manager at Microsoft, in the session sharing .NET 5 and Xamarin.Forms.
 At the end, Diego Lizarazo Rivera, Sr. Developer Evangelist at Samsung Electronics, showed a live coding demo.
 
 ## Tizen .NET
