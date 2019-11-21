@@ -15,7 +15,7 @@ Samsung Developer Conference 2019 was held in San Jose, California, on Oct. 29 a
 ## Samsung Developer Conference 2019
 The Samsung Developer Conference brings together thousands of developers, creators, and technology experts to explore the latest Samsung technologies and imagine the future with Samsung.
 
-Visit [Samsung Developer Conference](https://www.samsungdeveloperconference.com/) to see conference happenings, including the keynote, and take a look at [SDC19 top themes](https://news.samsung.com/global/sdc19-top-themes-from-samsungs-developer-event) to catch up on conference events.
+Visit the [Samsung Developer Conference](https://www.samsungdeveloperconference.com/) site to see conference happenings, including the keynote, and take a look at [SDC19 top themes](https://news.samsung.com/global/sdc19-top-themes-from-samsungs-developer-event) to catch up on conference events.
 
 ## Session
 [Watch the session online](https://youtu.be/fU5Yx8M0KOk).
