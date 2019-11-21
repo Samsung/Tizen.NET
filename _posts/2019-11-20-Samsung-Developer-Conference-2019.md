@@ -21,7 +21,7 @@ Visit [Samsung Developer Conference](https://www.samsungdeveloperconference.com/
 [Watch the session online](https://youtu.be/fU5Yx8M0KOk).
 {% include video id="fU5Yx8M0KOk" provider="youtube" %}
 
-<b>[What's New in Tizen? 5.5 Platform Update and Developer Environment](https://www.samsungdeveloperconference.com/schedule/session/1089296)</b>
+<b>[What's New? Tizen 5.5 Platform Update and Developer Environment](https://www.samsungdeveloperconference.com/schedule/session/1089296)</b>
 
 Hobum (Vincent) Kwon, who heads the Tizen .NET framework team, led a session that introduced and explained new features on the Tizen 5.5 platform, including new features on Tizen .NET. This year, we were very honored to invite David Ortinau, Principal Program Manager at Microsoft, to the session to share information about .NET 5 and Xamarin.Forms. At the end of the session, Diego Lizarazo Rivera, Sr., Developer Evangelist at Samsung Electronics, showed a live coding demo.
 
