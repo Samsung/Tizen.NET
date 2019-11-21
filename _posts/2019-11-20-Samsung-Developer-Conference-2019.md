@@ -39,7 +39,7 @@ We showed many demos, including:
   - Material design
   - Tizen .NET widget support on Galaxy Watch
 
-The Weather app, introduced in .NET Conference 2019, has been brought into Samsung products, and it runs naturally on Galaxy Watch, Smart TV, and Family Hub.
+The Weather app, introduced in .NET Conference 2019, has been brought into Samsung products, and it runs easily on Galaxy Watch, Smart TV, and Family Hub.
 
 <img src="{{site.url}}{{site.baseurl}}/assets/images/posts/sdc2019/weatherapp.png" alt="WeatherApp on Watch" width="150">
 <img src="{{site.url}}{{site.baseurl}}/assets/images/posts/sdc2019/weatherapp_tv.png" alt="WeatherApp on TV" width="300">
