@@ -8,14 +8,14 @@ toc: true
 toc_sticky: true
 ---
 
-Samsung Developer Conference was held at San Jose on Oct. 29 and 30. The conference gets bigger and Tizen zone in the exhibition zone gets bigger too. This year, there has been not only the Tizen .NET Team hosting booths and a session, but also the several patner booths demonstrating their Tizen .NET solutions expanding in the real world.
+Samsung Developer Conference 2019 was held in San Jose, California, on Oct. 29 and 30. The conference keeps getting larger, and the Tizen zone within SDC has expanded as well. This year, not only did the Tizen .NET Team host booths and a session, but several partner booths demonstrated their real-world Tizen .NET solutions.
 
 ![]({{site.url}}{{site.baseurl}}/assets/images/posts/sdc2019/sdc19_banner.png)
 
 ## Samsung Developer Conference 2019
-Samsung Developer Conference brings together thousands of developers, creators, and technologists to explore the newest tech and imagine what's possible with Samsung in the future.
+Samsung Developer Conference brings together thousands of developers, creators, and technology experts to explore the latest Samsung technologies and imagine future possibilities with Samsung.
 
-Visit [Samsung Developer Conference](https://www.samsungdeveloperconference.com/) to see what happened including keynote, and take a look at [SDC19 top themes](https://news.samsung.com/global/sdc19-top-themes-from-samsungs-developer-event) to catch up the conference.
+Visit [Samsung Developer Conference](https://www.samsungdeveloperconference.com/) to see conference happenings, including the keynote, and take a look at [SDC19 top themes](https://news.samsung.com/global/sdc19-top-themes-from-samsungs-developer-event) to catch up on conference events.
 
 ## Session
 [Watch the session online](https://youtu.be/fU5Yx8M0KOk).
