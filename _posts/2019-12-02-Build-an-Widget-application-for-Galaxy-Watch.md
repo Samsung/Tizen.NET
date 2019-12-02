@@ -70,7 +70,7 @@ dotnet add package Tizen.Wearable.CircularUI --version 1.4.0
 ℹ️ 
 > Unfortunately, since the application template for the .NET widget is not yet available in Visual Studio, you have to create the widget application code yourself as shown below.
 
-#### Step 1. Declaring an Widget Application in the Tizen Manifest
+#### Step 1. Declaring a Widget Application in the Tizen Manifest
 Declare the widget application and privileges in the `tizen-manifest.xml`.
 ```xml
 <widget-application appid="org.tizen.example.MyWidget" update-period="0" exec="MyWidget.dll" type="dotnet">
@@ -124,6 +124,6 @@ class MyWidgetApp: FormsWidgetApplication
 If you're a fan of Xamarin.Forms :monkey_face: , you can remember the [PrettyWeather](https://github.com/jamesmontemagno/app-pretty-weather) app that [James](https://github.com/jamesmontemagno/) showed at the last .NET conference.
 And, we slightly modified this beautiful application into a widget application that runs on the Galaxy Watch. :smiley:
 
-<img src="https://github.com/rookiejava/sdc2019-tizen-net/raw/master/demo/GalaxyWatch/PrettyWeatherWidget/Screen_SanJose.png" width=180/> <img src="https://github.com/rookiejava/sdc2019-tizen-net/raw/master/demo/GalaxyWatch/PrettyWeatherWidget/Screen_Seoul.png" width=180/> <img src="https://github.com/rookiejava/sdc2019-tizen-net/raw/master/demo/GalaxyWatch/PrettyWeatherWidget/Screen_Boston.png" width=180/> <img src="https://github.com/rookiejava/sdc2019-tizen-net/raw/master/demo/GalaxyWatch/PrettyWeatherWidget/Screen_CityList.png" width=180/>
+<img src="https://github.com/rookiejava/sdc2019-tizen-net/raw/master/demo/GalaxyWatch/PrettyWeatherWidget/Screen_SanJose.png" width="180" /> <img src="https://github.com/rookiejava/sdc2019-tizen-net/raw/master/demo/GalaxyWatch/PrettyWeatherWidget/Screen_Seoul.png" width="180" /> <img src="https://github.com/rookiejava/sdc2019-tizen-net/raw/master/demo/GalaxyWatch/PrettyWeatherWidget/Screen_Boston.png" width="180" /> <img src="https://github.com/rookiejava/sdc2019-tizen-net/raw/master/demo/GalaxyWatch/PrettyWeatherWidget/Screen_CityList.png" width="180" />
 
 Check it out right [here](https://github.com/rookiejava/sdc2019-tizen-net/tree/master/demo/GalaxyWatch/PrettyWeatherWidget).
