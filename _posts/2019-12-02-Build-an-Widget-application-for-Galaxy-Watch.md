@@ -70,8 +70,8 @@ dotnet add package Tizen.Wearable.CircularUI --version 1.4.0
 ℹ️ 
 > Unfortunately, since the application template for the .NET widget is not yet available in Visual Studio, you have to create the widget application code yourself as shown below.
 
-#### Step 1. Edit `tizen-manifest.xml`
-Declare the application type and privileges in the Tizen manifest file.
+#### Step 1. Declaring an Widget Application in the Tizen Manifest
+Declare the widget application and privileges in the `tizen-manifest.xml`.
 ```xml
 <widget-application appid="org.tizen.example.MyWidget" update-period="0" exec="MyWidget.dll" type="dotnet">
     <label>MyWidget</label>
