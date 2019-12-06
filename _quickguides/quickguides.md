@@ -11,7 +11,7 @@ This section provides basic information about developing Tizen .NET applications
 
 ## Official developer training and guides
 - [.NET Developer Training](https://developer.tizen.org/development/training/.net-application)
-- [.NET Developer Guides](https://developer.tizen.org/development/guides/.net-application)
+- [.NET Developer Guides](https://developer.tizen.org/development/guides-0)
 - [Tizen .NET API Reference](https://developer.tizen.org/development/api-reference/.net-application)
 
 --------------
