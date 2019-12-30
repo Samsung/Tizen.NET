@@ -40,5 +40,5 @@ To resolve this issue, please update `Tizen.NET.Sdk` package from `1.0.3` to `1.
 ```
 
 
-## Tizen .NET Templates will be updated
-Sorry for any inconvenience that is caused by this issue. Now is the transition period to the new version and Tizen .NET templates provided on Visual Studio will be updated soon.
+## Tizen .NET Templates have been updated
+Tizen .NET templates provided on Visual Studio have been updated, so please update your Visual Studio Tools for Tizen if you are facing this issue.
