@@ -9,19 +9,19 @@ toc: true
 toc_sticky: true
 ---
 
-When you want to use the internet image in your application, you would be worrying about the slow image loading or the load failure caused by the network issues. In this scenario, it would be really good idea to show the default temporal image until the actual image is successfully loaded and ready to be displayed. Also reusing the image data which has been downloaded can make displaying image very fast.
+When you want to use an internet image in your application, you worry about the slow image loading or load failure caused by network issues. In this scenario, it is a good idea to show the default temporal image until the actual image is successfully loaded and ready to be displayed. Reusing the image data that has been downloaded can also make an image appear quickly.
 
-`FFImageLoading` is the library including all those cool features and helping you to load images quick and easy.
+The `FFImageLoading` library includes all these features to help you to load images quickly and easily.
 
-## What is FFImageLoading - Fast & Furious Image Loading 
-Library to load images quickly & easily on Xamarin.iOS, Xamarin.Android, Xamarin.Forms, Xamarin.Mac / Xamarin.Tizen and Windows (UWP, WinRT).
+## What is FFImageLoading - Fast and furious image loading 
+The `FFImageLoading` library allows you to load images quickly and easily on Xamarin.iOS, Xamarin.Android, Xamarin.Forms, Xamarin.Mac,  Xamarin.Tizen, and Windows (UWP, WinRT).
 
-### Features (support on Tizen)
+### Features supported on Tizen
 - Configurable disk and memory caching
-- Multiple image views using the same image source (url, path, resource) will use only one bitmap which is cached in memory (less memory usage)
-- Deduplication of similar download/load requests. *(If 100 similar requests arrive at same time then one real loading will be performed while 99 others will wait).*
-- Error and loading placeholders support
-- Images can be automatically downsampled to specified size (less memory usage)
+- Multiple image views using the same image source (such as URL, path, resource) use only one bitmap, which is cached in memory (less memory usage)
+- No duplication of similar download/load requests. That is, if 100 similar requests arrive simultaneously, one will load while the other 99 wait
+- Support for error and loading placeholders
+- Images can be automatically downsampled to a specified size (less memory usage)
 - SVG support
 - Image loading Fade-In animations support
 - Can retry image downloads (RetryCount, RetryDelay)
