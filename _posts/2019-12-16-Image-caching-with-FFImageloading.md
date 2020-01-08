@@ -105,7 +105,7 @@ var image = new CachedImage
 ## Clear cache on the memory and disk
  If there is not enough memory on a device, you need to suppress memory usage in your app, FFImageLoading provides a way to clear cache on the memory.
 
-<<Question: Is the sentence "Provided in `CoreApplication`, it is the best place to clear memory cache" part of the text or code?>>
+(Question: Is the sentence "Provided in `CoreApplication`, it is the best place to clear memory cache" part of the text or code?)
 ``` c#
 // Provided in `CoreApplication`, it is the best place to clear memory cache
 protected override void OnLowMemory(LowMemoryEventArgs e)
@@ -120,7 +120,7 @@ FFImageLoading.ImageService.Instance.InvalidateDiskCacheAsync();
 ```
 
 ## Best use of CachedImage
- `CachedImage` works best when it is used in `CollectionView`, because `CollectionView` unloads <<Question: Is unloads the right word?>> a view that is out of sight and reloads when it comes back to the sight. Once the image source is loaded, it appears quickly.
+ `CachedImage` works best when it is used in `CollectionView`, because `CollectionView` unloads (Question: Is unloads the right word?) a view that is out of sight and reloads when it comes back to the sight. Once the image source is loaded, it appears quickly.
 ![][img1]
 
 
