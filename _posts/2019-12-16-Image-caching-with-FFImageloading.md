@@ -9,9 +9,9 @@ toc: true
 toc_sticky: true
 ---
 
-When you want to use an internet image in your application, you may worry about slow image loading or load failure caused by network issues. In this scenario, it is a good idea to show the default temporal image until the actual image is successfully loaded and ready to be displayed. Reusing the image data that has been downloaded can also make an image appear quickly.
+When you want to use an internet image in your application, you may be concerned about slow image loading or load failure caused by network issues. In this scenario, it is a good idea to show the default temporal image until the actual image is successfully loaded and ready to be displayed. Reusing the image data that has been downloaded can also make an image appear more quickly.
 
-The `FFImageLoading` library includes all these features to help you to load images quickly and easily.
+The `FFImageLoading` library includes these features to help you to load images quickly and easily.
 
 ## FFImageLoading - Fast and furious image loading
 The `FFImageLoading` library allows you to load images quickly and easily on Xamarin.iOS, Xamarin.Android, Xamarin.Forms, Xamarin.Mac,  Xamarin.Tizen, and Windows (UWP, WinRT).
@@ -44,7 +44,7 @@ dotnet add package Xamarin.FFImageLoading.Forms
 ```
 
 ### Initialize FFImageLoading
- To use `FFImageLoading`, initialize the library for the Tizen platform and set up various options:
+ To use `FFImageLoading`, initialize the library for the Tizen platform and configure various options:
 ```cs
 var app = new Program();
 Forms.Init(app);
@@ -52,7 +52,7 @@ Forms.Init(app);
 FFImageLoading.Forms.Platform.CachedImageRenderer.Init(app);
 ```
 
-### Set up options on startup time
+### Set up options at startup
  If you want to handle events from `CachedImage` object on your app code, you need to set the `ExecuteCallbacksOnUIThread` property to `true`.
 ```cs
 protected override void OnCreate()
@@ -68,7 +68,7 @@ protected override void OnCreate()
 ```
 
 ## CachedImage
- `CachedImage` is a main functional of `FFImageLoading`. Its usage is very similar to the  Xamarin.Forms `Image` class.
+ `CachedImage` is a main function of `FFImageLoading`. It is very similar to the  Xamarin.Forms `Image` class.
 
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
@@ -96,36 +96,31 @@ var image = new CachedImage
 
 | Property | Description |
 |-|-|
-|`LoadingPlaceholder`|If set, a loading placeholder appears during loading. It supports `UriImageSource`, `FileImageSource`, and `StreamImageSource`.|
- |`ErrorPlaceholder`|If set, an error placeholder appears when an error occurs while loading an image. It supports `UriImageSource`, `FileImageSource`, and `StreamImageSource`.|
- |`RetryCount` (integer, default: 3)|Defines retries count. If an image download or other failure occurs, it can automatically be retried.|
- |`RetryDelay` (integer, default: 250)|Defines retry delay. If an image download or other failure occurs, it can automatically be retried.|
- |CacheDuration (Timespan, default: `TimeSpan.FromDays(90)`)|Defines how long file cache of downloaded image is valid.|
+|`LoadingPlaceholder`|If set, a loading placeholder appears. It supports `UriImageSource`, `FileImageSource`, and `StreamImageSource`.|
+ |`ErrorPlaceholder`|If set, an error placeholder appears if an error occurs while loading an image. It supports `UriImageSource`, `FileImageSource`, and `StreamImageSource`.|
+ |`RetryCount` (integer, default: 3)|Defines the retry count. If an image download or other failure occurs, it can be retried automatically.|
+ |`RetryDelay` (integer, default: 250)|Defines the retry delay. If an image download or other failure occurs, it can automatically be retried.|
+ |CacheDuration (Timespan, default: `TimeSpan.FromDays(90)`)|Defines the length of time the file cache of the downloaded image is valid.|
 
 ## Clear cache on the memory and disk
- If there is not enough memory on a device, you need to suppress memory usage in your app, FFImageLoading provides a way to clear cache on the memory.
+ If a device does not have enough memory, you must suppress memory usage in your app. `FFImageLoading` provides a way to clear the memory cache.
 
-(Question: Is the sentence "Provided in `CoreApplication`, it is the best place to clear memory cache" part of the text or code?)
-``` c#
-// Provided in `CoreApplication`, it is the best place to clear memory cache
-protected override void OnLowMemory(LowMemoryEventArgs e)
-{
-    FFImageLoading.ImageService.Instance.InvalidateMemoryCache();
-}
-```
+ ``` c#
+  FFImageLoading.ImageService.Instance.InvalidateDiskCacheAsync();
+  ```
 
- You can also clear cache on the disk:
+ You can also clear the cache on the disk:
 ``` c#
 FFImageLoading.ImageService.Instance.InvalidateDiskCacheAsync();
 ```
 
 ## Best use of CachedImage
- `CachedImage` works best when it is used in `CollectionView`, because `CollectionView` unloads (Question: Is unloads the right word?) a view that is out of sight and reloads when it comes back to the sight. Once the image source is loaded, it appears quickly.
+ `CachedImage` works best when used in `CollectionView`, because `CollectionView` unloads a view that is out of sight, and reloads the view when it returns. Once the image source is loaded, it appears quickly.
 ![][img1]
 
 
 ## Privileges
- If an image from the internet is not shown, check your app's privilege. It needs the `internet` privilege. In the `tizen-manifest.xml` file, declare `http://tizen.org/privilege/internet`
+ If an internet image is not shown, check your app for the `internet` privilege. In the `tizen-manifest.xml` file, declare `http://tizen.org/privilege/internet`
 
 
 ## Links
