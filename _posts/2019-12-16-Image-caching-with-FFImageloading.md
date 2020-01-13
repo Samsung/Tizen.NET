@@ -104,8 +104,11 @@ var image = new CachedImage
 
 ## Clear cache on the memory and disk
  If a device does not have enough memory, you must suppress memory usage in your app. `FFImageLoading` provides a way to clear the memory cache.
-
+ 
  ``` c#
+// Provided in `CoreApplication`, it is the best place to clear memory cache
+protected override void OnLowMemory(LowMemoryEventArgs e)
+
   FFImageLoading.ImageService.Instance.InvalidateDiskCacheAsync();
   ```
 
