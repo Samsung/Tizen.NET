@@ -3,7 +3,7 @@ title:  "Tizen .NET Portal moving notice"
 search: true
 categories:
   - Tizen.NET
-last_modified_at: 2019-12-30
+last_modified_at: 2019-01-01
 author: Jay Cho
 toc: true
 toc_sticky: true
