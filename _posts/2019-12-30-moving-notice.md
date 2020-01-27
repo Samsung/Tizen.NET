@@ -10,7 +10,7 @@ toc_sticky: true
 ---
 
 ## Tizen .NET Portal is moving to Samsung Developers
-The [Tizen .NET Portal](https://samsung.github.io/Tizen.NET/) has provided a great deal of information about developing Tizen .NET applications. We keep [Posts](https://samsung.github.io/Tizen.NET/posts/) updated, and the GitHub board is always open for our developers.<br/>
+The [Tizen .NET Portal](https://samsung.github.io/Tizen.NET/) provides a great deal of information about developing Tizen .NET applications. We keep [Posts](https://samsung.github.io/Tizen.NET/posts/) updated, and the GitHub board is always open for our developers.<br/>
 
 Now, we are happy to announce that the portal will be integrated to the [Samsung Developers](https://developer.samsung.com/) website as of January 2020.
 
