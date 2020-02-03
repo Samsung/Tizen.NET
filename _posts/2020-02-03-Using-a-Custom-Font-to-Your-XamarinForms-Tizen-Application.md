@@ -15,7 +15,7 @@ Thanks to the Xamarin.Forms community, `Xamarin.Forms 4.5.0` introduces a [new u
 
 We added Tizen support, and now there is no need to write code to use the fonts. You can also choose from any of thousands of available fonts and use them in your Xamarin.Forms Tizen application. 
 
-> **NOTE**: This change will be effective as of [Xamarin.Forms 4.5.0 Pre Release 2](https://www.nuget.org/packages/Xamarin.Forms/4.5.0.187-pre2) or higher.
+> **NOTE**: This change is effective as of [Xamarin.Forms 4.5.0 Pre Release 2](https://www.nuget.org/packages/Xamarin.Forms/4.5.0.187-pre2) or higher.
 
 In this blog, we will describe how to use custom embedded fonts in Xamarin.Forms Tizen applications. 
 
@@ -24,24 +24,25 @@ In this blog, we will describe how to use custom embedded fonts in Xamarin.Forms
 To add fonts as resources, perform the following steps in the Visual Studio:
 
 ### 1. Create a folder to store the font files
-To create a folder for storing the font files, right click the project folder and select `Add > New Folder`. 
+
+To create a folder for storing the font files, right-click the project folder and select **Add > New Folder**. 
 
 <img src="https://d3unf4s5rp9dfh.cloudfront.net/Tizen_blog/customfont-create-folder.png" />
 
-Let's call it `Resources`.
+Let's call it **Resources**.
 
 <img src ="https://d3unf4s5rp9dfh.cloudfront.net/Tizen_blog/customfont-create-folder 2.png" />
 
 ### 2. Add a font file to your project
-To add a font file to your project, right click the `Resources` folder (that would have been created in previous step) and go to `Add > Existing item...`, or drag the file from `File Explore` (on Windows) / `Finder` (on Mac) and drop it into `Resources` folder. You can add True Type Font (`.ttf`) and Open Type Font (`.otf`) files. The example font file you can obtain from [here](https://github.com/xamarin/Xamarin.Forms/tree/master/Xamarin.Forms.Controls/Fonts).
+To add a font file to your project, right-click the **Resources** folder you just created and go to **Add > Existing item...**, or drag the file from **File Explore** (on Windows) or **Finder** (on Mac) and drop it into **Resources** folder. You can add TrueType font (`.ttf`) and OpenType font (`.otf`) files. You can obtain sample font files [here](https://github.com/xamarin/Xamarin.Forms/tree/master/Xamarin.Forms.Controls/Fonts).
 
 <img src="https://d3unf4s5rp9dfh.cloudfront.net/Tizen_blog/customfont-add-fonts.png" />
 
-Also, make sure that adding the font file with **`Build Action: Resources`**. Otherwise, the font file will not be distributed as part of your app.
+Be sure to add the font file with **`Build Action: Resources`**. Otherwise, the font file will not be distributed as part of your app.
 
 <img src="https://d3unf4s5rp9dfh.cloudfront.net/Tizen_blog/customfont-add-fonts2.png" />
 
-After you add the font file to your project as a `Resource`, you can begin assigning the font to `VisualElement` having `FontFamily` property like `Label`, `Entry` and so on. Font name can be specified in XAML or specified in C# code. As I mentioned above, you no longer need to know platform specific rules for specifying `FontFamily` attributes. Whether it's using the full path and font name separated by a hash(`#`) as the font name (just like existing Android way) or it's just using the font name (just like existing iOS way),  it works well. :smiley:
+After you add the font file to your project as a `Resource`, you can begin assigning the font to `VisualElement` items that have the `FontFamily` property, such as `Label`, `Entry`, and so on. Font name can be specified in XAML or specified in C# code. As I mentioned, you no longer need to know platform-specific rules for specifying `FontFamily` attributes. Whether it's using the full path and font name separated by a hash (#) as the font name (as with existing Android) or it's just using the font name (just like existing iOS way),  it works well. :smiley:
 
 > Note that the font file name and font name may be different. To discover the font name on Windows, right-click the `.ttf` file and select `Preview`. The font name can then be determined from the preview window.
 
