@@ -23,7 +23,7 @@ This blog explains how to use custom embedded fonts in Xamarin.Forms Tizen appli
 
 To add fonts as resources, perform the following steps in Visual Studio:
 
-### 1. Create a folder to store the font files
+### Create a folder to store the font files
 
 To create a folder for storing the font files, right-click the project folder and select **Add > New Folder**. 
 
@@ -33,7 +33,7 @@ Let's call it **Resource**.
 
 <img src ="https://d3unf4s5rp9dfh.cloudfront.net/Tizen_blog/customfont-create-folder 2.png" />
 
-### 2. Add a font file to your project
+### Add a font file to your project
 
 To add a font file to your project, right-click the **Resource** folder that you created in the previous step and go to **Add > Existing item...**, or drag the file from **File Explore** (on Windows) / **Finder** (on Mac) and drop it into the **Resource** folder. You can add TrueType font (`.ttf`) and OpenType font (`.otf`) files. For a folder of example fonts, go [here](https://github.com/xamarin/Xamarin.Forms/tree/master/Xamarin.Forms.Controls/Fonts).
 
