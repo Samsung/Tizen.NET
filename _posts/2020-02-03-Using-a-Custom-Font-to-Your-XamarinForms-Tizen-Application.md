@@ -25,11 +25,11 @@ To add fonts as resources, perform the following steps in Visual Studio:
 
 ### 1. Create a folder to store the font files
 
-To create a folder for storing the font files, right-click the project folder and select **Add > New Folder**. 
+    To create a folder for storing the font files, right-click the project folder and select **Add > New Folder**. 
 
-<img src="https://d3unf4s5rp9dfh.cloudfront.net/Tizen_blog/customfont-create-folder.png" />
+    <img src="https://d3unf4s5rp9dfh.cloudfront.net/Tizen_blog/customfont-create-folder.png" />
 
-Let's call it **Resources**.
+    Let's call it **Resources**.
 
 <img src ="https://d3unf4s5rp9dfh.cloudfront.net/Tizen_blog/customfont-create-folder 2.png" />
 
