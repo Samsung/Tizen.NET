@@ -29,17 +29,17 @@ To create a folder for storing the font files, right-click the project folder an
 
 <img src="https://d3unf4s5rp9dfh.cloudfront.net/Tizen_blog/customfont-create-folder.png" />
 
-Let's call it **Resources**.
+Let's call it **Resource**.
 
 <img src ="https://d3unf4s5rp9dfh.cloudfront.net/Tizen_blog/customfont-create-folder 2.png" />
 
 ### 2. Add a font file to your project
 
-To add a font file to your project, right click the `Resources` folder (that would have been created in previous step) and go to `Add > Existing item...`, or drag the file from `File Explore` (on Windows) / `Finder` (on Mac) and drop it into `Resources` folder. You can add True Type Font (`.ttf`) and Open Type Font (`.otf`) files. The example font file you can obtain from [here](https://github.com/xamarin/Xamarin.Forms/tree/master/Xamarin.Forms.Controls/Fonts).
+To add a font file to your project, right-click the **Resource** folder that you created in the previous step and go to **Add > Existing item...**, or drag the file from **File Explore** (on Windows) / **Finder** (on Mac) and drop it into the **Resource** folder. You can add TrueType font (`.ttf`) and OpenType font (`.otf`) files. You can obtain a folder of example fonts [here](https://github.com/xamarin/Xamarin.Forms/tree/master/Xamarin.Forms.Controls/Fonts).
 
 <img src="https://d3unf4s5rp9dfh.cloudfront.net/Tizen_blog/customfont-add-fonts.png" />
 
-Also, make sure that adding the font file with **`Build Action: Resources`**. Otherwise, the font file will not be distributed as part of your app.
+Make sure you add the font file with **Build Action: Resources**. Otherwise, the font file will not be distributed as part of your app.
 
 <img src="https://d3unf4s5rp9dfh.cloudfront.net/Tizen_blog/customfont-add-fonts2.png" />
 
