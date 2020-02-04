@@ -11,7 +11,7 @@ toc_sticky: true
 
 Previously, in order to use custom fonts in existing Xamarin.Forms applications, you had to add the font asset in each platform project and use the `FontFamily` property to apply the fonts. This was very cumbersome, because each platform required a different syntax for referencing a font file. 
 
-It's no different on Tizen. As we introduced in [previous blog post](https://samsung.github.io/Tizen.NET/tizen%20.net/custom-fonts), using custom fonts in your Tizen .NET applications was not so simple.
+It was the same on Tizen. As we introduced in [previous blog post](https://samsung.github.io/Tizen.NET/tizen%20.net/custom-fonts), using custom fonts in your Tizen .NET applications wasn't very simple.
 
 Xamarin.Forms 4.5.0 introduced a [new uniform way](https://github.com/xamarin/Xamarin.Forms/pull/6013) to specify the custom font across platforms. You can no longer define custom fonts on each platform and use them in the same way by including them as `Application Resources`, which was a feature available from [Xamarin.Forms 4.5.0 Pre Release 1](https://www.nuget.org/packages/Xamarin.Forms/4.5.0.142-pre1). Unfortunately, this version of Xamarin.Forms didn't include support for Tizen. So, we added the Tizen support, and now you don't need to write code to use the fonts. You you can choose from thousands of fonts to use in your Xamarin.Forms Tizen application. 
 
