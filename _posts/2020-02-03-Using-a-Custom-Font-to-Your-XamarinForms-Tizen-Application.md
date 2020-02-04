@@ -35,15 +35,15 @@ Let's call it **Resource**.
 
 ### 2. Add a font file to your project
 
-To add a font file to your project, right-click the **Resource** folder that you created in the previous step and go to **Add > Existing item...**, or drag the file from **File Explore** (on Windows) / **Finder** (on Mac) and drop it into the **Resource** folder. You can add TrueType font (`.ttf`) and OpenType font (`.otf`) files. You can obtain a folder of example fonts [here](https://github.com/xamarin/Xamarin.Forms/tree/master/Xamarin.Forms.Controls/Fonts).
+To add a font file to your project, right-click the **Resource** folder that you created in the previous step and go to **Add > Existing item...**, or drag the file from **File Explore** (on Windows) / **Finder** (on Mac) and drop it into the **Resource** folder. You can add TrueType font (`.ttf`) and OpenType font (`.otf`) files. For a folder of example fonts, go [here](https://github.com/xamarin/Xamarin.Forms/tree/master/Xamarin.Forms.Controls/Fonts).
 
 <img src="https://d3unf4s5rp9dfh.cloudfront.net/Tizen_blog/customfont-add-fonts.png" />
 
-Make sure you add the font file with **Build Action: Resources**. Otherwise, the font file will not be distributed as part of your app.
+**Note** Be sure to add the font file with **Build Action: Resources**. Otherwise, the font file will not be distributed as part of your app.
 
 <img src="https://d3unf4s5rp9dfh.cloudfront.net/Tizen_blog/customfont-add-fonts2.png" />
 
-After you add the font file to your project as a `Resource`, you can begin assigning the font to `VisualElement` having `FontFamily` property like `Label`, `Entry` and so on. Font name can be specified in XAML or specified in C# code. As I mentioned above, you no longer need to know platform specific rules for specifying `FontFamily` attributes. Whether it's using the full path and font name separated by a hash(`#`) as the font name (just like existing Android way) or it's just using the font name (just like existing iOS way),  it works well. :smiley:
+After you add the font file to your project as a `Resource`, you can begin assigning the font any `VisualElement` that has a `FontFamily` property, such as `Label`, `Entry`, and so on. The font name can be specified in XAML or in C# code. As I mentioned, you no longer need to know platform-specific rules for specifying `FontFamily` attributes. Whether you use the full path and font name separated by a hash (`#`) as the font name (as with Android) or you use just the font name (as with iOS),  it works well.
 
 > Note that the font file name and font name may be different. To discover the font name on Windows, right-click the `.ttf` file and select `Preview`. The font name can then be determined from the preview window.
 
