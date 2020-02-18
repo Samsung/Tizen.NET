@@ -10,20 +10,22 @@ toc_sticky: true
 ---
 
 ## SwipeView in Xamarin.Forms 4.4
-In the Xamarin.Forms 4.4 release, a new experimental control called [SwipeView](https://docs.microsoft.com/en-us/dotnet/api/xamarin.forms.swipeview?view=xamarin-forms) was added. [SwipeView](https://docs.microsoft.com/en-us/dotnet/api/xamarin.forms.swipeview?view=xamarin-forms) is a container control that wraps any of your controls and make them swipe-able.
-Check out the [API documentation](https://docs.microsoft.com/en-us/dotnet/api/xamarin.forms.swipeview?view=xamarin-forms) and [official guide](https://docs.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/swipeview) to dive into.
+The new experimental [SwipeView](https://docs.microsoft.com/en-us/dotnet/api/xamarin.forms.swipeview?view=xamarin-forms) control was added in the Xamarin.Forms 4.4 release. [SwipeView](https://docs.microsoft.com/en-us/dotnet/api/xamarin.forms.swipeview?view=xamarin-forms) is a container control that wraps any of your controls and make them swipe-able.
 
-**Note**: Depends on the platforms you are developing, `SwipeView` can be only used under an experimental flag. In this case, you need a following line before calling `Forms.Init` in your application.
+See the [API documentation](https://docs.microsoft.com/en-us/dotnet/api/xamarin.forms.swipeview?view=xamarin-forms) and [official guide](https://docs.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/swipeview) for detailed information.
+
+**Note**: Depending on the platforms for which you are developing, `SwipeView` can be only used under an experimental flag. In this case, add the following line before calling `Forms.Init` in your application.
+
 ```c#
 Forms.SetFlags("SwipeView_Experimental");
 ```
 
 ## Preparation to use SwipeView in Tizen
-For most of developers who use the Tizen wearable templates when creating a project in Visual Studio, update `Tizen.Wearable.CircularUI` Nuget version to `1.5.0-pre2` or above. This update will bring `Xamarin.Forms` version 4.4.0.991537 to your application.
+For most developers who use the Tizen wearable templates when creating a project in Visual Studio, update `Tizen.Wearable.CircularUI` Nuget version to `1.5.0-pre2` or above. This update brings `Xamarin.Forms` version 4.4.0.991537 to your application.
 ![]({{site.url}}{{site.baseurl}}/assets/images/posts/using-swipeview/solutionexplorer.png)
 
 ## Adding SwipeView to controls
-Here I want to create a simple city selector sample application. Check out the sample code below. I wrap my images with `SwipeView`. One image is the main city image and the other is a decorative image that shows the selected status of the main image. I put top items among 4 directions, so that application users can swipe down the city image to invoke an action.
+Here is how to create a simple city selector sample application. First, wrap my images with `SwipeView`. One image is the main city image and the other is a decorative image that shows the selected status of the main image. I put top items among 4 directions, so that application users can swipe down the city image to invoke an action. Check out the sample code below
 
 ```xaml
 <c:CirclePage xmlns="http://xamarin.com/schemas/2014/forms"
