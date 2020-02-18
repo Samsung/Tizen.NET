@@ -25,7 +25,7 @@ For most developers who use the Tizen wearable templates when creating a project
 ![]({{site.url}}{{site.baseurl}}/assets/images/posts/using-swipeview/solutionexplorer.png)
 
 ## Adding SwipeView to controls
-Here is how to create a simple city selector sample application. First, wrap my images with `SwipeView`. One image is the main city image and the other is a decorative image that shows the selected status of the main image. I put top items among 4 directions, so that application users can swipe down the city image to invoke an action. Check out the sample code below
+Here is how to create a simple city selector sample application (see the following code). First, wrap your images with `SwipeView`. One image is the main city image, and the other is a decorative image that shows the selected status of the main image. I put `TopItems` among four directions, so that application users can swipe down the city image to invoke an action.
 
 ```xaml
 <c:CirclePage xmlns="http://xamarin.com/schemas/2014/forms"
@@ -52,18 +52,21 @@ Here is how to create a simple city selector sample application. First, wrap my 
 	</c:CirclePage.Content>
 </c:CirclePage>
 ```
-In the cs file, I simply changed the visible status of a `selectedImage` when the main image is swiped down.
+
+In the cs file, simply change the visible status of a `selectedImage` when the main image is swiped down.
+
 ```c#
 private void TopItem_Invoked(object sender, EventArgs e)
 {
         selectedImage.IsVisible = !selectedImage.IsVisible;
 }
 ```
+
 Let's try running the code on an emulator. 
 ![]({{site.url}}{{site.baseurl}}/assets/images/posts/using-swipeview/swipeview.gif)
 
 ## Example
-Now, let's put more cities with `SwipeView`s.
+Now, let's add more cities with `SwipeView`s.
 ![]({{site.url}}{{site.baseurl}}/assets/images/posts/using-swipeview/swipeviews.gif)
 
-Again, check out the [API documentation](https://docs.microsoft.com/en-us/dotnet/api/xamarin.forms.swipeview?view=xamarin-forms) and [official guide](https://docs.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/swipeview) to see what you can do more with `SwipeView`.
+Again, check out the [API documentation](https://docs.microsoft.com/en-us/dotnet/api/xamarin.forms.swipeview?view=xamarin-forms) and [official guide](https://docs.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/swipeview) to see what else you can do with `SwipeView`.
