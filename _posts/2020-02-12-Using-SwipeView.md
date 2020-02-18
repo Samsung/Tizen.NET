@@ -10,7 +10,7 @@ toc_sticky: true
 ---
 
 ## SwipeView in Xamarin.Forms 4.4
-In the release of Xamarin.Forms 4.4, new control called [SwipeView](https://docs.microsoft.com/en-us/dotnet/api/xamarin.forms.swipeview?view=xamarin-forms) is added as an experimental control. [SwipeView](https://docs.microsoft.com/en-us/dotnet/api/xamarin.forms.swipeview?view=xamarin-forms) is a container control that wraps any of your controls and make them swipe-able.
+In the Xamarin.Forms 4.4 release, a new experimental control called [SwipeView](https://docs.microsoft.com/en-us/dotnet/api/xamarin.forms.swipeview?view=xamarin-forms) was added. [SwipeView](https://docs.microsoft.com/en-us/dotnet/api/xamarin.forms.swipeview?view=xamarin-forms) is a container control that wraps any of your controls and make them swipe-able.
 Check out the [API documentation](https://docs.microsoft.com/en-us/dotnet/api/xamarin.forms.swipeview?view=xamarin-forms) and [official guide](https://docs.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/swipeview) to dive into.
 
 **Note**: Depends on the platforms you are developing, `SwipeView` can be only used under an experimental flag. In this case, you need a following line before calling `Forms.Init` in your application.
