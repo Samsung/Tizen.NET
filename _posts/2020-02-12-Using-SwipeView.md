@@ -66,7 +66,7 @@ Let's try running the code on an emulator.
 ![]({{site.url}}{{site.baseurl}}/assets/images/posts/using-swipeview/swipeview.gif)
 
 ## Example
-Now, let's add more cities with `SwipeView`s.
+Now, let's add more cities with `SwipeView`:
 ![]({{site.url}}{{site.baseurl}}/assets/images/posts/using-swipeview/swipeviews.gif)
 
-Again, check out the [API documentation](https://docs.microsoft.com/en-us/dotnet/api/xamarin.forms.swipeview?view=xamarin-forms) and [official guide](https://docs.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/swipeview) to see what else you can do with `SwipeView`.
+Again, you can check out the [API documentation](https://docs.microsoft.com/en-us/dotnet/api/xamarin.forms.swipeview?view=xamarin-forms) and [official guide](https://docs.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/swipeview) to see what else you can do with `SwipeView`.
