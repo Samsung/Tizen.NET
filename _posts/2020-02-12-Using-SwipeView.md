@@ -21,7 +21,7 @@ Forms.SetFlags("SwipeView_Experimental");
 ```
 
 ## Preparation to use SwipeView in Tizen
-For most developers who use the Tizen wearable templates when creating a project in Visual Studio, update `Tizen.Wearable.CircularUI` Nuget version to `1.5.0-pre2` or above. This update brings `Xamarin.Forms` version 4.4.0.991537 to your application.
+For most developers who use the Tizen wearable templates when creating a project in Visual Studio, update `Tizen.Wearable.CircularUI` NuGet version to `1.5.0-pre2` or above. This update brings `Xamarin.Forms` version 4.4.0.991537 to your application.
 ![]({{site.url}}{{site.baseurl}}/assets/images/posts/using-swipeview/solutionexplorer.png)
 
 ## Adding SwipeView to controls
