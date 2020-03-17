@@ -1,17 +1,17 @@
 # main links
 main:
-  - title: "About"
-    url: /about/
-  - title: "Quick Guides"
-    url: /guides/
-  - title: "Posts"
-    url: /posts/
-  - title: "Known Issues"
-    url: /issues/
-  - title: "Resources"
-    url: /resources/
-  - title: "FAQ"
-    url: /faq/
+#  - title: "About"
+#    url: /about/
+#  - title: "Quick Guides"
+#    url: /guides/
+#  - title: "Posts"
+#    url: /posts/
+#  - title: "Known Issues"
+#    url: /issues/
+#  - title: "Resources"
+#    url: /resources/
+#  - title: "FAQ"
+#    url: /faq/
 
 
 # quick guides links

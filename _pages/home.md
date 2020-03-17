@@ -4,9 +4,8 @@ permalink: /
 header:
   overlay_color: "#5e616c"
 excerpt: >
-  Welcome to the Tizen .NET Portal!<br/>
-  Everything you need for developing Tizen .NET applications is available here.<br/>
-  To get started, see the [Set Up the Environment](guides/environment) guide.
+  Tizen .NET Portal is integrated to [Samsung Developers](https://developer.samsung.com/tizen)<br/>
+  Please visit [Samsung Developers](https://developer.samsung.com/tizen) to learn about Tizen .NET.<br/>
 feature_row:
   - image_path: /assets/images/home/samsung-developers-logo.png
     alt: "Samsung Developers"
