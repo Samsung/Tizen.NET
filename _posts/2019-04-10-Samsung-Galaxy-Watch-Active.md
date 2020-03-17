@@ -6,6 +6,7 @@ categories:
 author: Juwon (Julia) Ahn
 search: true
 classes: wide
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2019/04/10/samsung-galaxy-watch-active-and-wearable-emulator-without-the-rotating-bezel
 ---
 
 Samsung Galaxy Watch Active is now available.

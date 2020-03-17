@@ -7,6 +7,7 @@ author: Sungsu Kim
 toc: true
 toc_sticky: true
 toc_label: Contents
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2019/08/01/introducing-xamarin-essentials-for-tizen
 ---
 
 <br/>

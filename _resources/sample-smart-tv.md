@@ -3,6 +3,7 @@ title: "Sample Apps for Samsung Smart TVs"
 permalink: /resources/samples_smart_tv/
 toc: true
 toc_sticky: true
+redirect_to: https://developer.samsung.com/tizen/Smart-TV/Resources/Samples/Smart-TV.html
 ---
 
 Here are some helpful resources to develop a Tizen .NET application for Samsung Smart TVs.

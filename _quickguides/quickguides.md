@@ -3,6 +3,7 @@ title: "Tizen .NET Development"
 permalink: /guides/
 classes: wide
 comments: true
+redirect_to: https://developer.samsung.com/tizen
 ---
 
 Welcome to Tizen .NET World!

@@ -8,6 +8,7 @@ last_modified_at: 2019-08-08
 toc: true
 toc_sticky: true
 toc_label: Add a splash screen to your Tizen .NET application
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2019/08/08/add-a-splash-screen-to-your-tizen-net-application
 ---
 
 A splash screen appears instantly while your app launches and is quickly replaced with the app's first screen. Tizen provides an option for users to include splash screens in their applications. Splash screens can be customized based on orientation and resolution.

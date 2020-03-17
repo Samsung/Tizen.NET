@@ -3,6 +3,7 @@ title:  "Visual Studio Code"
 permalink: /issues/tv/tools-vscode/
 toc: true
 toc_sticky: true
+redirect_to: https://developer.samsung.com/tizen/Smart-TV/FAQ/FAQ.html
 ---
 
 Visual Studio 2017 on Windows is the number one choice for developing Tizen .NET applications. However, if you are a Mac user, you have the option of using Visual Studio Code to develop Tizen .NET applications.

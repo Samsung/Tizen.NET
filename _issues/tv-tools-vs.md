@@ -3,6 +3,7 @@ title:  "Visual Studio 2019"
 permalink: /issues/tv/tools-vs/
 toc: true
 toc_sticky: true
+redirect_to: https://developer.samsung.com/tizen/Smart-TV/FAQ/FAQ.html
 ---
 
 This issue was shared on March 23, 2019.

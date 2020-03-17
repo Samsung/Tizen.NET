@@ -1,6 +1,7 @@
 ---
 title: "Issues and Questions"
 permalink: /faq/questions/
+redirect_to: https://developer.samsung.com/tizen/Galaxy-Watch/FAQ/FAQ.html
 ---
 
 Do you have any questions about Tizen .NET? Did you find any issues? If so, you can open a request at the Tizen .NET GitHub.

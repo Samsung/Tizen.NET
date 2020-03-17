@@ -1,6 +1,7 @@
 ---
 title: "Technical Support"
 permalink: /faq/tech-support/
+redirect_to: https://developer.samsung.com/tizen/Galaxy-Watch/FAQ/FAQ.html
 ---
 
 ### Technical Support

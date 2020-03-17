@@ -8,6 +8,7 @@ author: Wonyoung Choi
 toc: true
 toc_sticky: true
 toc_label: Using Tizen.NET.Sdk as SDK-style
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2019/06/13/using-tizennetsdk-as-sdk-style
 ---
 
 `Tizen.NET.Sdk` is a NuGet package that provides the features for creating and signing a .tpk package file. Previously, this package was added to the `.csproj` file as a `PackageReference`; in this post, I introduce a new method to add this package.

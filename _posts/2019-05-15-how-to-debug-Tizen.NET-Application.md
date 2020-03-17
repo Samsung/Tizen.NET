@@ -6,6 +6,7 @@ categories:
 author: Reni Mathew
 toc: true
 toc_sticky: true
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2019/05/15/how-to-debug-tizennet-applications
 ---
 
 Debugging the Tizen .NET application is available as of Tizen 5.0.

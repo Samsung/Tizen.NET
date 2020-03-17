@@ -3,6 +3,7 @@ title: "Publish Your Wearable Application"
 permalink: /guides/publish-wearableapp/
 toc: true
 toc_sticky: true
+redirect_to: https://developer.samsung.com/tizen/Galaxy-Watch/Quickstarts/Publishing-an-application.html
 ---
 
 ## Samsung Galaxy Apps Seller Office

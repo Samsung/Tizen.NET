@@ -6,6 +6,7 @@ categories:
 author: Jay Cho
 toc: true
 toc_sticky: true
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2019/09/02/changes-to-tizennet-from-xamarinforms-420
 ---
 
 `Xamarin.Forms 4.2.0` has been released, with significant changes on the Tizen platform.

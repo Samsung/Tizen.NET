@@ -5,6 +5,7 @@ search: true
 toc: true
 toc_sticky: true
 toc_label: Known Issues & Workarounds
+redirect_to: https://developer.samsung.com/tizen/Smart-TV/FAQ/FAQ.html
 ---
 
 This section lists problems you might encounter while working with a Tizen TV emulator or a Samsung Smart TV.

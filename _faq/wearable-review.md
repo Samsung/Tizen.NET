@@ -1,6 +1,7 @@
 ---
 title:  "Design Review Process"
 permalink: /faq/wearable/design-review/
+redirect_to: https://developer.samsung.com/tizen/Galaxy-Watch/FAQ/FAQ.html
 ---
 
 ## Submit your design

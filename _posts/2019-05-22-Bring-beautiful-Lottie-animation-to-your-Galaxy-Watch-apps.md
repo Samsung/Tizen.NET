@@ -8,6 +8,7 @@ author: Kangho Hur
 toc: true
 toc_sticky: true
 toc_label: Lottie for Tizen .NET
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2019/05/22/bring-beautiful-lottie-animation-to-your-galaxy-watch-apps
 ---
 
 [Lottie](https://github.com/airbnb/lottie) is a library for Android, iOS, Web, and Windows that parses [Adobe After Effects](http://www.adobe.com/products/aftereffects.html) animations exported as JSON with [Bodymovin](https://github.com/bodymovin/bodymovin) and renders them natively on mobile devices and on the web.

@@ -7,6 +7,7 @@ last_modified_at: 2019-12-16
 author: Seungkeun Lee
 toc: true
 toc_sticky: true
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2019/12/16/image-caching-using-ffimageloading
 ---
 
 When you want to use an internet image in your application, you may be concerned about slow image loading or load failure caused by network issues. In this scenario, it is a good idea to show the default temporal image until the actual image is successfully loaded and ready to be displayed. Reusing the image data that has been downloaded can also make an image appear more quickly.

@@ -6,6 +6,7 @@ last_modified_at: 2019-02-19
 author: Jay Cho
 toc: true
 toc_sticky: true
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2019/02/19/launch-your-tizen-net-application-on-samsung-smart-tv
 ---
 
 This post discusses how to run the Tizen .NET application with Xamarin.Forms on the Samsung Smart TV 2018 models. Learn how to run your own applications on Samsung Smart TV.

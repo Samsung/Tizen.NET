@@ -6,6 +6,7 @@ categories:
 author: Rina You
 toc: true
 toc_sticky: true
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2019/03/08/how-to-use-skiasharp-in-tizen-net
 ---
 
 SkiaSharp is a cross-platform 2D graphics API for .NET platforms powered by the Google Skia Library. SkiaSharp provides a comprehensive API that is used on mobile, TV, watch, and desktop platforms. You can use SkiaSharp to create many different types of graphics, tables, and text in your own application.

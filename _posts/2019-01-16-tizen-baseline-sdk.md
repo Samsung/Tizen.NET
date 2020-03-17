@@ -4,6 +4,7 @@ author: Jay Cho
 categories:
   - Environment
 tag: SDK
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2019/01/16/install-tizen-baseline-sdk
 ---
 
 ## Overview

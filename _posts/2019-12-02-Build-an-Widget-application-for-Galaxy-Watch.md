@@ -7,6 +7,7 @@ last_modified_at: 2019-12-02
 author: Kangho Hur
 toc: true
 toc_sticky: true
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2019/12/02/build-a-widget-for-galaxy-watch
 ---
 
 The Tizen wearable profile provides three application models to create a variety of UI applications:

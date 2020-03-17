@@ -7,6 +7,7 @@ author: Sunghyun Min
 toc: true
 toc_sticky: true
 toc_label: Try the Latest in Tizen .NET with Nightly Builds
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2019/05/02/try-the-latest-in-tizen-net-with-nightly-builds
 ---
 
 TizenFX is a part of [Tizen Project](https://www.tizen.org/), which allows you to access platform-specific features not covered by the generic .NET and Xamarin.Forms. There are several versions of TizenFX, according to Tizen platform release. They have been published as Tizen.NET packages in [nuget.org](https://www.nuget.org/).

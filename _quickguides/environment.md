@@ -3,6 +3,7 @@ title: "Environment"
 permalink: /guides/environment/
 toc: true
 toc_sticky: true
+redirect_to: https://developer.samsung.com/tizen/Galaxy-Watch/Installation.html
 ---
 
 The guide describes how to set up an environment where you can develop Tizen .NET applications.

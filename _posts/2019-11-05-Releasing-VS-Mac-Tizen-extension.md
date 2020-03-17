@@ -6,6 +6,7 @@ categories:
 author: Jay Cho
 toc: true
 toc_sticky: true
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2019/11/05/introducing-the-visual-studio-for-mac-tizen-extension
 ---
 
 I am very pleased to announce the release of the Tizen extension for Visual Studio for Mac.

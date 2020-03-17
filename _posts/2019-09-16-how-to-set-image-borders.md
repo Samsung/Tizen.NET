@@ -7,6 +7,7 @@ author: Sunghyun Min
 toc: true
 toc_sticky: true
 toc_label: How to set image borders
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2019/09/16/how-to-set-an-images-borders-to-make-it-resizable
 ---
 
 Sometimes app developers want to set a resizable image as background to better fit the contents. However, if you resize the image as it is, you may not get the shape you want.<br/>

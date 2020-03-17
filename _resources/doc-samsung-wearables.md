@@ -4,6 +4,7 @@ permalink: /resources/SamsungWearables/
 toc: true
 toc_sticky: true
 toc_label: For Samsung Wearables
+redirect_to: https://developer.samsung.com/tizen/Galaxy-Watch/Resources/Documents/Galaxy-Watch.htmlhttps://developer.samsung.com/tizen/Galaxy-Watch/Resources/Documents/Galaxy-Watch.html
 ---
 
 ## Samsung Extension APIs

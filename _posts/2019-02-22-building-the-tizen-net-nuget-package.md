@@ -4,6 +4,7 @@ last_modified_at: 2019-02-22
 categories:
   - Tizen .NET
 author: Kangho Hur
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2019/02/22/build-the-tizen-net-nuget-package
 ---
 
 TizenFX APIs allow you to access Tizen-specific platform features not covered by the generic .NET standard and Xamarin APIs, such as system information and status, battery status, sensor date, and account and connectivity services.

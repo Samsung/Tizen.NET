@@ -7,6 +7,7 @@ last_modified_at: 2019-02-12
 author: Juwon (Julia) Ahn
 toc: true
 toc_label: Custom Fonts in Tizen .Net Apps
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2019/02/12/use-custom-fonts-in-tizen-net-apps
 ---
 
 ## Xamarin.Forms application

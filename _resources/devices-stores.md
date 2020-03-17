@@ -3,6 +3,7 @@ title: "Tizen Devices & Stores"
 permalink: /resources/devices-stores/
 toc: true
 toc_sticky: true
+redirect_to: https://developer.samsung.com/tizen
 ---
 
 ### Devices

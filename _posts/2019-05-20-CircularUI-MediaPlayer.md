@@ -8,6 +8,7 @@ author: Juwon (Julia) Ahn
 toc: true
 toc_sticky: true
 toc_label: Video Player for Wearables
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2019/05/20/how-to-make-a-video-player-for-tizen-wearables
 ---
 
 You can play media files stored in Galaxy Watch, or present over the Internet in your application. In this post, we discuss how to create a video player for Tizen wearables.

@@ -1,6 +1,7 @@
 ---
 title: "Tizen .NET Apps on Galaxy Store"
 permalink: /resources/dotnet_wearable_apps_on_galaxy_store/
+redirect_to: https://developer.samsung.com/tizen/Galaxy-Watch/Resources/Samples/Apps-on-store.html
 ---
 
 Here are Tizen .NET applications for Samsung Wearables.

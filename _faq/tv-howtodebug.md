@@ -1,6 +1,7 @@
 ---
 title:  "How to Debug?"
 permalink: /faq/tv/howtodebug/
+redirect_to: https://developer.samsung.com/tizen/Smart-TV/FAQ/FAQ.html
 ---
 
 Debug mode for [2018 Samsung Smart TV models](https://developer.samsung.com/tv/develop/specifications/tv-model-groups) is not supported.

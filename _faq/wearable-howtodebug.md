@@ -1,6 +1,7 @@
 ---
 title:  "How to Debug?"
 permalink: /faq/wearable/howtodebug/
+redirect_to: https://developer.samsung.com/tizen/Galaxy-Watch/FAQ/FAQ.html
 ---
 
 ## Debug a Tizen .NET application

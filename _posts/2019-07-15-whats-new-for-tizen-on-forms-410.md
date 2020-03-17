@@ -7,6 +7,7 @@ last_modified_at: 2019-07-15
 author: Sunghyun Min
 toc: true
 toc_sticky: true
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2019/07/15/whats-new-for-tizen-on-xamarinforms-410
 ---
 
 Many new UI features were added on `Xamarin.Forms 4.0`, including Shell, CollectionView and Material Visual.<br/>

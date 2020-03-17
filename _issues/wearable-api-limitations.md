@@ -5,6 +5,7 @@ search: true
 toc: true
 toc_label: Wearable API Limitations
 toc_sticky: true
+redirect_to: https://developer.samsung.com/tizen/Galaxy-Watch/FAQ/FAQ.html
 ---
 
 ## .NET Standard

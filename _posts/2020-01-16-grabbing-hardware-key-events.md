@@ -7,6 +7,7 @@ last_modified_at: 2020-01-16
 author: Jay Cho
 toc: true
 toc_sticky: true
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2020/01/16/grabbing-hardware-key-events-in-tizen
 ---
 
 It is not a common scenario to grab a hardware key event in your application, because you can simply use controls like `Editor` or `Entry` when you need to get input from users. However, if you want to make a more advanced application which handles hardware key inputs more detail or especially when you want to do something with the Smart TV remote control key event, you want to grab hardware key events.
