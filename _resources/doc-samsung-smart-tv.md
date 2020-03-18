@@ -17,6 +17,7 @@ gallery:
     image_path: https://user-images.githubusercontent.com/1029155/42200637-4685077c-7ecf-11e8-9984-4c68048da265.gif
   - url: https://user-images.githubusercontent.com/1029155/42200638-489afd3c-7ecf-11e8-981d-8f27169ee8c0.gif
     image_path: https://user-images.githubusercontent.com/1029155/42200638-489afd3c-7ecf-11e8-981d-8f27169ee8c0.gif
+redirect_to: https://developer.samsung.com/tizen/Smart-TV/Resources/Documents/Smart-TV.html
 ---
 
 

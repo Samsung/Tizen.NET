@@ -7,6 +7,7 @@ author: Sungsu Kim
 toc: true
 toc_sticky: true
 toc_label: Contents
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2019/04/15/how-to-use-sensors-on-a-galaxy-watch
 ---
 
 Many developers have asked how to use sensor features on Galaxy Watch. This post introduces sensors that are supported for Galaxy Watch and how developers can use them.

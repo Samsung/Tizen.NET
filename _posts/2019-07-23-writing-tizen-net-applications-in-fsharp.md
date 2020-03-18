@@ -5,6 +5,7 @@ categories:
   - Tizen .NET
 author: Swift Kim
 toc: true
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2019/07/23/writing-tizen-net-applications-in-f
 ---
 
 Although C# is the only language officially supported by Tizen .NET, you can write applications in other languages such as F# and VB.NET. Ideally, applications written in interoperable .NET languages are compiled into common IL (intermediate language) code, which can be executed by any CLI-compliant runtime.

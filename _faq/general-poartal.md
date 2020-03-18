@@ -1,6 +1,7 @@
 ---
 title:  "Tizen .NET Portal"
 permalink: /faq/portal/
+redirect_to: https://developer.samsung.com/tizen/Galaxy-Watch/FAQ/FAQ.html
 ---
 
 ## What is the Tizen .NET portal?

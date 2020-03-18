@@ -3,6 +3,7 @@ title: "Sample Apps for Samsung Wearables"
 permalink: /resources/samples_wearables/
 toc: true
 toc_sticky: true
+redirect_to: https://developer.samsung.com/tizen/Galaxy-Watch/Resources/Samples/Galaxy-Watch.html
 ---
 
 Here are some helpful resources to develop a Tizen .NET application for Samsung Wearables.

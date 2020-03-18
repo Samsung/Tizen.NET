@@ -7,6 +7,7 @@ last_modified_at: 2020-02-03
 author: Kangho Hur
 toc: true
 toc_sticky: true
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2020/02/04/using-a-custom-font-in-your-xamarinforms-tizen-application
 ---
 
 Previously, in order to use custom fonts in existing Xamarin.Forms applications, you had to add the font asset in each platform project and use the `FontFamily` property to apply the fonts. This was very cumbersome, because each platform required a different syntax for referencing a font file. 

@@ -7,6 +7,7 @@ categories:
   - Tizen .NET
 last_modified_at: 2019-01-04
 author: Juwon (Julia) Ahn
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2019/01/04/how-to-package-ui-and-service-applications-together-and-perform-them
 ---
 
 ## Create a new Tizen project for Xamarin.Forms application

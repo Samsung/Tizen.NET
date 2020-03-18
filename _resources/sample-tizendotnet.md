@@ -3,6 +3,7 @@ title: "Sample Applications"
 permalink: /resources/samples_tizendotnet/
 toc: true
 toc_sticky: true
+redirect_to: https://developer.samsung.com/tizen/Galaxy-Watch/Resources/Samples/Tizen.NET.html
 ---
 
 When you first start developing a Tizen .NET application, you may be still confused about what to do.

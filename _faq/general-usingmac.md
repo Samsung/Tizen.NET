@@ -3,6 +3,7 @@ title:  "Using Mac"
 permalink: /faq/mac/
 toc: true
 toc_sticky: true
+redirect_to: https://developer.samsung.com/tizen/Galaxy-Watch/FAQ/FAQ.html
 ---
 
 ## Parallels

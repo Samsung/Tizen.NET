@@ -3,6 +3,7 @@ title:  "Behaviors"
 permalink: /issues/wearable/behaviors/
 toc: true
 toc_sticky: true
+redirect_to: https://developer.samsung.com/tizen/Galaxy-Watch/FAQ/FAQ.html
 ---
 
 ## MediaView support

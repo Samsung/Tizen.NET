@@ -6,6 +6,7 @@ categories:
 author: Jay Cho
 toc: true
 toc_sticky: true
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2019/11/20/recapping-tizen-at-samsung-developer-conference-2019
 ---
 
 Samsung Developer Conference 2019 was held in San Jose, California, on Oct. 29 and 30. The conference keeps getting larger, and the Tizen zone within SDC has expanded as well. This year, not only did the Tizen .NET Team host booths and a session, but several partner booths demonstrated their real-world Tizen .NET solutions.

@@ -6,6 +6,7 @@ categories:
 author: Jay Cho
 toc: true
 toc_sticky: true
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2019/07/16/connecting-smart-tv-and-visual-studio
 ---
 
 To deploy and run the application on the Samsung Smart TV, first connect your TV to Visual Studio.

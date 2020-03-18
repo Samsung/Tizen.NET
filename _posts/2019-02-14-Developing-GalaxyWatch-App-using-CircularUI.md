@@ -6,6 +6,7 @@ last_modified_at: 2019-02-15
 author: Jeongkyun Pu
 toc: true
 toc_label: Developing Galaxy Watch App using CircularUI
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2019/02/14/develop-galaxy-watch-apps-using-circularui
 ---
 
 Tizen .NET has three types of application models:

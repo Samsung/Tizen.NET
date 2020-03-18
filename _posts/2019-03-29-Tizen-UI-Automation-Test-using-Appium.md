@@ -6,6 +6,7 @@ categories:
 author: SeungHyun Choi
 toc: true
 toc_sticky: true
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2019/03/29/tizen-ui-automation-test-using-appium
 ---
 
 ## What is Appium?

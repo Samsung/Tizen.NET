@@ -1,6 +1,7 @@
 ---
 permalink: /about/
 title: "Welcome to Tizen .NET Portal"
+redirect_to: https://developer.samsung.com/tizen/About-Tizen.NET/Tizen.NET.html
 ---
 
 <br/>

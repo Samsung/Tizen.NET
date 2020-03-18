@@ -5,6 +5,7 @@ search: true
 toc: true
 toc_sticky: true
 toc_label: Known Issues and Workarounds
+redirect_to: https://developer.samsung.com/tizen/Galaxy-Watch/FAQ/FAQ.html
 ---
 
 ## Connection issue between a watch and Device Manager

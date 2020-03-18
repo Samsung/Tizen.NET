@@ -6,6 +6,7 @@ categories:
 author: Jay Cho
 toc: true
 toc_sticky: true
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2019/10/02/add-a-tizen-project-to-xamarinforms-applications
 ---
 
 This article provide helpful information for new Tizen .NET application developers to get started.

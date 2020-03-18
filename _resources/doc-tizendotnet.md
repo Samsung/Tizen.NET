@@ -4,6 +4,7 @@ permalink: /resources/tizendotnet/
 toc: true
 toc_sticky: true
 toc_label: Tizen .NET
+redirect_to: https://developer.samsung.com/tizen/Galaxy-Watch/Resources/Documents/Tizen.NET.html
 ---
 
 ## Tizen .NET APIs

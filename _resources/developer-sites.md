@@ -3,6 +3,7 @@ title: "Developer Sites"
 permalink: /resources/developer-sites/
 toc: true
 toc_sticky: true
+redirect_to: https://developer.samsung.com/tizen/About-Tizen.NET/Tizen.NET.html
 ---
 
 Here are some helpful resources for developing Tizen .NET applications.

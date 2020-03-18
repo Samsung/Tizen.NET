@@ -6,6 +6,7 @@ categories:
 author: Jay Cho
 toc: true
 toc_sticky: true
+redirect_to: https://developer.samsung.com/tizen/blog/en-us/2019/10/14/update-tizennetsdk-package-in-visual-studio-163-or-above
 ---
 
 <b>Visual Studio 2019 version 16.3</b> has been recently released and lots of people would be very happy to update their Visual Studio to the latest.

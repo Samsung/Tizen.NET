@@ -7,6 +7,7 @@ gallery:
   - image_path: "/assets/images/guides/launch_elmsharp_tv.png"
   - image_path: "/assets/images/guides/launch_nui_tv.png"
   - image_path: "/assets/images/guides/launch_xf_tv.png"
+redirect_to: https://developer.samsung.com/tizen/Smart-TV/Quickstarts/Creating-an-application.html
 ---
 
 

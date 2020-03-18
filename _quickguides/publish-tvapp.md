@@ -3,6 +3,7 @@ title: "Samsung Apps TV Seller Office"
 permalink: /guides/publish-tvapp/
 toc: true
 toc_sticky: true
+redirect_to: https://developer.samsung.com/tizen/Smart-TV/Quickstarts/Publishing-an-application.html
 ---
 
 ## Official Pages

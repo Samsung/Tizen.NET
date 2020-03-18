@@ -10,6 +10,7 @@ gallery:
     title: "Tizen.NUI"
   - image_path: "/assets/images/guides/launch_xf_wearable.png"
     title: "Xamarin.Forms"
+redirect_to: https://developer.samsung.com/tizen/Galaxy-Watch/Quickstarts/Creating-an-application.html
 ---
 
 This guide describes how to create and run the basic Tizen .NET application. Visit [Create Your First Tizen Wearable .NET Application](https://developer.tizen.org/development/training/.net-application/getting-started/creating-your-first-tizen-wearable-.net-application) for complete instructions.

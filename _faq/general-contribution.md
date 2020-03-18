@@ -2,6 +2,7 @@
 title:  "How to Contribute"
 permalink: /faq/contribution/
 classes: wide
+redirect_to: https://developer.samsung.com/tizen/Galaxy-Watch/FAQ/FAQ.html
 ---
 
 ## Contributions

@@ -3,6 +3,7 @@ title:  "Welcome to Tizen .NET Posts"
 date:   2019-01-02
 categories:
   - Tizen .NET
+redirect_to: https://developer.samsung.com/blog/en-us/
 ---
 
 Welcome to Tizen .NET Posts!

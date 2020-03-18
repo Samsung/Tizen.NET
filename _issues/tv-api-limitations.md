@@ -5,6 +5,7 @@ search: true
 toc: true
 toc_label: TV API Limitations
 toc_sticky: true
+redirect_to: https://developer.samsung.com/tizen/Smart-TV/FAQ/FAQ.html
 ---
 
 ## .NET Standard
