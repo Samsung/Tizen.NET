@@ -1,0 +1,24 @@
+<Project>
+
+  <PropertyGroup>
+    <_DefaultTargetPlatformVersion>6.5</_DefaultTargetPlatformVersion>
+    <_TizenNETFrameworkReferenceVersion>9.0.0-pre1</_TizenNETFrameworkReferenceVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <KnownFrameworkReference
+      Include="Tizen.NET"
+      TargetFramework="net6.0"
+      RuntimeFrameworkName="Tizen.NET"
+      DefaultRuntimeFrameworkVersion="$(_TizenNETFrameworkReferenceVersion)"
+      LatestRuntimeFrameworkVersion="$(_TizenNETFrameworkReferenceVersion)"
+      TargetingPackName="Tizen.NET.Ref"
+      TargetingPackVersion="$(_TizenNETFrameworkReferenceVersion)"
+      RuntimePackNamePatterns="Tizen.NET.Runtime.**RID**"
+      RuntimePackRuntimeIdentifiers="tizen-arm;tizen-x86"
+      Profile="Tizen"
+      IsTrimmable="true"
+    />
+  </ItemGroup>
+
+</Project>

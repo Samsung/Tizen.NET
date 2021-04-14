@@ -1,0 +1,20 @@
+<Project>
+
+  <PropertyGroup>
+    <TargetPlatformSupported>true</TargetPlatformSupported>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">$(_DefaultTargetPlatformVersion)</TargetPlatformVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <SupportedPlatform Include="tizen" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TizenSdkSupportedTargetPlatformVersion Include="6.5" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <SdkSupportedTargetPlatformVersion Include="@(TizenSdkSupportedTargetPlatformVersion)" />
+  </ItemGroup>
+
+</Project>

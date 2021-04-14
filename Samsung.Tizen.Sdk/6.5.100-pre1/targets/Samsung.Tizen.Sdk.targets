@@ -1,0 +1,20 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<PropertyGroup>
+		<TizenProject>true</TizenProject>
+		<AfterMicrosoftNETSdkTargets>$(AfterMicrosoftNETSdkTargets);$(MSBuildThisFileDirectory)Samsung.Tizen.Sdk.After.targets</AfterMicrosoftNETSdkTargets>
+	</PropertyGroup>
+
+  <ItemGroup Condition=" '$(DisableImplicitFrameworkReferences)' != 'true' ">
+    <FrameworkReference
+        Include="Tizen.NET"
+        IsImplicitlyDefined="true"
+        Pack="false"
+        PrivateAssets="All"
+    />
+  </ItemGroup>
+  
+  <Import Project="Samsung.Tizen.Sdk.Versions.targets" />
+  <Import Project="Samsung.Tizen.Sdk.SupportedPlatforms.targets" />
+
+</Project>
