@@ -1,0 +1,29 @@
+﻿<!--
+***********************************************************************************************
+Tizen.NET.Sdk.targets
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (c) Samsung All rights reserved.
+***********************************************************************************************
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
+
+  <ImportGroup Condition="'$(_IsTizenNetSdkTargetsImported)' != 'true'">
+    <Import Project="Tizen.NET.Sdk.Common.targets" />
+    <Import Project="Tizen.NET.Sdk.Packaging.targets" />
+    <Import Project="Tizen.NET.Sdk.VisualStudio.targets" Condition="'$(BuildingInsideVisualStudio)' =='true'" />
+  </ImportGroup>
+
+  <PropertyGroup Condition="'$(_IsTizenNetSdkTargetsImported)' != 'true'">
+    <_IsTizenNetSdkTargetsImported>true</_IsTizenNetSdkTargetsImported>
+    <TizenNetSdkTargetsFile>$(MSBuildThisFileFullPath)</TizenNetSdkTargetsFile>
+  </PropertyGroup>
+
+</Project>

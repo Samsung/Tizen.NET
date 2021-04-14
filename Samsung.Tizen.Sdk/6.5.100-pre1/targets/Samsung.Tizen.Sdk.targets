@@ -2,6 +2,7 @@
 
 	<PropertyGroup>
 		<TizenProject>true</TizenProject>
+    <_TizenTaskAssemblyName>..\tools\Tizen.NET.Build.Tasks.dll</_TizenTaskAssemblyName>
 		<AfterMicrosoftNETSdkTargets>$(AfterMicrosoftNETSdkTargets);$(MSBuildThisFileDirectory)Samsung.Tizen.Sdk.After.targets</AfterMicrosoftNETSdkTargets>
 	</PropertyGroup>
 

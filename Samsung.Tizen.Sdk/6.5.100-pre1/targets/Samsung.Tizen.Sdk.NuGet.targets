@@ -1,0 +1,32 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <UsingTask TaskName="Tizen.NET.Build.Tasks.FixupNuGetReferences" AssemblyFile="$(_TizenTaskAssemblyName)" />
+
+  <PropertyGroup>
+    <AssetTargetFallback></AssetTargetFallback>
+    <PackageTargetFallback>
+      net6.0-tizen6.5;
+      tizen90;
+      tizen80;
+      tizen70;
+      tizen60;
+      tizen50;
+      tizen40;
+      $(PackageTargetFallback);
+    </PackageTargetFallback>
+  </PropertyGroup>
+
+  <Target Name="_FixupNuGetReferences" AfterTargets="ResolvePackageAssets">
+    <FixupNuGetReferences
+        PackageTargetFallback="$(PackageTargetFallback)"
+        CopyLocalItems="@(RuntimeCopyLocalItems)">
+      <Output TaskParameter="AssembliesToRemove" ItemName="_AssembliesToRemove" />
+      <Output TaskParameter="AssembliesToAdd"    ItemName="Reference" />
+    </FixupNuGetReferences>
+    <ItemGroup>
+      <RuntimeCopyLocalItems          Remove="@(_AssembliesToRemove)" />
+      <ResolvedCompileFileDefinitions Remove="@(_AssembliesToRemove)" />
+    </ItemGroup>
+  </Target>
+
+</Project>

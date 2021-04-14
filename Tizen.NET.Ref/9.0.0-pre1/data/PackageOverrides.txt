@@ -1,0 +1,7 @@
+Tizen.NET|4.0.0
+Tizen.NET.API9|9.0.1
+Tizen.NET.API8|8.0.1
+Tizen.NET.API7|7.0.1
+Tizen.NET.API6|6.0.1
+Tizen.NET.API5|5.0.1
+Tizen.NET.API4|4.0.2

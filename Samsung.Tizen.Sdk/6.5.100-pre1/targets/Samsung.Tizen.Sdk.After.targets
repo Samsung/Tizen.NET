@@ -1,3 +1,4 @@
 <Project>
+  <Import Project="Samsung.Tizen.Sdk.NuGet.targets" />
   <Import Project="Samsung.Tizen.Sdk.Packaging.targets" />
 </Project>

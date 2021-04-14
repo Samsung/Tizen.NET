@@ -1,0 +1,29 @@
+﻿<!--
+***********************************************************************************************
+Tizen.NET.Sdk.VisualStudio.targets
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (c) Samsung All rights reserved.
+***********************************************************************************************
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TizenProjectExtensionsPath>$(MSBuildExtensionsPath)\Tizen\VisualStudio\</TizenProjectExtensionsPath>
+  </PropertyGroup>
+
+  <!-- Import Capability & Rules on Visual Studio -->
+  <Import Project="$(TizenProjectExtensionsPath)Tizen.NET.ProjectType.targets" Condition="Exists('$(TizenProjectExtensionsPath)Tizen.NET.ProjectType.targets') and '$(BuildingInsideVisualStudio)' =='true' and '$(TizenCreateTpkOnBuild)' == 'true'" />
+
+  <!-- Install Check 'Visual Studio for Tizen' for developing on Visual Studio -->
+  <Target Name="TizenVsixInstallCheck" BeforeTargets="CompileDesignTime" Condition="'$(BuildingInsideVisualStudio)' =='true'" >
+    <Warning Condition="!Exists('$(TizenProjectExtensionsPath)Tizen.NET.ProjectType.props')" Text="$(TizenProjectExtensionsPath)Tizen.NET.ProjectType.props is not exist.&#xA; you need to check if 'Visual Studio for Tizen' is installed" />
+    <Warning Condition="!Exists('$(TizenProjectExtensionsPath)Tizen.NET.ProjectType.targets')" Text="$(TizenProjectExtensionsPath)Tizen.NET.ProjectType.targets is not exist.\&#xA; you need to check if 'Visual Studio for Tizen' is installed" />
+  </Target>
+</Project>

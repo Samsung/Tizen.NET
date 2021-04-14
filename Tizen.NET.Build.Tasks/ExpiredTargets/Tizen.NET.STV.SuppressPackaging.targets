@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="RemoveTizenSTVPlatformAssemblies"
+          AfterTargets="TizenResolveTpkPackageFiles">
+    <ItemGroup>
+      <SuppressPackagingStv Include="@(TizenResolvedFileToTpk)"
+                         Condition="('%(Extension)' == '.dll' or '%(Extension)' == '.pdb' or '%(Extension)' == '.so')
+                         and
+                         (
+                            '%(FileName)' ==  'Tizen.TV' or
+                            '%(FileName)' ==  'Tizen.TV.Application' or
+                            '%(FileName)' ==  'Tizen.TV.Application.Window' or
+                            '%(FileName)' ==  'Tizen.TV.Broadcast.Hybridcast' or
+                            '%(FileName)' ==  'Tizen.TV.Broadcast.Pvr' or
+                            '%(FileName)' ==  'Tizen.TV.Broadcast.TVService' or
+                            '%(FileName)' ==  'Tizen.TV.Connectivity.ExternalSpeaker' or
+                            '%(FileName)' ==  'Tizen.TV.ContextAware' or
+                            '%(FileName)' ==  'Tizen.TV.DownloadableApplications' or
+                            '%(FileName)' ==  'Tizen.TV.Logger' or
+                            '%(FileName)' ==  'Tizen.TV.Multimedia' or
+                            '%(FileName)' ==  'Tizen.TV.Multimedia.ContentService' or
+                            '%(FileName)' ==  'Tizen.TV.Network.Bluetooth' or
+                            '%(FileName)' ==  'Tizen.TV.Network.Connection' or
+                            '%(FileName)' ==  'Tizen.TV.Network.Curl' or
+                            '%(FileName)' ==  'Tizen.TV.Network.Speaker' or
+                            '%(FileName)' ==  'Tizen.TV.Network.WiFiDirect' or
+                            '%(FileName)' ==  'Tizen.TV.Halo' or
+                            '%(FileName)' ==  'Tizen.TV.HaloBinder' or
+                            '%(FileName)' ==  'Tizen.TV.HaloStyle' or
+                            '%(FileName)' ==  'Tizen.TV.Multimedia.ContentService' or
+                            '%(FileName)' ==  'Tizen.TV.Network.Speaker' or
+                            '%(FileName)' ==  'Tizen.TV.NUI.Component' or
+                            '%(FileName)' ==  'Tizen.TV.NUI' or
+                            '%(FileName)' ==  'Tizen.TV.Security' or
+                            '%(FileName)' ==  'Tizen.TV.Service.ServiceElementData' or
+                            '%(FileName)' ==  'Tizen.TV.Service.SourceList' or
+                            '%(FileName)' ==  'Tizen.TV.SPhysics' or
+                            '%(FileName)' ==  'Tizen.TV.System' or
+                            '%(FileName)' ==  'Tizen.TV.System.Hdmicec' or
+                            '%(FileName)' ==  'Tizen.TV.System.Mbr'
+                         )
+        "/>
+      <TizenResolvedFileToTpk Remove="@(SuppressPackagingStv)"/>
+    </ItemGroup>
+
+    <Message Text='Suppressed for STV "%(SuppressPackagingStv.FileName)%(SuppressPackagingStv.Extension)" from being included in TPK.' Condition=" '@(SuppressPackagingStv)' != '' "/>
+  </Target>
+</Project>

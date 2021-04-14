@@ -1,4 +1,19 @@
+﻿<!--
+***********************************************************************************************
+Tizen.NET.Sdk.Packaging.targets
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (c) Samsung All rights reserved.
+***********************************************************************************************
+-->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" >
+
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
 
   <!--
     Default behavior is creating TPK on Build
@@ -9,13 +24,13 @@
   </PropertyGroup>
 
   <!-- Using tasks for Tizen -->
-  <UsingTask AssemblyFile="$(_TizenTaskAssemblyName)" TaskName="Tizen.NET.Build.Tasks.Package" />
-  <UsingTask AssemblyFile="$(_TizenTaskAssemblyName)" TaskName="Tizen.NET.Build.Tasks.GetManifestInfo" />
-  <UsingTask AssemblyFile="$(_TizenTaskAssemblyName)" TaskName="Tizen.NET.Build.Tasks.Sign" />
-  <UsingTask AssemblyFile="$(_TizenTaskAssemblyName)" TaskName="Tizen.NET.Build.Tasks.FindPatternInList"/>
-  <UsingTask AssemblyFile="$(_TizenTaskAssemblyName)" TaskName="Tizen.NET.Build.Tasks.MergeManifest" />
-  <UsingTask AssemblyFile="$(_TizenTaskAssemblyName)" TaskName="Tizen.NET.Build.Tasks.GetTizenProject" />
-  <UsingTask AssemblyFile="$(_TizenTaskAssemblyName)" TaskName="Tizen.NET.Build.Tasks.ResourceXmlWriter" />
+  <UsingTask AssemblyFile="$(TizenNETBuildTasksAssembly)" TaskName="Tizen.NET.Build.Tasks.Package" />
+  <UsingTask AssemblyFile="$(TizenNETBuildTasksAssembly)" TaskName="Tizen.NET.Build.Tasks.GetManifestInfo" />
+  <UsingTask AssemblyFile="$(TizenNETBuildTasksAssembly)" TaskName="Tizen.NET.Build.Tasks.Sign" />
+  <UsingTask AssemblyFile="$(TizenNETBuildTasksAssembly)" TaskName="Tizen.NET.Build.Tasks.FindPatternInList"/>
+  <UsingTask AssemblyFile="$(TizenNETBuildTasksAssembly)" TaskName="Tizen.NET.Build.Tasks.MergeManifest" />
+  <UsingTask AssemblyFile="$(TizenNETBuildTasksAssembly)" TaskName="Tizen.NET.Build.Tasks.GetTizenProject" />
+  <UsingTask AssemblyFile="$(TizenNETBuildTasksAssembly)" TaskName="Tizen.NET.Build.Tasks.ResourceXmlWriter" />
 
   <!-- Default DirName for TPK -->
   <PropertyGroup>
@@ -518,6 +533,8 @@
                    ProjectFullName="$(MSBuildProjectDirectory)"
                    LangCountryListXmlPath="$(MSBuildThisFileDirectory)" />
 
+
+
   </Target>
 
   <!--
@@ -634,13 +651,6 @@
   ===========================================================================
   -->
   <Target Name="TizenPrepareCertificate">
-    <PropertyGroup>
-      <TizenDefaultAuthorPath>$(MSBuildThisFileDirectory)..\certificate\author_test.p12</TizenDefaultAuthorPath>
-      <TizenDefaultAuthorPass>author_test</TizenDefaultAuthorPass>
-      <TizenDefaultDistributorPath>$(MSBuildThisFileDirectory)..\certificate\tizen-distributor-signer.p12</TizenDefaultDistributorPath>
-      <TizenDefaultDistributorPass>tizenpkcs12passfordsigner</TizenDefaultDistributorPass>
-    </PropertyGroup>
-    
     <Message Condition="'$(AuthorPath)'==''"
              Importance="normal"
              Text="AuthorPath property is not set!" />

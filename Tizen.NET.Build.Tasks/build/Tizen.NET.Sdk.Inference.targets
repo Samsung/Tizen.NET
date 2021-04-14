@@ -1,0 +1,37 @@
+<!--
+***********************************************************************************************
+Tizen.NET.Sdk.Inference.targets
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (c) Samsung All rights reserved.
+***********************************************************************************************
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' != '' and !$(TargetFramework.Contains(',')) and !$(TargetFramework.Contains('+'))">
+    <_SdkShortFrameworkIdentifier>$(TargetFramework.TrimEnd('.0123456789'))</_SdkShortFrameworkIdentifier>
+    <_SdkShortFrameworkVersion>$(TargetFramework.Substring($(_SdkShortFrameworkIdentifier.Length)))</_SdkShortFrameworkVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFrameworkIdentifier)' == ''">
+    <TargetFrameworkIdentifier Condition="'$(_SdkShortFrameworkIdentifier)' == 'tizen'">Tizen</TargetFrameworkIdentifier>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFrameworkVersion)' == '' and '$(_SdkShortFrameworkVersion)' != '' and $(_SdkShortFrameworkVersion.Contains('.'))">
+    <TargetFrameworkVersion>v$(_SdkShortFrameworkVersion)</TargetFrameworkVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFrameworkVersion)' == '' and '$(_SdkShortFrameworkVersion)' != ''">
+    <TargetFrameworkVersion Condition="$(_SdkShortFrameworkVersion.Length) == 1">v$(_SdkShortFrameworkVersion[0]).0</TargetFrameworkVersion>
+    <TargetFrameworkVersion Condition="$(_SdkShortFrameworkVersion.Length) == 2">v$(_SdkShortFrameworkVersion[0]).$(_SdkShortFrameworkVersion[1])</TargetFrameworkVersion>
+    <TargetFrameworkVersion Condition="$(_SdkShortFrameworkVersion.Length) == 3">v$(_SdkShortFrameworkVersion[0]).$(_SdkShortFrameworkVersion[1]).$(_SdkShortFrameworkVersion[2])</TargetFrameworkVersion>
+  </PropertyGroup>
+
+</Project>
