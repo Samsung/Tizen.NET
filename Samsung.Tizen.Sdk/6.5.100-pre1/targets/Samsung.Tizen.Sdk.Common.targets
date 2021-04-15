@@ -1,6 +1,6 @@
 <!--
 ***********************************************************************************************
-Samsung.Tizen.Sdk.After.targets
+Samsung.Tizen.Sdk.Common.targets
 
 WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
           created a backup copy.  Incorrect changes to this file will make it
@@ -13,12 +13,13 @@ Copyright (c) Samsung All rights reserved.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <EnableDefaultTizenItems Condition="'$(EnableDefaultTizenItems)' == ''">$(EnableDefaultItems)</EnableDefaultTizenItems>
+    <TizenProject>true</TizenProject>
+    <_TizenTaskAssemblyName>..\tools\Tizen.NET.Build.Tasks.dll</_TizenTaskAssemblyName>
   </PropertyGroup>
 
-  <Import Project="Samsung.Tizen.Sdk.Common.targets" />
-  <Import Project="Samsung.Tizen.Sdk.NuGet.targets" />
-  <Import Project="Samsung.Tizen.Sdk.Packaging.targets" />
-  <Import Project="Samsung.Tizen.Sdk.VisualStudio.targets" />
+  <PropertyGroup>
+    <_IsTizenDefined>$([System.Text.RegularExpressions.Regex]::IsMatch('$(DefineConstants.Trim())', '(^|;)__TIZEN__($|;)'))</_IsTizenDefined>
+    <DefineConstants Condition="!$(_IsTizenDefined)">__TIZEN__;$(DefineConstants)</DefineConstants>
+  </PropertyGroup>
 
 </Project>
