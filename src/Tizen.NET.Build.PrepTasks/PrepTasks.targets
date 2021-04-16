@@ -1,0 +1,15 @@
+<Project>
+
+  <UsingTask TaskName="ReplaceFileContents" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <SourceFile ParameterType="Microsoft.Build.Framework.ITaskItem" Required="true" />
+      <DestinationFile ParameterType="Microsoft.Build.Framework.ITaskItem" Required="true" />
+      <Replacements ParameterType="System.String[]" />
+      <ReplacementFilePath ParameterType="System.String" />
+    </ParameterGroup>
+    <Task>
+      <Code Type="Class" Language="cs" Source="$(MSBuildThisFileDirectory)ReplaceFileContents.cs"/>
+    </Task>
+  </UsingTask>
+
+</Project>

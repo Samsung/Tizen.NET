@@ -1,0 +1,17 @@
+<Project>
+
+  <PropertyGroup>
+    <MicrosoftDotnetSdkInternalPackageVersion>6.0.100-preview.3.21202.5</MicrosoftDotnetSdkInternalPackageVersion>
+    <MicrosoftDotNetBuildTasksFeedPackageVersion>6.0.0-beta.21212.6</MicrosoftDotNetBuildTasksFeedPackageVersion>
+
+    <!-- Trim all characters after first `-` or `+` is encountered. -->
+    <DotNetPreviewVersionBand Condition=" '$(DotNetPreviewVersionBand)' == '' ">$([System.Text.RegularExpressions.Regex]::Replace($(MicrosoftDotnetSdkInternalPackageVersion), `[-+].*$`, ""))</DotNetPreviewVersionBand>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TizenPackVersion>6.5.100-alpha1</TizenPackVersion>
+    <TizenFXAPILevel>9</TizenFXAPILevel>
+    <TizenFXVersion>9.0.0.16100</TizenFXVersion>
+  </PropertyGroup>
+
+</Project>

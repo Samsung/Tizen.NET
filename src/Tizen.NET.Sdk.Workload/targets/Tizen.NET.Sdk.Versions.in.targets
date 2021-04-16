@@ -1,0 +1,35 @@
+<!--
+***********************************************************************************************
+Tizen.NET.Sdk.Versions.targets
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (c) Samsung All rights reserved.
+***********************************************************************************************
+-->
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <_TizenNETFrameworkReferenceVersion>@SDK_PACK_VERSION@</_TizenNETFrameworkReferenceVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <KnownFrameworkReference
+      Include="Tizen.NET"
+      TargetFramework="net6.0"
+      RuntimeFrameworkName="Tizen.NET"
+      DefaultRuntimeFrameworkVersion="$(_TizenNETFrameworkReferenceVersion)"
+      LatestRuntimeFrameworkVersion="$(_TizenNETFrameworkReferenceVersion)"
+      TargetingPackName="Tizen.NET.Ref"
+      TargetingPackVersion="$(_TizenNETFrameworkReferenceVersion)"
+      RuntimePackNamePatterns="Tizen.NET.Runtime.**RID**"
+      RuntimePackRuntimeIdentifiers="tizen-arm;tizen-x86"
+      Profile="Tizen"
+      IsTrimmable="true"
+    />
+  </ItemGroup>
+
+</Project>

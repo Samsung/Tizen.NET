@@ -1,0 +1,42 @@
+<!--
+***********************************************************************************************
+Microsoft.NET.Workload.Tizen.proj
+
+This project file is used to create the Microsoft.NET.Workload.Tizen NuGet, which is the
+workload manifest pack containing information about the various Tizen.NET workloads.
+***********************************************************************************************
+-->
+<Project Sdk="Microsoft.Build.NoTargets">
+
+  <PropertyGroup>
+    <PackageId>Microsoft.NET.Workload.Tizen</PackageId>
+    <Description>Tizen .NET workload manifest. Please do not reference directly.</Description>
+    <PackageVersion>$(TizenPackVersion)</PackageVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <BeforePack>
+      _GenerateWorkloadContent;
+      $(BeforePack);
+    </BeforePack>
+  </PropertyGroup>
+
+  <Target Name="_GenerateWorkloadContent" DependsOnTargets="_GetLicense">
+    <PropertyGroup>
+      <WorkloadManifestJsonPath>$(OutputPath)workload-manifest\WorkloadManifest.json</WorkloadManifestJsonPath>
+    </PropertyGroup>
+
+    <MakeDir Directories="$([System.IO.Path]::GetDirectoryName ($(WorkloadManifestJsonPath)))" />
+    <ReplaceFileContents
+        SourceFile="$(_ProjectSourceDirectory)Microsoft.NET.Workload.Tizen\WorkloadManifest.in.json"
+        DestinationFile="$(WorkloadManifestJsonPath)"
+        Replacements="@SDK_PACK_VERSION@=$(TizenPackVersion);">
+    </ReplaceFileContents>
+
+    <ItemGroup>
+      <_PackageFiles Include="$(_ProjectSourceDirectory)Microsoft.NET.Workload.Tizen\WorkloadManifest.targets" PackagePath="\" />
+      <_PackageFiles Include="$(WorkloadManifestJsonPath)" PackagePath="\" />
+    </ItemGroup>
+  </Target>
+
+</Project>

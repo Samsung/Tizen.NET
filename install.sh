@@ -11,14 +11,14 @@ SCRIPT_DIR=$(dirname $(readlink -f $0))
 
 TASK_DLL=$SCRIPT_DIR/Tizen.NET.Build.Tasks/bin/Debug/netstandard2.0/Tizen.NET.Build.Tasks.dll
 if [ -f $TASK_DLL ]; then
-	cp -f $TASK_DLL $SCRIPT_DIR/Samsung.Tizen.Sdk/*/tools/
+	cp -f $TASK_DLL $SCRIPT_DIR/Tizen.NET.Sdk.Workload/*/tools/
 fi
 
 rm -fr $DOTNET6_PATH/sdk-manifests/*/Microsoft.NET.Workload.Tizen
 cp -fr $SCRIPT_DIR/Microsoft.NET.Workload.Tizen $DOTNET6_PATH/sdk-manifests/*/
 
-rm -fr $DOTNET6_PATH/packs/Samsung.Tizen.Sdk
-cp -fr $SCRIPT_DIR/Samsung.Tizen.Sdk $DOTNET6_PATH/packs/
+rm -fr $DOTNET6_PATH/packs/Tizen.NET.Sdk.Workload
+cp -fr $SCRIPT_DIR/Tizen.NET.Sdk.Workload $DOTNET6_PATH/packs/
 
 rm -fr $DOTNET6_PATH/packs/Tizen.NET.Ref
 cp -fr $SCRIPT_DIR/Tizen.NET.Ref $DOTNET6_PATH/packs/

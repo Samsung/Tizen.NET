@@ -1,0 +1,25 @@
+<Project> 
+
+  <Import Project="..\Versions.props" />
+
+  <PropertyGroup>
+    <Configuration>Release</Configuration>
+    <_ProjectRootDirectory>$(MSBuildThisFileDirectory)..\</_ProjectRootDirectory>
+    <_ProjectSourceDirectory>$(_ProjectRootDirectory)src\</_ProjectSourceDirectory>
+    <_WorkloadOutputPath>$(_ProjectRootDirectory)\bin\dotnet\</_WorkloadOutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageType>DotnetPlatform</PackageType>
+    <Authors>Samsung Electronics</Authors>
+    <OutputPath>$(_ProjectRootDirectory)bin\nuget-unsigned\</OutputPath>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <!-- Remove the `<group targetFramework=".NETStandard2.0" />` entry from the .nuspec. -->
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    <!-- Ignore TargetFramework reference group related warnings, these are workload packs not functional NuGets. -->
+    <NoWarn>$(NoWarn);NU5128;NU5131</NoWarn>
+  </PropertyGroup>
+
+</Project>
