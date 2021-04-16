@@ -66,9 +66,11 @@
     </ItemGroup>
   </Target>
 
-  <Target Name="ExtractWorkloadPacks">
-    <RemoveDir Directories="$(_WorkloadOutputPath)" />
+  <PropertyGroup>
+    <_DotNetTargetPath>$([MSBuild]::EnsureTrailingSlash($(DotNetTargetPath)))</_DotNetTargetPath>
+  </PropertyGroup>
 
+  <Target Name="ExtractWorkloadPacks" DependsOnTargets="DeleteExtractedWorkloadPacks" >
     <ItemGroup>
       <_WLManifest Include="$(OutputPath)Microsoft.NET.Workload.Tizen.*.nupkg" />
       <_WLPacks Include="$(OutputPath)Tizen.NET.Sdk.Workload.*.nupkg" />
@@ -81,12 +83,20 @@
 
     <Unzip
         SourceFiles="@(_WLManifest)"
-        DestinationFolder="$(_WorkloadOutputPath)sdk-manifests\$(DotNetPreviewVersionBand)\Microsoft.NET.Workload.Tizen"
+        DestinationFolder="$(_DotNetTargetPath)sdk-manifests\$(DotNetPreviewVersionBand)\Microsoft.NET.Workload.Tizen"
     />
     <Unzip
         SourceFiles="@(_WLPacks)"
-        DestinationFolder="$(_WorkloadOutputPath)packs\$([System.String]::Copy('%(_WLPacks.Filename)').Replace('.$(_WLPackVersion)', ''))\$(_WLPackVersion)"
+        DestinationFolder="$(_DotNetTargetPath)packs\$([System.String]::Copy('%(_WLPacks.Filename)').Replace('.$(_WLPackVersion)', ''))\$(_WLPackVersion)"
     />
+  </Target>
+
+  <Target Name="DeleteExtractedWorkloadPacks" >
+    <ItemGroup>
+      <_PackFilesToDelete Include="$(_DotNetTargetPath)sdk-manifests\$(DotNetPreviewVersionBand)\Microsoft.NET.Workload.Tizen\**\*.*" />
+      <_PackFilesToDelete Include="$(_DotNetTargetPath)packs\Tizen.NET*\**\*.*" />
+    </ItemGroup>
+    <RemoveDir Directories="%(_PackFilesToDelete.RootDir)%(_PackFilesToDelete.Directory)" />
   </Target>
 
 </Project>

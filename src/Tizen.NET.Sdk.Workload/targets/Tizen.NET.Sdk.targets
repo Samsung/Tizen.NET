@@ -13,7 +13,7 @@ Copyright (c) Samsung All rights reserved.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
 	<PropertyGroup>
-		<AfterMicrosoftNETSdkTargets>$(AfterMicrosoftNETSdkTargets);$(MSBuildThisFileDirectory)Tizen.NET.Sdk.Workload.After.targets</AfterMicrosoftNETSdkTargets>
+		<AfterMicrosoftNETSdkTargets>$(AfterMicrosoftNETSdkTargets);$(MSBuildThisFileDirectory)Tizen.NET.Sdk.After.targets</AfterMicrosoftNETSdkTargets>
 	</PropertyGroup>
 
   <ItemGroup Condition=" '$(DisableImplicitFrameworkReferences)' != 'true' ">
