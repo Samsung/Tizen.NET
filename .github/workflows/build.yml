@@ -23,4 +23,8 @@ jobs:
       env:
         PULLREQUEST_ID: ${{ github.event.number }}
       run: make
+    - uses: actions/upload-artifact@v2
+      with:
+        name: tizen-workload-pkgs
+        path: bin/nuget-unsigned/*.nupkg
 
