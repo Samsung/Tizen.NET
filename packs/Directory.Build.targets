@@ -16,6 +16,18 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <_DotNetTargetVersion Condition="'$(DotNetTargetVersion)' != ''">$(DotNetTargetVersion)</_DotNetTargetVersion>
+    <_DotNetTargetVersion Condition="'$(DotNetTargetVersion)' == ''">$(_DefaultDotnetTargetVersion)</_DotNetTargetVersion>
+
+    <!-- Trim all characters after first `-` or `+` is encountered. -->
+    <DotNetPreviewVersionBand Condition=" '$(DotNetPreviewVersionBand)' == '' ">$([System.Text.RegularExpressions.Regex]::Replace($(_DotNetTargetVersion), `[-+].*$`, ""))</DotNetPreviewVersionBand>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <_WorkloadResolverFlagFile>$(_DotNetTargetPath)sdk\$(_DotNetTargetVersion)\EnableWorkloadResolver.sentinel</_WorkloadResolverFlagFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <NuGetLicense Condition=" '$(NuGetLicense)' == '' ">..\LICENSE</NuGetLicense>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
@@ -91,6 +103,11 @@
         SourceFiles="@(_WLPacks)"
         DestinationFolder="$(_DotNetTargetPath)packs\$([System.String]::Copy('%(_WLPacks.Filename)').Replace('.$(_WLPackVersion)', ''))\$(_WLPackVersion)"
     />
+    <MakeDir Directories="$([System.IO.Path]::GetDirectoryName ($(_WorkloadResolverFlagFile)))" />
+    <Touch
+        Files="$(_WorkloadResolverFlagFile)"
+        AlwaysCreate="true"
+    />
   </Target>
 
   <Target Name="DeleteExtractedWorkloadPacks" >
@@ -99,6 +116,7 @@
       <_PackFilesToDelete Include="$(_DotNetTargetPath)packs\Tizen.NET*\**\*.*" />
     </ItemGroup>
     <RemoveDir Directories="%(_PackFilesToDelete.RootDir)%(_PackFilesToDelete.Directory)" />
+    <Delete Files="$(_WorkloadResolverFlagFile)" />
   </Target>
 
 </Project>
