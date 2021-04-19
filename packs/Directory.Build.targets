@@ -10,6 +10,12 @@
   <UsingTask TaskName="CreateFrameworkListFile" AssemblyFile="$(DotNetSharedFrameworkTaskFile)"/>
 
   <PropertyGroup>
+    <_DotNetTargetPath Condition="'$(DotNetTargetPath)' != ''">$(DotNetTargetPath)</_DotNetTargetPath>
+    <_DotNetTargetPath Condition="'$(DotNetTargetPath)' == ''">$(_DefaultDotNetTargetPath)</_DotNetTargetPath>
+    <_DotNetTargetPath>$([MSBuild]::EnsureTrailingSlash($(_DotNetTargetPath)))</_DotNetTargetPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <NuGetLicense Condition=" '$(NuGetLicense)' == '' ">..\LICENSE</NuGetLicense>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
@@ -65,10 +71,6 @@
       <_PackageFiles Include="$(FrameworkListFile)" PackagePath="data" />
     </ItemGroup>
   </Target>
-
-  <PropertyGroup>
-    <_DotNetTargetPath>$([MSBuild]::EnsureTrailingSlash($(DotNetTargetPath)))</_DotNetTargetPath>
-  </PropertyGroup>
 
   <Target Name="ExtractWorkloadPacks" DependsOnTargets="DeleteExtractedWorkloadPacks" >
     <ItemGroup>

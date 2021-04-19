@@ -5,8 +5,8 @@
   <PropertyGroup>
     <Configuration>Release</Configuration>
     <_ProjectRootDirectory>$(MSBuildThisFileDirectory)..\</_ProjectRootDirectory>
-    <_ProjectSourceDirectory>$(_ProjectRootDirectory)src\</_ProjectSourceDirectory>
-    <DotNetTargetPath Condition="'$(DotNetTargetPath)' == ''">$(_ProjectRootDirectory)\bin\dotnet\</DotNetTargetPath>
+    <_ProjectSourceDirectory>$(_ProjectRootDirectory)src\</_ProjectSourceDirectory>    
+    <_DefaultDotNetTargetPath>$(_ProjectRootDirectory)\bin\dotnet\</_DefaultDotNetTargetPath>
   </PropertyGroup>
 
   <PropertyGroup>
