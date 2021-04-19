@@ -1,5 +1,4 @@
-MAKEFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
-TOP := $(notdir $(patsubst %/,%,$(dir $(MAKEFILE_PATH))))
+TOP := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
 include $(TOP)/Versions.mk
 include $(TOP)/Config.mk
