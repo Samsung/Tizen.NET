@@ -1,26 +1,27 @@
-TOP := .
+MAKEFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
+TOP := $(notdir $(patsubst %/,%,$(dir $(MAKEFILE_PATH))))
 
 include $(TOP)/Versions.mk
 include $(TOP)/Config.mk
 
 create-pack = \
 		@dotnet pack --nologo $(TOP)/build/$(1).proj \
-						-p:Configuration=Release \
-						-p:IncludeSymbols=False \
-						-p:TizenPackVersion=$(2) \
-						-p:TizenVersionHash=$(CURRENT_HASH)
+			-p:Configuration=Release \
+			-p:IncludeSymbols=False \
+			-p:TizenPackVersion=$(2) \
+			-p:TizenVersionHash=$(CURRENT_HASH)
 
 install-packs = \
 		@dotnet msbuild --nologo -t:ExtractWorkloadPacks \
-						$(TOP)/build/Microsoft.NET.Workload.Tizen.proj \
-						-p:DotNetTargetPath=$(1) \
-						-p:DotNetTargetVersion=$(2)
+			$(TOP)/build/Microsoft.NET.Workload.Tizen.proj \
+			-p:DotNetTargetPath=$(1) \
+			-p:DotNetTargetVersion=$(2)
 
 uninstall-packs = \
 		@dotnet msbuild --nologo -t:DeleteExtractedWorkloadPacks \
-						$(TOP)/build/Microsoft.NET.Workload.Tizen.proj \
-						-p:DotNetTargetPath=$(1) \
-						-p:DotNetTargetVersion=$(2)
+			$(TOP)/build/Microsoft.NET.Workload.Tizen.proj \
+			-p:DotNetTargetPath=$(1) \
+			-p:DotNetTargetVersion=$(2)
 
 all: create-nupkgs
 
