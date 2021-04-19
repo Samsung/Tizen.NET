@@ -1,3 +1,5 @@
+// https://github.com/xamarin/xamarin-android/blob/main/build-tools/xa-prep-tasks/Xamarin.Android.BuildTools.PrepTasks/DownloadUri.cs
+
 using System;
 using System.IO;
 using System.Linq;
