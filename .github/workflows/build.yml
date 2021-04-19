@@ -3,8 +3,12 @@ name: Build Workload
 on:
   push:
     branches: [ main ]
+    paths:
+    - 'workload/**'
   pull_request:
     branches: [ main ]
+    paths:
+    - 'workload/**'
 
 jobs:
   build:
