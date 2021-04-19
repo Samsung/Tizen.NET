@@ -32,20 +32,12 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
-  <Target Name="_SetGlobalProperties">
-    <ItemGroup>
-      <_GlobalProperties Include="-p:Configuration=$(Configuration)" />
-      <_GlobalProperties Include="-p:NuGetLicense=$(NuGetLicense)" />
-      <_GlobalProperties Include="-p:IncludeSymbols=False" />
-    </ItemGroup>
-  </Target>
-
-  <Target Name="CreateAllPacks"
-      DependsOnTargets="_SetGlobalProperties">
-    <RemoveDir Directories="$(OutputPath)" />
-    <Exec Command="dotnet pack @(_GlobalProperties, ' ') &quot;$(MSBuildThisFileDirectory)Microsoft.NET.Workload.Tizen.proj&quot;" />
-    <Exec Command="dotnet pack @(_GlobalProperties, ' ') &quot;$(MSBuildThisFileDirectory)Tizen.NET.Sdk.Workload.proj&quot;" />
-    <Exec Command="dotnet pack @(_GlobalProperties, ' ') &quot;$(MSBuildThisFileDirectory)Tizen.NET.Ref.proj&quot;" />
+  <Target Name="_GetPackageVersion">
+    <Error Condition="'$(TizenPackVersion)' == ''" Text="TizenPackVersion property is not set." />
+    <PropertyGroup>
+      <PackageVersion Condition="'$(TizenVersionHash)' != ''">$(TizenPackVersion)+sha.$(TizenVersionHash)</PackageVersion>
+      <PackageVersion Condition="'$(TizenVersionHash)' == ''">$(TizenPackVersion)</PackageVersion>
+    </PropertyGroup>
   </Target>
 
   <!-- https://github.com/xamarin/xamarin-android/blob/c703fa9431894132619e50e04a04eb3543b1f62f/build-tools/create-packs/Directory.Build.targets#L27 -->

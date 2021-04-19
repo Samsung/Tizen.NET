@@ -1,4 +1,4 @@
-// https://github.com/xamarin/xamarin-android/blob/main/build-tools/xa-prep-tasks/Xamarin.Android.BuildTools.PrepTasks/ReplaceFileContents.cs
+// https://github.com/xamarin/xamarin-android/blob/011a77134566b50ff48dfc4cad98ec7e07b333c2/build-tools/xa-prep-tasks/Xamarin.Android.BuildTools.PrepTasks/ReplaceFileContents.cs
 
 using System;
 using System.Collections.Generic;

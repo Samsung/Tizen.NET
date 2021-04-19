@@ -1,6 +1,6 @@
 <Project> 
 
-  <Import Project="..\Versions.props" />
+  <Import Project="Versions.props" />
 
   <PropertyGroup>
     <Configuration>Release</Configuration>

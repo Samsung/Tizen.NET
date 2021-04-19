@@ -13,5 +13,4 @@
 #    format: -[preview name].[Commit Distance]+sha[Commit Hash]
 #    example: -preview.3.100+sha12345
 #
-
 TIZEN_PACK_VERSION=6.5.100

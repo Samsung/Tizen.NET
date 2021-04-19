@@ -1,7 +1,6 @@
 <Project>
 
   <PropertyGroup>
-    <TizenPackVersion>6.5.100-alpha1</TizenPackVersion>
     <TizenFXAPILevel>9</TizenFXAPILevel>
     <TizenFXVersion>9.0.0.16100</TizenFXVersion>
   </PropertyGroup>

@@ -1,23 +1,40 @@
-mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
-topdir := $(dir $(mkfile_path))
-DOTNET_TARGET_PATH := $(abspath $(DESTDIR))
-DOTNET_TARGET_VERSION := $(DESTVER)
+TOP := .
+
+include $(TOP)/Versions.mk
+include $(TOP)/Config.mk
+
+create-pack = \
+		@dotnet pack --nologo $(TOP)/build/$(1).proj \
+						-p:Configuration=Release \
+						-p:IncludeSymbols=False \
+						-p:TizenPackVersion=$(2) \
+						-p:TizenVersionHash=$(CURRENT_HASH)
+
+install-packs = \
+		@dotnet msbuild --nologo -t:ExtractWorkloadPacks \
+						$(TOP)/build/Microsoft.NET.Workload.Tizen.proj \
+						-p:DotNetTargetPath=$(1) \
+						-p:DotNetTargetVersion=$(2)
+
+uninstall-packs = \
+		@dotnet msbuild --nologo -t:DeleteExtractedWorkloadPacks \
+						$(TOP)/build/Microsoft.NET.Workload.Tizen.proj \
+						-p:DotNetTargetPath=$(1) \
+						-p:DotNetTargetVersion=$(2)
 
 all: create-nupkgs
 
 create-nupkgs:
-	@dotnet msbuild -t:CreateAllPacks $(topdir)/packs/Tizen.NET.Sdk.Workload.proj
+	$(call create-pack,Microsoft.NET.Workload.Tizen,$(TIZEN_PACK_VERSION_FULL))
+	$(call create-pack,Tizen.NET.Sdk.Workload,$(TIZEN_PACK_VERSION_FULL))
+	$(call create-pack,Tizen.NET.Ref,$(TIZEN_PACK_VERSION_FULL))
 
-install: create-nupkgs
-	@dotnet msbuild -t:ExtractWorkloadPacks $(topdir)/packs/Tizen.NET.Sdk.Workload.proj \
-		-p:DotNetTargetPath=$(DOTNET_TARGET_PATH) \
-		-p:DotNetTargetVersion=$(DOTNET_TARGET_VERSION)
+install:
+	$(call install-packs,$(abspath $(DESTDIR)),$(DESTVER))
 
 uninstall:
-	@dotnet msbuild -t:DeleteExtractedWorkloadPacks $(topdir)/packs/Tizen.NET.Sdk.Workload.proj \
-		-p:DotNetTargetPath=$(DOTNET_TARGET_PATH) \
-		-p:DotNetTargetVersion=$(DOTNET_TARGET_VERSION)
+	$(call uninstall-packs,$(abspath $(DESTDIR)),$(DESTVER))
 
 clean:
-	@rm -fr $(topdir)/bin/
-	@rm -fr $(topdir)/packs/obj/
+	@rm -fr $(TOP)/bin/
+	@rm -fr $(TOP)/packs/obj/

@@ -1,4 +1,4 @@
-// https://github.com/xamarin/xamarin-android/blob/main/build-tools/xa-prep-tasks/Xamarin.Android.BuildTools.PrepTasks/DownloadUri.cs
+// https://github.com/xamarin/xamarin-android/blob/b0aaaf2de59f7b5624c95a5217fbbcc64da562ad/build-tools/xa-prep-tasks/Xamarin.Android.BuildTools.PrepTasks/DownloadUri.cs
 
 using System;
 using System.IO;

@@ -11,11 +11,11 @@ workload manifest pack containing information about the various Tizen.NET worklo
   <PropertyGroup>
     <PackageId>Microsoft.NET.Workload.Tizen</PackageId>
     <Description>Tizen .NET workload manifest. Please do not reference directly.</Description>
-    <PackageVersion>$(TizenPackVersion)</PackageVersion>
   </PropertyGroup>
 
   <PropertyGroup>
     <BeforePack>
+      _GetPackageVersion;
       _GenerateWorkloadContent;
       $(BeforePack);
     </BeforePack>

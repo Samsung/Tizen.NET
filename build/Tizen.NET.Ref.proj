@@ -16,7 +16,6 @@ by projects that use the Tizen .NET framework in .NET 5.
       - TizenFX API Level : $(TizenFXAPILevel)
       - TizenFX Version : $(TizenFXVersion)
     </Description>
-    <PackageVersion>$(TizenPackVersion)</PackageVersion>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -30,6 +29,7 @@ by projects that use the Tizen .NET framework in .NET 5.
 
   <PropertyGroup>
     <BeforePack>
+      _GetPackageVersion;
       _GetTargetingPackItems;
       _GenerateFrameworkListFile;
       $(BeforePack);

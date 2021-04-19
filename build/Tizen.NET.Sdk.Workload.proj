@@ -11,11 +11,11 @@ core workload sdk packs imported by Microsoft.NET.Workload.Tizen.
   <PropertyGroup>
     <PackageId>Tizen.NET.Sdk.Workload</PackageId>
     <Description>The MSBuild targets for buliding Tizen .NET projects</Description>
-    <PackageVersion>$(TizenPackVersion)</PackageVersion>
   </PropertyGroup>
 
   <PropertyGroup>
     <BeforePack>
+      _GetPackageVersion;
       _GenerateSdkContent;
       $(BeforePack);
     </BeforePack>
