@@ -1,5 +1,6 @@
 # Workload for Tizen .NET
 
 ```shell
-make install DESTDIR=<your dotnet sdk path>
+make install DESTDIR=<target sdk path>
+make install DESTDIR=<target sdk path> DESTVER=<target sdk version>
 ```
