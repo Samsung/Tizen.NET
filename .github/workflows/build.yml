@@ -1,4 +1,4 @@
-name: .NET
+name: Build Workload
 
 on:
   push:
@@ -20,5 +20,7 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Build
+      env:
+        PULLREQUEST_ID: ${{ github.event.number }}
       run: make
 
