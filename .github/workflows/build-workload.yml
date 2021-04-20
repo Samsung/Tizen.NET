@@ -3,8 +3,17 @@ name: Build Workload
 on:
   push:
     branches: [ main ]
+    paths:
+    - 'workload/**'
   pull_request:
     branches: [ main ]
+    paths:
+    - 'workload/**'
+  workflow_dispatch:
+    inputs:
+      prerelease:
+        description: 'Pre-release tag name'
+        required: true
 
 jobs:
   build:
@@ -24,6 +33,7 @@ jobs:
     - name: Build
       env:
         PULLREQUEST_ID: ${{ github.event.number }}
+        PRERELEASE_TAG: ${{ github.event.inputs.prerelease }}
       run: make
       working-directory: ./workload
 
