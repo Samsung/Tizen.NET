@@ -42,3 +42,31 @@ jobs:
         name: tizen-workload-pkgs
         path: ./workload/bin/nuget-unsigned/*.nupkg
 
+
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    needs: build
+    if: ${{ github.ref == 'refs/heads/main' }}
+
+    steps:
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+
+    - name: Install Github Package Registry Tool
+      run: dotnet tool install --global --no-cache gpr
+
+    - uses: actions/download-artifact@v2
+      with:
+        name: tizen-workload-pkgs
+
+    - name: Push packages to GPR
+      run: gpr push --api-key ${{ secrets.GITHUB_TOKEN }} --repository ${{ github.repository }} --retries 3 Samsung.*.nupkg
+
+    - name: Dump
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
