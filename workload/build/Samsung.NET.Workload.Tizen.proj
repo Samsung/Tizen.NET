@@ -1,0 +1,42 @@
+<!--
+***********************************************************************************************
+Samsung.NET.Workload.Tizen.proj
+
+This project file is used to create the Samsung.NET.Workload.Tizen NuGet, which is the
+workload manifest pack containing information about the various Tizen.NET workloads.
+***********************************************************************************************
+-->
+<Project Sdk="Microsoft.Build.NoTargets">
+
+  <PropertyGroup>
+    <PackageId>Samsung.NET.Workload.Tizen</PackageId>
+    <Description>Tizen .NET workload manifest. Please do not reference directly.</Description>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <BeforePack>
+      _GetPackageVersion;
+      _GenerateWorkloadContent;
+      $(BeforePack);
+    </BeforePack>
+  </PropertyGroup>
+
+  <Target Name="_GenerateWorkloadContent" DependsOnTargets="_GetLicense">
+    <PropertyGroup>
+      <WorkloadManifestJsonPath>$(OutputPath)workload-manifest\WorkloadManifest.json</WorkloadManifestJsonPath>
+    </PropertyGroup>
+
+    <MakeDir Directories="$([System.IO.Path]::GetDirectoryName ($(WorkloadManifestJsonPath)))" />
+    <ReplaceFileContents
+        SourceFile="$(_ProjectSourceDirectory)Samsung.NET.Workload.Tizen\WorkloadManifest.in.json"
+        DestinationFile="$(WorkloadManifestJsonPath)"
+        Replacements="@SDK_PACK_VERSION@=$(TizenPackVersion);">
+    </ReplaceFileContents>
+
+    <ItemGroup>
+      <_PackageFiles Include="$(_ProjectSourceDirectory)Samsung.NET.Workload.Tizen\WorkloadManifest.targets" PackagePath="\" />
+      <_PackageFiles Include="$(WorkloadManifestJsonPath)" PackagePath="\" />
+    </ItemGroup>
+  </Target>
+
+</Project>

@@ -4,7 +4,7 @@
     <PackageReference Include="Microsoft.DotNet.Arcade.Sdk" Version="$(MicrosoftDotNetBuildTasksFeedPackageVersion)" PrivateAssets="all" GeneratePathProperty="true" />
   </ItemGroup>
 
-  <Import Project="..\src\Tizen.NET.Build.PrepTasks\PrepTasks.targets" />
+  <Import Project="..\src\Samsung.Tizen.Build.PrepTasks\PrepTasks.targets" />
   <Import Project="Sdk.props" Sdk="Microsoft.DotNet.SharedFramework.Sdk" Version="$(MicrosoftDotNetBuildTasksFeedPackageVersion)" />
 
   <UsingTask TaskName="CreateFrameworkListFile" AssemblyFile="$(DotNetSharedFrameworkTaskFile)"/>
@@ -60,7 +60,7 @@
       <FrameworkListRootAttributes Include="Name" Value=".NET 6.0 - Tizen" />
       <FrameworkListRootAttributes Include="TargetFrameworkIdentifier" Value=".NETCoreApp" />
       <FrameworkListRootAttributes Include="TargetFrameworkVersion" Value="6.0" />
-      <FrameworkListRootAttributes Include="FrameworkName" Value="Tizen.NET" />
+      <FrameworkListRootAttributes Include="FrameworkName" Value="Samsung.Tizen" />
     </ItemGroup>
 
     <!-- https://github.com/dotnet/arcade/blob/5824baf1c9a900ee00c167f96201c750bba6a574/src/Microsoft.DotNet.SharedFramework.Sdk/src/CreateFrameworkListFile.cs -->
@@ -78,18 +78,18 @@
 
   <Target Name="ExtractWorkloadPacks" DependsOnTargets="DeleteExtractedWorkloadPacks" >
     <ItemGroup>
-      <_WLManifest Include="$(OutputPath)Microsoft.NET.Workload.Tizen.*.nupkg" />
-      <_WLPacks Include="$(OutputPath)Tizen.NET.Sdk.Workload.*.nupkg" />
-      <_WLPacks Include="$(OutputPath)Tizen.NET.Ref.*.nupkg" />
+      <_WLManifest Include="$(OutputPath)Samsung.NET.Workload.Tizen.*.nupkg" />
+      <_WLPacks Include="$(OutputPath)Samsung.Tizen.Sdk.*.nupkg" />
+      <_WLPacks Include="$(OutputPath)Samsung.Tizen.Ref.*.nupkg" />
     </ItemGroup>
 
     <PropertyGroup>
-      <_WLPackVersion>@(_WLManifest->'%(Filename)'->Replace('Microsoft.NET.Workload.Tizen.', ''))</_WLPackVersion>
+      <_WLPackVersion>@(_WLManifest->'%(Filename)'->Replace('Samsung.NET.Workload.Tizen.', ''))</_WLPackVersion>
     </PropertyGroup>
 
     <Unzip
         SourceFiles="@(_WLManifest)"
-        DestinationFolder="$(_DotNetTargetPath)sdk-manifests\$(DotNetPreviewVersionBand)\Microsoft.NET.Workload.Tizen"
+        DestinationFolder="$(_DotNetTargetPath)sdk-manifests\$(DotNetPreviewVersionBand)\Samsung.NET.Workload.Tizen"
     />
     <Unzip
         SourceFiles="@(_WLPacks)"
@@ -104,8 +104,8 @@
 
   <Target Name="DeleteExtractedWorkloadPacks" >
     <ItemGroup>
-      <_PackFilesToDelete Include="$(_DotNetTargetPath)sdk-manifests\$(DotNetPreviewVersionBand)\Microsoft.NET.Workload.Tizen\**\*.*" />
-      <_PackFilesToDelete Include="$(_DotNetTargetPath)packs\Tizen.NET*\**\*.*" />
+      <_PackFilesToDelete Include="$(_DotNetTargetPath)sdk-manifests\$(DotNetPreviewVersionBand)\Samsung.NET.Workload.Tizen\**\*.*" />
+      <_PackFilesToDelete Include="$(_DotNetTargetPath)packs\Samsung.Tizen.*\**\*.*" />
     </ItemGroup>
     <RemoveDir Directories="%(_PackFilesToDelete.RootDir)%(_PackFilesToDelete.Directory)" />
     <Delete Files="$(_WorkloadResolverFlagFile)" />

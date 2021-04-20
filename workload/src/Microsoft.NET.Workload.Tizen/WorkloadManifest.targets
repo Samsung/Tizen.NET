@@ -1,3 +1,0 @@
-<Project>
-	<Import Project="Sdk.targets" Sdk="Tizen.NET.Sdk.Workload" Condition="'$(TargetPlatformIdentifier)' == 'tizen'" />
-</Project>
