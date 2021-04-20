@@ -14,6 +14,7 @@ Copyright (c) Samsung All rights reserved.
 
   <PropertyGroup>
     <TizenProject>true</TizenProject>
+    <UseAppHost>false</UseAppHost>
     <_TizenTaskAssemblyName>..\tools\Samsung.Tizen.Build.Tasks.dll</_TizenTaskAssemblyName>
   </PropertyGroup>
 

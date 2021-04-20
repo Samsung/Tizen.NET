@@ -50,7 +50,7 @@ by projects that use the Tizen .NET framework in .NET 5.
 
     <ItemGroup>
       <_PackageFiles Include="@(_TizenRefPackAssemblies)" PackagePath="ref\net6.0" TargetPath="ref\net6.0" />
-      <_PackageFiles Include="$(_ProjectSourceDirectory)Samsung.Tizen.Ref/data/PackageOverrides.txt" PackagePath="data" />
+      <_PackageFiles Include="$(_ProjectSourceDirectory)Samsung.Tizen.Ref/data/*.txt" PackagePath="data" />
     </ItemGroup>
 
   </Target>
