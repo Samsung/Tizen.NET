@@ -5,10 +5,12 @@ on:
     branches: [ main ]
     paths:
     - 'workload/**'
+    - '.github/workflows/**'
   pull_request:
     branches: [ main ]
     paths:
     - 'workload/**'
+    - '.github/workflows/**'
   workflow_dispatch:
     inputs:
       prerelease:
