@@ -12,22 +12,22 @@ create-pack = \
 
 install-packs = \
 		@dotnet msbuild --nologo -t:ExtractWorkloadPacks \
-			$(TOP)/build/Microsoft.NET.Workload.Tizen.proj \
+			$(TOP)/build/Samsung.NET.Workload.Tizen.proj \
 			-p:DotNetTargetPath=$(1) \
 			-p:DotNetTargetVersion=$(2)
 
 uninstall-packs = \
 		@dotnet msbuild --nologo -t:DeleteExtractedWorkloadPacks \
-			$(TOP)/build/Microsoft.NET.Workload.Tizen.proj \
+			$(TOP)/build/Samsung.NET.Workload.Tizen.proj \
 			-p:DotNetTargetPath=$(1) \
 			-p:DotNetTargetVersion=$(2)
 
 all: create-nupkgs
 
 create-nupkgs:
-	$(call create-pack,Microsoft.NET.Workload.Tizen,$(TIZEN_PACK_VERSION_FULL))
-	$(call create-pack,Tizen.NET.Sdk.Workload,$(TIZEN_PACK_VERSION_FULL))
-	$(call create-pack,Tizen.NET.Ref,$(TIZEN_PACK_VERSION_FULL))
+	$(call create-pack,Samsung.NET.Workload.Tizen,$(TIZEN_PACK_VERSION_FULL))
+	$(call create-pack,Samsung.Tizen.Sdk,$(TIZEN_PACK_VERSION_FULL))
+	$(call create-pack,Samsung.Tizen.Ref,$(TIZEN_PACK_VERSION_FULL))
 
 install:
 	$(call install-packs,$(abspath $(DESTDIR)),$(DESTVER))

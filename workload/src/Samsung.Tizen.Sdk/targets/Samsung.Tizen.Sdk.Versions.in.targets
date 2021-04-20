@@ -1,0 +1,35 @@
+<!--
+***********************************************************************************************
+Samsung.Tizen.Sdk.Versions.targets
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (c) Samsung All rights reserved.
+***********************************************************************************************
+-->
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <_TizenFrameworkReferenceVersion>@SDK_PACK_VERSION@</_TizenFrameworkReferenceVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <KnownFrameworkReference
+      Include="Samsung.Tizen"
+      TargetFramework="net6.0"
+      RuntimeFrameworkName="Samsung.Tizen"
+      DefaultRuntimeFrameworkVersion="$(_TizenFrameworkReferenceVersion)"
+      LatestRuntimeFrameworkVersion="$(_TizenFrameworkReferenceVersion)"
+      TargetingPackName="Samsung.Tizen.Ref"
+      TargetingPackVersion="$(_TizenFrameworkReferenceVersion)"
+      RuntimePackNamePatterns="Samsung.Tizen.Runtime.**RID**"
+      RuntimePackRuntimeIdentifiers="tizen-arm;tizen-x86"
+      Profile="Tizen"
+      IsTrimmable="true"
+    />
+  </ItemGroup>
+
+</Project>

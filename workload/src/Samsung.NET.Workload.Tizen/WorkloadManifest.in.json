@@ -1,0 +1,22 @@
+{
+	"version": 5,
+	"workloads": {
+		"samsung-tizen-sdk-full": {
+			"description": "Tizen .NET SDK",
+			"packs": [
+				"Samsung.Tizen.Sdk",
+				"Samsung.Tizen.Ref"
+			]
+		}
+	},
+	"packs": {
+		"Samsung.Tizen.Sdk": {
+			"kind": "sdk",
+			"version": "@SDK_PACK_VERSION@"
+		},
+		"Samsung.Tizen.Ref": {
+			"kind": "framework",
+			"version": "@SDK_PACK_VERSION@"
+		}
+	}
+}
