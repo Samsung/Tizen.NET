@@ -68,7 +68,3 @@ jobs:
     - name: Push packages to GPR
       run: gpr push --api-key ${{ secrets.GITHUB_TOKEN }} --repository ${{ github.repository }} --retries 3 Samsung.*.nupkg
 
-    - name: Dump
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}
-      run: echo "$GITHUB_CONTEXT"
