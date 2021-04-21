@@ -13,15 +13,15 @@
 	"packs": {
 		"Samsung.Tizen.Sdk": {
 			"kind": "sdk",
-			"version": "@SDK_PACK_VERSION@"
+			"version": "@TIZEN_PACK_VERSION@"
 		},
 		"Samsung.Tizen.Ref": {
 			"kind": "framework",
-			"version": "@SDK_PACK_VERSION@"
+			"version": "@TIZEN_PACK_VERSION@"
 		},
 		"Samsung.Tizen.Templates": {
 			"kind": "template",
-			"version": "@SDK_PACK_VERSION@"
+			"version": "@TIZEN_PACK_VERSION@"
 		}
 	}
 }

@@ -37,7 +37,7 @@ core workload sdk pack imported by Samsung.NET.Workload.Tizen.
     <ReplaceFileContents
         SourceFile="%(_TargetInputFiles.FullPath)"
         DestinationFile="$(_SDKReplacedTargetDirectory)$([System.String]::Copy('%(Filename)%(Extension)').Replace('.in.targets','.targets'))"
-        Replacements="@SDK_PACK_VERSION@=$(TizenPackVersion);">
+        Replacements="@TIZEN_PACK_VERSION@=$(TizenPackVersion);">
     </ReplaceFileContents>
 
     <ItemGroup>
