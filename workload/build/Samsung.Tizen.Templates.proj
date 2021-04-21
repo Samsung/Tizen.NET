@@ -1,0 +1,31 @@
+<!--
+***********************************************************************************************
+Samsung.Tizen.Templates.proj
+
+This project file is used to create the Samsung.Tizen.Templates NuGet, which is the
+template pack to generate the Tizen projects using dotnet CLI.
+***********************************************************************************************
+-->
+<Project Sdk="Microsoft.Build.NoTargets">
+
+  <PropertyGroup>
+    <PackageId>Samsung.Tizen.Templates</PackageId>
+    <Description>Templates for Tizen platforms.</Description>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <BeforePack>
+      _GetPackageVersion;
+      _GetTemplateContents;
+      $(BeforePack);
+    </BeforePack>
+  </PropertyGroup>
+
+  <Target Name="_GetTemplateContents"
+      DependsOnTargets="_GetLicense">
+    <ItemGroup>
+      <_PackageFiles Include="$(_ProjectSourceDirectory)Samsung.Tizen.Templates/**" PackagePath="content" />
+    </ItemGroup>
+  </Target>
+
+</Project>

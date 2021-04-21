@@ -2,8 +2,8 @@
 ***********************************************************************************************
 Samsung.Tizen.Sdk.proj
 
-This project file is used to create the Samsung.Tizen.Sdk NuGet, which are the
-core workload sdk packs imported by Samsung.NET.Workload.Tizen.
+This project file is used to create the Samsung.Tizen.Sdk NuGet, which is the
+core workload sdk pack imported by Samsung.NET.Workload.Tizen.
 ***********************************************************************************************
 -->
 <Project Sdk="Microsoft.Build.NoTargets">
@@ -37,7 +37,7 @@ core workload sdk packs imported by Samsung.NET.Workload.Tizen.
     <ReplaceFileContents
         SourceFile="%(_TargetInputFiles.FullPath)"
         DestinationFile="$(_SDKReplacedTargetDirectory)$([System.String]::Copy('%(Filename)%(Extension)').Replace('.in.targets','.targets'))"
-        Replacements="@SDK_PACK_VERSION@=$(TizenPackVersion);">
+        Replacements="@TIZEN_PACK_VERSION@=$(TizenPackVersion);">
     </ReplaceFileContents>
 
     <ItemGroup>
