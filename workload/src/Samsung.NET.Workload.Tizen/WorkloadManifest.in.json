@@ -5,7 +5,8 @@
 			"description": "Tizen .NET SDK",
 			"packs": [
 				"Samsung.Tizen.Sdk",
-				"Samsung.Tizen.Ref"
+				"Samsung.Tizen.Ref",
+				"Samsung.Tizen.Templates"
 			]
 		}
 	},
@@ -16,6 +17,10 @@
 		},
 		"Samsung.Tizen.Ref": {
 			"kind": "framework",
+			"version": "@SDK_PACK_VERSION@"
+		},
+		"Samsung.Tizen.Templates": {
+			"kind": "template",
 			"version": "@SDK_PACK_VERSION@"
 		}
 	}

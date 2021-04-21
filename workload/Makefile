@@ -28,6 +28,7 @@ create-nupkgs:
 	$(call create-pack,Samsung.NET.Workload.Tizen,$(TIZEN_PACK_VERSION_FULL))
 	$(call create-pack,Samsung.Tizen.Sdk,$(TIZEN_PACK_VERSION_FULL))
 	$(call create-pack,Samsung.Tizen.Ref,$(TIZEN_PACK_VERSION_FULL))
+	$(call create-pack,Samsung.Tizen.Templates,$(TIZEN_PACK_VERSION_FULL))
 
 install:
 	$(call install-packs,$(abspath $(DESTDIR)),$(DESTVER))
