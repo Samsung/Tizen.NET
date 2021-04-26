@@ -23,7 +23,7 @@ jobs:
         dotnet-version: 5.0.x
 
     - name: Install Wix toolset
-      runs: sudo apt-get install -y wixl
+      run: sudo apt-get install -y wixl
 
     - name: Build
       env:
