@@ -1,0 +1,56 @@
+name: Release Workload
+
+on:
+  workflow_dispatch:
+    inputs:
+      prerelease:
+        description: 'Pre-release tag name'
+        required: true
+
+jobs:
+  release:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+
+    - name: Install Wix toolset
+      runs: sudo apt-get install -y wixl
+
+    - name: Build
+      env:
+        PRERELEASE_TAG: ${{ github.event.inputs.prerelease }}
+      run: make msi
+      working-directory: ./workload
+
+    - name: Push packages to GPR
+      run: |
+        gpr push --api-key ${{ secrets.GITHUB_TOKEN }} \
+                 --repository ${{ github.repository }} \
+                 --retries 3 ./workload/bin/nuget-unsigned/Samsung.*.nupkg
+
+    - name: Push packages to NuGet.org
+      run: |
+        dotnet nuget push ./workload/bin/nuget-unsigned/Samsung.*.nupkg \
+                      -k ${{ secrets.NUGET_APIKEY }} \
+                      -s https://api.nuget.org/v3/index.json \
+                      -t 3000
+
+    - name: Upload MSI to S3
+      uses: TizenAPI/tizenfx-build-actions/s3-upload@master
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      with:
+        region: ap-northeast-2
+        bucket: workload-bin
+        file: ./workload/bin/windows/Samsung.NET.Workload.Tizen.*.msi
+        folder: windows

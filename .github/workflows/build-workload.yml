@@ -65,12 +65,6 @@ jobs:
       with:
         name: tizen-workload-pkgs
 
-    - name: Push packages to GPR
-      run: |
-        gpr push --api-key ${{ secrets.GITHUB_TOKEN }} \
-                 --repository ${{ github.repository }} \
-                 --retries 3 Samsung.*.nupkg
-
     - name: Push packages to MyGet
       run: |
         dotnet nuget push Samsung.*.nupkg \
