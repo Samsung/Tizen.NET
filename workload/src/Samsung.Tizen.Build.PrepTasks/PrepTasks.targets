@@ -12,4 +12,16 @@
     </Task>
   </UsingTask>
 
+  <UsingTask TaskName="GenerateWixFile" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <MSIVersion ParameterType="System.String" Required="true" />
+      <SourceFile ParameterType="Microsoft.Build.Framework.ITaskItem" Required="true" />
+      <DestinationFile ParameterType="Microsoft.Build.Framework.ITaskItem" Required="true" />
+      <SourceDirectory ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Code Type="Class" Language="cs" Source="$(MSBuildThisFileDirectory)GenerateWixFile.cs"/>
+    </Task>
+  </UsingTask>
+
 </Project>
