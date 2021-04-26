@@ -1,0 +1,33 @@
+<!--
+***********************************************************************************************
+GenerateWix.proj
+
+This project file is used to generate the Samsung.NET.Workload.Tizen.wix file for building the
+MSI installer.
+***********************************************************************************************
+-->
+<Project Sdk="Microsoft.Build.NoTargets">
+
+  <Target Name="Generate" DependsOnTargets="_CheckRequiredProperties">
+    <MakeDir Directories="$([System.IO.Path]::GetDirectoryName ($(DestinationFile)))" />
+    <GenerateWixFile
+      MSIVersion="$(MSIVersion)"
+      SourceFile="$(MSBuildThisFileDirectory)Samsung.NET.Workload.Tizen.in.wix"
+      DestinationFile="$(DestinationFile)"
+      SourceDirectory="$(SourceDirectory)"
+      />
+  </Target>
+
+  <Target Name="_CheckRequiredProperties">
+    <Error Text="MSIVersion property is not set. Please use /p:MSIVersion=[Directory]."
+           Condition="'$(MSIVersion)' == ''" />
+
+    <Error Text="DestinationFile property is not set. Please use /p:DestinationFile=[Directory]."
+           Condition="'$(DestinationFile)' == ''" />
+
+    <Error Text="SourceDirectory property is not set. Please use /p:SourceDirectory=[Directory]."
+           Condition="'$(SourceDirectory)' == ''" />
+
+  </Target>
+
+</Project>

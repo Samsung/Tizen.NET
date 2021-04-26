@@ -1,5 +1,6 @@
 .vs/
 .vscode/
+.tmp/
 bin/
 obj/
 tmp/

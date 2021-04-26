@@ -1,5 +1,8 @@
 TOP := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
+BINDIR := $(TOP)/bin
+TMPDIR := $(TOP)/.tmp
+
 include $(TOP)/Versions.mk
 include $(TOP)/Config.mk
 
@@ -24,18 +27,49 @@ uninstall-packs = \
 
 all: create-nupkgs
 
-create-nupkgs:
+$(BINDIR)/.stamp-create-nupkgs:
 	$(call create-pack,Samsung.NET.Workload.Tizen,$(TIZEN_PACK_VERSION_FULL))
 	$(call create-pack,Samsung.Tizen.Sdk,$(TIZEN_PACK_VERSION_FULL))
 	$(call create-pack,Samsung.Tizen.Ref,$(TIZEN_PACK_VERSION_FULL))
 	$(call create-pack,Samsung.Tizen.Templates,$(TIZEN_PACK_VERSION_FULL))
+	@touch $@
 
-install:
+create-nupkgs: $(BINDIR)/.stamp-create-nupkgs
+
+install: create-nupkgs
 	$(call install-packs,$(abspath $(DESTDIR)),$(DESTVER))
 
 uninstall:
 	$(call uninstall-packs,$(abspath $(DESTDIR)),$(DESTVER))
 
+
+$(BINDIR)/.stamp-prepare-installer: $(BINDIR)/.stamp-create-nupkgs
+	@rm -fr $(TMPDIR)
+	$(call install-packs,$(abspath $(TMPDIR)),$(DESTVER))
+	@touch $@
+
+MSI_BIN_DIR := $(BINDIR)/windows
+
+define CreateMsi
+$(MSI_BIN_DIR)/Samsung.NET.Workload.Tizen.$1.wix: $(BINDIR)/.stamp-prepare-installer
+	@dotnet msbuild --nologo $(TOP)/build/GenerateWixFile.proj \
+									-t:Generate \
+									-p:MSIVersion=$(TIZEN_PACK_VERSION_FULL) \
+									-p:SourceDirectory=$(TMPDIR) \
+									-p:DestinationFile="$$@"
+
+$(MSI_BIN_DIR)/Samsung.NET.Workload.Tizen.$1.msi: $(MSI_BIN_DIR)/Samsung.NET.Workload.Tizen.$1.wix
+	@wixl -o "$$@" "$$<" -a x64
+
+MSI_TARGET := $(MSI_BIN_DIR)/Samsung.NET.Workload.Tizen.$1.msi
+endef
+
+$(eval $(call CreateMsi,$(TIZEN_PACK_VERSION_FULL)))
+
+msi: $(MSI_TARGET)
+	@rm -fr $(TMPDIR)
+
 clean:
-	@rm -fr $(TOP)/bin/
-	@rm -fr $(TOP)/packs/obj/
+	@rm -fr $(BINDIR)
+	@rm -fr $(TMPDIR)
+	@rm -fr $(TOP)/build/obj/

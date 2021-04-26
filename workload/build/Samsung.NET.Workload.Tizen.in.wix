@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <Product Name="Samsung.NET.Workload.Tizen"
+      Id="*"
+      Language="1033"
+      Version="@MSIVERSION@"
+      Manufacturer="Samsung Electronics"
+      UpgradeCode="7a121d07-f5f6-44eb-91e3-0259aa83eabf">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+    <Feature Id="ProductFeature" Title="Samsung.NET.Workload.Tizen">
+      <ComponentGroupRef Id="ProductComponents" />
+    </Feature>
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFiles64Folder">
+        <Directory Id="dotnet" Name="dotnet">
+          @DIRECTORIES@
+        </Directory>
+      </Directory>
+    </Directory>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="ProductComponents">
+      @COMPONENTS@
+    </ComponentGroup>
+  </Fragment>
+
+</Wix>
