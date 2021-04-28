@@ -15,6 +15,7 @@ Copyright (c) Samsung All rights reserved.
   <PropertyGroup>
     <TizenProject>true</TizenProject>
     <UseAppHost>false</UseAppHost>
+    <_RuntimeIdentifierUsesAppHost>false</_RuntimeIdentifierUsesAppHost>
     <_TizenTaskAssemblyName>..\tools\Samsung.Tizen.Build.Tasks.dll</_TizenTaskAssemblyName>
   </PropertyGroup>
 
@@ -22,5 +23,10 @@ Copyright (c) Samsung All rights reserved.
     <_IsTizenDefined>$([System.Text.RegularExpressions.Regex]::IsMatch('$(DefineConstants.Trim())', '(^|;)__TIZEN__($|;)'))</_IsTizenDefined>
     <DefineConstants Condition="!$(_IsTizenDefined)">__TIZEN__;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
+
+  <Target Name="_CheckPropertiesForTizen" BeforeTargets="BeforeBuild">
+    <Error Text="Samsung.Tizen.Sdk does not support the self contained packaging. Set SelfContained to false."
+           Condition="'$(SelfContained)' == 'true'" />
+  </Target>
 
 </Project>

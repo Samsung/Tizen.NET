@@ -20,13 +20,8 @@ Copyright (c) Samsung All rights reserved.
     <KnownFrameworkReference
       Include="Samsung.Tizen"
       TargetFramework="net6.0"
-      RuntimeFrameworkName="Samsung.Tizen"
-      DefaultRuntimeFrameworkVersion="$(_TizenFrameworkReferenceVersion)"
-      LatestRuntimeFrameworkVersion="$(_TizenFrameworkReferenceVersion)"
       TargetingPackName="Samsung.Tizen.Ref"
       TargetingPackVersion="$(_TizenFrameworkReferenceVersion)"
-      RuntimePackNamePatterns="Samsung.Tizen.Runtime.**RID**"
-      RuntimePackRuntimeIdentifiers="tizen-arm;tizen-x86"
       Profile="Tizen"
       IsTrimmable="true"
     />
