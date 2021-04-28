@@ -32,7 +32,6 @@ endef
 
 $(foreach pkgname,$(WORKLOAD_NUPKGS),$(eval $(call CreateNuGetPkgs,$(pkgname),$(TIZEN_PACK_VERSION_FULL))))
 
-.PHONY: packs
 packs: $(NUPKG_TARGETS)
 
 
@@ -44,7 +43,6 @@ define InstallWorkload
 			-p:DotNetTargetVersion=$(2)
 endef
 
-.PHONY: install
 install: packs
 	$(call InstallWorkload,$(abspath $(DESTDIR)),$(DESTVER))
 
