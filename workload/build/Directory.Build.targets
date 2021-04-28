@@ -7,22 +7,6 @@
   <Import Project="..\src\Samsung.Tizen.Build.PrepTasks\PrepTasks.targets" />
   <Import Project="Sdk.props" Sdk="Microsoft.DotNet.SharedFramework.Sdk" Version="$(MicrosoftDotNetBuildTasksFeedPackageVersion)" />
 
-  <UsingTask TaskName="CreateFrameworkListFile" AssemblyFile="$(DotNetSharedFrameworkTaskFile)"/>
-
-  <PropertyGroup>
-    <_DotNetTargetPath Condition="'$(DotNetTargetPath)' != ''">$(DotNetTargetPath)</_DotNetTargetPath>
-    <_DotNetTargetPath Condition="'$(DotNetTargetPath)' == ''">$(_DefaultDotNetTargetPath)</_DotNetTargetPath>
-    <_DotNetTargetPath>$([MSBuild]::EnsureTrailingSlash($(_DotNetTargetPath)))</_DotNetTargetPath>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <_DotNetTargetVersion Condition="'$(DotNetTargetVersion)' != ''">$(DotNetTargetVersion)</_DotNetTargetVersion>
-    <_DotNetTargetVersion Condition="'$(DotNetTargetVersion)' == ''">$(_DefaultDotnetTargetVersion)</_DotNetTargetVersion>
-
-    <!-- Trim all characters after first `-` or `+` is encountered. -->
-    <DotNetPreviewVersionBand Condition=" '$(DotNetPreviewVersionBand)' == '' ">$([System.Text.RegularExpressions.Regex]::Replace($(_DotNetTargetVersion), `[-+].*$`, ""))</DotNetPreviewVersionBand>
-  </PropertyGroup>
-
   <PropertyGroup>
     <_WorkloadResolverFlagFile>$(_DotNetTargetPath)sdk\$(_DotNetTargetVersion)\EnableWorkloadResolver.sentinel</_WorkloadResolverFlagFile>
   </PropertyGroup>
@@ -53,30 +37,7 @@
     </ItemGroup>
   </Target>
 
-  <!-- https://github.com/dotnet/runtime/blob/0647ec314948904319da5eb15e9931f7c85ed1e2/src/installer/pkg/projects/Directory.Build.targets#L281 -->
-  <Target Name="_GenerateFrameworkListFile" >
-    <!-- Hardcode framework attributes -->
-    <ItemGroup>
-      <FrameworkListRootAttributes Include="Name" Value=".NET 6.0 - Tizen" />
-      <FrameworkListRootAttributes Include="TargetFrameworkIdentifier" Value=".NETCoreApp" />
-      <FrameworkListRootAttributes Include="TargetFrameworkVersion" Value="6.0" />
-      <FrameworkListRootAttributes Include="FrameworkName" Value="Samsung.Tizen" />
-    </ItemGroup>
-
-    <!-- https://github.com/dotnet/arcade/blob/5824baf1c9a900ee00c167f96201c750bba6a574/src/Microsoft.DotNet.SharedFramework.Sdk/src/CreateFrameworkListFile.cs -->
-    <CreateFrameworkListFile
-        Files="@(_PackageFiles)"
-        FileClassifications="@(FrameworkListFileClass)"
-        TargetFile="$(FrameworkListFile)"
-        TargetFilePrefixes="ref;runtimes"
-        RootAttributes="@(FrameworkListRootAttributes)"
-    />
-    <ItemGroup>
-      <_PackageFiles Include="$(FrameworkListFile)" PackagePath="data" />
-    </ItemGroup>
-  </Target>
-
-  <Target Name="ExtractWorkloadPacks" DependsOnTargets="DeleteExtractedWorkloadPacks" >
+  <Target Name="InstallWorkloadPacks" DependsOnTargets="UninstallWorkloadPacks" >
     <ItemGroup>
       <_WLManifest Include="$(OutputPath)Samsung.NET.Workload.Tizen.*.nupkg" />
       <_WLPacks Include="$(OutputPath)Samsung.Tizen.Sdk.*.nupkg" />
@@ -105,7 +66,7 @@
     />
   </Target>
 
-  <Target Name="DeleteExtractedWorkloadPacks" >
+  <Target Name="UninstallWorkloadPacks" >
     <ItemGroup>
       <_PackFilesToDelete Include="$(_DotNetTargetPath)sdk-manifests\$(DotNetPreviewVersionBand)\Samsung.NET.Workload.Tizen\**\*.*" />
       <_PackFilesToDelete Include="$(_DotNetTargetPath)packs\Samsung.Tizen.*\**\*.*" />
