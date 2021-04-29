@@ -24,7 +24,6 @@ Copyright (c) Samsung All rights reserved.
       TargetingPackName="Samsung.Tizen.Ref"
       TargetingPackVersion="$(_TizenFrameworkReferenceVersion)"
       Profile="Tizen"
-      IsTrimmable="true"
     />
   </ItemGroup>
 
