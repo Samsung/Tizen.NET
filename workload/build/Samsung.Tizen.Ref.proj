@@ -55,4 +55,29 @@ by projects that use the Tizen .NET framework in .NET 5.
 
   </Target>
 
+  <UsingTask TaskName="CreateFrameworkListFile" AssemblyFile="$(DotNetSharedFrameworkTaskFile)"/>
+
+  <!-- https://github.com/dotnet/runtime/blob/0647ec314948904319da5eb15e9931f7c85ed1e2/src/installer/pkg/projects/Directory.Build.targets#L281 -->
+  <Target Name="_GenerateFrameworkListFile" >
+    <!-- Hardcode framework attributes -->
+    <ItemGroup>
+      <FrameworkListRootAttributes Include="Name" Value=".NET 6.0 - Tizen" />
+      <FrameworkListRootAttributes Include="TargetFrameworkIdentifier" Value=".NETCoreApp" />
+      <FrameworkListRootAttributes Include="TargetFrameworkVersion" Value="6.0" />
+      <FrameworkListRootAttributes Include="FrameworkName" Value="Samsung.Tizen" />
+    </ItemGroup>
+
+    <!-- https://github.com/dotnet/arcade/blob/5824baf1c9a900ee00c167f96201c750bba6a574/src/Microsoft.DotNet.SharedFramework.Sdk/src/CreateFrameworkListFile.cs -->
+    <CreateFrameworkListFile
+        Files="@(_PackageFiles)"
+        FileClassifications="@(FrameworkListFileClass)"
+        TargetFile="$(FrameworkListFile)"
+        TargetFilePrefixes="ref;runtimes"
+        RootAttributes="@(FrameworkListRootAttributes)"
+    />
+    <ItemGroup>
+      <_PackageFiles Include="$(FrameworkListFile)" PackagePath="data" />
+    </ItemGroup>
+  </Target>
+
 </Project>

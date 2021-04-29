@@ -13,7 +13,6 @@ Copyright (c) Samsung All rights reserved.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <_DefaultTargetPlatformVersion>6.5</_DefaultTargetPlatformVersion>
     <TargetPlatformSupported>true</TargetPlatformSupported>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">$(_DefaultTargetPlatformVersion)</TargetPlatformVersion>
   </PropertyGroup>

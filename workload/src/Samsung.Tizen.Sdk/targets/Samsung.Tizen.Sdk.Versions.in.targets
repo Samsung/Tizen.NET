@@ -13,20 +13,16 @@ Copyright (c) Samsung All rights reserved.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
+    <_DefaultTargetPlatformVersion>6.5</_DefaultTargetPlatformVersion>
     <_TizenFrameworkReferenceVersion>@TIZEN_PACK_VERSION@</_TizenFrameworkReferenceVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <KnownFrameworkReference
       Include="Samsung.Tizen"
-      TargetFramework="net6.0"
-      RuntimeFrameworkName="Samsung.Tizen"
-      DefaultRuntimeFrameworkVersion="$(_TizenFrameworkReferenceVersion)"
-      LatestRuntimeFrameworkVersion="$(_TizenFrameworkReferenceVersion)"
+      TargetFramework="net6.0-tizen$(_DefaultTargetPlatformVersion)"
       TargetingPackName="Samsung.Tizen.Ref"
       TargetingPackVersion="$(_TizenFrameworkReferenceVersion)"
-      RuntimePackNamePatterns="Samsung.Tizen.Runtime.**RID**"
-      RuntimePackRuntimeIdentifiers="tizen-arm;tizen-x86"
       Profile="Tizen"
       IsTrimmable="true"
     />
