@@ -57,7 +57,7 @@
         SourceFiles="@(_WLPacks)"
         DestinationFolder="$(_DotNetTargetPath)packs\$([System.String]::Copy('%(_WLPacks.Filename)').Replace('.$(_WLPackVersion)', ''))\$(_WLPackVersion)"
     />
-    <Copy SourceFiles="@(_WLTemplates)" DestinationFolder="$(_DotNetTargetPath)template-packs" />
+    <Copy SourceFiles="@(_WLTemplates)" DestinationFiles="@(_WLTemplates->'%(Filename)%(Extension)'->ToLower()->'$(_DotNetTargetPath)template-packs\%(Identity)')" />
 
     <MakeDir Directories="$([System.IO.Path]::GetDirectoryName ($(_WorkloadResolverFlagFile)))" />
     <Touch
@@ -68,12 +68,14 @@
 
   <Target Name="UninstallWorkloadPacks" >
     <ItemGroup>
-      <_PackFilesToDelete Include="$(_DotNetTargetPath)sdk-manifests\$(DotNetPreviewVersionBand)\Samsung.NET.Workload.Tizen\**\*.*" />
-      <_PackFilesToDelete Include="$(_DotNetTargetPath)packs\Samsung.Tizen.*\**\*.*" />
-      <_PackFilesToDelete Include="$(_DotNetTargetPath)template-packs\Samsung.Tizen.Templates.*.nupkg" />
+      <_DirectoriesToRemove Include="$(_DotNetTargetPath)sdk-manifests\$(DotNetPreviewVersionBand)\Samsung.NET.Workload.Tizen\" />
+      <_DirectoriesToRemove Include="$(_DotNetTargetPath)packs\Samsung.Tizen.Sdk\" />
+      <_DirectoriesToRemove Include="$(_DotNetTargetPath)packs\Samsung.Tizen.Ref\" />
+      <_FilesToRemove Include="$(_DotNetTargetPath)template-packs\samsung.tizen.templates.*.nupkg" />
+      <_FilesToRemove Include="$(_WorkloadResolverFlagFile)" />
     </ItemGroup>
-    <RemoveDir Directories="%(_PackFilesToDelete.RootDir)%(_PackFilesToDelete.Directory)" />
-    <Delete Files="$(_WorkloadResolverFlagFile)" />
+    <RemoveDir Directories="@(_DirectoriesToRemove)" />
+    <Delete Files="@(_FilesToRemove)" />
   </Target>
 
 </Project>
