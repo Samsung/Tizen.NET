@@ -47,12 +47,21 @@
 
     <PropertyGroup>
       <_WLPackVersion>@(_WLManifest->'%(Filename)'->Replace('Samsung.NET.Workload.Tizen.', ''))</_WLPackVersion>
+      <_SdkManifestsDirectory>$(_DotNetTargetPath)sdk-manifests\$(DotNetPreviewVersionBand)\</_SdkManifestsDirectory>
+      <_WLManifestTmpDirectory>$(_SdkManifestsDirectory)Samsung.NET.Workload.Tizen.Tmp\</_WLManifestTmpDirectory>
     </PropertyGroup>
 
     <Unzip
         SourceFiles="@(_WLManifest)"
-        DestinationFolder="$(_DotNetTargetPath)sdk-manifests\$(DotNetPreviewVersionBand)\Samsung.NET.Workload.Tizen"
+        DestinationFolder="$(_WLManifestTmpDirectory)"
     />
+    <ItemGroup>
+      <_WLManifestFiles Include="$(_WLManifestTmpDirectory)LICENSE" />
+      <_WLManifestFiles Include="$(_WLManifestTmpDirectory)data\*" />
+    </ItemGroup>
+    <Move SourceFiles="@(_WLManifestFiles)" DestinationFolder="$(_SdkManifestsDirectory)Samsung.NET.Workload.Tizen" />
+    <RemoveDir Directories="$(_WLManifestTmpDirectory)" />
+
     <Unzip
         SourceFiles="@(_WLPacks)"
         DestinationFolder="$(_DotNetTargetPath)packs\$([System.String]::Copy('%(_WLPacks.Filename)').Replace('.$(_WLPackVersion)', ''))\$(_WLPackVersion)"
