@@ -3,7 +3,8 @@
 
 [<b>Tizen .NET</b>](https://developer.samsung.com/tizen/About-Tizen.NET/Tizen.NET.html) is an advanced way to develop applications with .NET technology for Tizen OS.
 
-Tizen .NET is:
+Tizen .NET is :
+- Support [TizenFX](https://github.com/Samsung/TizenFX)
 - Support .NET [MAUI](https://github.com/dotnet/maui)
 - Support .NET 6
 
