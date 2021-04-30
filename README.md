@@ -48,10 +48,6 @@ Razor Page                                    page            [C#]        Web/AS
 ...
 
 ```  
-If not, please install the template
-```sh
-dotnet new -i  ${DOTNET6_SDK_PATH}/template-packs/Samsung.Tizen.Templates.6.5.100-ci.main.34.nupkg
-```
 
 #### 2. Creates a New Project
 ```sh
