@@ -8,8 +8,11 @@ You would first need to install .NET 6 Preview SDK. Download and install `SDK 6.
 ### Linux
 Use following commands to build and install Tizen workload.
 ```shell
-make && make install DESTDIR=<.net 6 preview sdk path>
-make && make install DESTDIR=<.net 6 preview sdk path> DESTVER=<.net 6 preview sdk version>
+make install DESTDIR=<.net 6 preview sdk path>
+```
+or
+```shell
+make install DESTDIR=<.net 6 preview sdk path> DESTVER=<.net 6 preview sdk version>
 ```
 
 ### Windows
