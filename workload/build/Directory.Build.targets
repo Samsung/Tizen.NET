@@ -8,10 +8,6 @@
   <Import Project="Sdk.props" Sdk="Microsoft.DotNet.SharedFramework.Sdk" Version="$(MicrosoftDotNetBuildTasksFeedPackageVersion)" />
 
   <PropertyGroup>
-    <_WorkloadResolverFlagFile>$(_DotNetTargetPath)sdk\$(_DotNetTargetVersion)\EnableWorkloadResolver.sentinel</_WorkloadResolverFlagFile>
-  </PropertyGroup>
-
-  <PropertyGroup>
     <NuGetLicense Condition=" '$(NuGetLicense)' == '' ">..\LICENSE</NuGetLicense>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
@@ -68,11 +64,6 @@
     />
     <Copy SourceFiles="@(_WLTemplates)" DestinationFiles="@(_WLTemplates->'%(Filename)%(Extension)'->ToLower()->'$(_DotNetTargetPath)template-packs\%(Identity)')" />
 
-    <MakeDir Directories="$([System.IO.Path]::GetDirectoryName ($(_WorkloadResolverFlagFile)))" />
-    <Touch
-        Files="$(_WorkloadResolverFlagFile)"
-        AlwaysCreate="true"
-    />
   </Target>
 
   <Target Name="UninstallWorkloadPacks" >
@@ -81,7 +72,6 @@
       <_DirectoriesToRemove Include="$(_DotNetTargetPath)packs\Samsung.Tizen.Sdk\" />
       <_DirectoriesToRemove Include="$(_DotNetTargetPath)packs\Samsung.Tizen.Ref\" />
       <_FilesToRemove Include="$(_DotNetTargetPath)template-packs\samsung.tizen.templates.*.nupkg" />
-      <_FilesToRemove Include="$(_WorkloadResolverFlagFile)" />
     </ItemGroup>
     <RemoveDir Directories="@(_DirectoriesToRemove)" />
     <Delete Files="@(_FilesToRemove)" />
