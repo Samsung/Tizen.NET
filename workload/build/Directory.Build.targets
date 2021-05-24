@@ -39,16 +39,16 @@
 
   <Target Name="InstallWorkloadPacks" DependsOnTargets="UninstallWorkloadPacks" >
     <ItemGroup>
-      <_WLManifest Include="$(OutputPath)Samsung.NET.Workload.Tizen.*.nupkg" />
+      <_WLManifest Include="$(OutputPath)Samsung.NET.Sdk.Tizen.Manifest-*.nupkg" />
       <_WLPacks Include="$(OutputPath)Samsung.Tizen.Sdk.*.nupkg" />
       <_WLPacks Include="$(OutputPath)Samsung.Tizen.Ref.*.nupkg" />
       <_WLTemplates Include="$(OutputPath)Samsung.Tizen.Templates.*.nupkg" />
     </ItemGroup>
 
     <PropertyGroup>
-      <_WLPackVersion>@(_WLManifest->'%(Filename)'->Replace('Samsung.NET.Workload.Tizen.', ''))</_WLPackVersion>
+      <_WLPackVersion>@(_WLManifest->'%(Filename)'->Replace('Samsung.NET.Sdk.Tizen.Manifest-$(DotNetPreviewVersionBand).', ''))</_WLPackVersion>
       <_SdkManifestsDirectory>$(_DotNetTargetPath)sdk-manifests\$(DotNetPreviewVersionBand)\</_SdkManifestsDirectory>
-      <_WLManifestTmpDirectory>$(_SdkManifestsDirectory)Samsung.NET.Workload.Tizen.Tmp\</_WLManifestTmpDirectory>
+      <_WLManifestTmpDirectory>$(_SdkManifestsDirectory)Samsung.NET.Sdk.Tizen.Tmp\</_WLManifestTmpDirectory>
     </PropertyGroup>
 
     <Unzip
@@ -59,7 +59,7 @@
       <_WLManifestFiles Include="$(_WLManifestTmpDirectory)LICENSE" />
       <_WLManifestFiles Include="$(_WLManifestTmpDirectory)data\*" />
     </ItemGroup>
-    <Move SourceFiles="@(_WLManifestFiles)" DestinationFolder="$(_SdkManifestsDirectory)Samsung.NET.Workload.Tizen" />
+    <Move SourceFiles="@(_WLManifestFiles)" DestinationFolder="$(_SdkManifestsDirectory)Samsung.NET.Sdk.Tizen" />
     <RemoveDir Directories="$(_WLManifestTmpDirectory)" />
 
     <Unzip
@@ -77,7 +77,7 @@
 
   <Target Name="UninstallWorkloadPacks" >
     <ItemGroup>
-      <_DirectoriesToRemove Include="$(_DotNetTargetPath)sdk-manifests\$(DotNetPreviewVersionBand)\Samsung.NET.Workload.Tizen\" />
+      <_DirectoriesToRemove Include="$(_DotNetTargetPath)sdk-manifests\$(DotNetPreviewVersionBand)\Samsung.NET.Sdk.Tizen\" />
       <_DirectoriesToRemove Include="$(_DotNetTargetPath)packs\Samsung.Tizen.Sdk\" />
       <_DirectoriesToRemove Include="$(_DotNetTargetPath)packs\Samsung.Tizen.Ref\" />
       <_FilesToRemove Include="$(_DotNetTargetPath)template-packs\samsung.tizen.templates.*.nupkg" />
