@@ -3,7 +3,7 @@
 Samsung.Tizen.Sdk.proj
 
 This project file is used to create the Samsung.Tizen.Sdk NuGet, which is the
-core workload sdk pack imported by Samsung.NET.Workload.Tizen.
+core workload sdk pack imported by the Samsung.NET.Sdk.Tizen.
 ***********************************************************************************************
 -->
 <Project Sdk="Microsoft.Build.NoTargets">

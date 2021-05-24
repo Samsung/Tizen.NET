@@ -1,3 +1,11 @@
+-include $(TMPDIR)/dotnet.config
+$(TMPDIR)/dotnet.config: $(TOP)/build/Versions.props
+	@mkdir -p $(TMPDIR)
+	@grep _DefaultDotnetTargetVersion build/Versions.props | sed -e 's/<\/*_DefaultDotnetTargetVersion>//g' -e 's/[ \t]*/TARGET_DOTNET_VERSION=/' > $@
+
+TARGET_DOTNET_VERSION_BAND=$(firstword $(subst -, ,$(TARGET_DOTNET_VERSION)))
+
+
 TIZEN_VERSION_BLAME_COMMIT := $(shell git blame $(TOP)/Versions.mk HEAD | grep TIZEN_PACK_VERSION | sed 's/ .*//')
 TIZEN_COMMIT_DISTANCE := $(shell git log $(TIZEN_VERSION_BLAME_COMMIT)..HEAD --oneline | wc -l)
 

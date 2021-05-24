@@ -5,32 +5,27 @@ TMPDIR := $(TOP)/.tmp
 NUPKG_BIN_DIR := $(BINDIR)/nuget-unsigned
 MSI_BIN_DIR := $(BINDIR)/windows
 
+_DEFAULT_TARGET: packs
+
 include $(TOP)/Versions.mk
 include $(TOP)/Config.mk
 
-WORKLOAD_NUPKGS := \
-		Samsung.NET.Workload.Tizen \
-		Samsung.Tizen.Sdk \
-		Samsung.Tizen.Ref \
-		Samsung.Tizen.Templates
-
-
-all: packs
-
-
 # Create nuget packages for manifest and packs
 define CreateNuGetPkgs
-$(NUPKG_BIN_DIR)/$(1).$(2).nupkg:
+$(NUPKG_BIN_DIR)/$(1)$(3).$(2).nupkg:
 		@dotnet pack --nologo $(TOP)/build/$(1).proj \
 			-p:Configuration=Release \
 			-p:IncludeSymbols=False \
 			-p:TizenPackVersion=$(2) \
 			-p:TizenVersionHash=$(CURRENT_HASH)
 
-NUPKG_TARGETS += $(NUPKG_BIN_DIR)/$(1).$(2).nupkg
+NUPKG_TARGETS += $(NUPKG_BIN_DIR)/$(1)$(3).$(2).nupkg
 endef
 
-$(foreach pkgname,$(WORKLOAD_NUPKGS),$(eval $(call CreateNuGetPkgs,$(pkgname),$(TIZEN_PACK_VERSION_FULL))))
+$(eval $(call CreateNuGetPkgs,Samsung.NET.Sdk.Tizen,$(TIZEN_PACK_VERSION_FULL),.Manifest-$(TARGET_DOTNET_VERSION_BAND)))
+$(eval $(call CreateNuGetPkgs,Samsung.Tizen.Sdk,$(TIZEN_PACK_VERSION_FULL)))
+$(eval $(call CreateNuGetPkgs,Samsung.Tizen.Ref,$(TIZEN_PACK_VERSION_FULL)))
+$(eval $(call CreateNuGetPkgs,Samsung.Tizen.Templates,$(TIZEN_PACK_VERSION_FULL)))
 
 packs: $(NUPKG_TARGETS)
 
@@ -38,7 +33,7 @@ packs: $(NUPKG_TARGETS)
 # Install workload to DESTDIR
 define InstallWorkload
 		@dotnet msbuild --nologo -t:InstallWorkloadPacks \
-			$(TOP)/build/Samsung.NET.Workload.Tizen.proj \
+			$(TOP)/build/Samsung.NET.Sdk.Tizen.proj \
 			-p:DotNetTargetPath=$(1) \
 			-p:DotNetTargetVersion=$(2)
 endef
@@ -50,7 +45,7 @@ install: packs
 # Uninstall workload from the dotnet sdk
 define UninstallWorkload
 		@dotnet msbuild --nologo -t:UninstallWorkloadPacks \
-			$(TOP)/build/Samsung.NET.Workload.Tizen.proj \
+			$(TOP)/build/Samsung.NET.Sdk.Tizen.proj \
 			-p:DotNetTargetPath=$(1) \
 			-p:DotNetTargetVersion=$(2)
 endef
@@ -64,7 +59,7 @@ $(MSI_BIN_DIR)/Samsung.NET.Workload.Tizen.$(1).wix: prepare-create-installer
 	@dotnet msbuild --nologo $(TOP)/build/GenerateWixFile.proj \
 									-t:Generate \
 									-p:MSIVersion=$(TIZEN_PACK_VERSION_FULL) \
-									-p:SourceDirectory=$(TMPDIR) \
+									-p:SourceDirectory=$(TMPDIR)/msi \
 									-p:DestinationFile="$$@"
 
 $(MSI_BIN_DIR)/Samsung.NET.Workload.Tizen.$(1).msi: $(MSI_BIN_DIR)/Samsung.NET.Workload.Tizen.$(1).wix
@@ -75,7 +70,7 @@ endef
 
 prepare-create-installer: packs
 	@rm -fr $(TMPDIR)
-	$(call InstallWorkload,$(abspath $(TMPDIR)),$(DESTVER))
+	$(call InstallWorkload,$(abspath $(TMPDIR)/msi),$(DESTVER))
 
 $(eval $(call CreateMsi,$(TIZEN_PACK_VERSION_FULL)))
 

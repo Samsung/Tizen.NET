@@ -1,5 +1,5 @@
 {
-	"version": 5,
+	"version": "@TIZEN_PACK_VERSION@",
 	"workloads": {
 		"samsung-tizen-sdk-full": {
 			"description": "Tizen .NET SDK",
