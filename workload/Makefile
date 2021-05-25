@@ -5,7 +5,7 @@ TMPDIR := $(TOP)/.tmp
 NUPKG_BIN_DIR := $(BINDIR)/nuget-unsigned
 MSI_BIN_DIR := $(BINDIR)/windows
 
-_DEFAULT_TARGET: packs
+.DEFAULT_GOAL := packs
 
 include $(TOP)/Versions.mk
 include $(TOP)/Config.mk
@@ -17,12 +17,13 @@ $(NUPKG_BIN_DIR)/$(1)$(3).$(2).nupkg:
 			-p:Configuration=Release \
 			-p:IncludeSymbols=False \
 			-p:TizenPackVersion=$(2) \
-			-p:TizenVersionHash=$(CURRENT_HASH)
+			-p:TizenVersionHash=$(CURRENT_HASH) \
+			-p:TargetDotnetVersion=$(4)
 
 NUPKG_TARGETS += $(NUPKG_BIN_DIR)/$(1)$(3).$(2).nupkg
 endef
 
-$(eval $(call CreateNuGetPkgs,Samsung.NET.Sdk.Tizen,$(TIZEN_PACK_VERSION_FULL),.Manifest-$(TARGET_DOTNET_VERSION_BAND)))
+$(eval $(call CreateNuGetPkgs,Samsung.NET.Sdk.Tizen,$(TIZEN_PACK_VERSION_FULL),.Manifest-$(TARGET_DOTNET_VERSION_BAND),$(DESTVER)))
 $(eval $(call CreateNuGetPkgs,Samsung.Tizen.Sdk,$(TIZEN_PACK_VERSION_FULL)))
 $(eval $(call CreateNuGetPkgs,Samsung.Tizen.Ref,$(TIZEN_PACK_VERSION_FULL)))
 $(eval $(call CreateNuGetPkgs,Samsung.Tizen.Templates,$(TIZEN_PACK_VERSION_FULL)))
