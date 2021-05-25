@@ -5,7 +5,6 @@
   <PropertyGroup>
     <_ProjectRootDirectory>$(MSBuildThisFileDirectory)..\</_ProjectRootDirectory>
     <_ProjectSourceDirectory>$(_ProjectRootDirectory)src\</_ProjectSourceDirectory>
-    <_DefaultDotNetTargetPath>$(_ProjectRootDirectory)\bin\dotnet\</_DefaultDotNetTargetPath>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -20,20 +19,6 @@
     <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
     <!-- Ignore TargetFramework reference group related warnings, these are workload packs not functional NuGets. -->
     <NoWarn>$(NoWarn);NU5128;NU5131</NoWarn>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <_DotNetTargetPath Condition="'$(DotNetTargetPath)' != ''">$(DotNetTargetPath)</_DotNetTargetPath>
-    <_DotNetTargetPath Condition="'$(DotNetTargetPath)' == ''">$(_DefaultDotNetTargetPath)</_DotNetTargetPath>
-    <_DotNetTargetPath>$([MSBuild]::EnsureTrailingSlash($(_DotNetTargetPath)))</_DotNetTargetPath>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <_DotNetTargetVersion Condition="'$(DotNetTargetVersion)' != ''">$(DotNetTargetVersion)</_DotNetTargetVersion>
-    <_DotNetTargetVersion Condition="'$(DotNetTargetVersion)' == ''">$(_DefaultDotnetTargetVersion)</_DotNetTargetVersion>
-
-    <!-- Trim all characters after first `-` or `+` is encountered. -->
-    <DotNetPreviewVersionBand Condition=" '$(DotNetPreviewVersionBand)' == '' ">$([System.Text.RegularExpressions.Regex]::Replace($(_DotNetTargetVersion), `[-+].*$`, ""))</DotNetPreviewVersionBand>
   </PropertyGroup>
 
 </Project>

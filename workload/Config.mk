@@ -1,9 +1,13 @@
 -include $(TMPDIR)/dotnet.config
 $(TMPDIR)/dotnet.config: $(TOP)/build/Versions.props
 	@mkdir -p $(TMPDIR)
-	@grep _DefaultDotnetTargetVersion build/Versions.props | sed -e 's/<\/*_DefaultDotnetTargetVersion>//g' -e 's/[ \t]*/TARGET_DOTNET_VERSION=/' > $@
+	@grep "<_DefaultTargetDotnetVersion>" build/Versions.props | sed -e 's/<\/*_DefaultTargetDotnetVersion>//g' -e 's/[ \t]*/TARGET_DOTNET_VERSION=/' > $@
 
+ifeq ($(DESTVER),)
 TARGET_DOTNET_VERSION_BAND=$(firstword $(subst -, ,$(TARGET_DOTNET_VERSION)))
+else
+TARGET_DOTNET_VERSION_BAND=$(firstword $(subst -, ,$(DESTVER)))
+endif
 
 
 TIZEN_VERSION_BLAME_COMMIT := $(shell git blame $(TOP)/Versions.mk HEAD | grep TIZEN_PACK_VERSION | sed 's/ .*//')
