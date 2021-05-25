@@ -6,8 +6,15 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <_DefaultDotnetTargetVersion>6.0.100-preview.3.21202.5</_DefaultDotnetTargetVersion>
+    <_DefaultTargetDotnetVersion>6.0.100-preview.3.21202.5</_DefaultTargetDotnetVersion>
     <MicrosoftDotNetBuildTasksFeedPackageVersion>6.0.0-beta.21212.6</MicrosoftDotNetBuildTasksFeedPackageVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <_TargetDotnetVersion Condition="'$(TargetDotnetVersion)' != ''">$(TargetDotnetVersion)</_TargetDotnetVersion>
+    <_TargetDotnetVersion Condition="'$(TargetDotnetVersion)' == ''">$(_DefaultTargetDotnetVersion)</_TargetDotnetVersion>
+    <!-- Trim all characters after first `-` or `+` is encountered. -->
+    <DotNetPreviewVersionBand Condition=" '$(DotNetPreviewVersionBand)' == '' ">$([System.Text.RegularExpressions.Regex]::Replace($(_TargetDotnetVersion), `[-+].*$`, ""))</DotNetPreviewVersionBand>
   </PropertyGroup>
 
 </Project>

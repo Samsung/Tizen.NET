@@ -34,8 +34,8 @@ packs: $(NUPKG_TARGETS)
 define InstallWorkload
 		@dotnet msbuild --nologo -t:InstallWorkloadPacks \
 			$(TOP)/build/Samsung.NET.Sdk.Tizen.proj \
-			-p:DotNetTargetPath=$(1) \
-			-p:DotNetTargetVersion=$(2)
+			-p:TargetDotnetPath=$(1) \
+			-p:TargetDotnetVersion=$(2)
 endef
 
 install: packs
@@ -46,8 +46,8 @@ install: packs
 define UninstallWorkload
 		@dotnet msbuild --nologo -t:UninstallWorkloadPacks \
 			$(TOP)/build/Samsung.NET.Sdk.Tizen.proj \
-			-p:DotNetTargetPath=$(1) \
-			-p:DotNetTargetVersion=$(2)
+			-p:TargetDotnetPath=$(1) \
+			-p:TargetDotnetVersion=$(2)
 endef
 uninstall:
 	$(call UninstallWorkload,$(abspath $(DESTDIR)),$(DESTVER))
