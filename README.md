@@ -20,11 +20,11 @@ Tizen .NET is :
   * [Tizen Studio](https://developer.tizen.org/development/tizen-studio)
 
 **- .NET 6 Preview SDK**
-  * Windows: [dotnet-sdk-6.0.100-preview.3.21202.5-win-x64.exe](https://download.visualstudio.microsoft.com/download/pr/f650c921-3ee9-4352-b743-a052e45d9ce7/99c5e001a48d243d27765d84c74f1e37/dotnet-sdk-6.0.100-preview.3.21202.5-win-x64.exe)
-  * macOS: [dotnet-sdk-6.0.100-preview.3.21202.5-osx-x64.pkg](https://download.visualstudio.microsoft.com/download/pr/fc5fdd1f-fb4c-4b88-a507-158204030320/98497ef248883404ff5b0604dda944fb/dotnet-sdk-6.0.100-preview.3.21202.5-osx-x64.pkg)
+  * Windows: [dotnet-sdk-6.0.100-preview.4.21255.9-win-x64.exe](hhttps://dotnetcli.azureedge.net/dotnet/Sdk/6.0.100-preview.4.21255.9/dotnet-sdk-6.0.100-preview.4.21255.9-win-x64.exe)
+  * macOS: [dotnet-sdk-6.0.100-preview.4.21255.9-osx-x64.pkg](https://dotnetcli.azureedge.net/dotnet/Sdk/6.0.100-preview.4.21255.9/dotnet-sdk-6.0.100-preview.4.21255.9-osx-x64.pkg)
 
 **- .NET MAUI Tizen workloads, packs and templates (Preview)**
-  * Windows: [Samsung.NET.Workload.Tizen.6.5.100-preview.3.34.msi](https://workload-bin.s3.ap-northeast-2.amazonaws.com/windows/Samsung.NET.Workload.Tizen.6.5.100-preview.3.34.msi)
+  * Windows: [Samsung.NET.Workload.Tizen.6.5.100-preview.4.45.msi](https://workload-bin.s3.ap-northeast-2.amazonaws.com/windows/Samsung.NET.Workload.Tizen.6.5.100-preview.4.45.msi)
   * macOS and Linux: Refer to the instructions [here](https://github.com/Samsung/Tizen.NET/tree/main/workload).
 
 ### Time to Go!
