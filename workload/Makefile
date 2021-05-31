@@ -1,5 +1,7 @@
 TOP := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
+PRERELEASE_TAG ?= preview.5
+
 BINDIR := $(TOP)/bin
 TMPDIR := $(TOP)/.tmp
 NUPKG_BIN_DIR := $(BINDIR)/nuget-unsigned
