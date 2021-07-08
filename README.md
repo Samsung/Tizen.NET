@@ -20,12 +20,17 @@ Tizen .NET is :
   * [Tizen Studio](https://developer.tizen.org/development/tizen-studio)
 
 **- .NET 6 Preview SDK**
-  * Windows: [dotnet-sdk-6.0.100-preview.4.21255.9-win-x64.exe](hhttps://dotnetcli.azureedge.net/dotnet/Sdk/6.0.100-preview.4.21255.9/dotnet-sdk-6.0.100-preview.4.21255.9-win-x64.exe)
-  * macOS: [dotnet-sdk-6.0.100-preview.4.21255.9-osx-x64.pkg](https://dotnetcli.azureedge.net/dotnet/Sdk/6.0.100-preview.4.21255.9/dotnet-sdk-6.0.100-preview.4.21255.9-osx-x64.pkg)
+  * Linux / Windows / macOS : https://dotnet.microsoft.com/download/dotnet/6.0
+  
 
-**- .NET MAUI Tizen workloads, packs and templates (Preview)**
-  * Windows: [Samsung.NET.Workload.Tizen.6.5.100-preview.4.45.msi](https://workload-bin.s3.ap-northeast-2.amazonaws.com/windows/Samsung.NET.Workload.Tizen.6.5.100-preview.4.45.msi)
-  * macOS and Linux: Refer to the instructions [here](https://github.com/Samsung/Tizen.NET/tree/main/workload).
+### Installing Tizen workload for .NET 6.0 (Preview)
+  * Windows: [Samsung.NET.Workload.Tizen.6.5.100-preview.5.56.msi](https://workload-bin.s3.ap-northeast-2.amazonaws.com/windows/Samsung.NET.Workload.Tizen.6.5.100-preview.5.56.msi)
+  * Linux / macOS: 
+  ```sh
+  git clone https://github.com/Samsung/Tizen.NET
+  cd Tizen.NET/workload
+  make install DESTDIR=<.net 6 preview sdk path>
+  ```
 
 ### Time to Go!
 
