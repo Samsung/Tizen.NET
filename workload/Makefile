@@ -12,7 +12,8 @@ include $(TOP)/Config.mk
 
 DIRECTORIES += \
 	$(OUTDIR) \
-	$(TMPDIR)
+	$(TMPDIR) \
+	$(DOTNET6_MANIFESTS_DESTDIR)
 
 $(DIRECTORIES):
 	@mkdir -p $@
@@ -47,33 +48,53 @@ $(eval $(call CreateNuGetPkgs,Samsung.Tizen.Sdk,$(TIZEN_PACK_VERSION_FULL)))
 $(eval $(call CreateNuGetPkgs,Samsung.Tizen.Ref,$(TIZEN_PACK_VERSION_FULL)))
 $(eval $(call CreateNuGetPkgs,Samsung.Tizen.Templates,$(TIZEN_PACK_VERSION_FULL)))
 
+.PHONY: packs
 packs: $(NUPKG_TARGETS)
 
-
-# Install workload to DESTDIR
-define InstallWorkload
-		@$(DOTNET6) msbuild --nologo -t:InstallWorkloadPacks \
-			$(TOP)/build/Samsung.NET.Sdk.Tizen.proj \
-			-p:TargetDotnetPath=$(1)
+# Create NuGet.config to use generated packages
+define TEMP_NUGET_CONFIG_BODY
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+<packageSources>
+	<clear />
+	<add key="local" value="$(WORKLOAD_PACKS_OUTDIR)" />
+</packageSources>
+</configuration>
 endef
+export TEMP_NUGET_CONFIG_BODY
 
-install: packs
-	$(call InstallWorkload,$(abspath $(DOTNET6_DESTDIR)))
+$(TMPDIR)/NuGet.config: | $(TMPDIR)
+	@echo "$$TEMP_NUGET_CONFIG_BODY" > $@
+
+
+# Install workload to the dotnet sdk
+$(TMPDIR)/.stamp-install-workload: $(TMPDIR)/NuGet.config | $(DOTNET6_MANIFESTS_DESTDIR)
+	@cp -f \
+		$(TOP)/LICENSE \
+		$(TOP)/src/Samsung.NET.Sdk.Tizen/WorkloadManifest.targets \
+		$(WORKLOAD_PACKS_OUTDIR)/workload-manifest/WorkloadManifest.json \
+		$(DOTNET6_MANIFESTS_DESTDIR)
+	@cd $(TMPDIR) && $(DOTNET6) workload install tizen --skip-manifest-update
+	@touch $@
+
+.PHONY: install
+install: packs $(TMPDIR)/.stamp-install-workload
 
 
 # Uninstall workload from the dotnet sdk
-define UninstallWorkload
-		@$(DOTNET6) msbuild --nologo -t:UninstallWorkloadPacks \
-			$(TOP)/build/Samsung.NET.Sdk.Tizen.proj \
-			-p:TargetDotnetPath=$(1)
-endef
-uninstall: $(DOTNET6)
-	$(call UninstallWorkload,$(abspath $(DOTNET6_DESTDIR)))
+.PHONY: uninstall
+uninstall:
+	@rm -fr \
+		$(DOTNET6_MANIFESTS_DESTDIR) \
+		$(DOTNET6_DESTDIR)/packs/Samsung.Tizen.Sdk \
+		$(DOTNET6_DESTDIR)/packs/Samsung.Tizen.Ref \
+		$(DOTNET6_DESTDIR)/template-packs/samsung.tizen.templates.*.nupkg \
+		$(TMPDIR)/.stamp-install-manifest
 
 
-# Create MSI windows bundle
+# Create MSI windows installer
 define CreateMsi
-$(WORKLOAD_MSI_OUTDIR)/Samsung.NET.Workload.Tizen.$(1).wix: prepare-create-installer
+$(WORKLOAD_MSI_OUTDIR)/Samsung.NET.Workload.Tizen.$(1).wix: | $(TMPDIR)/msi
 	@$(DOTNET6) msbuild --nologo $(TOP)/build/GenerateWixFile.proj \
 									-t:Generate \
 									-p:MSIVersion=$(TIZEN_PACK_VERSION_FULL) \
@@ -86,9 +107,14 @@ $(WORKLOAD_MSI_OUTDIR)/Samsung.NET.Workload.Tizen.$(1).msi: $(WORKLOAD_MSI_OUTDI
 MSI_TARGET := $(WORKLOAD_MSI_OUTDIR)/Samsung.NET.Workload.Tizen.$(1).msi
 endef
 
-prepare-create-installer: packs
-	@rm -fr $(TMPDIR)
-	$(call InstallWorkload,$(abspath $(TMPDIR)/msi)))
+$(TMPDIR)/msi: install
+	@mkdir -p $@/sdk-manifests/$(DOTNET6_VERSION_BAND)
+	@cp -fr $(DOTNET6_MANIFESTS_DESTDIR) $@/sdk-manifests/$(DOTNET6_VERSION_BAND)
+	@mkdir -p $@/packs
+	@cp -fr $(DOTNET6_DESTDIR)/packs/Samsung.Tizen.Sdk $@/packs
+	@cp -fr $(DOTNET6_DESTDIR)/packs/Samsung.Tizen.Ref $@/packs
+	@mkdir -p $@/template-packs
+	@cp -f $(DOTNET6_DESTDIR)/template-packs/samsung.tizen.templates.*.nupkg $@/template-packs
 
 $(eval $(call CreateMsi,$(TIZEN_PACK_VERSION_FULL)))
 
