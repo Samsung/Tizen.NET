@@ -62,7 +62,7 @@
       <_WLManifestFiles Include="$(_WLManifestTmpDirectory)LICENSE" />
       <_WLManifestFiles Include="$(_WLManifestTmpDirectory)data\*" />
     </ItemGroup>
-    <Move SourceFiles="@(_WLManifestFiles)" DestinationFolder="$(_SdkManifestsDirectory)Samsung.NET.Sdk.Tizen" />
+    <Move SourceFiles="@(_WLManifestFiles)" DestinationFolder="$(_SdkManifestsDirectory)samsung.net.sdk.tizen" />
     <RemoveDir Directories="$(_WLManifestTmpDirectory)" />
 
     <Unzip
@@ -75,7 +75,7 @@
 
   <Target Name="UninstallWorkloadPacks" >
     <ItemGroup>
-      <_DirectoriesToRemove Include="$(_TargetDotnetPath)sdk-manifests\$(DotNetPreviewVersionBand)\Samsung.NET.Sdk.Tizen\" />
+      <_DirectoriesToRemove Include="$(_TargetDotnetPath)sdk-manifests\$(DotNetPreviewVersionBand)\samsung.net.sdk.tizen\" />
       <_DirectoriesToRemove Include="$(_TargetDotnetPath)packs\Samsung.Tizen.Sdk\" />
       <_DirectoriesToRemove Include="$(_TargetDotnetPath)packs\Samsung.Tizen.Ref\" />
       <_FilesToRemove Include="$(_TargetDotnetPath)template-packs\samsung.tizen.templates.*.nupkg" />
