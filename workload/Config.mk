@@ -1,12 +1,13 @@
 -include $(TMPDIR)/dotnet.config
 $(TMPDIR)/dotnet.config: $(TOP)/build/Versions.props
 	@mkdir -p $(TMPDIR)
-	@grep "<_DefaultTargetDotnetVersion>" build/Versions.props | sed -e 's/<\/*_DefaultTargetDotnetVersion>//g' -e 's/[ \t]*/TARGET_DOTNET_VERSION=/' > $@
+	@grep "<MicrosoftDotnetSdkInternalPackageVersion>" build/Versions.props | sed -e 's/<\/*MicrosoftDotnetSdkInternalPackageVersion>//g' -e 's/[ \t]*/TARGET_DOTNET_VERSION=/' > $@
 
 ifeq ($(DESTVER),)
-TARGET_DOTNET_VERSION_BAND=$(firstword $(subst -, ,$(TARGET_DOTNET_VERSION)))
+TARGET_DOTNET_VERSION_BAND = $(firstword $(subst -, ,$(TARGET_DOTNET_VERSION)))
 else
-TARGET_DOTNET_VERSION_BAND=$(firstword $(subst -, ,$(DESTVER)))
+TARGET_DOTNET_VERSION = $(DESTVER)
+TARGET_DOTNET_VERSION_BAND = $(firstword $(subst -, ,$(DESTVER)))
 endif
 
 
