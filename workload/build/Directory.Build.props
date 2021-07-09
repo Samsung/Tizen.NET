@@ -12,7 +12,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageType>DotnetPlatform</PackageType>
     <Authors>Samsung Electronics</Authors>
-    <OutputPath>$(_ProjectRootDirectory)bin\nuget-unsigned\</OutputPath>
+    <OutputPath>$(_ProjectRootDirectory)out\nuget-unsigned\</OutputPath>
     <GenerateDependencyFile>false</GenerateDependencyFile>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <!-- Remove the `<group targetFramework=".NETStandard2.0" />` entry from the .nuspec. -->

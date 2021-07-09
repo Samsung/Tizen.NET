@@ -1,7 +1,7 @@
 TOP := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
 TMPDIR := $(TOP)/.tmp
-OUTDIR := $(TOP)/bin
+OUTDIR := $(TOP)/out
 WORKLOAD_PACKS_OUTDIR := $(OUTDIR)/nuget-unsigned
 WORKLOAD_MSI_OUTDIR := $(OUTDIR)/windows
 
@@ -89,7 +89,7 @@ uninstall:
 		$(DOTNET6_DESTDIR)/packs/Samsung.Tizen.Sdk \
 		$(DOTNET6_DESTDIR)/packs/Samsung.Tizen.Ref \
 		$(DOTNET6_DESTDIR)/template-packs/samsung.tizen.templates.*.nupkg \
-		$(TMPDIR)/.stamp-install-manifest
+		$(TMPDIR)/.stamp-install-workload
 
 
 # Create MSI windows installer
