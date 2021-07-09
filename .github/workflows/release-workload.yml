@@ -9,18 +9,11 @@ on:
 
 jobs:
   release:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
-
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 5.0.x
 
     - name: Install Wix toolset
       run: sudo apt-get install -y wixl
@@ -33,7 +26,7 @@ jobs:
 
     - name: Push packages to NuGet.org
       run: |
-        dotnet nuget push ./workload/bin/nuget-unsigned/Samsung.*.nupkg \
+        dotnet nuget push ./workload/out/nuget-unsigned/Samsung.*.nupkg \
                       -k ${{ secrets.NUGET_APIKEY }} \
                       -s https://api.nuget.org/v3/index.json \
                       -t 3000
@@ -46,5 +39,5 @@ jobs:
       with:
         region: ap-northeast-2
         bucket: workload-bin
-        file: ./workload/bin/windows/Samsung.NET.Workload.Tizen.*.msi
+        file: ./workload/out/windows/Samsung.NET.Workload.Tizen.*.msi
         folder: windows
