@@ -24,7 +24,7 @@ Tizen .NET is :
   
 
 ### Installing Tizen workload for .NET 6.0 (Preview)
-  * Windows: [Samsung.NET.Workload.Tizen.6.5.100-preview.5.56.msi](https://workload-bin.s3.ap-northeast-2.amazonaws.com/windows/Samsung.NET.Workload.Tizen.6.5.100-preview.5.56.msi)
+  * Windows: [Samsung.NET.Workload.Tizen.6.5.100-preview.5.57.msi](https://workload-bin.s3.ap-northeast-2.amazonaws.com/windows/Samsung.NET.Workload.Tizen.6.5.100-preview.5.57.msi)
   * Linux / macOS: 
   ```sh
   git clone -b release/6.0.1xx-preview5 https://github.com/Samsung/Tizen.NET
