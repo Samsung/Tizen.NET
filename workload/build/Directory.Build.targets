@@ -8,13 +8,6 @@
   <Import Project="Sdk.props" Sdk="Microsoft.DotNet.SharedFramework.Sdk" Version="$(MicrosoftDotNetBuildTasksFeedPackageVersion)" />
 
   <PropertyGroup>
-    <_DefaultTargetDotnetPath>$(_ProjectRootDirectory)\bin\dotnet\</_DefaultTargetDotnetPath>
-    <_TargetDotnetPath Condition="'$(TargetDotnetPath)' != ''">$(TargetDotnetPath)</_TargetDotnetPath>
-    <_TargetDotnetPath Condition="'$(TargetDotnetPath)' == ''">$(_DefaultTargetDotnetPath)</_TargetDotnetPath>
-    <_TargetDotnetPath>$([MSBuild]::EnsureTrailingSlash($(_TargetDotnetPath)))</_TargetDotnetPath>
-  </PropertyGroup>
-
-  <PropertyGroup>
     <NuGetLicense Condition=" '$(NuGetLicense)' == '' ">..\LICENSE</NuGetLicense>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
@@ -38,50 +31,6 @@
     <ItemGroup>
       <_PackageFiles Include="$(IntermediateOutputPath)$(PackageLicenseFile)" PackagePath="\" />
     </ItemGroup>
-  </Target>
-
-  <Target Name="InstallWorkloadPacks" DependsOnTargets="UninstallWorkloadPacks" >
-    <ItemGroup>
-      <_WLManifest Include="$(OutputPath)Samsung.NET.Sdk.Tizen.Manifest-*.nupkg" />
-      <_WLPacks Include="$(OutputPath)Samsung.Tizen.Sdk.*.nupkg" />
-      <_WLPacks Include="$(OutputPath)Samsung.Tizen.Ref.*.nupkg" />
-      <_WLTemplates Include="$(OutputPath)Samsung.Tizen.Templates.*.nupkg" />
-    </ItemGroup>
-
-    <PropertyGroup>
-      <_WLPackVersion>@(_WLManifest->'%(Filename)'->Replace('Samsung.NET.Sdk.Tizen.Manifest-$(DotNetPreviewVersionBand).', ''))</_WLPackVersion>
-      <_SdkManifestsDirectory>$(_TargetDotnetPath)sdk-manifests\$(DotNetPreviewVersionBand)\</_SdkManifestsDirectory>
-      <_WLManifestTmpDirectory>$(_SdkManifestsDirectory)Samsung.NET.Sdk.Tizen.Tmp\</_WLManifestTmpDirectory>
-    </PropertyGroup>
-
-    <Unzip
-        SourceFiles="@(_WLManifest)"
-        DestinationFolder="$(_WLManifestTmpDirectory)"
-    />
-    <ItemGroup>
-      <_WLManifestFiles Include="$(_WLManifestTmpDirectory)LICENSE" />
-      <_WLManifestFiles Include="$(_WLManifestTmpDirectory)data\*" />
-    </ItemGroup>
-    <Move SourceFiles="@(_WLManifestFiles)" DestinationFolder="$(_SdkManifestsDirectory)samsung.net.sdk.tizen" />
-    <RemoveDir Directories="$(_WLManifestTmpDirectory)" />
-
-    <Unzip
-        SourceFiles="@(_WLPacks)"
-        DestinationFolder="$(_TargetDotnetPath)packs\$([System.String]::Copy('%(_WLPacks.Filename)').Replace('.$(_WLPackVersion)', ''))\$(_WLPackVersion)"
-    />
-    <Copy SourceFiles="@(_WLTemplates)" DestinationFiles="@(_WLTemplates->'%(Filename)%(Extension)'->ToLower()->'$(_TargetDotnetPath)template-packs\%(Identity)')" />
-
-  </Target>
-
-  <Target Name="UninstallWorkloadPacks" >
-    <ItemGroup>
-      <_DirectoriesToRemove Include="$(_TargetDotnetPath)sdk-manifests\$(DotNetPreviewVersionBand)\samsung.net.sdk.tizen\" />
-      <_DirectoriesToRemove Include="$(_TargetDotnetPath)packs\Samsung.Tizen.Sdk\" />
-      <_DirectoriesToRemove Include="$(_TargetDotnetPath)packs\Samsung.Tizen.Ref\" />
-      <_FilesToRemove Include="$(_TargetDotnetPath)template-packs\samsung.tizen.templates.*.nupkg" />
-    </ItemGroup>
-    <RemoveDir Directories="@(_DirectoriesToRemove)" />
-    <Delete Files="@(_FilesToRemove)" />
   </Target>
 
 </Project>

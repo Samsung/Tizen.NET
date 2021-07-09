@@ -4,7 +4,6 @@ on:
   push:
     branches:
     - main
-    - develop
     paths:
     - 'workload/**'
     - '.github/workflows/**'
@@ -21,18 +20,11 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
-
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 5.0.x
 
     - name: Build
       env:
@@ -44,14 +36,13 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: tizen-workload-pkgs
-        path: ./workload/bin/nuget-unsigned/*.nupkg
+        path: ./workload/out/nuget-unsigned/*.nupkg
 
 
   deploy:
-
     runs-on: ubuntu-latest
     needs: build
-
+    if: ${{ github.ref == 'refs/heads/main' }}
     steps:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1

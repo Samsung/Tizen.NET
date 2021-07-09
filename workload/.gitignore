@@ -2,5 +2,6 @@
 .vscode/
 .tmp/
 bin/
+out/
 obj/
 tmp/
