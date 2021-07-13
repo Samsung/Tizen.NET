@@ -31,6 +31,13 @@ Tizen .NET is :
   cd Tizen.NET/workload
   make install DESTDIR=<.net 6 preview sdk path>
   ```
+You can see the Tizen workload as follows if it is properly installed.
+```sh
+dotnet workload list
+Workload Id
+-----------
+tizen    
+```
 
 ### Time to Go!
 
