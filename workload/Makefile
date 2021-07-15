@@ -123,6 +123,14 @@ $(eval $(call CreateMsi,$(TIZEN_PACK_VERSION_FULL)))
 msi: $(MSI_TARGET)
 	@rm -fr $(TMPDIR)
 
+# Test 'tizen' workload
+.PHONY: test
+test: install
+	@rm -fr $(TMPDIR)/test
+	@mkdir -p $(TMPDIR)/test
+	@$(DOTNET6) new tizen --output $(TMPDIR)/test
+	@$(DOTNET6) build $(TMPDIR)/test
+
 
 # Remove artifacts and temporary files
 clean:

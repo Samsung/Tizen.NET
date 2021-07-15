@@ -30,7 +30,7 @@ jobs:
       env:
         PULLREQUEST_ID: ${{ github.event.number }}
         PRERELEASE_TAG: ${{ github.event.inputs.prerelease }}
-      run: make
+      run: make test
       working-directory: ./workload
 
     - uses: actions/upload-artifact@v2
