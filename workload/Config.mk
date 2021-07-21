@@ -7,7 +7,7 @@ DOTNET6_VERSION_BAND = $(firstword $(subst -, ,$(DOTNET6_VERSION)))
 ifeq ($(DESTDIR),)
 DOTNET6_DESTDIR = $(OUTDIR)/dotnet
 else
-DOTNET6_DESTDIR = $(DESTDIR)
+DOTNET6_DESTDIR = $(abspath $(DESTDIR))
 endif
 
 DOTNET6_MANIFESTS_DESTDIR=$(DOTNET6_DESTDIR)/sdk-manifests/$(DOTNET6_VERSION_BAND)/samsung.net.sdk.tizen
