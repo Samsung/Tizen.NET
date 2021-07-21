@@ -2,7 +2,7 @@
 	"version": "@TIZEN_PACK_VERSION@",
 	"workloads": {
 		"tizen": {
-			"description": "Tizen .NET SDK",
+			"description": ".NET SDK Workload for building Tizen applications.",
 			"packs": [
 				"Samsung.Tizen.Sdk",
 				"Samsung.Tizen.Ref",
