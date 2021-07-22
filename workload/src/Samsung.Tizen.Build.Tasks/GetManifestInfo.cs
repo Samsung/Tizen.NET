@@ -10,22 +10,22 @@ namespace Samsung.Tizen.Build.Tasks
 {
     public class GetManifestInfo : Task
     {
-        private readonly List<ITaskItem> _tpkExecList = new List<ITaskItem>();
+        private readonly List<ITaskItem> _applicatonList = new List<ITaskItem>();
 
         [Required]
         public string ManifestFilePath { get; set; }
 
         [Output]
-        public string TpkName { get; private set; }
+        public string PackageName { get; private set; }
 
         [Output]
-        public string TpkVersion { get; private set; }
+        public string PackageVersion { get; private set; }
 
         [Output]
-        public ITaskItem[] TpkExecList
-        {
-            get { return _tpkExecList.ToArray(); }
-        }
+        public ITaskItem FirstApplication => _applicatonList.Any() ? _applicatonList[0] : null;
+
+        [Output]
+        public ITaskItem[] ApplicationList => _applicatonList.ToArray();
 
         public override bool Execute()
         {
@@ -42,35 +42,34 @@ namespace Samsung.Tizen.Build.Tasks
 
             var ns = doc.Root.GetDefaultNamespace();
 
-            TpkName = doc.Element(ns + "manifest")?.Attribute("package")?.Value;
-            TpkVersion = doc.Element(ns + "manifest")?.Attribute("version")?.Value;
+            PackageName = doc.Element(ns + "manifest")?.Attribute("package")?.Value;
+            PackageVersion = doc.Element(ns + "manifest")?.Attribute("version")?.Value;
 
-            if (string.IsNullOrEmpty(TpkName))
+            if (string.IsNullOrEmpty(PackageName))
             {
-                Log.LogError("tpkName is Invalid {0}", TpkName);
+                Log.LogError("PackageName is Invalid {0}", PackageName);
                 return false;
             }
 
-            if (string.IsNullOrEmpty(TpkVersion))
+            if (string.IsNullOrEmpty(PackageVersion))
             {
-                Log.LogError("tpkVersion is Invalid {0}", TpkVersion);
+                Log.LogError("PackageVersion is Invalid {0}", PackageVersion);
                 return false;
             }
 
-            Log.LogMessage("Package name : " + TpkName);
-            Log.LogMessage("Package version : " + TpkVersion);
+            Log.LogMessage("Package name : " + PackageName);
+            Log.LogMessage("Package version : " + PackageVersion);
 
-            // Get exec list
-            IEnumerable<string> execList = from e in doc.Root.Elements()
-                                           where (e.Name == ns + "ui-application") && (e.Attribute("exec") != null)
-                                           select e.Attribute("exec").Value;
+            // Get application list
+            IEnumerable<XElement> appList = from e in doc.Root.Elements()
+                                           where e.Name.Namespace == ns && e.Name.LocalName.EndsWith("-application")
+                                           select e;
 
-            Log.LogMessage("Exec Count : " + execList.Count());
-            int count = 0;
-            foreach (var exec in execList)
-            {
-                Log.LogMessage("Exec[{0}] Name : {1}", count++, exec);
-                _tpkExecList.Add(new TaskItem(exec));
+            foreach (var app in appList) {
+                var item = new TaskItem(app.Attribute("appid").Value);
+                item.SetMetadata("Exec", app.Attribute("exec").Value);
+                item.SetMetadata("Type", app.Name.LocalName);
+                _applicatonList.Add(item);
             }
 
             return true;

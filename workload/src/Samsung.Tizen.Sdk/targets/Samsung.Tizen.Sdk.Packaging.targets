@@ -164,9 +164,10 @@ Copyright (c) Samsung All rights reserved.
 
     <GetManifestInfo ManifestFilePath="$(TizenManifestFile)"
                      Condition="Exists('$(TizenManifestFile)')">
-      <Output TaskParameter="TpkName" PropertyName="TizenPackageName" />
-      <Output TaskParameter="TpkVersion" PropertyName="TizenPackageVersion" />
-      <Output TaskParameter="TpkExecList" ItemName="TizenPackageExecItemList" />
+      <Output TaskParameter="PackageName" PropertyName="TizenPackageName" />
+      <Output TaskParameter="PackageVersion" PropertyName="TizenPackageVersion" />
+      <Output TaskParameter="ApplicationList" ItemName="TizenPackageApplicationList" />
+      <Output TaskParameter="FirstApplication" ItemName="TizenPackageFirstApplication" />
     </GetManifestInfo>
   </Target>
 
@@ -190,18 +191,18 @@ Copyright (c) Samsung All rights reserved.
   ===========================================================================
   -->
   <Target Name="TizenCheckExecFileExist" DependsOnTargets="_TizenGetTpkInfoFromManifest">
-
     <ItemGroup>
-      <TizenPackageExecItemList Remove="%(TizenTpkAssemblyFiles.Filename)%(TizenTpkAssemblyFiles.Extension)" />
+      <_TizenPackageExecItemList Include="%(TizenPackageApplicationList.Exec)" />
+      <_TizenPackageExecItemList Remove="%(TizenTpkAssemblyFiles.Filename)%(TizenTpkAssemblyFiles.Extension)" />
     </ItemGroup>
 
     <Message Text="$(TizenManifestFile) exec file check OK"
-             Condition="@(TizenPackageExecItemList->Count()) == 0" />
+             Condition="@(_TizenPackageExecItemList->Count()) == 0" />
 
     <Error Code="TS0002"
            File="$(TizenManifestFile)"
-           Text="The '%(TizenPackageExecItemList.Identity)' file was not found.&#xA;Please check the exec attribute of $(TizenManifestFile) or check the assembly name"
-           Condition="@(TizenPackageExecItemList->Count()) != 0" />
+           Text="The '%(_TizenPackageExecItemList.Identity)' file was not found.&#xA;Please check the exec attribute of $(TizenManifestFile) or check the assembly name"
+           Condition="@(_TizenPackageExecItemList->Count()) != 0" />
   </Target>
 
   <!--
