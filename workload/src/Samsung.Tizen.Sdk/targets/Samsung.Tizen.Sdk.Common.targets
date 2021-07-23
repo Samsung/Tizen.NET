@@ -24,9 +24,31 @@ Copyright (c) Samsung All rights reserved.
     <DefineConstants Condition="!$(_IsTizenDefined)">__TIZEN__;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(HostOS)' == ''">
+    <HostOS Condition="$([MSBuild]::IsOSPlatform('windows'))">Windows</HostOS>
+    <HostOS Condition="$([MSBuild]::IsOSPlatform('linux'))">Linux</HostOS>
+    <HostOS Condition="$([MSBuild]::IsOSPlatform('osx'))">Darwin</HostOS>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <_TizenSdkDefaultBaseDirectory Condition="'$(HOME)' != ''">$(HOME)</_TizenSdkDefaultBaseDirectory>
+    <_TizenSdkDefaultBaseDirectory Condition="'$(HOME)' == ''">$(HOMEDRIVE)</_TizenSdkDefaultBaseDirectory>
+    <TizenSdkDirectory Condition="'$(TizenSdkDirectory)' == ''">$(_TizenSdkDefaultBaseDirectory)\tizen-studio\</TizenSdkDirectory>
+    <SdbToolPath Condition="'$(SdbToolPath)' == ''">$(TizenSdkDirectory)tools\</SdbToolPath>
+    <SdbToolPath Condition="'$(SdbToolPath)' != ''">$([MSBuild]::EnsureTrailingSlash('$(SdbToolPath)'))</SdbToolPath>
+    <SdbToolExe Condition="'$(SdbToolExe)' == '' And '$(HostOS)' != 'Windows'">sdb</SdbToolExe>
+    <SdbToolExe Condition="'$(SdbToolExe)' == '' And '$(HostOS)' == 'Windows'">sdb.exe</SdbToolExe>
+  </PropertyGroup>
+
   <Target Name="_CheckPropertiesForTizen" BeforeTargets="BeforeBuild">
     <Error Text="Samsung.Tizen.Sdk does not support the self contained packaging. Set SelfContained to false."
            Condition="'$(SelfContained)' == 'true'" />
+  </Target>
+
+  <Target Name="_CheckSdbToolPath">
+    <Error
+        Text="$(SdbToolPath)$(SdbToolExe) not found. Please set SdbToolPath property."
+        Condition="!Exists('$(SdbToolPath)$(SdbToolExe)')" />
   </Target>
 
 </Project>

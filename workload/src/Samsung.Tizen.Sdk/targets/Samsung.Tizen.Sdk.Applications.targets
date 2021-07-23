@@ -1,0 +1,27 @@
+<!--
+***********************************************************************************************
+Samsung.Tizen.Sdk.Applications.targets
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (c) Samsung All rights reserved.
+***********************************************************************************************
+-->
+<Project>
+
+  <PropertyGroup>
+    <RunCommand>dotnet</RunCommand>
+    <RunArguments>build &quot;$(MSBuildProjectFullPath)&quot; -target:Run</RunArguments>
+  </PropertyGroup>
+
+  <Target Name="Install" DependsOnTargets="_CheckSdbToolPath;TizenPackage">
+    <Exec Command="&quot;$(SdbToolPath)sdb&quot; $(SdbTarget) install $(SignedTpkFile)" />
+  </Target>
+
+  <Target Name="Run" DependsOnTargets="Install">
+    <Exec Command="&quot;$(SdbToolPath)sdb&quot; $(SdbTarget) shell app_launcher -s %(TizenPackageFirstApplication.Identity)" />
+  </Target>
+
+</Project>
