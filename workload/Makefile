@@ -1,5 +1,7 @@
 TOP := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
+PRERELEASE_TAG ?= preview.7
+
 TMPDIR := $(TOP)/.tmp
 OUTDIR := $(TOP)/out
 WORKLOAD_PACKS_OUTDIR := $(OUTDIR)/nuget-unsigned
