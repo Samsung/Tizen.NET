@@ -51,30 +51,16 @@ $(eval $(call CreateNuGetPkgs,Samsung.Tizen.Templates,$(TIZEN_PACK_VERSION_FULL)
 .PHONY: packs
 packs: $(NUPKG_TARGETS)
 
-# Create NuGet.config to use generated packages
-define TEMP_NUGET_CONFIG_BODY
-<?xml version="1.0" encoding="utf-8"?>
-<configuration>
-<packageSources>
-	<clear />
-	<add key="local" value="$(WORKLOAD_PACKS_OUTDIR)" />
-</packageSources>
-</configuration>
-endef
-export TEMP_NUGET_CONFIG_BODY
-
-$(TMPDIR)/NuGet.config: | $(TMPDIR)
-	@echo "$$TEMP_NUGET_CONFIG_BODY" > $@
-
 
 # Install workload to the dotnet sdk
-$(TMPDIR)/.stamp-install-workload: $(TMPDIR)/NuGet.config | $(DOTNET6_MANIFESTS_DESTDIR)
+$(TMPDIR)/.stamp-install-workload: | $(DOTNET6_MANIFESTS_DESTDIR)
 	@cp -f \
 		$(TOP)/LICENSE \
 		$(TOP)/src/Samsung.NET.Sdk.Tizen/WorkloadManifest.targets \
 		$(WORKLOAD_PACKS_OUTDIR)/workload-manifest/WorkloadManifest.json \
 		$(DOTNET6_MANIFESTS_DESTDIR)
-	@cd $(TMPDIR) && $(DOTNET6) workload install tizen --skip-manifest-update
+	@$(DOTNET6) workload install tizen --skip-manifest-update \
+		--source $(WORKLOAD_PACKS_OUTDIR) --temp-dir=$(TMPDIR)
 	@touch $@
 
 .PHONY: install
