@@ -14,7 +14,6 @@ Copyright (c) Samsung All rights reserved.
 
   <PropertyGroup>
     <_DefaultTargetPlatformVersion>6.5</_DefaultTargetPlatformVersion>
-    <_TizenFrameworkReferenceVersion>@TIZEN_PACK_VERSION@</_TizenFrameworkReferenceVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,7 +21,7 @@ Copyright (c) Samsung All rights reserved.
       Include="Samsung.Tizen"
       TargetFramework="net6.0-tizen$(_DefaultTargetPlatformVersion)"
       TargetingPackName="Samsung.Tizen.Ref"
-      TargetingPackVersion="$(_TizenFrameworkReferenceVersion)"
+      TargetingPackVersion="**FromWorkload**"
       Profile="Tizen"
     />
   </ItemGroup>
