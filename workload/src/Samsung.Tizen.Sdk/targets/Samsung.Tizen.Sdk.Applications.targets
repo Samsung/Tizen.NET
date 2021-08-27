@@ -16,7 +16,7 @@ Copyright (c) Samsung All rights reserved.
     <RunArguments>build &quot;$(MSBuildProjectFullPath)&quot; -target:Run</RunArguments>
   </PropertyGroup>
 
-  <Target Name="Install" DependsOnTargets="_CheckSdbToolPath;TizenPackage">
+  <Target Name="Install" DependsOnTargets="_CheckSdbToolPath;Build;TizenPackage">
     <Exec Command="&quot;$(SdbToolPath)sdb&quot; $(SdbTarget) install $(SignedTpkFile)" />
   </Target>
 

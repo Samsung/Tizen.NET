@@ -16,6 +16,10 @@ Copyright (c) Samsung All rights reserved.
 		<AfterMicrosoftNETSdkTargets>$(AfterMicrosoftNETSdkTargets);$(MSBuildThisFileDirectory)Samsung.Tizen.Sdk.After.targets</AfterMicrosoftNETSdkTargets>
 	</PropertyGroup>
 
+  <Import Project="Samsung.Tizen.Sdk.Versions.targets" />
+  <Import Project="Samsung.Tizen.Sdk.SupportedPlatforms.targets" />
+  <Import Project="Samsung.Tizen.Sdk.DefaultProperties.targets" />
+
   <ItemGroup Condition=" '$(DisableImplicitFrameworkReferences)' != 'true' ">
     <FrameworkReference
         Include="Samsung.Tizen"
@@ -25,7 +29,17 @@ Copyright (c) Samsung All rights reserved.
     />
   </ItemGroup>
 
-  <Import Project="Samsung.Tizen.Sdk.Versions.targets" />
-  <Import Project="Samsung.Tizen.Sdk.SupportedPlatforms.targets" />
+  <ItemGroup>
+    <FrameworkReference Update="Microsoft.NETCore.App" RuntimePackLabels="Tizen" />
+    <KnownRuntimePack Remove="Microsoft.NETCore.App" />
+    <KnownRuntimePack Include="Microsoft.NETCore.App"
+                      TargetFramework="net6.0"
+                      RuntimeFrameworkName="Microsoft.NETCore.App"
+                      LatestRuntimeFrameworkVersion="**FromWorkload**"
+                      RuntimePackNamePatterns="Samsung.NETCore.App.Runtime.**RID**"
+                      RuntimePackRuntimeIdentifiers="tizen"
+                      RuntimePackLabels="Tizen"
+                      />
+  </ItemGroup>
 
 </Project>

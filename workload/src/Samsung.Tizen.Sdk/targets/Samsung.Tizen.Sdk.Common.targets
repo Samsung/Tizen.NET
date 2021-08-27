@@ -13,15 +13,7 @@ Copyright (c) Samsung All rights reserved.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <TizenProject>true</TizenProject>
-    <UseAppHost>false</UseAppHost>
-    <_RuntimeIdentifierUsesAppHost>false</_RuntimeIdentifierUsesAppHost>
     <_TizenTaskAssemblyName>..\tools\Samsung.Tizen.Build.Tasks.dll</_TizenTaskAssemblyName>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <_IsTizenDefined>$([System.Text.RegularExpressions.Regex]::IsMatch('$(DefineConstants.Trim())', '(^|;)__TIZEN__($|;)'))</_IsTizenDefined>
-    <DefineConstants Condition="!$(_IsTizenDefined)">__TIZEN__;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(HostOS)' == ''">
@@ -40,15 +32,34 @@ Copyright (c) Samsung All rights reserved.
     <SdbToolExe Condition="'$(SdbToolExe)' == '' And '$(HostOS)' == 'Windows'">sdb.exe</SdbToolExe>
   </PropertyGroup>
 
-  <Target Name="_CheckPropertiesForTizen" BeforeTargets="BeforeBuild">
-    <Error Text="Samsung.Tizen.Sdk does not support the self contained packaging. Set SelfContained to false."
-           Condition="'$(SelfContained)' == 'true'" />
-  </Target>
-
   <Target Name="_CheckSdbToolPath">
     <Error
         Text="$(SdbToolPath)$(SdbToolExe) not found. Please set SdbToolPath property."
         Condition="!Exists('$(SdbToolPath)$(SdbToolExe)')" />
+  </Target>
+
+  <PropertyGroup Condition=" '$(RuntimeIdentifiers)' != '' ">
+    <BuildDependsOn>
+        _BuildWithSingleRID
+    </BuildDependsOn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(RuntimeIdentifiers)' == '' ">
+    <BuildDependsOn>
+        $(BuildDependsOn);
+        TizenPackage;
+    </BuildDependsOn>
+  </PropertyGroup>
+
+  <Target Name="_BuildWithSingleRID">
+    <ItemGroup>
+      <_RuntimeIdentifiersAsItems Include="$(RuntimeIdentifiers)" Condition=" '$(RuntimeIdentifiers)' != '' " />
+    </ItemGroup>
+    <MSBuild
+      Projects="$(MSBuildProjectFile)"
+      Targets="Build"
+      Properties="RuntimeIdentifier=%(_RuntimeIdentifiersAsItems.Identity);RuntimeIdentifiers=">
+    </MSBuild>
   </Target>
 
 </Project>
