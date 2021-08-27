@@ -22,37 +22,15 @@ core workload sdk pack imported by the Samsung.NET.Sdk.Tizen.
   </PropertyGroup>
 
   <Target Name="_GenerateSdkContent" DependsOnTargets="_GetBuildTasksAssets;_GetLicense">
-
     <PropertyGroup>
       <_SDKSourceDirectory>$(_ProjectSourceDirectory)Samsung.Tizen.Sdk\</_SDKSourceDirectory>
-      <_SDKReplacedTargetDirectory>$(OutputPath)sdk-targets\</_SDKReplacedTargetDirectory>
     </PropertyGroup>
-
-    <ItemGroup>
-      <_TargetInputFiles Include="$(_SDKSourceDirectory)targets\*.in.targets" />
-    </ItemGroup>
-
-    <RemoveDir Directories="$(_SDKReplacedTargetDirectory)" />
-    <MakeDir Directories="$(_SDKReplacedTargetDirectory)" />
-    <ReplaceFileContents
-        SourceFile="%(_TargetInputFiles.FullPath)"
-        DestinationFile="$(_SDKReplacedTargetDirectory)$([System.String]::Copy('%(Filename)%(Extension)').Replace('.in.targets','.targets'))"
-        Replacements="@TIZEN_PACK_VERSION@=$(TizenPackVersion);">
-    </ReplaceFileContents>
 
     <ItemGroup>
       <_PackageFiles Include="$(_SDKSourceDirectory)certificate\*" PackagePath="certificate" />
       <_PackageFiles Include="$(_SDKSourceDirectory)Sdk\*" PackagePath="Sdk" />
       <_PackageFiles Include="$(_SDKSourceDirectory)tools\*" PackagePath="tools" />
-      <_PackageFiles Include="$(_SDKReplacedTargetDirectory)\*.targets" PackagePath="targets" />
-      <_PackageFiles
-          Include="$(_SDKSourceDirectory)targets\*.props"
-          Exclude="$(_SDKSourceDirectory)targets\*.in.props"
-          PackagePath="targets" />
-      <_PackageFiles
-          Include="$(_SDKSourceDirectory)targets\*.targets"
-          Exclude="$(_SDKSourceDirectory)targets\*.in.targets"
-          PackagePath="targets" />
+      <_PackageFiles Include="$(_SDKSourceDirectory)targets\*" PackagePath="targets" />
     </ItemGroup>
   </Target>
 

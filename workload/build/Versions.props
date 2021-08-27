@@ -2,11 +2,11 @@
 
   <PropertyGroup>
     <TizenFXAPILevel>9</TizenFXAPILevel>
-    <TizenFXVersion>9.0.0.16468</TizenFXVersion>
+    <TizenFXVersion>9.0.0.16587</TizenFXVersion>
   </PropertyGroup>
 
   <PropertyGroup>
-    <MicrosoftDotnetSdkInternalPackageVersion>6.0.100-preview.7.21379.14</MicrosoftDotnetSdkInternalPackageVersion>
+    <MicrosoftDotnetSdkInternalPackageVersion>6.0.100-rc.1.21426.1</MicrosoftDotnetSdkInternalPackageVersion>
     <MicrosoftDotNetBuildTasksFeedPackageVersion>6.0.0-beta.21212.6</MicrosoftDotNetBuildTasksFeedPackageVersion>
   </PropertyGroup>
   <PropertyGroup>

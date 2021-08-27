@@ -47,6 +47,7 @@ $(eval $(call CreateNuGetPkgs,Samsung.NET.Sdk.Tizen,$(TIZEN_PACK_VERSION_FULL),.
 $(eval $(call CreateNuGetPkgs,Samsung.Tizen.Sdk,$(TIZEN_PACK_VERSION_FULL)))
 $(eval $(call CreateNuGetPkgs,Samsung.Tizen.Ref,$(TIZEN_PACK_VERSION_FULL)))
 $(eval $(call CreateNuGetPkgs,Samsung.Tizen.Templates,$(TIZEN_PACK_VERSION_FULL)))
+$(eval $(call CreateNuGetPkgs,Samsung.NETCore.App.Runtime,$(TIZEN_PACK_VERSION_FULL),.tizen))
 
 .PHONY: packs
 packs: $(NUPKG_TARGETS)
@@ -70,13 +71,8 @@ install: packs $(TMPDIR)/.stamp-install-workload
 # Uninstall workload from the dotnet sdk
 .PHONY: uninstall
 uninstall:
-	@rm -fr \
-		$(DOTNET6_MANIFESTS_DESTDIR) \
-		$(DOTNET6_DESTDIR)/packs/Samsung.Tizen.Sdk \
-		$(DOTNET6_DESTDIR)/packs/Samsung.Tizen.Ref \
-		$(DOTNET6_DESTDIR)/template-packs/samsung.tizen.templates.*.nupkg \
-		$(TMPDIR)/.stamp-install-workload
-
+	@$(DOTNET6) workload uninstall tizen
+	@rm -f $(TMPDIR)/.stamp-install-workload
 
 # Create MSI windows installer
 define CreateMsi
@@ -99,6 +95,7 @@ $(TMPDIR)/msi: install
 	@mkdir -p $@/packs
 	@cp -fr $(DOTNET6_DESTDIR)/packs/Samsung.Tizen.Sdk $@/packs
 	@cp -fr $(DOTNET6_DESTDIR)/packs/Samsung.Tizen.Ref $@/packs
+	@cp -fr $(DOTNET6_DESTDIR)/packs/Samsung.NETCore.App.Runtime.* $@/packs
 	@mkdir -p $@/template-packs
 	@cp -f $(DOTNET6_DESTDIR)/template-packs/samsung.tizen.templates.*.nupkg $@/template-packs
 

@@ -1,27 +1,32 @@
 {
-	"version": "@TIZEN_PACK_VERSION@",
-	"workloads": {
-		"tizen": {
-			"description": ".NET SDK Workload for building Tizen applications.",
-			"packs": [
-				"Samsung.Tizen.Sdk",
-				"Samsung.Tizen.Ref",
-				"Samsung.Tizen.Templates"
-			]
-		}
-	},
-	"packs": {
-		"Samsung.Tizen.Sdk": {
-			"kind": "sdk",
-			"version": "@TIZEN_PACK_VERSION@"
-		},
-		"Samsung.Tizen.Ref": {
-			"kind": "framework",
-			"version": "@TIZEN_PACK_VERSION@"
-		},
-		"Samsung.Tizen.Templates": {
-			"kind": "template",
-			"version": "@TIZEN_PACK_VERSION@"
-		}
-	}
+  "version": "@TIZEN_PACK_VERSION@",
+  "workloads": {
+    "tizen": {
+      "description": ".NET SDK Workload for building Tizen applications.",
+      "packs": [
+        "Samsung.Tizen.Sdk",
+        "Samsung.Tizen.Ref",
+        "Samsung.Tizen.Templates",
+        "Samsung.NETCore.App.Runtime.tizen"
+      ]
+    }
+  },
+  "packs": {
+    "Samsung.Tizen.Sdk": {
+      "kind": "sdk",
+      "version": "@TIZEN_PACK_VERSION@"
+    },
+    "Samsung.Tizen.Ref": {
+      "kind": "framework",
+      "version": "@TIZEN_PACK_VERSION@"
+    },
+    "Samsung.Tizen.Templates": {
+      "kind": "template",
+      "version": "@TIZEN_PACK_VERSION@"
+    },
+    "Samsung.NETCore.App.Runtime.tizen": {
+      "kind": "framework",
+      "version": "@TIZEN_PACK_VERSION@"
+    }
+  }
 }

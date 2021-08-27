@@ -84,7 +84,6 @@ Copyright (c) Samsung All rights reserved.
   -->
   <PropertyGroup>
     <TizenPackageDependsOn>
-      Build;
       TizenResolveTpkPackageFiles;
       TizenPrePackageEvent;
       _TizenPrepareTpkPackage;
@@ -105,7 +104,6 @@ Copyright (c) Samsung All rights reserved.
   -->
   <Target Name="TizenPackage"
           Condition="'$(TizenCreateTpkOnBuild)' == 'true' And '$(TargetFramework)' != ''"
-          AfterTargets="Build"
           DependsOnTargets="$(TizenPackageDependsOn)" />
 
   <!--
