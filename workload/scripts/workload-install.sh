@@ -76,9 +76,8 @@ if [ ! -f $SDK_MANIFESTS_DIR/samsung.net.sdk.tizen/WorkloadManifest.json ]; then
     exit 1
 fi
 
+# Install workload packs.
+$DOTNET_INSTALL_DIR/dotnet workload install tizen --skip-manifest-update
+
 # Clean-up
 rm -fr $TMPDIR
-
-echo "Tizen manifest is installed to $SDK_MANIFESTS_DIR/samsung.net.sdk.tizen/."
-echo ""
-echo "Run \`dotnet workload install tizen --skip-manifest-update\` to install tizen workload packs."

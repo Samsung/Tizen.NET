@@ -45,6 +45,13 @@ function Test-Directory([string]$TestDir) {
     Remove-Item -Path $(Join-Path -Path $TestDir -ChildPath ".test-write-access") -Force
 }
 
+function Get-Package([string]$Id, [string]$Version, [string]$Destination, [string]$FileExt = "nupkg") {
+    $OutFileName = "$Id.$Version.$FileExt"
+    $OutFilePath = Join-Path -Path $Destination -ChildPath $OutFileName
+    Invoke-WebRequest -Uri "https://www.nuget.org/api/v2/package/$Id/$Version" -OutFile $OutFilePath
+    return $OutFilePath
+}
+
 $ManifestDir = Join-Path -Path $DotnetInstallDir -ChildPath "sdk-manifests" | Join-Path -ChildPath $DotnetVersionBand
 $TizenManifestDir = Join-Path -Path $ManifestDir -ChildPath "samsung.net.sdk.tizen"
 Test-Directory $ManifestDir
@@ -52,14 +59,28 @@ Test-Directory $ManifestDir
 Write-Host "Installing $ManifestName/$Version to $ManifestDir..."
 
 $TempDir = $(New-TemporaryDirectory)
-$TempZipFile = Join-Path -Path $TempDir -ChildPath "manifest.zip"
-$TempUnzipDir = Join-Path -Path $TempDir -ChildPath "unzipped"
-Invoke-WebRequest -Uri "https://www.nuget.org/api/v2/package/$ManifestName/$Version" -OutFile $TempZipFile
-Expand-Archive -Path $TempZipFile -DestinationPath $TempUnzipDir
-New-Item -Path $TizenManifestDir -ItemType "directory" -Force
-Copy-Item -Path "$TempUnzipDir\data\*" -Destination $TizenManifestDir
-Remove-Item -Path $TempDir -Force -Recurse
 
-Write-Host "Tizen manifest is installed to $TizenManifestDir."
-Write-Host ""
-Write-Host "Run 'dotnet workload install tizen --skip-manifest-update' to install tizen workload packs."
+# Install workload manifest.
+$TempZipFile = $(Get-Package -Id $ManifestName -Version $Version -Destination $TempDir -FileExt "zip")
+$TempUnzipDir = Join-Path -Path $TempDir -ChildPath "unzipped"
+Expand-Archive -Path $TempZipFile -DestinationPath $TempUnzipDir
+New-Item -Path $TizenManifestDir -ItemType "directory" -Force | Out-Null
+Copy-Item -Path "$TempUnzipDir\data\*" -Destination $TizenManifestDir
+
+# Download workload packs.
+$TizenManifestFile = Join-Path -Path $TizenManifestDir -ChildPath "WorkloadManifest.json"
+$ManifestJson = $(Get-Content $TizenManifestFile | ConvertFrom-Json)
+$ManifestJson.packs.PSObject.Properties | ForEach-Object {
+    $PackageId = $_.Name
+    $PackageVersion = $_.Value.version
+    Write-Host "Downloading $PackageId/$PackageVersion..."
+    Get-Package -Id $PackageId -Version $PackageVersion -Destination $TempDir | Out-Null
+}
+
+# Install workload to dotnet sdk
+$Env:DOTNET_ROOT = $DotnetInstallDir
+$Env:DOTNET_MULTILEVEL_LOOKUP = 0
+
+& $DotnetInstallDir\dotnet workload install tizen --skip-manifest-update --from-cache $TempDir
+
+Remove-Item -Path $TempDir -Force -Recurse
