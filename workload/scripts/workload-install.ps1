@@ -60,4 +60,4 @@ Remove-Item -Path $TempDir -Force -Recurse
 
 Write-Host "Tizen manifest is installed to $TizenManifestDir."
 Write-Host ""
-Write-Host "Run 'dotnet workload install tizen' to install tizen workload packs."
+Write-Host "Run 'dotnet workload install tizen --skip-manifest-update' to install tizen workload packs."

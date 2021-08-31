@@ -3,10 +3,13 @@
 ## workload-install
 
 This script installs the Tizen workload manifest files to the dotnet sdk location.
-After installation by this script, other workload packs can be installed by `dotnet workload install tizen` command.
+After installation by this script, other workload packs can be installed by following command:
+```
+dotnet workload install tizen --skip-manifest-update
+```
 
 ### Usage
-On Linux:
+On Linux/MacOS:
 ```
 workload-install.sh [-v <Version>] [-d <Dotnet SDK Location>]
 ```
