@@ -38,10 +38,11 @@ function Test-Directory([string]$TestDir) {
         Write-Error "No target directory '$TestDir'."
     }
     Try {
-        [io.file]::OpenWrite($(Join-Path -Path $TestDir -ChildPath ".tmp")).Close()
+        [io.file]::OpenWrite($(Join-Path -Path $TestDir -ChildPath ".test-write-access")).Close()
     } Catch {
         Write-Error "No permission to install. Try run with administrator mode."
     }
+    Remove-Item -Path $(Join-Path -Path $TestDir -ChildPath ".test-write-access") -Force
 }
 
 $ManifestDir = Join-Path -Path $DotnetInstallDir -ChildPath "sdk-manifests" | Join-Path -ChildPath $DotnetVersionBand
@@ -55,6 +56,7 @@ $TempZipFile = Join-Path -Path $TempDir -ChildPath "manifest.zip"
 $TempUnzipDir = Join-Path -Path $TempDir -ChildPath "unzipped"
 Invoke-WebRequest -Uri "https://www.nuget.org/api/v2/package/$ManifestName/$Version" -OutFile $TempZipFile
 Expand-Archive -Path $TempZipFile -DestinationPath $TempUnzipDir
+New-Item -Path $TizenManifestDir -ItemType "directory" -Force
 Copy-Item -Path "$TempUnzipDir\data\*" -Destination $TizenManifestDir
 Remove-Item -Path $TempDir -Force -Recurse
 
