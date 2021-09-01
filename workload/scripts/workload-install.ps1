@@ -16,7 +16,7 @@ Dotnet SDK Location installed
 
 [cmdletbinding()]
 param(
-    [Alias('v')][string]$Version="6.5.100-rc.1.92",
+    [Alias('v')][string]$Version="<latest>",
     [Alias('d')][string]$DotnetInstallDir="$env:Programfiles\dotnet"
 )
 
@@ -45,11 +45,20 @@ function Test-Directory([string]$TestDir) {
     Remove-Item -Path $(Join-Path -Path $TestDir -ChildPath ".test-write-access") -Force
 }
 
+function Get-LatestVersion([string]$Id) {
+    $Response = Invoke-WebRequest -Uri https://api.nuget.org/v3-flatcontainer/$Id/index.json | ConvertFrom-Json
+    return $Response.versions | Select-Object -Last 1
+}
+
 function Get-Package([string]$Id, [string]$Version, [string]$Destination, [string]$FileExt = "nupkg") {
     $OutFileName = "$Id.$Version.$FileExt"
     $OutFilePath = Join-Path -Path $Destination -ChildPath $OutFileName
     Invoke-WebRequest -Uri "https://www.nuget.org/api/v2/package/$Id/$Version" -OutFile $OutFilePath
     return $OutFilePath
+}
+
+if ($Version -eq "<latest>") {
+    $Version = Get-LatestVersion -Id $ManifestName
 }
 
 $ManifestDir = Join-Path -Path $DotnetInstallDir -ChildPath "sdk-manifests" | Join-Path -ChildPath $DotnetVersionBand

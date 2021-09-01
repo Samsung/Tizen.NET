@@ -5,8 +5,8 @@
 
 #!/bin/bash -e
 
-MANIFEST_NAME=Samsung.NET.Sdk.Tizen.Manifest-6.0.100
-MANIFEST_VERSION=6.5.100-rc.1.92
+MANIFEST_NAME="samsung.net.sdk.tizen.manifest-6.0.100"
+MANIFEST_VERSION="<latest>"
 
 DOTNET_VERSION_BAND=6.0.100
 DOTNET_INSTALL_DIR=/usr/share/dotnet
@@ -42,10 +42,17 @@ while [ $# -ne 0 ]; do
     shift
 done
 
+# Check latest version of manifest.
+if [[ "$MANIFEST_VERSION" == "<latest>" ]]; then
+    MANIFEST_VERSION=$(curl -s https://api.nuget.org/v3-flatcontainer/$MANIFEST_NAME/index.json | grep \" | tail -n 1 | tr -d '\r' | xargs)
+    if [ ! "$MANIFEST_VERSION" ]; then
+        echo "Failed to get the latest version of $MANIFEST_NAME."
+        exit 1
+    fi
+fi
+
 SDK_MANIFESTS_DIR=$DOTNET_INSTALL_DIR/sdk-manifests/$DOTNET_VERSION_BAND
-
-echo "Installing $MANIFEST_NAME/$MANIFEST_VERSION to $SDK_MANIFESTS_DIR..."
-
+# Check target manifest directory.
 if [ ! -d $SDK_MANIFESTS_DIR ]; then
     echo "No target directory \`$SDK_MANIFESTS_DIR\`";
     exit 1
@@ -57,6 +64,8 @@ if [ ! -w $SDK_MANIFESTS_DIR ]; then
 fi
 
 TMPDIR=$(mktemp -d)
+
+echo "Installing $MANIFEST_NAME/$MANIFEST_VERSION to $SDK_MANIFESTS_DIR..."
 
 # Download and extract the manifest nuget package.
 curl -s -o $TMPDIR/manifest.zip -L https://www.nuget.org/api/v2/package/$MANIFEST_NAME/$MANIFEST_VERSION
