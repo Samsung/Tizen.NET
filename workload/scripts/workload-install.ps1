@@ -17,7 +17,7 @@ Dotnet SDK Location installed
 [cmdletbinding()]
 param(
     [Alias('v')][string]$Version="<latest>",
-    [Alias('d')][string]$DotnetInstallDir="$env:Programfiles\dotnet"
+    [Alias('d')][string]$DotnetInstallDir="<auto>"
 )
 
 Set-StrictMode -Version Latest
@@ -57,10 +57,24 @@ function Get-Package([string]$Id, [string]$Version, [string]$Destination, [strin
     return $OutFilePath
 }
 
+# Check dotnet install directory.
+if ($DotnetInstallDir -eq "<auto>") {
+    if (Test-Path $Env:DOTNET_ROOT) {
+        $DotnetInstallDir = $Env:DOTNET_ROOT
+    } else {
+        $DotnetInstallDir = Join-Path -Path $Env:Programfiles -ChildPath "dotnet"
+    }
+}
+if (-Not $(Test-Path $DotnetInstallDir)) {
+    Write-Error "No installed dotnet '$DotnetInstallDir'."
+}
+
+# Check latest version of manifest.
 if ($Version -eq "<latest>") {
     $Version = Get-LatestVersion -Id $ManifestName
 }
 
+# Check workload manifest directory.
 $ManifestDir = Join-Path -Path $DotnetInstallDir -ChildPath "sdk-manifests" | Join-Path -ChildPath $DotnetVersionBand
 $TizenManifestDir = Join-Path -Path $ManifestDir -ChildPath "samsung.net.sdk.tizen"
 Test-Directory $ManifestDir
