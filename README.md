@@ -24,23 +24,28 @@ Tizen .NET is :
   
 
 ### Installing Tizen workload for .NET 6.0 (Preview)
-  * Windows: [Samsung.NET.Workload.Tizen.6.5.100-preview.7.84.msi](https://workload-bin.s3.ap-northeast-2.amazonaws.com/windows/Samsung.NET.Workload.Tizen.6.5.100-preview.7.84.msi)
-  ```bat
-  dotnet workload install tizen
-  ```
-  * Linux / macOS: 
+  You can install Tizen workload for .NET 6.0 by using the installer script.
+  * On Linux/MacOS:
   ```sh
-  git clone -b release/6.0.1xx-preview7 https://github.com/Samsung/Tizen.NET
-  cd Tizen.NET/workload
-  make install DESTDIR=<.net 6 preview sdk path>
+  curl -sSL https://raw.githubusercontent.com/Samsung/Tizen.NET/main/workload/scripts/workload-install.sh | sudo bash
   ```
-You can see the Tizen workload as follows if it is properly installed.
-```sh
-dotnet workload list
-Workload Id
------------
-tizen    
-```
+  if you want to install a specific version of Tizen.NET workload or install to a specific directory, use the following command:
+  ```sh
+  curl -sSL https://raw.githubusercontent.com/Samsung/Tizen.NET/main/workload/scripts/workload-install.sh | bash /dev/stdin -v <version> -d <directory>
+  ```
+  * On Windows:
+  ```powershell
+  Invoke-WebRequest 'https://raw.githubusercontent.com/Samsung/Tizen.NET/main/workload/scripts/workload-install.ps1' -Proxy $env:HTTP_PROXY -ProxyUseDefaultCredentials -OutFile 'workload-install.ps1';
+  ./workload-install.ps1 [-v <version>] [-d <directory>]
+  ```
+
+  You can see the Tizen workload as follows if it is properly installed.
+  ```sh
+  dotnet workload list
+  Workload Id
+  -----------
+  tizen    
+  ```
 
 ### Time to Go!
 

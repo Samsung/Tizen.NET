@@ -9,7 +9,7 @@ MANIFEST_NAME="samsung.net.sdk.tizen.manifest-6.0.100"
 MANIFEST_VERSION="<latest>"
 
 DOTNET_VERSION_BAND=6.0.100
-DOTNET_INSTALL_DIR=/usr/share/dotnet
+DOTNET_INSTALL_DIR="<auto>"
 
 while [ $# -ne 0 ]; do
     name=$1
@@ -42,6 +42,19 @@ while [ $# -ne 0 ]; do
     shift
 done
 
+# Check dotnet install directory.
+if [[ "$DOTNET_INSTALL_DIR" == "<auto>" ]]; then
+    if [[ -n "$DOTNET_ROOT" && -d "$DOTNET_ROOT" ]]; then
+        DOTNET_INSTALL_DIR=$DOTNET_ROOT
+    else
+        DOTNET_INSTALL_DIR="/usr/share/dotnet"
+    fi
+fi
+if [ ! -d $DOTNET_INSTALL_DIR ]; then
+    echo "No installed dotnet \`$DOTNET_INSTALL_DIR\`."
+    exit 1
+fi
+
 # Check latest version of manifest.
 if [[ "$MANIFEST_VERSION" == "<latest>" ]]; then
     MANIFEST_VERSION=$(curl -s https://api.nuget.org/v3-flatcontainer/$MANIFEST_NAME/index.json | grep \" | tail -n 1 | tr -d '\r' | xargs)
@@ -51,10 +64,10 @@ if [[ "$MANIFEST_VERSION" == "<latest>" ]]; then
     fi
 fi
 
+# Check workload manifest directory.
 SDK_MANIFESTS_DIR=$DOTNET_INSTALL_DIR/sdk-manifests/$DOTNET_VERSION_BAND
-# Check target manifest directory.
 if [ ! -d $SDK_MANIFESTS_DIR ]; then
-    echo "No target directory \`$SDK_MANIFESTS_DIR\`";
+    echo "No target directory \`$SDK_MANIFESTS_DIR\`.";
     exit 1
 fi
 
