@@ -34,7 +34,7 @@ function New-TemporaryDirectory {
 }
 
 function Test-Directory([string]$TestDir) {
-    if (-Not $(Test-Path $TestDir)) {
+    if (-Not $(Test-Path "$TestDir")) {
         Write-Error "No target directory '$TestDir'."
     }
     Try {
@@ -59,13 +59,13 @@ function Get-Package([string]$Id, [string]$Version, [string]$Destination, [strin
 
 # Check dotnet install directory.
 if ($DotnetInstallDir -eq "<auto>") {
-    if (Test-Path $Env:DOTNET_ROOT) {
+    if (Test-Path "$Env:DOTNET_ROOT") {
         $DotnetInstallDir = $Env:DOTNET_ROOT
     } else {
         $DotnetInstallDir = Join-Path -Path $Env:Programfiles -ChildPath "dotnet"
     }
 }
-if (-Not $(Test-Path $DotnetInstallDir)) {
+if (-Not $(Test-Path "$DotnetInstallDir")) {
     Write-Error "No installed dotnet '$DotnetInstallDir'."
 }
 
