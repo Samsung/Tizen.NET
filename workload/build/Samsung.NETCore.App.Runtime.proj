@@ -8,15 +8,17 @@ This project file is used to create the Samsung.NETCore.App.Runtime.**RID** NuGe
 <Project Sdk="Microsoft.Build.NoTargets">
 
   <PropertyGroup>
-    <PackageId>Samsung.NETCore.App.Runtime.tizen</PackageId>
+    <ProductName>Samsung.NETCore.App.Runtime.tizen</ProductName>
     <Description>Internal implementation package not meant for direct consumption. Please do not reference directly.</Description>
+    <ProductCode>A0755204-DDB9-4526-AD66-DBE08778077A</ProductCode>
+    <UpgradeCode>1CD74724-E19F-4E59-9CCC-C7C14FEC9939</UpgradeCode>
+    <InstallDirectory>packs\Samsung.NETCore.App.Runtime.tizen\</InstallDirectory>
   </PropertyGroup>
 
   <PropertyGroup>
-    <BeforePack>
+    <BeforePackDependsOn>
       _GetRuntimeContents;
-      $(BeforePack);
-    </BeforePack>
+    </BeforePackDependsOn>
   </PropertyGroup>
 
   <Target Name="_GetRuntimeContents" DependsOnTargets="_GetPackageVersion;_GetLicense">

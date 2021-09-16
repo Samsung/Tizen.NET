@@ -9,15 +9,17 @@ workload manifest pack containing information about the Tizen .NET workload.
 <Project Sdk="Microsoft.Build.NoTargets">
 
   <PropertyGroup>
-    <PackageId>Samsung.NET.Sdk.Tizen.Manifest-$(DotNetPreviewVersionBand)</PackageId>
+    <ProductName>Samsung.NET.Sdk.Tizen.Manifest-$(DotNetPreviewVersionBand)</ProductName>
     <Description>Tizen .NET workload manifest. Please do not reference directly.</Description>
+    <ProductCode>8AB56598-0A56-48B9-A1DE-2EE7BEF373E7</ProductCode>
+    <UpgradeCode>18BB1D71-4310-49C2-B2E2-E22567A4FBE7</UpgradeCode>
+    <InstallDirectory>sdk-manifests\$(DotNetPreviewVersionBand)\samsung.net.sdk.tizen\</InstallDirectory>
   </PropertyGroup>
 
   <PropertyGroup>
-    <BeforePack>
+    <BeforePackDependsOn>
       _GenerateWorkloadContent;
-      $(BeforePack);
-    </BeforePack>
+    </BeforePackDependsOn>
   </PropertyGroup>
 
   <Target Name="_GenerateWorkloadContent" DependsOnTargets="_GetPackageVersion;_GetLicense">

@@ -10,12 +10,23 @@ by projects that use the Tizen .NET framework in .NET 5.
 <Project Sdk="Microsoft.Build.NoTargets">
 
   <PropertyGroup>
-    <PackageId>Samsung.Tizen.Ref</PackageId>
+    <ProductName>Samsung.Tizen.Ref</ProductName>
     <Description>
       Tizen .NET reference assemblies. Please do not reference directly.
       - TizenFX API Level : $(TizenFXAPILevel)
       - TizenFX Version : $(TizenFXVersion)
     </Description>
+    <ProductCode>29029EC0-DB40-4739-B8A1-2AC550D90A53</ProductCode>
+    <UpgradeCode>C3B45314-FA86-4E45-A725-A20FFD127D34</UpgradeCode>
+    <InstallDirectory>packs\Samsung.Tizen.Ref\</InstallDirectory>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <BeforePackDependsOn>
+      _GetPackageVersion;
+      _GetTargetingPackItems;
+      _GenerateFrameworkListFile;
+    </BeforePackDependsOn>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -27,17 +38,7 @@ by projects that use the Tizen .NET framework in .NET 5.
     <PackageReference Include="$(TizenFXPackageName)" Version="$(TizenFXVersion)" GeneratePathProperty="true" />
   </ItemGroup>
 
-  <PropertyGroup>
-    <BeforePack>
-      _GetPackageVersion;
-      _GetTargetingPackItems;
-      _GenerateFrameworkListFile;
-      $(BeforePack);
-    </BeforePack>
-  </PropertyGroup>
-
-  <Target Name="_GetTargetingPackItems"
-      DependsOnTargets="_GetLicense">
+  <Target Name="_GetTargetingPackItems" DependsOnTargets="_GetLicense">
     <PropertyGroup>
       <FrameworkListFile>$(IntermediateOutputPath)FrameworkList.xml</FrameworkListFile>
     </PropertyGroup>
@@ -52,7 +53,6 @@ by projects that use the Tizen .NET framework in .NET 5.
       <_PackageFiles Include="@(_TizenRefPackAssemblies)" PackagePath="ref\net6.0" TargetPath="ref\net6.0" />
       <_PackageFiles Include="$(_ProjectSourceDirectory)Samsung.Tizen.Ref/data/*.txt" PackagePath="data" />
     </ItemGroup>
-
   </Target>
 
   <UsingTask TaskName="CreateFrameworkListFile" AssemblyFile="$(DotNetSharedFrameworkTaskFile)"/>

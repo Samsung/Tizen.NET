@@ -13,6 +13,7 @@
     <PackageType>DotnetPlatform</PackageType>
     <Authors>Samsung Electronics</Authors>
     <OutputPath>$(_ProjectRootDirectory)out\nuget-unsigned\</OutputPath>
+    <MSIOutputPath>$(_ProjectRootDirectory)out\windows\</MSIOutputPath>
     <GenerateDependencyFile>false</GenerateDependencyFile>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <!-- Remove the `<group targetFramework=".NETStandard2.0" />` entry from the .nuspec. -->

@@ -14,9 +14,14 @@
 
   <UsingTask TaskName="GenerateWixFile" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
     <ParameterGroup>
-      <MSIVersion ParameterType="System.String" Required="true" />
+      <ProductName ParameterType="System.String" Required="true" />
+      <ProductCode ParameterType="System.String" Required="true" />
+      <ProductVersion ParameterType="System.String" Required="true" />
+      <WorkloadVersion ParameterType="System.String" Required="true" />
+      <UpgradeCode ParameterType="System.String" Required="true" />
       <SourceFile ParameterType="Microsoft.Build.Framework.ITaskItem" Required="true" />
       <DestinationFile ParameterType="Microsoft.Build.Framework.ITaskItem" Required="true" />
+      <BaseDirectory ParameterType="System.String" Required="true" />
       <SourceDirectory ParameterType="System.String" Required="true" />
     </ParameterGroup>
     <Task>

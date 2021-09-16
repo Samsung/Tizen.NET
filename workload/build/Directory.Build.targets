@@ -10,6 +10,19 @@
   <PropertyGroup>
     <NuGetLicense Condition=" '$(NuGetLicense)' == '' ">..\LICENSE</NuGetLicense>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageId Condition="'$(CreateMsiNuGet)' != 'True'">$(ProductName)</PackageId>
+    <PackageId Condition="'$(CreateMsiNuGet)' == 'True'">$(ProductName).Msi.x64</PackageId>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <BeforePack Condition="'$(CreateMsiNuGet)' != 'True'">
+      $(BeforePackDependsOn);
+      $(BeforePack);
+    </BeforePack>
+    <BeforePack Condition="'$(CreateMsiNuGet)' == 'True'">
+      _GenerateMSIContent;
+      $(BeforePack);
+    </BeforePack>
   </PropertyGroup>
 
   <Target Name="_GetPackageVersion">
@@ -31,6 +44,33 @@
     <ItemGroup>
       <_PackageFiles Include="$(IntermediateOutputPath)$(PackageLicenseFile)" PackagePath="\" />
     </ItemGroup>
+  </Target>
+
+  <Target Name="_GenerateMsiContent" DependsOnTargets="_GetPackageVersion;_GetLicense;_GenerateMsiBundle">
+    <ItemGroup>
+      <_PackageFiles Include="$(_DestinationMsiFile)" PackagePath="data" />
+      <_PackageFiles Include="$(MSIOutputPath)$(ProductName)\msi.json" PackagePath="data" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="_GenerateMsiBundle">
+    <PropertyGroup>
+      <TargetDotnetDirectory Condition="'$(TargetDotnetDirectory)' != ''">$([MSBuild]::EnsureTrailingSlash('$(TargetDotnetDirectory)'))</TargetDotnetDirectory>
+      <_DestinationMsiFile>$(MSIOutputPath)$(ProductName)\$(ProductName).$(TizenPackVersion)-x64.msi</_DestinationMsiFile>
+      <_DestinationWixFile>$(MSIOutputPath)$(ProductName)\$(ProductName).$(TizenPackVersion).wix</_DestinationWixFile>
+    </PropertyGroup>
+    <GenerateWixFile
+      SourceFile="$(MSBuildThisFileDirectory)Template.in.wix"
+      ProductName="$(ProductName)"
+      ProductCode="$(ProductCode)"
+      ProductVersion="$(ProductVersion)"
+      WorkloadVersion="$(TizenPackVersion)"
+      UpgradeCode="$(UpgradeCode)"
+      DestinationFile="$(_DestinationWixFile)"
+      BaseDirectory="$(TargetDotnetDirectory)"
+      SourceDirectory="$(TargetDotnetDirectory)$(InstallDirectory)"
+      />
+    <Exec Command="wixl -o $(_DestinationMsiFile) $(_DestinationWixFile) -a x64" />
   </Target>
 
 </Project>

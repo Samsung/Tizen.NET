@@ -9,16 +9,18 @@ template pack to generate the Tizen projects using dotnet CLI.
 <Project Sdk="Microsoft.Build.NoTargets">
 
   <PropertyGroup>
-    <PackageId>Samsung.Tizen.Templates</PackageId>
+    <ProductName>Samsung.Tizen.Templates</ProductName>
     <Description>Templates for Tizen platforms.</Description>
+    <ProductCode>D4E54241-DEA8-4405-B606-568F7D4A39D2</ProductCode>
+    <UpgradeCode>7016B275-A604-491C-9CBA-3D9B565C75A2</UpgradeCode>
+    <InstallDirectory>template-packs\</InstallDirectory>
   </PropertyGroup>
 
   <PropertyGroup>
-    <BeforePack>
+    <BeforePackDependsOn>
       _GetPackageVersion;
       _GetTemplateContents;
-      $(BeforePack);
-    </BeforePack>
+    </BeforePackDependsOn>
   </PropertyGroup>
 
   <Target Name="_GetTemplateContents"

@@ -9,16 +9,18 @@ core workload sdk pack imported by the Samsung.NET.Sdk.Tizen.
 <Project Sdk="Microsoft.Build.NoTargets">
 
   <PropertyGroup>
-    <PackageId>Samsung.Tizen.Sdk</PackageId>
+    <ProductName>Samsung.Tizen.Sdk</ProductName>
     <Description>The MSBuild targets for buliding Tizen .NET projects</Description>
+    <ProductCode>28B43B6D-A808-4774-A11B-EB6726C2DC89</ProductCode>
+    <UpgradeCode>58BFFD25-AAE9-47DA-AB84-4037E8148764</UpgradeCode>
+    <InstallDirectory>packs\Samsung.Tizen.Sdk\</InstallDirectory>
   </PropertyGroup>
 
   <PropertyGroup>
-    <BeforePack>
+    <BeforePackDependsOn>
       _GetPackageVersion;
       _GenerateSdkContent;
-      $(BeforePack);
-    </BeforePack>
+    </BeforePackDependsOn>
   </PropertyGroup>
 
   <Target Name="_GenerateSdkContent" DependsOnTargets="_GetBuildTasksAssets;_GetLicense">

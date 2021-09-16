@@ -1,4 +1,4 @@
-TOP := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
+TOP := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 
 TMPDIR := $(TOP)/.tmp
 OUTDIR := $(TOP)/out
@@ -31,23 +31,23 @@ $(TMPDIR)/dotnet-install.sh: | $(OUTDIR)
 
 
 # Create nuget packages for manifest and packs
-define CreateNuGetPkgs
-$(WORKLOAD_PACKS_OUTDIR)/$(1)$(3).$(2).nupkg: $(DOTNET6)
+define CreateNuGetPack
+$(WORKLOAD_PACKS_OUTDIR)/$(1)$(2).$(TIZEN_PACK_VERSION_FULL).nupkg: $(DOTNET6)
 		@$(DOTNET6) pack --nologo $(TOP)/build/$(1).proj \
 			-p:Configuration=Release \
 			-p:IncludeSymbols=False \
-			-p:TizenPackVersion=$(2) \
+			-p:TizenPackVersion=$(TIZEN_PACK_VERSION_FULL) \
 			-p:TizenVersionHash=$(CURRENT_HASH) \
-			-p:DotNetPreviewVersionBand=$(4)
+			-p:DotNetPreviewVersionBand=$(3)
 
-NUPKG_TARGETS += $(WORKLOAD_PACKS_OUTDIR)/$(1)$(3).$(2).nupkg
+NUPKG_TARGETS += $(WORKLOAD_PACKS_OUTDIR)/$(1)$(2).$(TIZEN_PACK_VERSION_FULL).nupkg
 endef
 
-$(eval $(call CreateNuGetPkgs,Samsung.NET.Sdk.Tizen,$(TIZEN_PACK_VERSION_FULL),.Manifest-$(DOTNET6_VERSION_BAND),$(DOTNET6_VERSION_BAND)))
-$(eval $(call CreateNuGetPkgs,Samsung.Tizen.Sdk,$(TIZEN_PACK_VERSION_FULL)))
-$(eval $(call CreateNuGetPkgs,Samsung.Tizen.Ref,$(TIZEN_PACK_VERSION_FULL)))
-$(eval $(call CreateNuGetPkgs,Samsung.Tizen.Templates,$(TIZEN_PACK_VERSION_FULL)))
-$(eval $(call CreateNuGetPkgs,Samsung.NETCore.App.Runtime,$(TIZEN_PACK_VERSION_FULL),.tizen))
+$(eval $(call CreateNuGetPack,Samsung.NET.Sdk.Tizen,.Manifest-$(DOTNET6_VERSION_BAND),$(DOTNET6_VERSION_BAND)))
+$(eval $(call CreateNuGetPack,Samsung.Tizen.Sdk))
+$(eval $(call CreateNuGetPack,Samsung.Tizen.Ref))
+$(eval $(call CreateNuGetPack,Samsung.Tizen.Templates))
+$(eval $(call CreateNuGetPack,Samsung.NETCore.App.Runtime,.tizen))
 
 .PHONY: packs
 packs: $(NUPKG_TARGETS)
@@ -74,35 +74,30 @@ uninstall:
 	@$(DOTNET6) workload uninstall tizen
 	@rm -f $(TMPDIR)/.stamp-install-workload
 
-# Create MSI windows installer
-define CreateMsi
-$(WORKLOAD_MSI_OUTDIR)/Samsung.NET.Workload.Tizen.$(1).wix: | $(TMPDIR)/msi
-	@$(DOTNET6) msbuild --nologo $(TOP)/build/GenerateWixFile.proj \
-									-t:Generate \
-									-p:MSIVersion=$(TIZEN_PACK_VERSION_FULL) \
-									-p:SourceDirectory=$(TMPDIR)/msi \
-									-p:DestinationFile="$$@"
+# Create MSI windows bundles
+define CreateMsiNuGetPack
+$(WORKLOAD_PACKS_OUTDIR)/$(1)$(2).$(TIZEN_PACK_VERSION_FULL).Msi.x64.nupkg: | install
+		@$(DOTNET6) pack --nologo $(TOP)/build/$(1).proj \
+			-p:Configuration=Release \
+			-p:IncludeSymbols=False \
+			-p:CreateMsiNuGet=True \
+			-p:ProductVersion=$(TIZEN_PACK_VERSION) \
+			-p:TizenPackVersion=$(TIZEN_PACK_VERSION_FULL) \
+			-p:TizenVersionHash=$(CURRENT_HASH) \
+			-p:TargetDotnetDirectory=$(DOTNET6_DESTDIR) \
+			-p:DotNetPreviewVersionBand=$(3)
 
-$(WORKLOAD_MSI_OUTDIR)/Samsung.NET.Workload.Tizen.$(1).msi: $(WORKLOAD_MSI_OUTDIR)/Samsung.NET.Workload.Tizen.$(1).wix
-	@wixl -o "$$@" "$$<" -a x64
-
-MSI_TARGET := $(WORKLOAD_MSI_OUTDIR)/Samsung.NET.Workload.Tizen.$(1).msi
+MSI_NUGET_TARGETS += $(WORKLOAD_PACKS_OUTDIR)/$(1)$(2).$(TIZEN_PACK_VERSION_FULL).Msi.x64.nupkg
 endef
 
-$(TMPDIR)/msi: install
-	@mkdir -p $@/sdk-manifests/$(DOTNET6_VERSION_BAND)
-	@cp -fr $(DOTNET6_MANIFESTS_DESTDIR) $@/sdk-manifests/$(DOTNET6_VERSION_BAND)
-	@mkdir -p $@/packs
-	@cp -fr $(DOTNET6_DESTDIR)/packs/Samsung.Tizen.Sdk $@/packs
-	@cp -fr $(DOTNET6_DESTDIR)/packs/Samsung.Tizen.Ref $@/packs
-	@cp -fr $(DOTNET6_DESTDIR)/packs/Samsung.NETCore.App.Runtime.* $@/packs
-	@mkdir -p $@/template-packs
-	@cp -f $(DOTNET6_DESTDIR)/template-packs/samsung.tizen.templates.*.nupkg $@/template-packs
+$(eval $(call CreateMsiNuGetPack,Samsung.NET.Sdk.Tizen,.Manifest-$(DOTNET6_VERSION_BAND),$(DOTNET6_VERSION_BAND)))
+$(eval $(call CreateMsiNuGetPack,Samsung.Tizen.Sdk))
+$(eval $(call CreateMsiNuGetPack,Samsung.Tizen.Ref))
+$(eval $(call CreateMsiNuGetPack,Samsung.Tizen.Templates))
+$(eval $(call CreateMsiNuGetPack,Samsung.NETCore.App.Runtime,.tizen))
 
-$(eval $(call CreateMsi,$(TIZEN_PACK_VERSION_FULL)))
+msi: $(MSI_NUGET_TARGETS)
 
-msi: $(MSI_TARGET)
-	@rm -fr $(TMPDIR)
 
 # Test 'tizen' workload
 .PHONY: test
