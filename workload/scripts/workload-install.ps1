@@ -57,9 +57,32 @@ function Get-Package([string]$Id, [string]$Version, [string]$Destination, [strin
     return $OutFilePath
 }
 
+function Install-Pack([string]$Id, [string]$Version, [string]$Kind) {
+    $TempZipFile = $(Get-Package -Id $Id -Version $Version -Destination $TempDir -FileExt "zip")
+    $TempUnzipDir = Join-Path -Path $TempDir -ChildPath "unzipped\$Id"
+
+    switch ($Kind) {
+        "manifest" {
+            Expand-Archive -Path $TempZipFile -DestinationPath $TempUnzipDir
+            New-Item -Path $TizenManifestDir -ItemType "directory" -Force | Out-Null
+            Copy-Item -Path "$TempUnzipDir\data\*" -Destination $TizenManifestDir -Force
+        }
+        {($_ -eq "sdk") -or ($_ -eq "framework")} {
+            Expand-Archive -Path $TempZipFile -DestinationPath $TempUnzipDir
+            $TargetDirectory = $(Join-Path -Path $DotnetInstallDir -ChildPath "packs\$Id\$Version")
+            New-Item -Path $TargetDirectory -ItemType "directory" -Force | Out-Null
+            Copy-Item -Path "$TempUnzipDir/*" -Destination $TargetDirectory -Recurse -Force
+        }
+        "template" {
+            $TargetFileName = [System.IO.Path]::GetFileNameWithoutExtension($TempZipFile).ToLower() + ".nupkg"
+            Copy-Item $TempZipFile -Destination $(Join-Path -Path $DotnetInstallDir -ChildPath "template-packs\$TargetFileName") -Force
+        }
+    }
+}
+
 # Check dotnet install directory.
 if ($DotnetInstallDir -eq "<auto>") {
-    if (Test-Path "$Env:DOTNET_ROOT") {
+    if ($Env:DOTNET_ROOT -And $(Test-Path "$Env:DOTNET_ROOT")) {
         $DotnetInstallDir = $Env:DOTNET_ROOT
     } else {
         $DotnetInstallDir = Join-Path -Path $Env:Programfiles -ChildPath "dotnet"
@@ -79,31 +102,25 @@ $ManifestDir = Join-Path -Path $DotnetInstallDir -ChildPath "sdk-manifests" | Jo
 $TizenManifestDir = Join-Path -Path $ManifestDir -ChildPath "samsung.net.sdk.tizen"
 Test-Directory $ManifestDir
 
-Write-Host "Installing $ManifestName/$Version to $ManifestDir..."
-
 $TempDir = $(New-TemporaryDirectory)
 
 # Install workload manifest.
-$TempZipFile = $(Get-Package -Id $ManifestName -Version $Version -Destination $TempDir -FileExt "zip")
-$TempUnzipDir = Join-Path -Path $TempDir -ChildPath "unzipped"
-Expand-Archive -Path $TempZipFile -DestinationPath $TempUnzipDir
-New-Item -Path $TizenManifestDir -ItemType "directory" -Force | Out-Null
-Copy-Item -Path "$TempUnzipDir\data\*" -Destination $TizenManifestDir
+Write-Host "Installing $ManifestName/$Version to $ManifestDir..."
+Install-Pack -Id $ManifestName -Version $Version -Kind "manifest"
 
-# Download workload packs.
+# Download and install workload packs.
 $TizenManifestFile = Join-Path -Path $TizenManifestDir -ChildPath "WorkloadManifest.json"
 $ManifestJson = $(Get-Content $TizenManifestFile | ConvertFrom-Json)
 $ManifestJson.packs.PSObject.Properties | ForEach-Object {
-    $PackageId = $_.Name
-    $PackageVersion = $_.Value.version
-    Write-Host "Downloading $PackageId/$PackageVersion..."
-    Get-Package -Id $PackageId -Version $PackageVersion -Destination $TempDir | Out-Null
+    Write-Host "Installing $($_.Name)/$($_.Value.version)..."
+    Install-Pack -Id $_.Name -Version $_.Value.version -Kind $_.Value.kind
 }
 
-# Install workload to dotnet sdk
-$Env:DOTNET_ROOT = $DotnetInstallDir
-$Env:DOTNET_MULTILEVEL_LOOKUP = 0
+# Add tizen to the installed workload metadata.
+New-Item -Path $(Join-Path -Path $DotnetInstallDir -ChildPath "metadata\workloads\$DotnetVersionBand\InstalledWorkloads\tizen") -Force | Out-Null
+if (Test-Path $(Join-Path -Path $DotnetInstallDir -ChildPath "metadata\workloads\$DotnetVersionBand\InstallerType\msi")) {
+    New-Item -Path "HKLM:\SOFTWARE\Microsoft\dotnet\InstalledWorkloads\Standalone\x64\$DotnetVersionBand\tizen" -Force | Out-Null
+}
 
-& $DotnetInstallDir\dotnet workload install tizen --skip-manifest-update --from-cache $TempDir
-
+# Clean up
 Remove-Item -Path $TempDir -Force -Recurse
