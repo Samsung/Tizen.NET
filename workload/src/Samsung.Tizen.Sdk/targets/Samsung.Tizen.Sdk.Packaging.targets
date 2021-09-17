@@ -95,6 +95,19 @@ Copyright (c) Samsung All rights reserved.
 
   <!--
   ===========================================================================
+  _UsePlatformManifestsAlways
+
+  TPK must exclude the assets provided by platform.
+  ===========================================================================
+  -->
+  <Target Name="_UsePlatformManifestsAlways" DependsOnTargets="ResolveTargetingPackAssets" BeforeTargets="ResolveAssemblyReferences">
+    <ItemGroup>
+      <PackageConflictPlatformManifests Include="@(PlatformManifestsFromTargetingPacks)" />
+    </ItemGroup>
+  </Target>
+
+  <!--
+  ===========================================================================
   TizenPackage
 
   The tpk sign & package entry point.
@@ -354,7 +367,7 @@ Copyright (c) Samsung All rights reserved.
 
   </Target>
 
-    <!--
+  <!--
   ===========================================================================
   ClearReferenceCopyLocalPaths if SupportMultiAppPackage is set to false in csproj
   ===========================================================================
