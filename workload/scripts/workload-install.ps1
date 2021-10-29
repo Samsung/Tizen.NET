@@ -74,8 +74,24 @@ function Install-Pack([string]$Id, [string]$Version, [string]$Kind) {
             Copy-Item -Path "$TempUnzipDir/*" -Destination $TargetDirectory -Recurse -Force
         }
         "template" {
-            $TargetFileName = [System.IO.Path]::GetFileNameWithoutExtension($TempZipFile).ToLower() + ".nupkg"
+            $TargetFileName = "$Id.$Version.nupkg".ToLower();
             Copy-Item $TempZipFile -Destination $(Join-Path -Path $DotnetInstallDir -ChildPath "template-packs\$TargetFileName") -Force
+        }
+    }
+}
+
+function Remove-Pack([string]$Id, [string]$Version, [string]$Kind) {
+    switch ($Kind) {
+        "manifest" {
+            Remove-Item -Path $TizenManifestDir -Recurse -Force
+        }
+        {($_ -eq "sdk") -or ($_ -eq "framework")} {
+            $TargetDirectory = $(Join-Path -Path $DotnetInstallDir -ChildPath "packs\$Id\$Version")
+            Remove-Item -Path $TargetDirectory -Recurse -Force
+        }
+        "template" {
+            $TargetFileName = "$Id.$Version.nupkg".ToLower();
+            Remove-Item -Path $(Join-Path -Path $DotnetInstallDir -ChildPath "template-packs\$TargetFileName") -Force
         }
     }
 }
@@ -100,7 +116,25 @@ if ($Version -eq "<latest>") {
 # Check workload manifest directory.
 $ManifestDir = Join-Path -Path $DotnetInstallDir -ChildPath "sdk-manifests" | Join-Path -ChildPath $DotnetVersionBand
 $TizenManifestDir = Join-Path -Path $ManifestDir -ChildPath "samsung.net.sdk.tizen"
+$TizenManifestFile = Join-Path -Path $TizenManifestDir -ChildPath "WorkloadManifest.json"
 Test-Directory $ManifestDir
+
+# Check and remove already installed old version.
+if (Test-Path $TizenManifestFile) {
+    $ManifestJson = $(Get-Content $TizenManifestFile | ConvertFrom-Json)
+    $OldVersion = $ManifestJson.version
+    if ($OldVersion -ne $Version) {
+        Write-Host "Removing $ManifestName/$OldVersion from $ManifestDir..."
+        Remove-Pack -Id $ManifestName -Version $OldVersion -Kind "manifest"
+        $ManifestJson.packs.PSObject.Properties | ForEach-Object {
+            Write-Host "Removing $($_.Name)/$($_.Value.version)..."
+            Remove-Pack -Id $_.Name -Version $_.Value.version -Kind $_.Value.kind
+        }
+    } else {
+        Write-Host "$Version version is already installed."
+        Exit 0
+    }
+}
 
 $TempDir = $(New-TemporaryDirectory)
 
@@ -109,9 +143,8 @@ Write-Host "Installing $ManifestName/$Version to $ManifestDir..."
 Install-Pack -Id $ManifestName -Version $Version -Kind "manifest"
 
 # Download and install workload packs.
-$TizenManifestFile = Join-Path -Path $TizenManifestDir -ChildPath "WorkloadManifest.json"
-$ManifestJson = $(Get-Content $TizenManifestFile | ConvertFrom-Json)
-$ManifestJson.packs.PSObject.Properties | ForEach-Object {
+$NewManifestJson = $(Get-Content $TizenManifestFile | ConvertFrom-Json)
+$NewManifestJson.packs.PSObject.Properties | ForEach-Object {
     Write-Host "Installing $($_.Name)/$($_.Value.version)..."
     Install-Pack -Id $_.Name -Version $_.Value.version -Kind $_.Value.kind
 }

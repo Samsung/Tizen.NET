@@ -38,13 +38,32 @@ Tizen .NET is :
   Invoke-WebRequest 'https://raw.githubusercontent.com/Samsung/Tizen.NET/main/workload/scripts/workload-install.ps1' -Proxy $env:HTTP_PROXY -ProxyUseDefaultCredentials -OutFile 'workload-install.ps1';
   ./workload-install.ps1 [-v <version>] [-d <directory>]
   ```
-
+  
+  For an instance:
+  ```powershell
+  PS D:\workspace> Invoke-WebRequest 'https://raw.githubusercontent.com/Samsung/Tizen.NET/main/workload/scripts/workload-install.ps1' -OutFile 'workload-install.ps1';
+  
+  PS D:\workspace> .\workload-install.ps1
+Installing Samsung.NET.Sdk.Tizen.Manifest-6.0.100/6.5.100-rc.1.114 to C:\Program Files\dotnet\sdk-manifests\6.0.100...
+Installing Samsung.Tizen.Sdk/6.5.100-rc.1.114...
+Installing Samsung.Tizen.Ref/6.5.100-rc.1.114...
+Installing Samsung.Tizen.Templates/6.5.100-rc.1.114...
+Installing Samsung.NETCore.App.Runtime.tizen/6.5.100-rc.1.114... 
+```
   You can see the Tizen workload as follows if it is properly installed.
-  ```sh
-  dotnet workload list
-  Workload Id
-  -----------
-  tizen    
+  ```powershell
+PS D:\workspace> dotnet workload list
+
+This command lists only workloads that were installed via `dotnet workload install` in this version of the SDK and not those that were installed via Visual Studio.
+
+Installed Workload Ids
+----------------------
+maui
+tizen
+
+Use `dotnet workload search` to find additional workloads to install.
+
+Updates are avaliable for the following workload(s): maui tizen. Run `dotnet workload update` to get the latest  
   ```
 
 ### Time to Go!
