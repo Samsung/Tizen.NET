@@ -19,9 +19,11 @@ Tizen .NET is :
   * [Tizen Extensions for Visual Studio Family](https://developer.tizen.org/development/tizen-extensions-visual-studio-family) or 
   * [Tizen Studio](https://developer.tizen.org/development/tizen-studio)
 
-**- .NET 6 Preview SDK**
+**- .NET 6 SDK**
   * Linux / Windows / macOS : https://dotnet.microsoft.com/download/dotnet/6.0
   
+**- Visual Studio 2022**
+  * To create Tizen .NET with .NET6, you need the latest version of [Visual Studio 2022](https://visualstudio.microsoft.com/)
 
 ### Installing Tizen workload for .NET 6.0 (Preview)
   You can install Tizen workload for .NET 6.0 by using the installer script.
@@ -66,7 +68,12 @@ Use `dotnet workload search` to find additional workloads to install.
 Updates are avaliable for the following workload(s): maui tizen. Run `dotnet workload update` to get the latest  
   ```
 
-### Time to Go!
+### Time to Go! (using Visual Studio 2022)
+See [here](https://github.com/Samsung/Tizen.NET/wiki/Build-your-first-(.NET6)-Tizen-App-using-Visual-Studio-2022) for more details.
+
+![](https://github.com/Samsung/Tizen.NET/blob/a710d7095ca9ba0a759705dc59461140dec13ae4/assets/hello-tizen-net6-vs2022.gif)
+
+### Time to Go! (using CLI)
 
 #### 1. Check the Tizen templates before creating a new Tizen Project
 You can see the Tizen template as follows if it is properly installed.
