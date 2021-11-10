@@ -7,7 +7,6 @@ WORKLOAD_MSI_OUTDIR := $(OUTDIR)/windows
 
 .DEFAULT_GOAL := packs
 
-include $(TOP)/Versions.mk
 include $(TOP)/Config.mk
 
 DIRECTORIES += \
@@ -43,11 +42,11 @@ $(WORKLOAD_PACKS_OUTDIR)/$(1)$(3).$(2).nupkg: $(DOTNET6)
 NUPKG_TARGETS += $(WORKLOAD_PACKS_OUTDIR)/$(1)$(3).$(2).nupkg
 endef
 
-$(eval $(call CreateNuGetPkgs,Samsung.NET.Sdk.Tizen,$(TIZEN_PACK_VERSION_FULL),.Manifest-$(DOTNET6_VERSION_BAND),$(DOTNET6_VERSION_BAND)))
-$(eval $(call CreateNuGetPkgs,Samsung.Tizen.Sdk,$(TIZEN_PACK_VERSION_FULL)))
-$(eval $(call CreateNuGetPkgs,Samsung.Tizen.Ref,$(TIZEN_PACK_VERSION_FULL)))
-$(eval $(call CreateNuGetPkgs,Samsung.Tizen.Templates,$(TIZEN_PACK_VERSION_FULL)))
-$(eval $(call CreateNuGetPkgs,Samsung.NETCore.App.Runtime,$(TIZEN_PACK_VERSION_FULL),.tizen))
+$(eval $(call CreateNuGetPkgs,Samsung.NET.Sdk.Tizen,$(TIZEN_WORKLOAD_VERSION_FULL),.Manifest-$(DOTNET6_VERSION_BAND),$(DOTNET6_VERSION_BAND)))
+$(eval $(call CreateNuGetPkgs,Samsung.Tizen.Sdk,$(TIZEN_WORKLOAD_VERSION_FULL)))
+$(eval $(call CreateNuGetPkgs,Samsung.Tizen.Ref,$(TIZEN_WORKLOAD_VERSION_FULL)))
+$(eval $(call CreateNuGetPkgs,Samsung.Tizen.Templates,$(TIZEN_WORKLOAD_VERSION_FULL)))
+$(eval $(call CreateNuGetPkgs,Samsung.NETCore.App.Runtime,$(TIZEN_WORKLOAD_VERSION_FULL),.tizen))
 
 .PHONY: packs
 packs: $(NUPKG_TARGETS)
@@ -79,7 +78,7 @@ define CreateMsi
 $(WORKLOAD_MSI_OUTDIR)/Samsung.NET.Workload.Tizen.$(1).wix: | $(TMPDIR)/msi
 	@$(DOTNET6) msbuild --nologo $(TOP)/build/GenerateWixFile.proj \
 									-t:Generate \
-									-p:MSIVersion=$(TIZEN_PACK_VERSION_FULL) \
+									-p:MSIVersion=$(TIZEN_WORKLOAD_VERSION_FULL) \
 									-p:SourceDirectory=$(TMPDIR)/msi \
 									-p:DestinationFile="$$@"
 
@@ -99,7 +98,7 @@ $(TMPDIR)/msi: install
 	@mkdir -p $@/template-packs
 	@cp -f $(DOTNET6_DESTDIR)/template-packs/samsung.tizen.templates.*.nupkg $@/template-packs
 
-$(eval $(call CreateMsi,$(TIZEN_PACK_VERSION_FULL)))
+$(eval $(call CreateMsi,$(TIZEN_WORKLOAD_VERSION_FULL)))
 
 msi: $(MSI_TARGET)
 	@rm -fr $(TMPDIR)

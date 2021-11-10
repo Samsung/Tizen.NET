@@ -166,7 +166,7 @@ Copyright (c) Samsung All rights reserved.
   ===========================================================================
   -->
   <Target Name="_TizenGetTpkInfoFromManifest"
-          Condition="'$(TizenCreateTpkOnBuild)' == 'true'">
+          Condition="'$(WebProject)' != 'true' And '$(TizenCreateTpkOnBuild)' == 'true'">
 
     <Error Code="TS0001"
            File="$(MSBuildProjectFile)"
@@ -221,7 +221,7 @@ Copyright (c) Samsung All rights reserved.
   TizenComputeTpkAssemblyFiles
   ===========================================================================
   -->
-  <Target Name="TizenComputeTpkAssemblyFiles" DependsOnTargets="ComputeFilesToPublish">
+  <Target Name="TizenComputeTpkAssemblyFiles" DependsOnTargets="ComputeFilesToPublish" Condition="'$(WebProject)' != 'true'">
     <PropertyGroup>
       <TizenTpkAssemblyDirName Condition=" '$(TizenTpkAssemblyDirName)' == '' ">bin</TizenTpkAssemblyDirName>
       <PublishDepsFile>$(OutDir)$(ProjectDepsFileName)</PublishDepsFile>
@@ -617,7 +617,8 @@ Copyright (c) Samsung All rights reserved.
                             TizenPrepareCertificate;
                             TizenCheckCertificateChanged"
           Inputs="@(TizenResolvedFileToTpk->'$(TizenPackageDir)\%(TizenTpkSubPath)');$(IntermediateOutputPath)TizenAuthorTimeStamp;$(IntermediateOutputPath)TizenDistributorTimeStamp"
-          Outputs="$(SignedTpkFile)">
+          Outputs="$(SignedTpkFile)"
+          Condition="'$(WebProject)' != 'true'">
 
     <CallTarget Targets="TizenCheckExecFileExist" />
 

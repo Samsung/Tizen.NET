@@ -173,7 +173,7 @@ namespace Samsung.Tizen.Build.Tasks
                     File.Delete(outputname);
                 }
 
-                ZipFile.CreateFromDirectory(root, outputname, CompressionLevel.Optimal, false, new SlashEncoder());
+                ZipFile.CreateFromDirectory(root, outputname, CompressionLevel.Optimal, false);
             }
         }
     }

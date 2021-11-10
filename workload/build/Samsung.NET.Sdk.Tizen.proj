@@ -9,6 +9,11 @@ workload manifest pack containing information about the Tizen .NET workload.
 <Project Sdk="Microsoft.Build.NoTargets">
 
   <PropertyGroup>
+    <!-- Trim all characters after first `-` or `+` is encountered. -->
+    <DotNetPreviewVersionBand Condition=" '$(DotNetPreviewVersionBand)' == '' ">$([System.Text.RegularExpressions.Regex]::Replace($(MicrosoftDotnetSdkInternalPackageVersion), `[-+].*$`, ""))</DotNetPreviewVersionBand>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <PackageId>Samsung.NET.Sdk.Tizen.Manifest-$(DotNetPreviewVersionBand)</PackageId>
     <Description>Tizen .NET workload manifest. Please do not reference directly.</Description>
   </PropertyGroup>
@@ -29,7 +34,7 @@ workload manifest pack containing information about the Tizen .NET workload.
     <ReplaceFileContents
         SourceFile="$(_ProjectSourceDirectory)Samsung.NET.Sdk.Tizen\WorkloadManifest.in.json"
         DestinationFile="$(WorkloadManifestJsonPath)"
-        Replacements="@TIZEN_PACK_VERSION@=$(TizenPackVersion);">
+        Replacements="@TIZEN_WORKLOAD_VERSION@=$(TizenPackVersion);">
     </ReplaceFileContents>
 
     <ItemGroup>

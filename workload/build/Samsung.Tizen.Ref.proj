@@ -10,6 +10,10 @@ by projects that use the Tizen .NET framework in .NET 5.
 <Project Sdk="Microsoft.Build.NoTargets">
 
   <PropertyGroup>
+    <TizenFXAPILevel>$(TizenFXVersion.Split(".")[0])</TizenFXAPILevel>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <PackageId>Samsung.Tizen.Ref</PackageId>
     <Description>
       Tizen .NET reference assemblies. Please do not reference directly.

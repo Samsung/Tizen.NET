@@ -7,6 +7,7 @@ Tizen.Account.SyncManager.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.Applications.Alarm.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.Applications.AttachPanel.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.Applications.Badge.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
+Tizen.Applications.Cion.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.Applications.Common.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.Applications.ComponentBased.ComponentManager.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.Applications.ComponentBased.Default.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
@@ -65,6 +66,7 @@ Tizen.Network.WiFi.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.Nlp.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.NUI.Components.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.NUI.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
+Tizen.NUI.Extension.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.NUI.Wearable.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.NUI.WindowSystem.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.PhonenumberUtils.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0

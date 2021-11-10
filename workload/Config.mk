@@ -1,18 +1,25 @@
--include $(TMPDIR)/dotnet.config
-$(TMPDIR)/dotnet.config: $(TOP)/build/Versions.props
+# DOTNET6_VERSION
+-include $(TMPDIR)/dotnet-version.config
+$(TMPDIR)/dotnet-version.config: $(TOP)/build/Versions.props
 	@mkdir -p $(TMPDIR)
 	@grep "<MicrosoftDotnetSdkInternalPackageVersion>" build/Versions.props | sed -e 's/<\/*MicrosoftDotnetSdkInternalPackageVersion>//g' -e 's/[ \t]*/DOTNET6_VERSION=/' > $@
 DOTNET6_VERSION_BAND = $(firstword $(subst -, ,$(DOTNET6_VERSION)))
 
+# DOTNET6_DESTDIR
 ifeq ($(DESTDIR),)
 DOTNET6_DESTDIR = $(OUTDIR)/dotnet
 else
 DOTNET6_DESTDIR = $(abspath $(DESTDIR))
 endif
-
 DOTNET6_MANIFESTS_DESTDIR=$(DOTNET6_DESTDIR)/sdk-manifests/$(DOTNET6_VERSION_BAND)/samsung.net.sdk.tizen
 
-TIZEN_VERSION_BLAME_COMMIT := $(shell git blame $(TOP)/Versions.mk HEAD | grep TIZEN_PACK_VERSION | sed 's/ .*//')
+# TIZEN_WORKLOAD_VERSION
+-include $(TMPDIR)/workload-version.config
+$(TMPDIR)/workload-version.config: $(TOP)/build/Versions.props
+	@mkdir -p $(TMPDIR)
+	@grep "<TizenWorkloadVersion>" build/Versions.props | sed -e 's/<\/*TizenWorkloadVersion>//g' -e 's/[ \t]*/TIZEN_WORKLOAD_VERSION=/' > $@
+
+TIZEN_VERSION_BLAME_COMMIT := $(shell git blame $(TOP)/build/Versions.props HEAD | grep "<TizenWorkloadVersion>" | sed 's/ .*//')
 TIZEN_COMMIT_DISTANCE := $(shell git log $(TIZEN_VERSION_BLAME_COMMIT)..HEAD --oneline | wc -l)
 
 CURRENT_HASH := $(shell git log -1 --pretty=%h)
@@ -35,4 +42,4 @@ PRERELEASE_VERSION := ci.$(CURRENT_BRANCH)
 endif
 endif
 
-TIZEN_PACK_VERSION_FULL := $(TIZEN_PACK_VERSION)-$(PRERELEASE_VERSION).$(TIZEN_COMMIT_DISTANCE)
+TIZEN_WORKLOAD_VERSION_FULL := $(TIZEN_WORKLOAD_VERSION)-$(PRERELEASE_VERSION).$(TIZEN_COMMIT_DISTANCE)
