@@ -16,6 +16,24 @@ Copyright (c) Samsung All rights reserved.
     <_DefaultTargetPlatformVersion>7.0</_DefaultTargetPlatformVersion>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <TargetPlatformSupported>true</TargetPlatformSupported>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">$(_DefaultTargetPlatformVersion)</TargetPlatformVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <SupportedPlatform Include="tizen" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TizenSdkSupportedTargetPlatformVersion Include="6.5" />
+    <TizenSdkSupportedTargetPlatformVersion Include="7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <SdkSupportedTargetPlatformVersion Include="@(TizenSdkSupportedTargetPlatformVersion)" />
+  </ItemGroup>
+
   <ItemGroup>
     <KnownFrameworkReference
       Include="Samsung.Tizen"

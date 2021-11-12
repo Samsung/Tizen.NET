@@ -17,7 +17,6 @@ Copyright (c) Samsung All rights reserved.
 	</PropertyGroup>
 
   <Import Project="Samsung.Tizen.Sdk.Versions.targets" />
-  <Import Project="Samsung.Tizen.Sdk.SupportedPlatforms.targets" />
   <Import Project="Samsung.Tizen.Sdk.DefaultProperties.targets" />
 
   <ItemGroup Condition=" '$(DisableImplicitFrameworkReferences)' != 'true' ">
