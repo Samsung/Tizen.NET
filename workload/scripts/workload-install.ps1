@@ -74,8 +74,10 @@ function Install-Pack([string]$Id, [string]$Version, [string]$Kind) {
             Copy-Item -Path "$TempUnzipDir/*" -Destination $TargetDirectory -Recurse -Force
         }
         "template" {
-            $TargetFileName = "$Id.$Version.nupkg".ToLower();
-            Copy-Item $TempZipFile -Destination $(Join-Path -Path $DotnetInstallDir -ChildPath "template-packs\$TargetFileName") -Force
+            $TargetFileName = "$Id.$Version.nupkg".ToLower()
+            $TargetDirectory = $(Join-Path -Path $DotnetInstallDir -ChildPath "template-packs")
+            New-Item -Path $TargetDirectory -ItemType "directory" -Force | Out-Null
+            Copy-Item $TempZipFile -Destination $(Join-Path -Path $TargetDirectory -ChildPath "$TargetFileName") -Force
         }
     }
 }
