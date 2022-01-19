@@ -24,8 +24,8 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
 
-$ManifestName = "Samsung.NET.Sdk.Tizen.Manifest-6.0.100"
-$DotnetVersionBand = "6.0.100"
+$ManifestName = "Samsung.NET.Sdk.Tizen.Manifest-6.0.200"
+$DotnetVersionBand = "6.0.200"
 
 function New-TemporaryDirectory {
     $parent = [System.IO.Path]::GetTempPath()
