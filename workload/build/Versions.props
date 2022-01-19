@@ -33,7 +33,7 @@
     Dotnet SDK versions for building the workload.
    -->
   <PropertyGroup>
-    <MicrosoftDotnetSdkInternalPackageVersion>6.0.100</MicrosoftDotnetSdkInternalPackageVersion>
+    <MicrosoftDotnetSdkInternalPackageVersion>6.0.200-preview.22063.5</MicrosoftDotnetSdkInternalPackageVersion>
     <MicrosoftDotNetBuildTasksFeedPackageVersion>6.0.0-beta.21212.6</MicrosoftDotNetBuildTasksFeedPackageVersion>
   </PropertyGroup>
 </Project>
