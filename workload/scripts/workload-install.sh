@@ -5,10 +5,10 @@
 
 #!/bin/bash -e
 
-MANIFEST_NAME="samsung.net.sdk.tizen.manifest-6.0.100"
+MANIFEST_NAME="samsung.net.sdk.tizen.manifest-6.0.200"
 MANIFEST_VERSION="<latest>"
 
-DOTNET_VERSION_BAND=6.0.100
+DOTNET_VERSION_BAND=6.0.200
 DOTNET_INSTALL_DIR="<auto>"
 
 while [ $# -ne 0 ]; do
