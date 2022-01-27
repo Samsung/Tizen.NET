@@ -19,7 +19,7 @@ Copyright (c) Samsung All rights reserved.
   <Import Project="Samsung.Tizen.Sdk.Versions.targets" />
   <Import Project="Samsung.Tizen.Sdk.DefaultProperties.targets" />
 
-  <ItemGroup Condition=" '$(DisableImplicitFrameworkReferences)' != 'true' ">
+  <ItemGroup Condition=" '$(DisableImplicitFrameworkReferences)' != 'true' And '$(DisableImplicitTizenReferences)' != 'true' ">
     <FrameworkReference
         Include="Samsung.Tizen"
         IsImplicitlyDefined="true"
