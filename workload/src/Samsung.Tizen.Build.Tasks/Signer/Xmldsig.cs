@@ -65,7 +65,7 @@ namespace Samsung.Tizen.Build.Tasks.Signer
         public XmldsigForWidgetDigSig(WidgetDigSig role, SHA512WithRSA signer, string root)
         {
             Role = role;
-            SigningRoot = root;
+            SigningRoot = root.TrimEnd(new[] { '/', '\\' });
 
             Signer = signer;
             CertificateChain = new List<string>(signer.Base64KeyChain);
@@ -73,21 +73,8 @@ namespace Samsung.Tizen.Build.Tasks.Signer
 
         private string NormalizePath(string path)
         {
-#if NET46
-            bool isWindows = true;
-#else
-            //bool isWindows = System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
-            bool isWindows = true;
-#endif
-            if (isWindows)
-            {
-                string relPath = path.Substring(SigningRoot.Length + 1).Replace('\\', '/');
-                return Uri.EscapeDataString(relPath);
-            }
-            else
-            {
-                return Uri.EscapeDataString(path.Substring(SigningRoot.Length + 1));
-            }
+            string relPath = path.Substring(SigningRoot.Length + 1).Replace('\\', '/');
+            return Uri.EscapeDataString(relPath);
         }
 
         private string GenerateXMLTemplate()
