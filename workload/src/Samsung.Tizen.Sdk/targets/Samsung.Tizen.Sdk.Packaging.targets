@@ -12,15 +12,6 @@ Copyright (c) Samsung All rights reserved.
 
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" >
 
-  <!--
-    Default behavior is creating TPK on Build
-    If you do not want to build tpk on build then remove Samsung.Tizen.Sdk or set property TizenCreateTpkOnBuild false
-  -->
-  <PropertyGroup>
-    <TizenCreateTpkOnBuild Condition="'$(TizenCreateTpkOnBuild)' == '' and '$(OutputType)' == 'Exe'">true</TizenCreateTpkOnBuild>
-  </PropertyGroup>
-
-  <!-- Using tasks for Tizen -->
   <UsingTask AssemblyFile="$(_TizenTaskAssemblyName)" TaskName="Samsung.Tizen.Build.Tasks.Package" />
   <UsingTask AssemblyFile="$(_TizenTaskAssemblyName)" TaskName="Samsung.Tizen.Build.Tasks.GetManifestInfo" />
   <UsingTask AssemblyFile="$(_TizenTaskAssemblyName)" TaskName="Samsung.Tizen.Build.Tasks.Sign" />
@@ -29,42 +20,19 @@ Copyright (c) Samsung All rights reserved.
   <UsingTask AssemblyFile="$(_TizenTaskAssemblyName)" TaskName="Samsung.Tizen.Build.Tasks.GetTizenProject" />
   <UsingTask AssemblyFile="$(_TizenTaskAssemblyName)" TaskName="Samsung.Tizen.Build.Tasks.ResourceXmlWriter" />
 
-  <!-- Default DirName for TPK -->
   <PropertyGroup>
-    <TizenPackageDirNameDefault>tpkroot</TizenPackageDirNameDefault>
-    <TizenPackageLibDirNameDefault>lib</TizenPackageLibDirNameDefault>
-    <TizenPackageBinDirNameDefault>bin</TizenPackageBinDirNameDefault>
-    <TizenPackageResDirNameDefault>res</TizenPackageResDirNameDefault>
-    <TizenPackageSharedDirNameDefault>shared</TizenPackageSharedDirNameDefault>
-    <TizenPackageSharedResDirNameDefault>shared\res</TizenPackageSharedResDirNameDefault>
+    <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+    <TizenCreateTpkOnBuild Condition="'$(TizenCreateTpkOnBuild)' == '' and '$(OutputType)' == 'Exe'">true</TizenCreateTpkOnBuild>
+    <TizenPackageOutputPath>$(OutputPath)tpkroot\</TizenPackageOutputPath>
   </PropertyGroup>
 
-  <!-- Set DirName for TPK -->
-  <PropertyGroup>
-    <TizenPackageDirName Condition="'$(TizenPackageDirName)'==''">$(TizenPackageDirNameDefault)</TizenPackageDirName>
-    <TizenPackageLibDirName Condition="'$(TizenPackageLibDirName)'==''">$(TizenPackageLibDirNameDefault)</TizenPackageLibDirName>
-    <TizenPackageBinDirName Condition="'$(TizenPackageBinDirName)'==''">$(TizenPackageBinDirNameDefault)</TizenPackageBinDirName>
-    <TizenPackageResDirName Condition="'$(TizenPackageResDirName)'==''">$(TizenPackageResDirNameDefault)</TizenPackageResDirName>
-    <TizenPackageSharedDirName Condition="'$(TizenPackageSharedDirName)'==''">$(TizenPackageSharedDirNameDefault)</TizenPackageSharedDirName>
-    <TizenPackageSharedResDirName Condition="'$(TizenPackageSharedResDirName)'==''">$(TizenPackageSharedResDirNameDefault)</TizenPackageSharedResDirName>
-  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <TizenTpkUserIncludeFiles>
+      <TizenTpkFileName></TizenTpkFileName>
+      <TizenTpkSubDir></TizenTpkSubDir>
+    </TizenTpkUserIncludeFiles>
+  </ItemDefinitionGroup>
 
-  <!-- Related DirName for TPK -->
-  <PropertyGroup>
-    <TizenPackageDir>$(OutputPath)$(TizenPackageDirName)</TizenPackageDir>
-    <TizenPackageLibDir>$(TizenPackageDir)\$(TizenPackageLibDirName)</TizenPackageLibDir>
-    <TizenPackageBinDir>$(TizenPackageDir)\$(TizenPackageBinDirName)</TizenPackageBinDir>
-    <TizenPackageResDir>$(TizenPackageDir)\$(TizenPackageResDirName)</TizenPackageResDir>
-    <TizenPackageSharedDir>$(TizenPackageDir)\$(TizenPackageSharedDirName)</TizenPackageSharedDir>
-    <TizenPackageSharedResDir>$(TizenPackageDir)\$(TizenPackageSharedResDirName)</TizenPackageSharedResDir>
-  </PropertyGroup>
-
-
-  <PropertyGroup>
-    <TizenManifestFile Condition="'$(TizenManifestFile)'==''">tizen-manifest.xml</TizenManifestFile>
-  </PropertyGroup>
-
-  <!-- TpkKeepMeta -->
   <PropertyGroup>
     <TpkKeepMeta>
       TizenTpkFileName;
@@ -90,7 +58,6 @@ Copyright (c) Samsung All rights reserved.
       _TizenTpkSign;
       TizenPostPackageEvent;
     </TizenPackageDependsOn>
-    <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
   </PropertyGroup>
 
   <!--
@@ -149,11 +116,11 @@ Copyright (c) Samsung All rights reserved.
   ===========================================================================
   _TizenClean
 
-  Clean TizenPackageDir Direcotry (Default : tpkroot)
+  Clean TizenPackageOutputPath Direcotry (Default : tpkroot)
   ===========================================================================
   -->
   <Target Name="_TizenClean">
-    <RemoveDir Directories="$(TizenPackageDir)" Condition="Exists('$(TizenPackageDir)')"/>
+    <RemoveDir Directories="$(TizenPackageOutputPath)" Condition="Exists('$(TizenPackageOutputPath)')"/>
     <ItemGroup>
       <TpkFiles Include="$(OutDir)\*.tpk" />
     </ItemGroup>
@@ -206,10 +173,8 @@ Copyright (c) Samsung All rights reserved.
       <_TizenPackageExecItemList Include="%(TizenPackageApplicationList.Exec)" />
       <_TizenPackageExecItemList Remove="%(TizenTpkAssemblyFiles.Filename)%(TizenTpkAssemblyFiles.Extension)" />
     </ItemGroup>
-
     <Message Text="$(TizenManifestFile) exec file check OK"
              Condition="@(_TizenPackageExecItemList->Count()) == 0" />
-
     <Error Code="TS0002"
            File="$(TizenManifestFile)"
            Text="The '%(_TizenPackageExecItemList.Identity)' file was not found.&#xA;Please check the exec attribute of $(TizenManifestFile) or check the assembly name"
@@ -223,14 +188,12 @@ Copyright (c) Samsung All rights reserved.
   -->
   <Target Name="TizenComputeTpkAssemblyFiles" DependsOnTargets="ComputeFilesToPublish" Condition="'$(WebProject)' != 'true'">
     <PropertyGroup>
-      <TizenTpkAssemblyDirName Condition=" '$(TizenTpkAssemblyDirName)' == '' ">bin</TizenTpkAssemblyDirName>
       <PublishDepsFile>$(OutDir)$(ProjectDepsFileName)</PublishDepsFile>
     </PropertyGroup>
-
     <ItemGroup>
       <!-- Copy all the assemblies -->
       <TizenTpkAssemblyFiles Include="@(ResolvedFileToPublish)" KeepMetadata="$(TpkKeepMeta)" Condition="'%(RelativePath)' != '$(ProjectDepsFileName)'">
-        <TizenTpkSubDir>$(TizenTpkAssemblyDirName)</TizenTpkSubDir>
+        <TizenTpkSubDir>bin\</TizenTpkSubDir>
         <TizenTpkFileName>%(RelativePath)</TizenTpkFileName>
       </TizenTpkAssemblyFiles>
       <!-- Copy Current Projects deps.json to tpk root folder -->
@@ -238,19 +201,6 @@ Copyright (c) Samsung All rights reserved.
         <TizenTpkFileName>$(MSBuildProjectName).deps.json</TizenTpkFileName>
       </TizenTpkAssemblyFiles>
     </ItemGroup>
-
-    <ItemGroup>
-      <!--
-      First, add a trailing slash to the TizenTpkSubDir metadata if necessary.
-      This allows us to use the same value for the TizenTpkSubPath metadata whether or not TizenTpkSubDir metadata is set:
-      %(TizenTpkAssemblyFiles.TizenTpkSubDir)%(TizenTpkAssemblyFiles.TizenTpkFileName)
-      Note that RecursiveDir already includes the trailing slash.
-      -->
-      <TizenTpkAssemblyFiles Update="@(TizenTpkAssemblyFiles)">
-        <TizenTpkSubDir Condition="'%(TizenTpkAssemblyFiles.TizenTpkSubDir)' != ''">$([MSBuild]::EnsureTrailingSlash(%(TizenTpkAssemblyFiles.TizenTpkSubDir)))</TizenTpkSubDir>
-      </TizenTpkAssemblyFiles>
-    </ItemGroup>
-
     <Message Condition="!Exists('$(PublishDepsFile)')" Text="PublishDepsFile : Unable to copy $(PublishDepsFile). File does not exist." Importance="high"/>
   </Target>
 
@@ -259,9 +209,7 @@ Copyright (c) Samsung All rights reserved.
   TizenComputeTpkResourceFiles
   ===========================================================================
   -->
-  <Target Name="TizenComputeTpkResourceFiles"
-          Returns="@(AllTpkItemsFullPath)">
-
+  <Target Name="TizenComputeTpkResourceFiles" Returns="@(AllTpkItemsFullPath)">
     <!-- Get TizenProject from reference projects -->
     <GetTizenProject ProjectFiles="@(_MSBuildProjectReferenceExistent)"
                      Condition="'@(_MSBuildProjectReferenceExistent)' != '' and '%(_MSBuildProjectReferenceExistent.Private)' != 'false' and '$(SupportMultiAppPackage)' != 'false'">
@@ -285,7 +233,6 @@ Copyright (c) Samsung All rights reserved.
       <TizenTpkFiles KeepDuplicates="false"
                      KeepMetadata="$(TpkKeepMeta)"
                      Include="@(_AllTpkItemsFullPath->'%(FullPath)')" />
-
       <TizenTpkFiles Update="@(TizenTpkFiles)"
                      Condition=" '%(TizenTpkFiles.TizenTpkIsManifest)' == 'true' " >
         <TizenTpkIsBaseManifest>false</TizenTpkIsBaseManifest><!-- reference manifest should not be TizenTpkIsBaseManifest -->
@@ -298,49 +245,28 @@ Copyright (c) Samsung All rights reserved.
       <_TizenProjectFiles Remove ="@(_TizenProjectFiles)" />
     </ItemGroup>
 
-    <PropertyGroup>
-      <EnableDefaultTpkItems Condition=" '$(EnableDefaultTpkItems)' == '' ">true</EnableDefaultTpkItems>
-    </PropertyGroup>
-
     <!-- Default Resource File Include from Project -->
-    <ItemGroup Condition=" '$(EnableDefaultTpkItems)' == 'true' ">
-      <DefaultTpkResFiles Include="res\**\*" Exclude="@(TizenTpkUserExcludeFiles)" />
-      <DefaultTpkLibFiles Include="lib\**\*" Exclude="@(TizenTpkUserExcludeFiles)" />
-      <DefaultTpkSharedFiles Include="shared\**\*" Exclude="@(TizenTpkUserExcludeFiles)" />
-      <DefaultTpkManifestFiles Include="$(TizenManifestFile)" />
-
-      <TizenTpkFiles Include="@(DefaultTpkResFiles)" Condition="Exists('%(DefaultTpkResFiles.Identity)')">
-        <TizenTpkSubDir>res\%(DefaultTpkResFiles.RecursiveDir)</TizenTpkSubDir>
+    <ItemGroup Condition=" '$(EnableDefaultTizenItems)' == 'true' ">
+      <TizenTpkFiles Include="@(TizenResource)" Condition="Exists('%(TizenResource.Identity)')">
+        <TizenTpkSubDir>res\%(TizenResource.RecursiveDir)</TizenTpkSubDir>
         <TizenTpkFileName>%(Filename)%(Extension)</TizenTpkFileName>
       </TizenTpkFiles>
-      <TizenTpkFiles Include="@(DefaultTpkLibFiles)" Condition="Exists('%(DefaultTpkLibFiles.Identity)')">
-        <TizenTpkSubDir>lib\%(DefaultTpkLibFiles.RecursiveDir)</TizenTpkSubDir>
+      <TizenTpkFiles Include="@(TizenLibrary)" Condition="Exists('%(TizenLibrary.Identity)')">
+        <TizenTpkSubDir>lib\%(TizenLibrary.RecursiveDir)</TizenTpkSubDir>
         <TizenTpkFileName>%(Filename)%(Extension)</TizenTpkFileName>
       </TizenTpkFiles>
-      <TizenTpkFiles Include="@(DefaultTpkSharedFiles)" Condition="Exists('%(DefaultTpkSharedFiles.Identity)')">
-        <TizenTpkSubDir>shared\%(DefaultTpkSharedFiles.RecursiveDir)</TizenTpkSubDir>
+      <TizenTpkFiles Include="@(TizenSharedResource)" Condition="Exists('%(TizenSharedResource.Identity)')">
+        <TizenTpkSubDir>shared\%(TizenSharedResource.RecursiveDir)</TizenTpkSubDir>
         <TizenTpkFileName>%(Filename)%(Extension)</TizenTpkFileName>
       </TizenTpkFiles>
-      <TizenTpkFiles Include="@(DefaultTpkManifestFiles)" Condition="Exists('%(DefaultTpkManifestFiles.Identity)')">
+      <TizenTpkFiles Include="$(TizenManifestFile)" Condition="Exists('$(TizenManifestFile)')">
         <TizenTpkFileName>%(Filename)%(Extension)</TizenTpkFileName>
         <TizenTpkIsManifest>true</TizenTpkIsManifest>
-        <TizenTpkIsBaseManifest>true</TizenTpkIsBaseManifest><!-- Set this file as BaseManifest -->
+        <TizenTpkIsBaseManifest>true</TizenTpkIsBaseManifest>
       </TizenTpkFiles>
-    </ItemGroup>
-
-    <!-- Set User Include Files -->
-    <ItemGroup>
-      <TizenTpkFiles Include="@(TizenTpkUserIncludeFiles)" Exclude="@(TizenTpkUserExcludeFiles)" Condition="'%(TizenTpkUserIncludeFiles.TizenTpkSubDir)' != '' and '%(TizenTpkUserIncludeFiles.TizenTpkFileName)' != ''" >
-      </TizenTpkFiles>
-      <TizenTpkFiles Include="@(TizenTpkUserIncludeFiles)" Exclude="@(TizenTpkUserExcludeFiles)" Condition="'%(TizenTpkUserIncludeFiles.TizenTpkSubDir)' != '' and '%(TizenTpkUserIncludeFiles.TizenTpkFileName)' == ''" >
-        <TizenTpkFileName>%(Filename)%(Extension)</TizenTpkFileName>
-      </TizenTpkFiles>
-      <TizenTpkFiles Include="@(TizenTpkUserIncludeFiles)" Exclude="@(TizenTpkUserExcludeFiles)" Condition="'%(TizenTpkUserIncludeFiles.TizenTpkSubDir)' == '' and '%(TizenTpkUserIncludeFiles.TizenTpkFileName)' != ''" >
-        <TizenTpkSubDir></TizenTpkSubDir>
-      </TizenTpkFiles>
-      <TizenTpkFiles Include="@(TizenTpkUserIncludeFiles)" Exclude="@(TizenTpkUserExcludeFiles)" Condition="'%(TizenTpkUserIncludeFiles.TizenTpkSubDir)' == '' and '%(TizenTpkUserIncludeFiles.TizenTpkFileName)' == ''" >
-        <TizenTpkSubDir>%(TizenTpkUserIncludeFiles.RelativeDir)</TizenTpkSubDir>
-        <TizenTpkFileName>%(Filename)%(Extension)</TizenTpkFileName>
+      <TizenTpkFiles Include="@(TizenTpkUserIncludeFiles)" Exclude="@(TizenTpkUserExcludeFiles)">
+        <TizenTpkSubDir Condition="'%(TizenTpkUserIncludeFiles.TizenTpkSubDir)' == ''">%(TizenTpkUserIncludeFiles.RelativeDir)</TizenTpkSubDir>
+        <TizenTpkFileName Condition="'%(TizenTpkUserIncludeFiles.TizenTpkFileName)' == ''">%(Filename)%(Extension)</TizenTpkFileName>
       </TizenTpkFiles>
     </ItemGroup>
 
@@ -364,7 +290,6 @@ Copyright (c) Samsung All rights reserved.
     </ItemGroup>
 
     <Message Text="TizenTpkFiles : %(TizenTpkFiles.Identity)" Importance="high"/>
-
   </Target>
 
   <!--
@@ -384,7 +309,6 @@ Copyright (c) Samsung All rights reserved.
   ===========================================================================
   -->
   <Target Name="TizenComputeTpkPackageFiles" DependsOnTargets="ClearReferenceCopyLocalPaths;TizenComputeTpkAssemblyFiles;TizenComputeTpkResourceFiles">
-
     <ItemGroup>
       <!-- Add AssemblyFiles -->
       <TizenResolvedFileToTpk Include="@(TizenTpkAssemblyFiles)" KeepMetadata="$(TpkKeepMeta)">
@@ -395,7 +319,6 @@ Copyright (c) Samsung All rights reserved.
         <TizenTpkSubPath>%(TizenTpkFiles.TizenTpkSubDir)%(TizenTpkFiles.TizenTpkFileName)</TizenTpkSubPath>
       </TizenResolvedFileToTpk>
     </ItemGroup>
-
     <Message Text='Added "%(TizenResolvedFileToTpk.Identity)" to TPK' Condition ="'@(TizenResolvedFileToTpk)' != '' "/>
   </Target>
 
@@ -408,12 +331,10 @@ Copyright (c) Samsung All rights reserved.
     <PropertyGroup>
       <TizenExcludeItemList>;@(TizenTpkUserExcludeFiles);</TizenExcludeItemList>
     </PropertyGroup>
-
     <ItemGroup>
       <TizenResolvedFileToRemove Include="@(TizenResolvedFileToTpk)" Condition=" $(TizenExcludeItemList.Contains('%(TizenResolvedFileToTpk.Filename)%(TizenResolvedFileToTpk.Extension)'))" />
       <TizenResolvedFileToTpk Remove="@(TizenResolvedFileToRemove)" />
     </ItemGroup>
-
     <Message Text='Excluded "%(TizenResolvedFileToRemove.Identity)" from TPK' Condition ="'@(TizenResolvedFileToRemove)' != '' "/>
   </Target>
 
@@ -423,24 +344,17 @@ Copyright (c) Samsung All rights reserved.
   ===========================================================================
   -->
   <Target Name="TizenExcludeTpkFilesWithPattern">
-
-    <FindPatternInList Condition="'$(TizenTpkExcludePattern)' != ''"
-                       List="@(TizenResolvedFileToTpk)"
-                       Patterns="$(TizenTpkExcludePattern)">
+    <FindPatternInList Condition="'$(TizenTpkExcludePattern)' != ''" List="@(TizenResolvedFileToTpk)" Patterns="$(TizenTpkExcludePattern)">
       <Output TaskParameter="MatchList" ItemName="TizenExcludeList" />
     </FindPatternInList>
-
     <FindPatternInList Condition="'$(TizenTpkExcludePattern)' != '' and '$(TizenTpkNotExcludePattern)' != ''"
-                       List="@(TizenExcludeList)"
-                       Patterns="$(TizenTpkNotExcludePattern)">
+                       List="@(TizenExcludeList)" Patterns="$(TizenTpkNotExcludePattern)">
       <Output TaskParameter="MatchList" ItemName="TizenNotExcludeList" />
     </FindPatternInList>
-
     <ItemGroup>
       <TizenExcludeList Remove="@(TizenNotExcludeList)"/>
       <TizenResolvedFileToTpk Remove="@(TizenExcludeList)" />
     </ItemGroup>
-
     <Message Text='Excluded "%(TizenExcludeList.Identity)" from TPK (by pattern)' Condition ="'@(TizenExcludeList)' != '' "/>
   </Target>
 
@@ -450,9 +364,7 @@ Copyright (c) Samsung All rights reserved.
   ===========================================================================
   -->
   <Target Name="TizenResolveTpkPackageFiles"
-          DependsOnTargets="TizenComputeTpkPackageFiles;
-                            TizenExcludeTpkFilesWithUserExclude;
-                            TizenExcludeTpkFilesWithPattern">
+          DependsOnTargets="TizenComputeTpkPackageFiles;TizenExcludeTpkFilesWithUserExclude;TizenExcludeTpkFilesWithPattern">
     <Message Text='From : "%(TizenResolvedFileToTpk.Identity)"&#xA;  To : "%(TizenResolvedFileToTpk.TizenTpkSubPath)"'
              Condition ="'@(TizenResolvedFileToTpk)' != '' "/>
   </Target>
@@ -464,9 +376,10 @@ Copyright (c) Samsung All rights reserved.
   -->
 
   <Target Name="_RemoveUnusedRuntimeAssets" AfterTargets="TizenResolveTpkPackageFiles">
-	<ItemGroup>
-		<TizenResolvedFileToTpk Remove="@(TizenResolvedFileToTpk)" Condition="$([System.String]::Copy('%(TizenTpkSubPath)').StartsWith('bin\runtimes\win')) Or $([System.String]::Copy('%(TizenTpkSubPath)').StartsWith('bin\runtimes\osx'))" />
-	</ItemGroup>
+    <ItemGroup>
+      <TizenResolvedFileToTpk Remove="@(TizenResolvedFileToTpk)"
+                              Condition="$([System.String]::Copy('%(TizenTpkSubPath)').StartsWith('bin\runtimes\win')) Or $([System.String]::Copy('%(TizenTpkSubPath)').StartsWith('bin\runtimes\osx'))" />
+    </ItemGroup>
   </Target>
 
   <!--
@@ -474,27 +387,20 @@ Copyright (c) Samsung All rights reserved.
   TizenIncrementalClean
   ===========================================================================
   -->
-  <Target Name="TizenIncrementalClean"
-          AfterTargets="IncrementalClean"
-          DependsOnTargets="_TizenResolveTpkPackageName;
-                            TizenResolveTpkPackageFiles">
-
+  <Target Name="TizenIncrementalClean" AfterTargets="IncrementalClean"
+          DependsOnTargets="_TizenResolveTpkPackageName;TizenResolveTpkPackageFiles">
     <ReadLinesFromFile File="$(IntermediateOutputPath)Tizen$(CleanFile)">
       <Output TaskParameter="Lines" ItemName="_TizenCleanUnfilteredPriorFileWrites" />
     </ReadLinesFromFile>
-
     <RemoveDuplicates Inputs="@(_TizenCleanUnfilteredPriorFileWrites)">
       <Output TaskParameter="Filtered" ItemName="_TizenCleanUnfilteredPriorFileWritesNoDup" />
     </RemoveDuplicates>
-
-    <ConvertToAbsolutePath Paths="@(TizenResolvedFileToTpk->'$(TizenPackageDir)\%(TizenTpkSubPath)')">
+    <ConvertToAbsolutePath Paths="@(TizenResolvedFileToTpk->'$(TizenPackageOutputPath)%(TizenTpkSubPath)')">
       <Output TaskParameter="AbsolutePaths" ItemName="_ResolveTizenResolvedFilekFileWritesAbs" />
     </ConvertToAbsolutePath>
-
     <ConvertToAbsolutePath Paths="$(SignedTpkFile)">
       <Output TaskParameter="AbsolutePaths" ItemName="_ResolveTizenResolvedFilekFileWritesAbs" />
     </ConvertToAbsolutePath>
-
     <ItemGroup>
       <_TizenCleanPriorFileWrites Include="@(_TizenCleanUnfilteredPriorFileWritesNoDup)" Exclude="@(_ResolveTizenResolvedFilekFileWritesAbs)" />
     </ItemGroup>
@@ -504,12 +410,10 @@ Copyright (c) Samsung All rights reserved.
             TreatErrorsAsWarnings="true"
             Condition="'@(_TizenCleanPriorFileWrites->Count())' &gt; 0">
     </Delete>
-
     <Delete Files="@(_TizenCleanPriorFileWrites)"
             TreatErrorsAsWarnings="true">
       <Output TaskParameter="DeletedFiles" ItemName="__TizenCleanPriorFileWritesDeleted" />
     </Delete>
-
     <WriteLinesToFile File="$(IntermediateOutputPath)Tizen$(CleanFile)"
                       Lines="@(_ResolveTizenResolvedFilekFileWritesAbs)"
                       Overwrite="true" />
@@ -521,14 +425,13 @@ Copyright (c) Samsung All rights reserved.
   ===========================================================================
   -->
   <Target Name="TizenCreateTpkDirectoryStructure">
-    <MakeDir Directories = "$(TizenPackageDir)" Condition = "!Exists('$(TizenPackageDir)')" />
-    <MakeDir Directories = "$(TizenPackageDir)\$(TizenPackageBinDirNameDefault)" Condition = "!Exists('$(TizenPackageDir)\$(TizenPackageBinDirNameDefault)')" />
-    <MakeDir Directories = "$(TizenPackageDir)\$(TizenPackageResDirNameDefault)" Condition = "!Exists('$(TizenPackageDir)\$(TizenPackageResDirNameDefault)')" />
-    <MakeDir Directories = "$(TizenPackageDir)\$(TizenPackageLibDirNameDefault)" Condition = "!Exists('$(TizenPackageDir)\$(TizenPackageLibDirNameDefault)')" />
-    <MakeDir Directories = "$(TizenPackageDir)\$(TizenPackageSharedDirNameDefault)" Condition = "!Exists('$(TizenPackageDir)\$(TizenPackageSharedDirNameDefault)')" />
-    <MakeDir Directories = "$(TizenPackageDir)\$(TizenPackageSharedResDirNameDefault)" Condition = "!Exists('$(TizenPackageDir)\$(TizenPackageSharedResDirNameDefault)')" />
+    <MakeDir Directories = "$(TizenPackageOutputPath)" Condition = "!Exists('$(TizenPackageOutputPath)')" />
+    <MakeDir Directories = "$(TizenPackageOutputPath)bin" Condition = "!Exists('$(TizenPackageOutputPath)bin')" />
+    <MakeDir Directories = "$(TizenPackageOutputPath)lib" Condition = "!Exists('$(TizenPackageOutputPath)lib')" />
+    <MakeDir Directories = "$(TizenPackageOutputPath)res" Condition = "!Exists('$(TizenPackageOutputPath)res')" />
+    <MakeDir Directories = "$(TizenPackageOutputPath)shared" Condition = "!Exists('$(TizenPackageOutputPath)shared')" />
+    <MakeDir Directories = "$(TizenPackageOutputPath)shared\res" Condition = "!Exists('$(TizenPackageOutputPath)shared\res')" />
   </Target>
-
 
   <!--
   ===========================================================================
@@ -536,12 +439,10 @@ Copyright (c) Samsung All rights reserved.
   ===========================================================================
   -->
   <Target Name="TizenResourceXmlWriter" AfterTargets="TizenPackage">
-
     <!-- If project is Tizen Project, create res.xml -->
     <ResourceXmlWriter
                    ProjectFullName="$(MSBuildProjectDirectory)"
                    LangCountryListXmlPath="$(MSBuildThisFileDirectory)..\tools\" />
-
   </Target>
 
   <!--
@@ -550,7 +451,6 @@ Copyright (c) Samsung All rights reserved.
   ===========================================================================
   -->
   <Target Name="TizenManifestMergeAndCopy">
-
     <ItemGroup>
       <BaseManifest Include="@(TizenResolvedFileToTpk)"
                     Condition="'%(TizenResolvedFileToTpk.TizenTpkIsManifest)' == 'true' and '%(TizenResolvedFileToTpk.TizenTpkIsBaseManifest)' == 'true'"/>
@@ -563,17 +463,16 @@ Copyright (c) Samsung All rights reserved.
     <MergeManifest Condition="@(SubManifest->Count()) > 0"
                    MainManifestFile="%(BaseManifest.Identity)"
                    SubManifestFileList="@(SubManifest)"
-                   ResultManifestFile="$(TizenPackageDir)\tizen-manifest.xml"/>
+                   ResultManifestFile="$(TizenPackageOutputPath)tizen-manifest.xml"/>
 
     <!-- If manifest file count is only one, copy manifest -->
     <Copy SourceFiles="@(TizenResolvedFileToTpk)"
-          DestinationFiles="@(TizenResolvedFileToTpk->'$(TizenPackageDir)\tizen-manifest.xml')"
+          DestinationFiles="@(TizenResolvedFileToTpk->'$(TizenPackageOutputPath)tizen-manifest.xml')"
           Condition="@(SubManifest->Count()) == 0 and '%(TizenResolvedFileToTpk.TizenTpkIsManifest)' == 'true' "
           OverwriteReadOnlyFiles="true"
           Retries="10">
       <Output TaskParameter="DestinationFiles" ItemName="TpkFileWrites" />
     </Copy>
-
   </Target>
 
   <!--
@@ -581,7 +480,7 @@ Copyright (c) Samsung All rights reserved.
   _TizenPrepareTpkPackage
 
   1. Publish Assembly to PublishDir
-  2. Copy bin/res/lib/shared resource to TizenPackageDir (Default : tpkroot)
+  2. Copy bin/res/lib/shared resource to TizenPackageOutputPath (Default : tpkroot)
   3. Remove tpk files
   ===========================================================================
   -->
@@ -591,10 +490,9 @@ Copyright (c) Samsung All rights reserved.
                             TizenCreateTpkDirectoryStructure;
                             TizenManifestMergeAndCopy"
           Inputs="@(TizenResolvedFileToTpk)"
-          Outputs="@(TizenResolvedFileToTpk->'$(TizenPackageDir)\%(TizenTpkSubPath)')">
-
+          Outputs="@(TizenResolvedFileToTpk->'$(TizenPackageOutputPath)%(TizenTpkSubPath)')">
     <Copy SourceFiles="@(TizenResolvedFileToTpk)"
-          DestinationFiles="@(TizenResolvedFileToTpk->'$(TizenPackageDir)\%(TizenTpkSubPath)')"
+          DestinationFiles="@(TizenResolvedFileToTpk->'$(TizenPackageOutputPath)%(TizenTpkSubPath)')"
           Condition="'%(TizenResolvedFileToTpk.TizenTpkIsManifest)' != 'true' "
           OverwriteReadOnlyFiles="true"
           Retries="10">
@@ -616,7 +514,7 @@ Copyright (c) Samsung All rights reserved.
                             _TizenPrepareTpkPackage;
                             TizenPrepareCertificate;
                             TizenCheckCertificateChanged"
-          Inputs="@(TizenResolvedFileToTpk->'$(TizenPackageDir)\%(TizenTpkSubPath)');$(IntermediateOutputPath)TizenAuthorTimeStamp;$(IntermediateOutputPath)TizenDistributorTimeStamp"
+          Inputs="@(TizenResolvedFileToTpk->'$(TizenPackageOutputPath)%(TizenTpkSubPath)');$(IntermediateOutputPath)TizenAuthorTimeStamp;$(IntermediateOutputPath)TizenDistributorTimeStamp"
           Outputs="$(SignedTpkFile)"
           Condition="'$(WebProject)' != 'true'">
 
@@ -625,7 +523,7 @@ Copyright (c) Samsung All rights reserved.
     <Error Condition="!Exists('$(AuthorPath)') OR !Exists('$(DistributorPath)')"
            Text="Invalid Tpk Signing resource ... Please check the Properties &#60;AuthorPath&#62; &#61; $(AuthorPath), &#60;DistributorPath&#62; &#61; $(DistributorPath)"/>
 
-    <Sign RootDir="$(TizenPackageDir)"
+    <Sign RootDir="$(TizenPackageOutputPath)"
           AuthorFile="$(AuthorPath)"
           AuthorPassword="$(AuthorPass)"
           DistFile="$(DistributorPath)"
@@ -713,8 +611,6 @@ Copyright (c) Samsung All rights reserved.
   ===========================================================================
   -->
   <Target Name="TizenCheckCertificateChanged">
-
-
     <!-- Check the Author Certificate Info changed & Save Info -->
     <ReadLinesFromFile File="$(IntermediateOutputPath)TizenAuthorTimeStamp">
       <Output TaskParameter="Lines" ItemName="SignedAuthorHash" />
