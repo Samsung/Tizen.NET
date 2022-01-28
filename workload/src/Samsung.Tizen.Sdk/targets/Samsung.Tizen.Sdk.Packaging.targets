@@ -308,7 +308,7 @@ Copyright (c) Samsung All rights reserved.
   TizenComputeTpkPackageFiles
   ===========================================================================
   -->
-  <Target Name="TizenComputeTpkPackageFiles" DependsOnTargets="ClearReferenceCopyLocalPaths;TizenComputeTpkAssemblyFiles;TizenComputeTpkResourceFiles">
+  <Target Name="TizenComputeTpkPackageFiles" DependsOnTargets="ClearReferenceCopyLocalPaths;_TizenGenerateResourceXmlFile;TizenComputeTpkAssemblyFiles;TizenComputeTpkResourceFiles">
     <ItemGroup>
       <!-- Add AssemblyFiles -->
       <TizenResolvedFileToTpk Include="@(TizenTpkAssemblyFiles)" KeepMetadata="$(TpkKeepMeta)">
@@ -324,39 +324,41 @@ Copyright (c) Samsung All rights reserved.
 
   <!--
   ===========================================================================
-  TizenExcludeTpkFilesWithUserExclude
+  _TizenExcludeTpkFiles
   ===========================================================================
   -->
-  <Target Name="TizenExcludeTpkFilesWithUserExclude" >
+  <Target Name="_TizenExcludeTpkFiles">
+    <!-- Exclude TizenTpkUserExcludeFiles -->
     <PropertyGroup>
-      <TizenExcludeItemList>;@(TizenTpkUserExcludeFiles);</TizenExcludeItemList>
+      <_TizenTpkUserExcludeFiles>;@(TizenTpkUserExcludeFiles);</_TizenTpkUserExcludeFiles>
     </PropertyGroup>
     <ItemGroup>
-      <TizenResolvedFileToRemove Include="@(TizenResolvedFileToTpk)" Condition=" $(TizenExcludeItemList.Contains('%(TizenResolvedFileToTpk.Filename)%(TizenResolvedFileToTpk.Extension)'))" />
-      <TizenResolvedFileToTpk Remove="@(TizenResolvedFileToRemove)" />
+      <_TizenTpkUserExcludeFilesToRemove Include="@(TizenResolvedFileToTpk)" Condition=" $(_TizenTpkUserExcludeFiles.Contains('%(TizenResolvedFileToTpk.Filename)%(TizenResolvedFileToTpk.Extension)'))" />
+      <TizenResolvedFileToTpk Remove="@(_TizenTpkUserExcludeFilesToRemove)" />
     </ItemGroup>
-    <Message Text='Excluded "%(TizenResolvedFileToRemove.Identity)" from TPK' Condition ="'@(TizenResolvedFileToRemove)' != '' "/>
-  </Target>
 
-  <!--
-  ===========================================================================
-  TizenExcludeTpkFilesWithPattern
-  ===========================================================================
-  -->
-  <Target Name="TizenExcludeTpkFilesWithPattern">
+    <!-- Exclude TizenTpkExcludePattern -->
     <FindPatternInList Condition="'$(TizenTpkExcludePattern)' != ''" List="@(TizenResolvedFileToTpk)" Patterns="$(TizenTpkExcludePattern)">
-      <Output TaskParameter="MatchList" ItemName="TizenExcludeList" />
+      <Output TaskParameter="MatchList" ItemName="_TizenTpkPatternExcludeFilesToRemove" />
     </FindPatternInList>
     <FindPatternInList Condition="'$(TizenTpkExcludePattern)' != '' and '$(TizenTpkNotExcludePattern)' != ''"
-                       List="@(TizenExcludeList)" Patterns="$(TizenTpkNotExcludePattern)">
-      <Output TaskParameter="MatchList" ItemName="TizenNotExcludeList" />
+                       List="@(_TizenTpkPatternExcludeFilesToRemove)" Patterns="$(TizenTpkNotExcludePattern)">
+      <Output TaskParameter="MatchList" ItemName="_TizenTpkPatternExcludeFilesToKeep" />
     </FindPatternInList>
     <ItemGroup>
-      <TizenExcludeList Remove="@(TizenNotExcludeList)"/>
-      <TizenResolvedFileToTpk Remove="@(TizenExcludeList)" />
+      <_TizenTpkPatternExcludeFilesToRemove Remove="@(_TizenTpkPatternExcludeFilesToKeep)"/>
+      <TizenResolvedFileToTpk Remove="@(_TizenTpkPatternExcludeFilesToRemove)" />
     </ItemGroup>
-    <Message Text='Excluded "%(TizenExcludeList.Identity)" from TPK (by pattern)' Condition ="'@(TizenExcludeList)' != '' "/>
+
+    <!-- Exclude Unused Runtime Assets -->
+    <ItemGroup>
+      <TizenResolvedFileToTpk Remove="@(TizenResolvedFileToTpk)"
+                              Condition="$([System.String]::Copy('%(TizenTpkSubPath)').StartsWith('bin\runtimes\win'))" />
+      <TizenResolvedFileToTpk Remove="@(TizenResolvedFileToTpk)"
+                              Condition="$([System.String]::Copy('%(TizenTpkSubPath)').StartsWith('bin\runtimes\osx'))" />
+    </ItemGroup>
   </Target>
+
 
   <!--
   ===========================================================================
@@ -364,22 +366,9 @@ Copyright (c) Samsung All rights reserved.
   ===========================================================================
   -->
   <Target Name="TizenResolveTpkPackageFiles"
-          DependsOnTargets="TizenComputeTpkPackageFiles;TizenExcludeTpkFilesWithUserExclude;TizenExcludeTpkFilesWithPattern">
+          DependsOnTargets="TizenComputeTpkPackageFiles;_TizenExcludeTpkFiles">
     <Message Text='From : "%(TizenResolvedFileToTpk.Identity)"&#xA;  To : "%(TizenResolvedFileToTpk.TizenTpkSubPath)"'
              Condition ="'@(TizenResolvedFileToTpk)' != '' "/>
-  </Target>
-
-  <!--
-  ===========================================================================
-  _RemoveUnusedRuntimeAssets
-  ===========================================================================
-  -->
-
-  <Target Name="_RemoveUnusedRuntimeAssets" AfterTargets="TizenResolveTpkPackageFiles">
-    <ItemGroup>
-      <TizenResolvedFileToTpk Remove="@(TizenResolvedFileToTpk)"
-                              Condition="$([System.String]::Copy('%(TizenTpkSubPath)').StartsWith('bin\runtimes\win')) Or $([System.String]::Copy('%(TizenTpkSubPath)').StartsWith('bin\runtimes\osx'))" />
-    </ItemGroup>
   </Target>
 
   <!--
@@ -435,14 +424,18 @@ Copyright (c) Samsung All rights reserved.
 
   <!--
   ===========================================================================
-  TizenResourceXmlWriter
+  _TizenGenerateResourceXmlFile
   ===========================================================================
   -->
-  <Target Name="TizenResourceXmlWriter" AfterTargets="TizenPackage">
-    <!-- If project is Tizen Project, create res.xml -->
+  <Target Name="_TizenGenerateResourceXmlFile">
     <ResourceXmlWriter
                    ProjectFullName="$(MSBuildProjectDirectory)"
-                   LangCountryListXmlPath="$(MSBuildThisFileDirectory)..\tools\" />
+                   LangCountryListXmlPath="$(MSBuildThisFileDirectory)..\tools\">
+      <Output TaskParameter="ResourceXmlPath" PropertyName="_TizenResourceXmlPath" />
+    </ResourceXmlWriter>
+    <ItemGroup>
+      <TizenResource Include="$(_TizenResourceXmlPath)" />
+    </ItemGroup>
   </Target>
 
   <!--
