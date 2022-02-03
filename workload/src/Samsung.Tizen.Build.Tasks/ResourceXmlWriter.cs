@@ -12,9 +12,9 @@ namespace Samsung.Tizen.Build.Tasks
 {
     public class ResourceXmlWriter : Task
     {
-        public static readonly string STR_res = "res";
-        public static readonly string STR_contents = "contents";
-        public static readonly string STR_folder = "folder";
+        private const string STR_RES = "res";
+        private const string STR_CONTENTS = "contents";
+        private const string STR_FOLDER = "folder";
         private static Dictionary<string, string> langMap;
         private static Dictionary<string, bool> dpiMap;
 
@@ -34,6 +34,8 @@ namespace Samsung.Tizen.Build.Tasks
         [Required]
         public string LangCountryListXmlPath { get; set; }
 
+        [Output]
+        public string ResourceXmlPath { get; private set; }
 
         private bool IsValidLanguageID(string langId)
         {
@@ -76,91 +78,98 @@ namespace Samsung.Tizen.Build.Tasks
             }
         }
 
+        private Tuple<string, string> ParseLanguageAndResolution(string name)
+        {
+            Tuple<string, string> result = new Tuple<string, string>("default_All", "All");
+
+            if (name.Contains("-"))
+            {
+                string[] nameSplit = name.Split('-');
+                if (IsValidLanguageID(nameSplit[0]) && IsValidResolution(nameSplit[1]))
+                {
+                    result = new Tuple<string, string>(nameSplit[0], nameSplit[1]);
+                }
+                else
+                {
+                    Log.LogWarning("Invalid language or resolution. {0}", name);
+                }
+            }
+            else
+            {
+                if (IsValidLanguageID(name))
+                {
+                    result = new Tuple<string, string>(name, "All");
+                }
+                else if (IsValidResolution(name))
+                {
+                    result = new Tuple<string, string>("default_All", name);
+                }
+            }
+            return result;
+        }
+
         public override bool Execute()
         {
-
-            string resFolderPath = ProjectFullName + "\\res\\";
             XmlDocument doc = new XmlDocument();
             XmlNode docNode = doc.CreateXmlDeclaration("1.0", "UTF-8", "yes");
             doc.AppendChild(docNode);
 
-            XmlNode rootNode = doc.CreateElement(STR_res, "http://tizen.org/ns/rm");
+            XmlNode rootNode = doc.CreateElement(STR_RES, "http://tizen.org/ns/rm");
             doc.AppendChild(rootNode);
 
             XmlElement groupImageNode = doc.CreateElement("group-image", "http://tizen.org/ns/rm");
-            groupImageNode.SetAttribute(STR_folder, STR_contents);
+            groupImageNode.SetAttribute(STR_FOLDER, STR_CONTENTS);
             rootNode.AppendChild(groupImageNode);
 
             XmlElement groupLayoutNode = doc.CreateElement("group-layout", "http://tizen.org/ns/rm");
-            groupLayoutNode.SetAttribute(STR_folder, STR_contents);
+            groupLayoutNode.SetAttribute(STR_FOLDER, STR_CONTENTS);
             rootNode.AppendChild(groupLayoutNode);
 
             XmlElement groupSoundNode = doc.CreateElement("group-sound", "http://tizen.org/ns/rm");
-            groupSoundNode.SetAttribute(STR_folder, STR_contents);
+            groupSoundNode.SetAttribute(STR_FOLDER, STR_CONTENTS);
             rootNode.AppendChild(groupSoundNode);
 
             XmlElement groupBinNode = doc.CreateElement("group-bin", "http://tizen.org/ns/rm");
-            groupBinNode.SetAttribute(STR_folder, STR_contents);
+            groupBinNode.SetAttribute(STR_FOLDER, STR_CONTENTS);
             rootNode.AppendChild(groupBinNode);
 
-            DirectoryInfo di = new DirectoryInfo(@resFolderPath + STR_contents);
-            if (!di.Exists)
+            DirectoryInfo contentsDir = new DirectoryInfo(Path.Combine(ProjectFullName, STR_RES, STR_CONTENTS));
+            if (!contentsDir.Exists)
             {
+                Log.LogMessage("No resource contents directory.");
                 return true;
             }
-            foreach (XmlNode groupNode in doc.DocumentElement.ChildNodes)
-            {
-                foreach (var fi in di.GetDirectories())
-                {
-                    String languageID = null;
-                    String resolutionRange = null;
-                    String folderPath = null;
 
-                    String fileName = fi.Name;
-                    folderPath = "contents/" + fileName;
-                    if (fileName.Contains("-"))
-                    {
-                        String[] names = fileName.Split('-');
-                        names[0] = names[0];
-                        if (IsValidLanguageID(names[0]))
-                        {
-                            languageID = names[0].Equals("default_All") ? "All" : names[0];
-                        }
-                        if (IsValidResolution(names[1]))
-                        {
-                            resolutionRange = GetResolution(names[1]);
-                        }
-                    }
-                    if (languageID == null || resolutionRange == null)
-                    {
-                        continue;
-                    }
-                    else
+            foreach (var dir in contentsDir.GetDirectories())
+            {
+                var nameParts = ParseLanguageAndResolution(dir.Name);
+                if (!nameParts.Item1.Equals("default_All") || !nameParts.Item2.Equals("All"))
+                {
+                    foreach (XmlNode groupNode in doc.DocumentElement.ChildNodes)
                     {
                         XmlElement node = doc.CreateElement("node", "http://tizen.org/ns/rm");
-                        XmlAttribute folder = doc.CreateAttribute(STR_folder);
-                        folder.Value = folderPath;
+                        XmlAttribute folder = doc.CreateAttribute(STR_FOLDER);
+                        folder.Value = "contents/" + dir.Name;
                         node.Attributes.Append(folder);
-                        if (resolutionRange.Length != 0)
-                        {
-                            XmlAttribute screen_dpi_range = doc.CreateAttribute("screen-dpi-range");
-                            screen_dpi_range.Value = resolutionRange;
-                            node.Attributes.Append(screen_dpi_range);
-                        }
-                        // Language attribute is not emitted when ALL language is selected
-                        if (!languageID.Equals("All"))
+                        if (!nameParts.Item1.Equals("default_All"))
                         {
                             XmlAttribute language = doc.CreateAttribute("language");
-                            language.Value = languageID;
+                            language.Value = nameParts.Item1;
                             node.Attributes.Append(language);
                         }
-
+                        if (!nameParts.Item2.Equals("All"))
+                        {
+                            XmlAttribute resolution = doc.CreateAttribute("screen-dpi-range");
+                            resolution.Value = GetResolution(nameParts.Item2);
+                            node.Attributes.Append(resolution);
+                        }
                         groupNode.AppendChild(node);
                     }
                 }
             }
 
-            using (var file = File.Open(@resFolderPath + "res.xml", FileMode.Create, FileAccess.Write))
+            ResourceXmlPath = Path.Combine(STR_RES, "res.xml");
+            using (var file = File.Open(Path.Combine(ProjectFullName, ResourceXmlPath), FileMode.Create, FileAccess.Write))
             {
                 doc.Save(file);
             }
