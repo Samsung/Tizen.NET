@@ -17,7 +17,7 @@ Copyright (c) Samsung All rights reserved.
   </PropertyGroup>
 
   <Import Project="Samsung.Tizen.Sdk.Common.targets" />
-  <Import Project="Samsung.Tizen.Sdk.NuGet.targets" />
+  <Import Project="Samsung.Tizen.Sdk.NuGet.targets" Condition=" '$(MSBuildRuntimeType)' == 'Full' and '$(MSBuildVersion)' &lt; '17.0' " />
   <Import Project="Samsung.Tizen.Sdk.Packaging.targets" />
   <Import Project="Samsung.Tizen.Sdk.Applications.targets" Condition="'$(OutputType)'=='Exe'" />
   <Import Project="Samsung.Tizen.Sdk.VisualStudio.targets" />
