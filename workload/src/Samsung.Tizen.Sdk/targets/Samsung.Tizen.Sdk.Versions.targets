@@ -26,6 +26,16 @@ Copyright (c) Samsung All rights reserved.
   </ItemGroup>
 
   <ItemGroup>
+    <ApiVersionList Include="v4.0" Value="4.0"/>
+    <ApiVersionList Include="v5.0" Value="5.0"/>
+    <ApiVersionList Include="v6.0" Value="5.0"/>
+    <ApiVersionList Include="v7.0" Value="5.5"/>
+    <ApiVersionList Include="v8.0" Value="6.0"/>
+    <ApiVersionList Include="v9.0" Value="6.5"/>
+    <ApiVersionList Include="v10.0" Value="7.0"/>
+  </ItemGroup>
+
+  <ItemGroup>
     <TizenSdkSupportedTargetPlatformVersion Include="6.5" />
     <TizenSdkSupportedTargetPlatformVersion Include="7.0" />
   </ItemGroup>

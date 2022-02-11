@@ -81,7 +81,6 @@ namespace Samsung.Tizen.Build.Tasks
                 item.SetMetadata("Type", app.Name.LocalName);
                 _applicatonList.Add(item);
             }
-
             return true;
         }
     }
