@@ -22,6 +22,9 @@ namespace Samsung.Tizen.Build.Tasks
         public string PackageVersion { get; private set; }
 
         [Output]
+        public string ApiVersion { get; private set; }
+
+        [Output]
         public ITaskItem FirstApplication => _applicatonList.Any() ? _applicatonList[0] : null;
 
         [Output]
@@ -44,6 +47,13 @@ namespace Samsung.Tizen.Build.Tasks
 
             PackageName = doc.Element(ns + "manifest")?.Attribute("package")?.Value;
             PackageVersion = doc.Element(ns + "manifest")?.Attribute("version")?.Value;
+            ApiVersion = doc.Element(ns + "manifest")?.Attribute("api-version")?.Value;
+
+            if (string.IsNullOrEmpty(ApiVersion))
+            {
+                Log.LogError("ApiVersion is Invalid.");
+                return false;
+            }
 
             if (string.IsNullOrEmpty(PackageName))
             {
