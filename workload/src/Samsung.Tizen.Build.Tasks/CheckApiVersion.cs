@@ -19,7 +19,7 @@ namespace Samsung.Tizen.Build.Tasks
         public string ManifestApiVersion { get; set; }
 
         [Required]
-        public string TargetFrameWork { get; set; }
+        public string TargetFrameWorkIdentifier { get; set; }
 
         [Required]
         public string TargetFrameworkVersion { get; set; }
@@ -28,7 +28,7 @@ namespace Samsung.Tizen.Build.Tasks
         public string TargetPlatformVersion { get; set; }
 
         [Required]
-        public ITaskItem[] ApiVersionList { get; set; }
+        public ITaskItem[] SupportedAPILevelList { get; set; }
 
         string ApiVersion { get; set; }
 
@@ -40,7 +40,7 @@ namespace Samsung.Tizen.Build.Tasks
                 return false;
             }
 
-            if (TargetFrameWork.StartsWith("tizen"))
+            if (TargetFrameWorkIdentifier.StartsWith("tizen"))
             {
                 //net5.0 tfm, get api version from tpv
                 if (string.IsNullOrEmpty(TargetFrameworkVersion))
@@ -50,16 +50,16 @@ namespace Samsung.Tizen.Build.Tasks
                 }
 
                 //convert tfv to api version
-                foreach(var item in ApiVersionList)
+                foreach(var item in SupportedAPILevelList)
                 {
                     if (Regex.IsMatch(item.ItemSpec, TargetFrameworkVersion))
                     {
-                        ApiVersion = item.GetMetadata("Value");
+                        ApiVersion = item.GetMetadata("MappedAPIVersion");
                         break;
                     }
                 }
             }
-            else if (TargetFrameWork.StartsWith("net6.0-tizen"))
+            else if (TargetFrameWorkIdentifier.StartsWith("net6.0-tizen"))
             {
                 //net6.0 tfm, get api version from tpv
                 if (string.IsNullOrEmpty(TargetPlatformVersion))

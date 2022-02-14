@@ -160,10 +160,10 @@ Copyright (c) Samsung All rights reserved.
   <Target Name="_CheckApiVersion" DependsOnTargets="_TizenGetTpkInfoFromManifest">
     <CheckApiVersion
       ManifestApiVersion="$(TizenApiVersion)"
-      TargetFramework="$(TargetFramework)"
+      TargetFrameworkIdentifier="$(TargetFramework)"
       TargetFrameworkVersion = "$(TargetFrameworkVersion)"
       TargetPlatformVersion="$(TargetPlatformVersion)"
-      ApiVersionList="@(ApiVersionList)"
+      SupportedAPILevelList="@(SupportedAPILevel)"
       >
     </CheckApiVersion>
   </Target>
