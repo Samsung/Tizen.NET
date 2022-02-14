@@ -54,8 +54,8 @@ Copyright (c) Samsung All rights reserved.
   <PropertyGroup>
     <TizenPackageDependsOn>
       TizenResolveTpkPackageFiles;
-      _CheckApiVersion;
       TizenPrePackageEvent;
+      _CheckApiVersion;
       _TizenPrepareTpkPackage;
       _TizenTpkSign;
       TizenPostPackageEvent;
@@ -160,8 +160,9 @@ Copyright (c) Samsung All rights reserved.
   <Target Name="_CheckApiVersion" DependsOnTargets="_TizenGetTpkInfoFromManifest">
     <CheckApiVersion
       ManifestApiVersion="$(TizenApiVersion)"
-      TargetFrameworkIdentifier="$(TargetFramework)"
-      TargetFrameworkVersion = "$(TargetFrameworkVersion)"
+      TargetFrameworkIdentifier="$(TargetFrameworkIdentifier)"
+      TargetPlatformIdentifier="$(TargetPlatformIdentifier)"
+      TargetFrameworkVersion="$(TargetFrameworkVersion)"
       TargetPlatformVersion="$(TargetPlatformVersion)"
       SupportedAPILevelList="@(SupportedAPILevel)"
       >

@@ -22,6 +22,9 @@ namespace Samsung.Tizen.Build.Tasks
         public string TargetFrameWorkIdentifier { get; set; }
 
         [Required]
+        public string TargetPlatformIdentifier { get; set; }
+
+        [Required]
         public string TargetFrameworkVersion { get; set; }
 
         [Required]
@@ -40,7 +43,7 @@ namespace Samsung.Tizen.Build.Tasks
                 return false;
             }
 
-            if (TargetFrameWorkIdentifier.StartsWith("tizen"))
+            if (TargetFrameWorkIdentifier == "tizen")
             {
                 //net5.0 tfm, get api version from tpv
                 if (string.IsNullOrEmpty(TargetFrameworkVersion))
@@ -59,7 +62,7 @@ namespace Samsung.Tizen.Build.Tasks
                     }
                 }
             }
-            else if (TargetFrameWorkIdentifier.StartsWith("net6.0-tizen"))
+            else if (TargetFrameWorkIdentifier == ".NETCoreApp" && TargetPlatformIdentifier == "tizen")
             {
                 //net6.0 tfm, get api version from tpv
                 if (string.IsNullOrEmpty(TargetPlatformVersion))
