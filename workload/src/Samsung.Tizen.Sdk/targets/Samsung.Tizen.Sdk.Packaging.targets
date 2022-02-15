@@ -249,12 +249,8 @@ Copyright (c) Samsung All rights reserved.
       <_TizenProjectFiles Remove ="@(_TizenProjectFiles)" />
     </ItemGroup>
 
-    <PropertyGroup>
-      <EnableDefaultTpkItems Condition=" '$(EnableDefaultTpkItems)' == '' ">true</EnableDefaultTpkItems>
-    </PropertyGroup>
-
     <!-- Default Resource File Include from Project -->
-    <ItemGroup Condition=" '$(EnableDefaultTpkItems)' == 'true' ">
+    <ItemGroup>
       <DefaultTpkLibFiles Include="lib\**\*" Exclude="@(TizenTpkUserExcludeFiles)" />
       <DefaultTpkManifestFiles Include="$(TizenManifestFile)" />
 
