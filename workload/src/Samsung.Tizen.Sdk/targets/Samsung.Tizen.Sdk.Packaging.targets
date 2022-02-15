@@ -34,6 +34,10 @@ Copyright (c) Samsung All rights reserved.
   </ItemDefinitionGroup>
 
   <PropertyGroup>
+    <TizenManifestFile Condition="'$(TizenManifestFile)'==''">tizen-manifest.xml</TizenManifestFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <TpkKeepMeta>
       TizenTpkFileName;
       TizenTpkSubDir;
