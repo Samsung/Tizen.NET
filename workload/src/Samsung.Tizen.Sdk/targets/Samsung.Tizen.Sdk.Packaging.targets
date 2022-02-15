@@ -245,24 +245,35 @@ Copyright (c) Samsung All rights reserved.
       <_TizenProjectFiles Remove ="@(_TizenProjectFiles)" />
     </ItemGroup>
 
+    <PropertyGroup>
+      <EnableDefaultTpkItems Condition=" '$(EnableDefaultTpkItems)' == '' ">true</EnableDefaultTpkItems>
+    </PropertyGroup>
+
     <!-- Default Resource File Include from Project -->
-    <ItemGroup Condition=" '$(EnableDefaultTizenItems)' == 'true' ">
-      <TizenTpkFiles Include="@(TizenResource)" Condition="Exists('%(TizenResource.Identity)')">
-        <TizenTpkSubDir>res\%(TizenResource.RecursiveDir)</TizenTpkSubDir>
+    <ItemGroup Condition=" '$(EnableDefaultTpkItems)' == 'true' ">
+      <DefaultTpkLibFiles Include="lib\**\*" Exclude="@(TizenTpkUserExcludeFiles)" />
+      <DefaultTpkManifestFiles Include="$(TizenManifestFile)" />
+
+      <TizenTpkFiles Include="@(DefaultTpkLibFiles)" Condition="Exists('%(DefaultTpkLibFiles.Identity)')">
+        <TizenTpkSubDir>lib\%(DefaultTpkLibFiles.RecursiveDir)</TizenTpkSubDir>
         <TizenTpkFileName>%(Filename)%(Extension)</TizenTpkFileName>
       </TizenTpkFiles>
-      <TizenTpkFiles Include="@(TizenLibrary)" Condition="Exists('%(TizenLibrary.Identity)')">
-        <TizenTpkSubDir>lib\%(TizenLibrary.RecursiveDir)</TizenTpkSubDir>
+      <TizenTpkFiles Include="@(DefaultTpkManifestFiles)" Condition="Exists('%(DefaultTpkManifestFiles.Identity)')">
         <TizenTpkFileName>%(Filename)%(Extension)</TizenTpkFileName>
+        <TizenTpkIsManifest>true</TizenTpkIsManifest>
+        <TizenTpkIsBaseManifest>true</TizenTpkIsBaseManifest>
+      </TizenTpkFiles>
+    </ItemGroup>
+
+    <!-- Include Files -->
+    <ItemGroup>
+      <TizenTpkFiles Include="@(TizenResource)" Condition="Exists('%(TizenResource.Identity)')">
+        <TizenTpkSubDir>res\%(TizenResource.RecursiveDir)</TizenTpkSubDir>
+        <TizenTpkFileName Condition="'%(TizenResource.TizenTpkFileName)' == ''">%(Filename)%(Extension)</TizenTpkFileName>
       </TizenTpkFiles>
       <TizenTpkFiles Include="@(TizenSharedResource)" Condition="Exists('%(TizenSharedResource.Identity)')">
         <TizenTpkSubDir>shared\%(TizenSharedResource.RecursiveDir)</TizenTpkSubDir>
         <TizenTpkFileName>%(Filename)%(Extension)</TizenTpkFileName>
-      </TizenTpkFiles>
-      <TizenTpkFiles Include="$(TizenManifestFile)" Condition="Exists('$(TizenManifestFile)')">
-        <TizenTpkFileName>%(Filename)%(Extension)</TizenTpkFileName>
-        <TizenTpkIsManifest>true</TizenTpkIsManifest>
-        <TizenTpkIsBaseManifest>true</TizenTpkIsBaseManifest>
       </TizenTpkFiles>
       <TizenTpkFiles Include="@(TizenTpkUserIncludeFiles)" Exclude="@(TizenTpkUserExcludeFiles)">
         <TizenTpkSubDir Condition="'%(TizenTpkUserIncludeFiles.TizenTpkSubDir)' == ''">%(TizenTpkUserIncludeFiles.RelativeDir)</TizenTpkSubDir>
