@@ -19,7 +19,7 @@ namespace Samsung.Tizen.Build.Tasks
         public string ManifestApiVersion { get; set; }
 
         [Required]
-        public string TargetFrameWorkIdentifier { get; set; }
+        public string TargetFrameworkIdentifier { get; set; }
 
         [Required]
         public string TargetPlatformIdentifier { get; set; }
@@ -33,7 +33,7 @@ namespace Samsung.Tizen.Build.Tasks
         [Required]
         public ITaskItem[] SupportedAPILevelList { get; set; }
 
-        string ApiVersion { get; set; }
+        Version ApiVersion;
 
         public override bool Execute()
         {
@@ -43,7 +43,17 @@ namespace Samsung.Tizen.Build.Tasks
                 return false;
             }
 
-            if (TargetFrameWorkIdentifier == "tizen")
+            if (TargetFrameworkIdentifier == ".NETCoreApp" && TargetPlatformIdentifier == "tizen")
+            {
+                //net6.0 tfm, get api version from tpv
+                if (string.IsNullOrEmpty(TargetPlatformVersion.ToString()))
+                {
+                    Log.LogError("TargetPlatformVersion is Invalid {0}", TargetPlatformVersion);
+                    return false;
+                }
+                Version.TryParse(TargetPlatformVersion, out ApiVersion);
+            }
+            else
             {
                 //net5.0 tfm, get api version from tpv
                 if (string.IsNullOrEmpty(TargetFrameworkVersion))
@@ -53,27 +63,19 @@ namespace Samsung.Tizen.Build.Tasks
                 }
 
                 //convert tfv to api version
-                foreach(var item in SupportedAPILevelList)
+                foreach(ITaskItem item in SupportedAPILevelList)
                 {
                     if (Regex.IsMatch(item.ItemSpec, TargetFrameworkVersion))
                     {
-                        ApiVersion = item.GetMetadata("MappedAPIVersion");
+                        Version.TryParse(item.GetMetadata("MappedAPIVersion"), out ApiVersion);
                         break;
                     }
                 }
             }
-            else if (TargetFrameWorkIdentifier == ".NETCoreApp" && TargetPlatformIdentifier == "tizen")
-            {
-                //net6.0 tfm, get api version from tpv
-                if (string.IsNullOrEmpty(TargetPlatformVersion))
-                {
-                    Log.LogError("TargetPlatformVersion is Invalid {0}", TargetPlatformVersion);
-                    return false;
-                }
-                ApiVersion = TargetPlatformVersion;
-            }
 
-            if (string.Compare(ManifestApiVersion, ApiVersion.ToString()) > 0)
+            ManifestApiVersion += ".0";
+            Version.TryParse(ManifestApiVersion, out Version parsedManifestApiVersion);
+            if(parsedManifestApiVersion.CompareTo(ApiVersion) == 1)
             {
                 Log.LogError("Api version is Invalid {0}", ApiVersion);
                 return false;
