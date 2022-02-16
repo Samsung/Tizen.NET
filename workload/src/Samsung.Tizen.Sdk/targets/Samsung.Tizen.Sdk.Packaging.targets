@@ -34,10 +34,6 @@ Copyright (c) Samsung All rights reserved.
   </ItemDefinitionGroup>
 
   <PropertyGroup>
-    <TizenManifestFile Condition="'$(TizenManifestFile)'==''">tizen-manifest.xml</TizenManifestFile>
-  </PropertyGroup>
-
-  <PropertyGroup>
     <TpkKeepMeta>
       TizenTpkFileName;
       TizenTpkSubDir;
@@ -251,14 +247,11 @@ Copyright (c) Samsung All rights reserved.
 
     <!-- Default Resource File Include from Project -->
     <ItemGroup>
-      <DefaultTpkLibFiles Include="lib\**\*" Exclude="@(TizenTpkUserExcludeFiles)" />
-      <DefaultTpkManifestFiles Include="$(TizenManifestFile)" />
-
-      <TizenTpkFiles Include="@(DefaultTpkLibFiles)" Condition="Exists('%(DefaultTpkLibFiles.Identity)')">
-        <TizenTpkSubDir>lib\%(DefaultTpkLibFiles.RecursiveDir)</TizenTpkSubDir>
+      <TizenTpkFiles Include="@(TizenLibrary)" Condition="Exists('%(TizenLibrary.Identity)')">
+        <TizenTpkSubDir>lib\%(TizenLibrary.RecursiveDir)</TizenTpkSubDir>
         <TizenTpkFileName>%(Filename)%(Extension)</TizenTpkFileName>
       </TizenTpkFiles>
-      <TizenTpkFiles Include="@(DefaultTpkManifestFiles)" Condition="Exists('%(DefaultTpkManifestFiles.Identity)')">
+      <TizenTpkFiles Include="$(TizenManifestFile)" Condition="Exists('$(TizenManifestFile)')">
         <TizenTpkFileName>%(Filename)%(Extension)</TizenTpkFileName>
         <TizenTpkIsManifest>true</TizenTpkIsManifest>
         <TizenTpkIsBaseManifest>true</TizenTpkIsBaseManifest>
