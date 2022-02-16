@@ -46,7 +46,7 @@ namespace Samsung.Tizen.Build.Tasks
             if (TargetFrameworkIdentifier == ".NETCoreApp" && TargetPlatformIdentifier == "tizen")
             {
                 //net6.0 tfm, get api version from tpv
-                if (string.IsNullOrEmpty(TargetPlatformVersion.ToString()))
+                if (string.IsNullOrEmpty(TargetPlatformVersion))
                 {
                     Log.LogError("TargetPlatformVersion is Invalid {0}", TargetPlatformVersion);
                     return false;
@@ -75,9 +75,9 @@ namespace Samsung.Tizen.Build.Tasks
 
             ManifestApiVersion += ".0";
             Version.TryParse(ManifestApiVersion, out Version parsedManifestApiVersion);
-            if(parsedManifestApiVersion.CompareTo(ApiVersion) == 1)
+            if (parsedManifestApiVersion < ApiVersion)
             {
-                Log.LogError("Api version is Invalid {0}", ApiVersion);
+                Log.LogError("The api-version specified in tizen-manifest file is {0}. Current target framework is not supported in this api-version.", parsedManifestApiVersion);
                 return false;
             }
 
