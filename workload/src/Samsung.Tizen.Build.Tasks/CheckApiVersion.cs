@@ -19,6 +19,9 @@ namespace Samsung.Tizen.Build.Tasks
         public string ManifestApiVersion { get; set; }
 
         [Required]
+        public string TargetFramework { get; set; }
+
+        [Required]
         public string TargetFrameworkIdentifier { get; set; }
 
         [Required]
@@ -42,27 +45,32 @@ namespace Samsung.Tizen.Build.Tasks
                 Log.LogError("ManifestApiVersion is Invalid {0}", ManifestApiVersion);
                 return false;
             }
+            Version.TryParse(ManifestApiVersion + ".0", out Version parsedManifestApiVersion);
 
             if (TargetFrameworkIdentifier == ".NETCoreApp" && TargetPlatformIdentifier == "tizen")
             {
-                //net6.0 tfm, get api version from tpv
                 if (string.IsNullOrEmpty(TargetPlatformVersion))
                 {
                     Log.LogError("TargetPlatformVersion is Invalid {0}", TargetPlatformVersion);
                     return false;
                 }
                 Version.TryParse(TargetPlatformVersion, out ApiVersion);
+
+                if (parsedManifestApiVersion < ApiVersion)
+                {
+                    Log.LogError("The api-version specified in tizen-manifest file is {0}.", ManifestApiVersion);
+                    Log.LogError("Current target framework {0} is not supported in this api-version.", TargetFramework);
+                    return false;
+                }
             }
-            else
+            else if (TargetFrameworkIdentifier == "Tizen")
             {
-                //net5.0 tfm, get api version from tpv
                 if (string.IsNullOrEmpty(TargetFrameworkVersion))
                 {
                     Log.LogError("TargetFrameworkVersion is Invalid {0}", TargetFrameworkVersion);
                     return false;
                 }
 
-                //convert tfv to api version
                 foreach(ITaskItem item in SupportedAPILevelList)
                 {
                     if (Regex.IsMatch(item.ItemSpec, TargetFrameworkVersion))
@@ -71,14 +79,13 @@ namespace Samsung.Tizen.Build.Tasks
                         break;
                     }
                 }
-            }
 
-            ManifestApiVersion += ".0";
-            Version.TryParse(ManifestApiVersion, out Version parsedManifestApiVersion);
-            if (parsedManifestApiVersion < ApiVersion)
-            {
-                Log.LogError("The api-version specified in tizen-manifest file is {0}. Current target framework is not supported in this api-version.", parsedManifestApiVersion);
-                return false;
+                if (parsedManifestApiVersion < ApiVersion)
+                {
+                    Log.LogError("The api-version specified in tizen-manifest file is {0}.", ManifestApiVersion);
+                    Log.LogError("Current target framework {0} is not supported in this api-version.", TargetFramework);
+                    return false;
+                }
             }
 
             return true;
