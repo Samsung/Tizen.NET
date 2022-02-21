@@ -19,6 +19,7 @@ Copyright (c) Samsung All rights reserved.
   <UsingTask AssemblyFile="$(_TizenTaskAssemblyName)" TaskName="Samsung.Tizen.Build.Tasks.MergeManifest" />
   <UsingTask AssemblyFile="$(_TizenTaskAssemblyName)" TaskName="Samsung.Tizen.Build.Tasks.GetTizenProject" />
   <UsingTask AssemblyFile="$(_TizenTaskAssemblyName)" TaskName="Samsung.Tizen.Build.Tasks.ResourceXmlWriter" />
+  <UsingTask AssemblyFile="$(_TizenTaskAssemblyName)" TaskName="Samsung.Tizen.Build.Tasks.CheckApiVersion" />
 
   <PropertyGroup>
     <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
@@ -54,6 +55,7 @@ Copyright (c) Samsung All rights reserved.
     <TizenPackageDependsOn>
       TizenResolveTpkPackageFiles;
       TizenPrePackageEvent;
+      _CheckApiVersion;
       _TizenPrepareTpkPackage;
       _TizenTpkSign;
       TizenPostPackageEvent;
@@ -144,9 +146,28 @@ Copyright (c) Samsung All rights reserved.
                      Condition="Exists('$(TizenManifestFile)')">
       <Output TaskParameter="PackageName" PropertyName="TizenPackageName" />
       <Output TaskParameter="PackageVersion" PropertyName="TizenPackageVersion" />
+      <Output TaskParameter="ApiVersion" PropertyName="TizenApiVersion" />
       <Output TaskParameter="ApplicationList" ItemName="TizenPackageApplicationList" />
       <Output TaskParameter="FirstApplication" ItemName="TizenPackageFirstApplication" />
     </GetManifestInfo>
+  </Target>
+
+  <!--
+  ===========================================================================
+  _CheckApiVersion
+  ===========================================================================
+  -->
+  <Target Name="_CheckApiVersion" DependsOnTargets="_TizenGetTpkInfoFromManifest">
+    <CheckApiVersion
+      ManifestApiVersion="$(TizenApiVersion)"
+      TargetFramework="$(TargetFramework)"
+      TargetFrameworkIdentifier="$(TargetFrameworkIdentifier)"
+      TargetPlatformIdentifier="$(TargetPlatformIdentifier)"
+      TargetFrameworkVersion="$(TargetFrameworkVersion)"
+      TargetPlatformVersion="$(TargetPlatformVersion)"
+      SupportedAPILevelList="@(SupportedAPILevel)"
+      >
+    </CheckApiVersion>
   </Target>
 
   <!--
