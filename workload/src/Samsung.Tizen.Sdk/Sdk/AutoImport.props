@@ -18,13 +18,18 @@ https://github.com/dotnet/designs/blob/4703666296f5e59964961464c25807c727282cae/
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <TizenManifestFile Condition="'$(TizenManifestFile)'==''">tizen-manifest.xml</TizenManifestFile>
+    <TizenManifestFile Condition="'$(TizenManifestFile)' == ''">tizen-manifest.xml</TizenManifestFile>
+    <TizenResourcePrefix Condition="'$(TizenResourcePrefix)' == ''">res</TizenResourcePrefix>
+    <TizenSharedPrefix Condition="'$(TizenSharedPrefix)' == ''">shared</TizenSharedPrefix>
   </PropertyGroup>
 
+  <ItemGroup>
+    <TizenLibrary Include="lib\**\*" Exclude="@(TizenTpkUserExcludeFiles)" />
+  </ItemGroup>
+
   <ItemGroup Condition="'$(EnableDefaultTizenItems)' == 'true'">
-    <TizenResource Include="res\**\*" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder);@(TizenTpkUserExcludeFiles)" />
-    <TizenLibrary Include="lib\**\*" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder);@(TizenTpkUserExcludeFiles)" />
-    <TizenSharedResource Include="shared\**\*" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder);@(TizenTpkUserExcludeFiles)" />
+    <TizenResource Include="$(TizenResourcePrefix)\**\*" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder);@(TizenTpkUserExcludeFiles)" />
+    <TizenSharedResource Include="$(TizenSharedPrefix)\**\*" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder);@(TizenTpkUserExcludeFiles)" />
   </ItemGroup>
 
 </Project>

@@ -267,23 +267,27 @@ Copyright (c) Samsung All rights reserved.
     </ItemGroup>
 
     <!-- Default Resource File Include from Project -->
-    <ItemGroup Condition=" '$(EnableDefaultTizenItems)' == 'true' ">
-      <TizenTpkFiles Include="@(TizenResource)" Condition="Exists('%(TizenResource.Identity)')">
-        <TizenTpkSubDir>res\%(TizenResource.RecursiveDir)</TizenTpkSubDir>
-        <TizenTpkFileName>%(Filename)%(Extension)</TizenTpkFileName>
-      </TizenTpkFiles>
+    <ItemGroup>
       <TizenTpkFiles Include="@(TizenLibrary)" Condition="Exists('%(TizenLibrary.Identity)')">
         <TizenTpkSubDir>lib\%(TizenLibrary.RecursiveDir)</TizenTpkSubDir>
-        <TizenTpkFileName>%(Filename)%(Extension)</TizenTpkFileName>
-      </TizenTpkFiles>
-      <TizenTpkFiles Include="@(TizenSharedResource)" Condition="Exists('%(TizenSharedResource.Identity)')">
-        <TizenTpkSubDir>shared\%(TizenSharedResource.RecursiveDir)</TizenTpkSubDir>
         <TizenTpkFileName>%(Filename)%(Extension)</TizenTpkFileName>
       </TizenTpkFiles>
       <TizenTpkFiles Include="$(TizenManifestFile)" Condition="Exists('$(TizenManifestFile)')">
         <TizenTpkFileName>%(Filename)%(Extension)</TizenTpkFileName>
         <TizenTpkIsManifest>true</TizenTpkIsManifest>
         <TizenTpkIsBaseManifest>true</TizenTpkIsBaseManifest>
+      </TizenTpkFiles>
+    </ItemGroup>
+
+    <!-- Include Files -->
+    <ItemGroup>
+      <TizenTpkFiles Include="@(TizenResource)" Condition="Exists('%(TizenResource.Identity)')">
+        <TizenTpkSubDir>res\%(TizenResource.RecursiveDir)</TizenTpkSubDir>
+        <TizenTpkFileName Condition="'%(TizenResource.TizenTpkFileName)' == ''">%(Filename)%(Extension)</TizenTpkFileName>
+      </TizenTpkFiles>
+      <TizenTpkFiles Include="@(TizenSharedResource)" Condition="Exists('%(TizenSharedResource.Identity)')">
+        <TizenTpkSubDir>shared\%(TizenSharedResource.RecursiveDir)</TizenTpkSubDir>
+        <TizenTpkFileName>%(Filename)%(Extension)</TizenTpkFileName>
       </TizenTpkFiles>
       <TizenTpkFiles Include="@(TizenTpkUserIncludeFiles)" Exclude="@(TizenTpkUserExcludeFiles)">
         <TizenTpkSubDir Condition="'%(TizenTpkUserIncludeFiles.TizenTpkSubDir)' == ''">%(TizenTpkUserIncludeFiles.RelativeDir)</TizenTpkSubDir>
