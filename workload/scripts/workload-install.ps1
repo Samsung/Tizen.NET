@@ -24,8 +24,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
 
-$ManifestName = "Samsung.NET.Sdk.Tizen.Manifest-6.0.200"
-$DotnetVersionBand = "6.0.200"
+$ManifestBaseName = "Samsung.NET.Sdk.Tizen.Manifest"
 
 function New-TemporaryDirectory {
     $parent = [System.IO.Path]::GetTempPath()
@@ -46,7 +45,11 @@ function Test-Directory([string]$TestDir) {
 }
 
 function Get-LatestVersion([string]$Id) {
-    $Response = Invoke-WebRequest -Uri https://api.nuget.org/v3-flatcontainer/$Id/index.json | ConvertFrom-Json
+    try {
+        $Response = Invoke-WebRequest -Uri https://api.nuget.org/v3-flatcontainer/$Id/index.json | ConvertFrom-Json
+    } catch {
+        Write-Error "Wrong Id: $Id"
+    }
     return $Response.versions | Select-Object -Last 1
 }
 
@@ -108,6 +111,21 @@ if ($DotnetInstallDir -eq "<auto>") {
 }
 if (-Not $(Test-Path "$DotnetInstallDir")) {
     Write-Error "No installed dotnet '$DotnetInstallDir'."
+}
+
+# Check installed dotnet version
+$DotnetCommand = "$DotnetInstallDir\dotnet"
+if (Get-Command $DotnetCommand -ErrorAction SilentlyContinue)
+{
+    $DotnetVersion = Invoke-Expression "& '$DotnetCommand' --version"
+    $VersionSplitSymbol = '.'
+    $SplitVersion = $DotnetVersion.Split($VersionSplitSymbol);
+    $DotnetVersionBand = $SplitVersion[0] + $VersionSplitSymbol + $SplitVersion[1] + $VersionSplitSymbol + $SplitVersion[2][0] + "00"
+    $ManifestName = "$ManifestBaseName-$DotnetVersionBand"
+}
+else
+{
+    Write-Error "'$DotnetCommand' occurs an error."
 }
 
 # Check latest version of manifest.

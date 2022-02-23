@@ -5,10 +5,8 @@
 
 #!/bin/bash -e
 
-MANIFEST_NAME="samsung.net.sdk.tizen.manifest-6.0.200"
+MANIFEST_BASE_NAME="samsung.net.sdk.tizen.manifest"
 MANIFEST_VERSION="<latest>"
-
-DOTNET_VERSION_BAND=6.0.200
 DOTNET_INSTALL_DIR="<auto>"
 
 while [ $# -ne 0 ]; do
@@ -54,6 +52,19 @@ if [ ! -d $DOTNET_INSTALL_DIR ]; then
     echo "No installed dotnet \`$DOTNET_INSTALL_DIR\`."
     exit 1
 fi
+
+# Check installed dotnet version
+DOTNET_COMMAND="$DOTNET_INSTALL_DIR/dotnet"
+
+if ! type "$DOTNET_COMMAND" > /dev/null; then
+    echo "$DOTNET_COMMAND command not found"
+    exit 1
+fi
+
+DOTNET_VERSION=$($DOTNET_COMMAND --version)
+IFS='.' read -r -a array <<< "$DOTNET_VERSION"
+DOTNET_VERSION_BAND="${array[0]}.${array[1]}.${array[2]:0:1}00"
+MANIFEST_NAME="$MANIFEST_BASE_NAME-$DOTNET_VERSION_BAND"
 
 # Check latest version of manifest.
 if [[ "$MANIFEST_VERSION" == "<latest>" ]]; then
