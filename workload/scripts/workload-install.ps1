@@ -25,6 +25,7 @@ $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
 
 $ManifestBaseName = "Samsung.NET.Sdk.Tizen.Manifest"
+$SupportedDotnetVersion = "6"
 
 function New-TemporaryDirectory {
     $parent = [System.IO.Path]::GetTempPath()
@@ -120,6 +121,11 @@ if (Get-Command $DotnetCommand -ErrorAction SilentlyContinue)
     $DotnetVersion = Invoke-Expression "& '$DotnetCommand' --version"
     $VersionSplitSymbol = '.'
     $SplitVersion = $DotnetVersion.Split($VersionSplitSymbol);
+    if ($SplitVersion[0] -ne $SupportedDotnetVersion)
+    {
+        Write-Host "Current .NET version is $DotnetVersion. .NET 6.0 SDK is required."
+        Exit 0
+    }
     $DotnetVersionBand = $SplitVersion[0] + $VersionSplitSymbol + $SplitVersion[1] + $VersionSplitSymbol + $SplitVersion[2][0] + "00"
     $ManifestName = "$ManifestBaseName-$DotnetVersionBand"
 }
