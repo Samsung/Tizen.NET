@@ -57,7 +57,7 @@ fi
 # Check installed dotnet version
 DOTNET_COMMAND="$DOTNET_INSTALL_DIR/dotnet"
 
-if ! type "$DOTNET_COMMAND" > /dev/null; then
+if [ ! -x "$DOTNET_COMMAND" ]; then
     echo "$DOTNET_COMMAND command not found"
     exit 1
 fi
