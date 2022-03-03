@@ -17,7 +17,8 @@ Dotnet SDK Location installed
 [cmdletbinding()]
 param(
     [Alias('v')][string]$Version="<latest>",
-    [Alias('d')][string]$DotnetInstallDir="<auto>"
+    [Alias('d')][string]$DotnetInstallDir="<auto>",
+    [Alias('t')][string]$DotnetTargetVersionBand="<auto>"
 )
 
 Set-StrictMode -Version Latest
@@ -134,13 +135,17 @@ else
     Write-Error "'$DotnetCommand' occurs an error."
 }
 
+if ($DotnetTargetVersionBand -eq "<auto>") {
+    $DotnetTargetVersionBand = $DotnetVersionBand
+}
+
 # Check latest version of manifest.
 if ($Version -eq "<latest>") {
     $Version = Get-LatestVersion -Id $ManifestName
 }
 
 # Check workload manifest directory.
-$ManifestDir = Join-Path -Path $DotnetInstallDir -ChildPath "sdk-manifests" | Join-Path -ChildPath $DotnetVersionBand
+$ManifestDir = Join-Path -Path $DotnetInstallDir -ChildPath "sdk-manifests" | Join-Path -ChildPath $DotnetTargetVersionBand
 $TizenManifestDir = Join-Path -Path $ManifestDir -ChildPath "samsung.net.sdk.tizen"
 $TizenManifestFile = Join-Path -Path $TizenManifestDir -ChildPath "WorkloadManifest.json"
 Test-Directory $ManifestDir
@@ -176,9 +181,9 @@ $NewManifestJson.packs.PSObject.Properties | ForEach-Object {
 }
 
 # Add tizen to the installed workload metadata.
-New-Item -Path $(Join-Path -Path $DotnetInstallDir -ChildPath "metadata\workloads\$DotnetVersionBand\InstalledWorkloads\tizen") -Force | Out-Null
-if (Test-Path $(Join-Path -Path $DotnetInstallDir -ChildPath "metadata\workloads\$DotnetVersionBand\InstallerType\msi")) {
-    New-Item -Path "HKLM:\SOFTWARE\Microsoft\dotnet\InstalledWorkloads\Standalone\x64\$DotnetVersionBand\tizen" -Force | Out-Null
+New-Item -Path $(Join-Path -Path $DotnetInstallDir -ChildPath "metadata\workloads\$DotnetTargetVersionBand\InstalledWorkloads\tizen") -Force | Out-Null
+if (Test-Path $(Join-Path -Path $DotnetInstallDir -ChildPath "metadata\workloads\$DotnetTargetVersionBand\InstallerType\msi")) {
+    New-Item -Path "HKLM:\SOFTWARE\Microsoft\dotnet\InstalledWorkloads\Standalone\x64\$DotnetTargetVersionBand\tizen" -Force | Out-Null
 }
 
 # Clean up

@@ -9,6 +9,7 @@ MANIFEST_BASE_NAME="samsung.net.sdk.tizen.manifest"
 SupportedDotnetVersion="6"
 MANIFEST_VERSION="<latest>"
 DOTNET_INSTALL_DIR="<auto>"
+DOTNET_TARGET_VERSION_BAND="<auto>"
 DOTNET_DEFAULT_PATH_LINUX="/usr/share/dotnet"
 DOTNET_DEFAULT_PATH_MACOS="/usr/local/share/dotnet"
 
@@ -23,15 +24,20 @@ while [ $# -ne 0 ]; do
             shift
             DOTNET_INSTALL_DIR=$1
             ;;
+        -t|--dotnet-target-version-band)
+            shift
+            DOTNET_TARGET_VERSION_BAND=$1
+            ;;
         -h|--help)
             script_name="$(basename "$0")"
             echo "Tizen Workload Installer"
-            echo "Usage: $script_name [-v|--version <VERSION>] [-d|--dotnet-install-dir <DIR>]"
+            echo "Usage: $script_name [-v|--version <VERSION>] [-d|--dotnet-install-dir <DIR>] [-t|--dotnet-target-version-band <VERSION>]"
             echo "       $script_name -h|-?|--help"
             echo ""
             echo "Options:"
-            echo "  -v,--version <VERSION>         Use specific VERSION, Defaults to \`$MANIFEST_VERSION\`."
-            echo "  -d,--dotnet-install-dir <DIR>  Dotnet SDK Location installed, Defaults to \`$DOTNET_INSTALL_DIR\`."
+            echo "  -v,--version <VERSION>                     Use specific VERSION, Defaults to \`$MANIFEST_VERSION\`."
+            echo "  -d,--dotnet-install-dir <DIR>              Dotnet SDK Location installed, Defaults to \`$DOTNET_INSTALL_DIR\`."
+            echo "  -t,--dotnet-target-version-band <VERSION>  Use specific dotnet version band for install location, Defaults to \`$DOTNET_TARGET_VERSION_BAND\`."
             exit 0
             ;;
         *)
@@ -90,6 +96,12 @@ fi
 DOTNET_VERSION_BAND="${array[0]}.${array[1]}.${array[2]:0:1}00"
 MANIFEST_NAME="$MANIFEST_BASE_NAME-$DOTNET_VERSION_BAND"
 
+
+if [[ "$DOTNET_TARGET_VERSION_BAND" == "<auto>" ]]; then
+    DOTNET_TARGET_VERSION_BAND=$DOTNET_VERSION_BAND
+fi
+
+
 # Check latest version of manifest.
 if [[ "$MANIFEST_VERSION" == "<latest>" ]]; then
     MANIFEST_VERSION=$(curl -s https://api.nuget.org/v3-flatcontainer/$MANIFEST_NAME/index.json | grep \" | tail -n 1 | tr -d '\r' | xargs)
@@ -100,7 +112,7 @@ if [[ "$MANIFEST_VERSION" == "<latest>" ]]; then
 fi
 
 # Check workload manifest directory.
-SDK_MANIFESTS_DIR=$DOTNET_INSTALL_DIR/sdk-manifests/$DOTNET_VERSION_BAND
+SDK_MANIFESTS_DIR=$DOTNET_INSTALL_DIR/sdk-manifests/$DOTNET_TARGET_VERSION_BAND
 if [ ! -d $SDK_MANIFESTS_DIR ]; then
     echo "No target directory \`$SDK_MANIFESTS_DIR\`.";
     exit 1
