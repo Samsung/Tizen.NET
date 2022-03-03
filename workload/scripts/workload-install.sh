@@ -63,7 +63,7 @@ if [[ "$DOTNET_INSTALL_DIR" == "<auto>" ]]; then
         DOTNET_INSTALL_DIR=$DOTNET_DEFAULT_PATH_LINUX
     elif [[ -d "$DOTNET_DEFAULT_PATH_MACOS" ]]; then
         DOTNET_INSTALL_DIR=$DOTNET_DEFAULT_PATH_MACOS
-    else
+    elif [[ -n "$(which dotnet)" ]]; then
         DOTNET_INSTALL_DIR=$(read_dotnet_link $(which dotnet))
     fi
 fi
