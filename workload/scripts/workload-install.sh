@@ -9,6 +9,8 @@ MANIFEST_BASE_NAME="samsung.net.sdk.tizen.manifest"
 SupportedDotnetVersion="6"
 MANIFEST_VERSION="<latest>"
 DOTNET_INSTALL_DIR="<auto>"
+DOTNET_DEFAULT_PATH_LINUX="/usr/share/dotnet"
+DOTNET_DEFAULT_PATH_MACOS="/usr/local/share/dotnet"
 
 while [ $# -ne 0 ]; do
     name=$1
@@ -41,12 +43,28 @@ while [ $# -ne 0 ]; do
     shift
 done
 
+function read_dotnet_link() {
+    cd -P "$(dirname "$1")"
+    dotnet_file="$PWD/$(basename "$1")"
+    while [[ -h "$dotnet_file" ]]; do
+        cd -P "$(dirname "$dotnet_file")"
+        dotnet_file="$(readlink "$dotnet_file")"
+        cd -P "$(dirname "$dotnet_file")"
+        dotnet_file="$PWD/$(basename "$dotnet_file")"
+    done
+    echo $PWD
+}
+
 # Check dotnet install directory.
 if [[ "$DOTNET_INSTALL_DIR" == "<auto>" ]]; then
     if [[ -n "$DOTNET_ROOT" && -d "$DOTNET_ROOT" ]]; then
         DOTNET_INSTALL_DIR=$DOTNET_ROOT
-    else
-        DOTNET_INSTALL_DIR="/usr/share/dotnet"
+    elif [[ -d "$DOTNET_DEFAULT_PATH_LINUX" ]]; then
+        DOTNET_INSTALL_DIR=$DOTNET_DEFAULT_PATH_LINUX
+    elif [[ -d "$DOTNET_DEFAULT_PATH_MACOS" ]]; then
+        DOTNET_INSTALL_DIR=$DOTNET_DEFAULT_PATH_MACOS
+    elif [[ -n "$(which dotnet)" ]]; then
+        DOTNET_INSTALL_DIR=$(read_dotnet_link $(which dotnet))
     fi
 fi
 if [ ! -d $DOTNET_INSTALL_DIR ]; then
