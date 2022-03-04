@@ -13,7 +13,6 @@ Tizen .NET is :
 > This is an early preview of Tizen in .NET 6 not for production use. Expect breaking changes as this is still in development for .NET 6.
 
 ### Prerequisites
-> [.NET MAUI Check Tool](https://github.com/Redth/dotnet-maui-check) doesn't support Tizen environment yet, but hopes to be supported soon.
 
 **- Tizen SDK**
   * [Tizen Extensions for Visual Studio Family](https://developer.tizen.org/development/tizen-extensions-visual-studio-family) or 
