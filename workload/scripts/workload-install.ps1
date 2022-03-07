@@ -36,7 +36,8 @@ function New-TemporaryDirectory {
 
 function Test-Directory([string]$TestDir) {
     if (-Not $(Test-Path "$TestDir")) {
-        Write-Error "No target directory '$TestDir'."
+        New-Item -ItemType Directory -Path $TestDir
+        Write-Host "Create target directory '$TestDir'."
     }
     Try {
         [io.file]::OpenWrite($(Join-Path -Path $TestDir -ChildPath ".test-write-access")).Close()

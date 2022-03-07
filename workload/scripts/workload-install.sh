@@ -114,8 +114,8 @@ fi
 # Check workload manifest directory.
 SDK_MANIFESTS_DIR=$DOTNET_INSTALL_DIR/sdk-manifests/$DOTNET_TARGET_VERSION_BAND
 if [ ! -d $SDK_MANIFESTS_DIR ]; then
-    echo "No target directory \`$SDK_MANIFESTS_DIR\`.";
-    exit 1
+    mkdir -p $SDK_MANIFESTS_DIR
+    echo "Create target directory \`$SDK_MANIFESTS_DIR\`.";
 fi
 
 if [ ! -w $SDK_MANIFESTS_DIR ]; then
