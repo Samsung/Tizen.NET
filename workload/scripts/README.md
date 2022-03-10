@@ -5,7 +5,7 @@
 This script installs the Tizen workload manifest files and packs to the installed dotnet sdk.
 
 ### Usage
-On Linux/MacOS:
+On Linux / macOS:
 ```
 workload-install.sh [-v <Version>] [-d <Dotnet SDK Location>] [-t <Dotnet Version Band Target Folder>]
 ```
