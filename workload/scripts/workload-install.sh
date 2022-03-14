@@ -61,6 +61,18 @@ function read_dotnet_link() {
     echo $PWD
 }
 
+function error_permission_denied() {
+    echo "No permission to install manifest. Try again with sudo."
+    exit 1
+}
+
+function ensure_directory() {
+    if [ ! -d $1 ]; then
+        mkdir -p $1 || error_permission_denied
+    fi
+    [ ! -w $1 ] && error_permission_denied
+}
+
 # Check dotnet install directory.
 if [[ "$DOTNET_INSTALL_DIR" == "<auto>" ]]; then
     if [[ -n "$DOTNET_ROOT" && -d "$DOTNET_ROOT" ]]; then
@@ -113,15 +125,8 @@ fi
 
 # Check workload manifest directory.
 SDK_MANIFESTS_DIR=$DOTNET_INSTALL_DIR/sdk-manifests/$DOTNET_TARGET_VERSION_BAND
-if [ ! -d $SDK_MANIFESTS_DIR ]; then
-    echo "No target directory \`$SDK_MANIFESTS_DIR\`.";
-    exit 1
-fi
 
-if [ ! -w $SDK_MANIFESTS_DIR ]; then
-    echo "No permission to install manifest. Try again with sudo."
-    exit 1
-fi
+ensure_directory $SDK_MANIFESTS_DIR
 
 TMPDIR=$(mktemp -d)
 

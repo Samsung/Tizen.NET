@@ -34,16 +34,15 @@ function New-TemporaryDirectory {
     New-Item -ItemType Directory -Path (Join-Path $parent $name)
 }
 
-function Test-Directory([string]$TestDir) {
-    if (-Not $(Test-Path "$TestDir")) {
-        Write-Error "No target directory '$TestDir'."
-    }
+function Ensure-Directory([string]$TestDir) {
     Try {
+        New-Item -ItemType Directory -Path $TestDir -Force -ErrorAction stop
         [io.file]::OpenWrite($(Join-Path -Path $TestDir -ChildPath ".test-write-access")).Close()
-    } Catch {
+        Remove-Item -Path $(Join-Path -Path $TestDir -ChildPath ".test-write-access") -Force
+    }
+    Catch [System.UnauthorizedAccessException] [
         Write-Error "No permission to install. Try run with administrator mode."
     }
-    Remove-Item -Path $(Join-Path -Path $TestDir -ChildPath ".test-write-access") -Force
 }
 
 function Get-LatestVersion([string]$Id) {
@@ -148,7 +147,7 @@ if ($Version -eq "<latest>") {
 $ManifestDir = Join-Path -Path $DotnetInstallDir -ChildPath "sdk-manifests" | Join-Path -ChildPath $DotnetTargetVersionBand
 $TizenManifestDir = Join-Path -Path $ManifestDir -ChildPath "samsung.net.sdk.tizen"
 $TizenManifestFile = Join-Path -Path $TizenManifestDir -ChildPath "WorkloadManifest.json"
-Test-Directory $ManifestDir
+Ensure-Directory $ManifestDir
 
 # Check and remove already installed old version.
 if (Test-Path $TizenManifestFile) {
