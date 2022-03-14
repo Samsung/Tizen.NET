@@ -40,7 +40,7 @@ function Ensure-Directory([string]$TestDir) {
         [io.file]::OpenWrite($(Join-Path -Path $TestDir -ChildPath ".test-write-access")).Close()
         Remove-Item -Path $(Join-Path -Path $TestDir -ChildPath ".test-write-access") -Force
     }
-    Catch [System.UnauthorizedAccessException] [
+    Catch [System.UnauthorizedAccessException] {
         Write-Error "No permission to install. Try run with administrator mode."
     }
 }
