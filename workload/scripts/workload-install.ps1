@@ -147,7 +147,7 @@ if ($Version -eq "<latest>") {
 $ManifestDir = Join-Path -Path $DotnetInstallDir -ChildPath "sdk-manifests" | Join-Path -ChildPath $DotnetTargetVersionBand
 $TizenManifestDir = Join-Path -Path $ManifestDir -ChildPath "samsung.net.sdk.tizen"
 $TizenManifestFile = Join-Path -Path $TizenManifestDir -ChildPath "WorkloadManifest.json"
-Ensur-Directory $ManifestDir
+Ensure-Directory $ManifestDir
 
 # Check and remove already installed old version.
 if (Test-Path $TizenManifestFile) {
