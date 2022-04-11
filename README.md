@@ -13,7 +13,6 @@ Tizen .NET is :
 > This is an early preview of Tizen in .NET 6 not for production use. Expect breaking changes as this is still in development for .NET 6.
 
 ### Prerequisites
-> [.NET MAUI Check Tool](https://github.com/Redth/dotnet-maui-check) doesn't support Tizen environment yet, but hopes to be supported soon.
 
 **- Tizen SDK**
   * [Tizen Extensions for Visual Studio Family](https://developer.tizen.org/development/tizen-extensions-visual-studio-family) or 
@@ -23,11 +22,11 @@ Tizen .NET is :
   * Linux / Windows / macOS : https://dotnet.microsoft.com/download/dotnet/6.0
   
 **- Visual Studio 2022**
-  * To create Tizen .NET with .NET6, you need the latest version of [Visual Studio 2022](https://visualstudio.microsoft.com/)
+  * To create Tizen .NET with .NET 6, you need the latest version of [Visual Studio 2022](https://visualstudio.microsoft.com/)
 
 ### Installing Tizen workload for .NET 6.0 (Preview)
   You can install Tizen workload for .NET 6.0 by using the installer script.
-  * On Linux/MacOS:
+  * On Linux / macOS:
   ```sh
   curl -sSL https://raw.githubusercontent.com/Samsung/Tizen.NET/main/workload/scripts/workload-install.sh | sudo bash
   ```
@@ -142,4 +141,4 @@ Unfortunately `dotnet run` is not yet integrated. So for now you need to use `sd
 sdb install bin/Debug/net6.0-tizen/com.companyname.HelloTizenNet6-1.0.0.tpk
 ```
 
-> Tizen emulators and devices that support .NET6 have not yet been officially released, and we will announce a binary for testing soon.
+> Tizen emulators and devices that support .NET 6 have not yet been officially released, and we will announce a binary for testing soon.
