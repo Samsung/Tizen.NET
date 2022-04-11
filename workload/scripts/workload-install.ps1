@@ -47,7 +47,7 @@ function Ensure-Directory([string]$TestDir) {
 
 function Get-LatestVersion([string]$Id) {
     try {
-        $Response = Invoke-WebRequest -Uri https://api.nuget.org/v3-flatcontainer/$Id/index.json | ConvertFrom-Json
+        $Response = Invoke-WebRequest -Uri https://api.nuget.org/v3-flatcontainer/$Id/index.json -UseBasicParsing | ConvertFrom-Json
     } catch {
         Write-Error "Wrong Id: $Id"
     }
