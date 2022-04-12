@@ -53,7 +53,6 @@ function Retry([Action]$action)
     {
         try
         {
-            Write-Host $_.Exception.Message
             $action.Invoke();
             break;
         }
@@ -69,6 +68,7 @@ function Retry([Action]$action)
 function Get-LatestVersion([string]$Id) {
     try {
         $JsonStr = "https://api.nuget.org/v3-flatcontainer/$Id/index.json"
+        Write-Host "Check $JsonStr"
         Retry({
             $Response = Invoke-WebRequest -Uri $JsonStr -UseBasicParsing | ConvertFrom-Json
         })
