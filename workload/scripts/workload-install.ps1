@@ -28,6 +28,12 @@ $ProgressPreference = "SilentlyContinue"
 $ManifestBaseName = "Samsung.NET.Sdk.Tizen.Manifest"
 $SupportedDotnetVersion = "6"
 
+$LatestVersionMap = @{
+    "$ManifestBaseName-6.0.100" = "6.5.100-rc.1.120";
+    "$ManifestBaseName-6.0.200" = "7.0.100-preview.13.6";
+    "$ManifestBaseName-6.0.300" = "7.0.100-preview.13.30"
+}
+
 function New-TemporaryDirectory {
     $parent = [System.IO.Path]::GetTempPath()
     $name = [System.IO.Path]::GetRandomFileName()
@@ -45,43 +51,32 @@ function Ensure-Directory([string]$TestDir) {
     }
 }
 
-function Retry([Action]$action)
-{
+function Get-LatestVersion([string]$Id) {
     $attempts=3
     $sleepInSeconds=3
     do
     {
         try
         {
-            $action.Invoke();
-            break;
+            $Response = Invoke-WebRequest -Uri https://api.nuget.org/v3-flatcontainer/$Id/index.json -UseBasicParsing | ConvertFrom-Json
+            return $Response.versions | Select-Object -Last 1
         }
-        catch [Exception]
-        {
-            Write-Host $_.Exception.Message
+        catch {
+            Write-Host "Id: $Id"
+            Write-Host "An exception was caught: $($_.Exception.Message)"
         }
+
         $attempts--
         if ($attempts -gt 0) { Start-Sleep $sleepInSeconds }
     } while ($attempts -gt 0)
-}
 
-function Get-LatestVersion([string]$Id) {
-    try {
-        $JsonStr = "https://api.nuget.org/v3-flatcontainer/$Id/index.json"
-        Write-Host "Check $JsonStr"
-        Retry({
-            $Response = Invoke-WebRequest -Uri $JsonStr -UseBasicParsing | ConvertFrom-Json
-        })
-    }
-    catch [System.Net.WebException] {
-        Write-Host "A WebException was caught: $($_.Exception.Message)"
-        $_.Exception.Response
-    }
-    catch {
-        Write-Host "An exception was caught: $($_.Exception.Message)"
+    if ($LatestVersionMap.ContainsKey($Id))
+    {
+        Write-Host "Return cached latest version."
+        return $LatestVersionMap.$Id
+    } else {
         Write-Error "Wrong Id: $Id"
     }
-    return $Response.versions | Select-Object -Last 1
 }
 
 function Get-Package([string]$Id, [string]$Version, [string]$Destination, [string]$FileExt = "nupkg") {
