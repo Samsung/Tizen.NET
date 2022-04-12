@@ -124,7 +124,7 @@ if [[ "$MANIFEST_VERSION" == "<latest>" ]]; then
     MANIFEST_VERSION=$(curl -s https://api.nuget.org/v3-flatcontainer/$MANIFEST_NAME/index.json | grep \" | tail -n 1 | tr -d '\r' | xargs)
     if [ ! "$MANIFEST_VERSION" ]; then
         if [ ! -z ${LatestVersionMap[$MANIFEST_NAME]} ]; then
-            echo "return cached latest version."
+            echo "Return cached latest version."
             MANIFEST_VERSION=${LatestVersionMap[$MANIFEST_NAME]}
         else
             echo "Failed to get the latest version of $MANIFEST_NAME."

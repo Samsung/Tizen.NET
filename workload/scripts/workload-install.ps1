@@ -72,7 +72,7 @@ function Get-LatestVersion([string]$Id) {
 
     if ($LatestVersionMap.ContainsKey($Id))
     {
-        Write-Host "return cached latest version."
+        Write-Host "Return cached latest version."
         return $LatestVersionMap.$Id
     } else {
         Write-Error "Wrong Id: $Id"
