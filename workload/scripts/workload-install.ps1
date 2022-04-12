@@ -45,10 +45,40 @@ function Ensure-Directory([string]$TestDir) {
     }
 }
 
+function Retry([Action]$action)
+{
+    $attempts=3
+    $sleepInSeconds=3
+    do
+    {
+        try
+        {
+            Write-Host $_.Exception.Message
+            $action.Invoke();
+            break;
+        }
+        catch [Exception]
+        {
+            Write-Host $_.Exception.Message
+        }
+        $attempts--
+        if ($attempts -gt 0) { Start-Sleep $sleepInSeconds }
+    } while ($attempts -gt 0)
+}
+
 function Get-LatestVersion([string]$Id) {
     try {
-        $Response = Invoke-WebRequest -Uri https://api.nuget.org/v3-flatcontainer/$Id/index.json -UseBasicParsing | ConvertFrom-Json
-    } catch {
+        $JsonStr = "https://api.nuget.org/v3-flatcontainer/$Id/index.json"
+        Retry({
+            $Response = Invoke-WebRequest -Uri $JsonStr -UseBasicParsing | ConvertFrom-Json
+        })
+    }
+    catch [System.Net.WebException] {
+        Write-Host "A WebException was caught: $($_.Exception.Message)"
+        $_.Exception.Response
+    }
+    catch {
+        Write-Host "An exception was caught: $($_.Exception.Message)"
         Write-Error "Wrong Id: $Id"
     }
     return $Response.versions | Select-Object -Last 1
