@@ -314,7 +314,7 @@ Copyright (c) Samsung All rights reserved.
       <AllTpkItemsFullPath Include="@(TizenTpkFiles->'%(FullPath)')"/>
     </ItemGroup>
 
-    <Message Text="TizenTpkFiles : %(TizenTpkFiles.Identity)" Importance="high"/>
+    <!-- <Message Text="TizenTpkFiles : %(TizenTpkFiles.Identity)" Importance="high"/> -->
   </Target>
 
   <!--
@@ -551,7 +551,7 @@ Copyright (c) Samsung All rights reserved.
           OutputSignedTpk="$(SignedTpkFile)" />
 
     <Message Text="Successfully created tpk package : $(SignedTpkFile)" Condition="Exists('$(SignedTpkFile)')"/>
-    <Message Text="Failed to create tpk package : $(SignedTpkFile)" Importance="high" Condition="!Exists('$(SignedTpkFile)')"/>
+    <Error Text="Failed to create tpk package : $(SignedTpkFile)" Importance="high" Condition="!Exists('$(SignedTpkFile)')"/>
   </Target>
 
   <!--
