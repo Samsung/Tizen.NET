@@ -8,11 +8,7 @@ Tizen .NET is :
 - Support .NET [MAUI](https://github.com/dotnet/maui)
 - Support .NET 6
 
-
-## Getting Started
-> This is an early preview of Tizen in .NET 6 not for production use. Expect breaking changes as this is still in development for .NET 6.
-
-### Prerequisites
+## Prerequisites
 
 **- Tizen SDK**
   * [Tizen Extensions for Visual Studio Family](https://developer.tizen.org/development/tizen-extensions-visual-studio-family) or 
@@ -24,55 +20,16 @@ Tizen .NET is :
 **- Visual Studio 2022**
   * To create Tizen .NET with .NET 6, you need the latest version of [Visual Studio 2022](https://visualstudio.microsoft.com/)
 
-### Installing Tizen workload for .NET 6.0 (Preview)
-  You can install Tizen workload for .NET 6.0 by using the installer script.
-  * On Linux / macOS:
-  ```sh
-  curl -sSL https://raw.githubusercontent.com/Samsung/Tizen.NET/main/workload/scripts/workload-install.sh | sudo bash
-  ```
-  if you want to install a specific version of Tizen.NET workload or install to a specific directory, use the following command:
-  ```sh
-  curl -sSL https://raw.githubusercontent.com/Samsung/Tizen.NET/main/workload/scripts/workload-install.sh | bash /dev/stdin -v <version> -d <directory>
-  ```
-  * On Windows:
-  ```powershell
-  Invoke-WebRequest 'https://raw.githubusercontent.com/Samsung/Tizen.NET/main/workload/scripts/workload-install.ps1' -Proxy $env:HTTP_PROXY -ProxyUseDefaultCredentials -OutFile 'workload-install.ps1';
-  ./workload-install.ps1 [-v <version>] [-d <directory>]
-  ```
-  
-  For an instance:
-  ```powershell
-  PS D:\workspace> Invoke-WebRequest 'https://raw.githubusercontent.com/Samsung/Tizen.NET/main/workload/scripts/workload-install.ps1' -OutFile 'workload-install.ps1';
-  
-  PS D:\workspace> .\workload-install.ps1
-Installing Samsung.NET.Sdk.Tizen.Manifest-6.0.100/6.5.100-rc.1.114 to C:\Program Files\dotnet\sdk-manifests\6.0.100...
-Installing Samsung.Tizen.Sdk/6.5.100-rc.1.114...
-Installing Samsung.Tizen.Ref/6.5.100-rc.1.114...
-Installing Samsung.Tizen.Templates/6.5.100-rc.1.114...
-Installing Samsung.NETCore.App.Runtime.tizen/6.5.100-rc.1.114... 
-```
-  You can see the Tizen workload as follows if it is properly installed.
-  ```powershell
-PS D:\workspace> dotnet workload list
+**- Tizen .NET Workload**
+  * [Installing Tizen .NET Workload using Visual Studio / Visual Studio Code / CLI](https://github.com/Samsung/Tizen.NET/wiki/Installing-Tizen-.NET-Workload).
+  > This is an early preview of Tizen in .NET 6 not for production use. Expect breaking changes as this is still in development for .NET 6.
 
-This command lists only workloads that were installed via `dotnet workload install` in this version of the SDK and not those that were installed via Visual Studio.
-
-Installed Workload Ids
-----------------------
-maui
-tizen
-
-Use `dotnet workload search` to find additional workloads to install.
-
-Updates are avaliable for the following workload(s): maui tizen. Run `dotnet workload update` to get the latest  
-  ```
-
-### Time to Go! (using Visual Studio 2022)
+## Getting Started with Visual Studio 2022
 See [here](https://github.com/Samsung/Tizen.NET/wiki/Build-your-first-(.NET6)-Tizen-App-using-Visual-Studio-2022) for more details.
 
 ![](https://github.com/Samsung/Tizen.NET/blob/a710d7095ca9ba0a759705dc59461140dec13ae4/assets/hello-tizen-net6-vs2022.gif)
 
-### Time to Go! (using CLI)
+## Getting Started with CLI
 
 #### 1. Check the Tizen templates before creating a new Tizen Project
 You can see the Tizen template as follows if it is properly installed.
