@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest package="com.Microsoft.NetConf2021.Maui" version="1.0.0" api-version="8" xmlns="http://tizen.org/ns/packages">
+  <profile name="common" />
+  <ui-application appid="com.Microsoft.NetConf2021.Maui" exec="Microsoft.NetConf2021.Maui.dll" multiple="false" nodisplay="false" taskmanage="true" type="dotnet" launch_mode="single">
+    <icon>xhdpi/appicon.xhigh.png</icon>
+    <icon dpi="xhdpi">xhdpi/appicon.xhigh.png</icon>
+    <icon dpi="hdpi">hdpi/appicon.high.png</icon>
+    <label>.NET Pods</label>
+    <metadata key="http://tizen.org/metadata/prefer_dotnet_aot" value="true" />
+    <splash-screens>
+      <splash-screen src="splash/splash.mdpi.portrait.png" type="img" dpi="mdpi" orientation="portrait" indicator-display="false" />
+      <splash-screen src="splash/splash.mdpi.landscape.png" type="img" dpi="mdpi" orientation="landscape" indicator-display="false" />
+      <splash-screen src="splash/splash.hdpi.portrait.png" type="img" dpi="hdpi" orientation="portrait" indicator-display="false" />
+      <splash-screen src="splash/splash.hdpi.landscape.png" type="img" dpi="hdpi" orientation="landscape" indicator-display="false" />
+    </splash-screens>
+  </ui-application>
+  <shortcut-list />
+  <privileges>
+    <privilege>http://tizen.org/privilege/internet</privilege>
+    <privilege>http://tizen.org/privilege/network.get</privilege>
+  </privileges>
+  <dependencies />
+  <provides-appdefined-privileges />
+</manifest>

@@ -1,1 +1,1 @@
-# .NET Podcasts - Sample Application
+# .NET Podcasts
