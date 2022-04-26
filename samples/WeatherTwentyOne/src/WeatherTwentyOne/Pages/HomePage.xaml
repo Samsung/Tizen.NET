@@ -40,7 +40,7 @@
                 <!-- Top widgets -->
                 <HorizontalStackLayout
                     IsVisible="{OnIdiom Phone=False, Default=True}"
-                    Padding="0,30"
+                    Padding="30,0,30,0"
                     MinimumHeightRequest="360">
                     <v:CurrentWidget
                         WidthRequest="200" />
