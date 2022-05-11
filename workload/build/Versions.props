@@ -2,7 +2,7 @@
   <!--
     Workload version:
     * The first two numbers represent the major and minor version of the Tizen OS.
-    * The third number is the service release count. 
+    * The third number is the sdk version band.
     * However, the first digit of the third number starts at 100.
 
     Pre-release version:
@@ -15,7 +15,7 @@
        example: -preview.3.100+sha12345
   -->
   <PropertyGroup>
-    <TizenWorkloadVersion>7.0.100</TizenWorkloadVersion>
+    <TizenWorkloadVersion>7.0.400</TizenWorkloadVersion>
   </PropertyGroup>
 
   <!-- 
