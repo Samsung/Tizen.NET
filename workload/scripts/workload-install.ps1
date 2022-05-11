@@ -146,9 +146,9 @@ if (Get-Command $DotnetCommand -ErrorAction SilentlyContinue)
     $DotnetVersion = Invoke-Expression "& '$DotnetCommand' --version"
     $VersionSplitSymbol = '.'
     $SplitVersion = $DotnetVersion.Split($VersionSplitSymbol);
-    if ($SplitVersion[0] -ne $SupportedDotnetVersion)
+    if ($SplitVersion[0] -lt $SupportedDotnetVersion)
     {
-        Write-Host "Current .NET version is $DotnetVersion. .NET 6.0 SDK is required."
+        Write-Host "Current .NET version is $DotnetVersion. .NET SDK version 6.0 or later is required."
         Exit 0
     }
     $DotnetVersionBand = $SplitVersion[0] + $VersionSplitSymbol + $SplitVersion[1] + $VersionSplitSymbol + $SplitVersion[2][0] + "00"

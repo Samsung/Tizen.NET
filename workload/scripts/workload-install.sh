@@ -100,8 +100,8 @@ fi
 
 DOTNET_VERSION=$($DOTNET_COMMAND --version)
 IFS='.' read -r -a array <<< "$DOTNET_VERSION"
-if [[ ${array[0]} != $SupportedDotnetVersion ]]; then
-    echo "Current .NET version is ${DOTNET_VERSION}. .NET 6.0 SDK is required."
+if [[ ${array[0]} -lt $SupportedDotnetVersion ]]; then
+    echo "Current .NET version is ${DOTNET_VERSION}. .NET SDK version 6.0 or later is required."
     exit 0
 fi
 
