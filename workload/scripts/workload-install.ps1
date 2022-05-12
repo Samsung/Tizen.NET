@@ -31,7 +31,7 @@ $SupportedDotnetVersion = "6"
 $LatestVersionMap = @{
     "$ManifestBaseName-6.0.100" = "6.5.100-rc.1.120";
     "$ManifestBaseName-6.0.200" = "7.0.100-preview.13.6";
-    "$ManifestBaseName-6.0.300" = "7.0.300-rc.3.0"
+    "$ManifestBaseName-6.0.300" = "7.0.303"
 }
 
 function New-TemporaryDirectory {
