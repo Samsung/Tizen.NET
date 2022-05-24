@@ -12,17 +12,17 @@ include $(TOP)/Config.mk
 DIRECTORIES += \
 	$(OUTDIR) \
 	$(TMPDIR) \
-	$(DOTNET7_MANIFESTS_DESTDIR)
+	$(DOTNET_MANIFESTS_DESTDIR)
 
 $(DIRECTORIES):
 	@mkdir -p $@
 
 
 # Install dotnet 7.0 sdk for internal use
-DOTNET7 := $(DOTNET7_DESTDIR)/dotnet
+DOTNET := $(DOTNET_DESTDIR)/dotnet
 
-$(DOTNET7): | $(TMPDIR)/dotnet-install.sh
-	@bash $(TMPDIR)/dotnet-install.sh -v $(DOTNET_VERSION) -i $(DOTNET7_DESTDIR)
+$(DOTNET): | $(TMPDIR)/dotnet-install.sh
+	@bash $(TMPDIR)/dotnet-install.sh -v $(DOTNET_VERSION) -i $(DOTNET_DESTDIR)
 
 $(TMPDIR)/dotnet-install.sh: | $(OUTDIR)
 	@curl -o $@ \
@@ -31,8 +31,8 @@ $(TMPDIR)/dotnet-install.sh: | $(OUTDIR)
 
 # Create nuget packages for manifest and packs
 define CreateNuGetPkgs
-$(WORKLOAD_PACKS_OUTDIR)/$(1)$(3).$(2).nupkg: $(DOTNET7)
-		@$(DOTNET7) pack --nologo $(TOP)/build/$(1).proj \
+$(WORKLOAD_PACKS_OUTDIR)/$(1)$(3).$(2).nupkg: $(DOTNET)
+		@$(DOTNET) pack --nologo $(TOP)/build/$(1).proj \
 			-p:Configuration=Release \
 			-p:IncludeSymbols=False \
 			-p:TizenPackVersion=$(2) \
@@ -52,13 +52,13 @@ $(eval $(call CreateNuGetPkgs,Samsung.NETCore.App.Runtime,$(TIZEN_WORKLOAD_VERSI
 packs: $(NUPKG_TARGETS)
 
 # Install workload to the dotnet sdk
-$(TMPDIR)/.stamp-install-workload: | $(DOTNET7_MANIFESTS_DESTDIR)
+$(TMPDIR)/.stamp-install-workload: | $(DOTNET_MANIFESTS_DESTDIR)
 	@cp -f \
 		$(TOP)/LICENSE \
 		$(TOP)/src/Samsung.NET.Sdk.Tizen/WorkloadManifest.targets \
 		$(WORKLOAD_PACKS_OUTDIR)/workload-manifest/WorkloadManifest.json \
-		$(DOTNET7_MANIFESTS_DESTDIR)
-	@$(DOTNET7) workload install tizen --skip-manifest-update \
+		$(DOTNET_MANIFESTS_DESTDIR)
+	@$(DOTNET) workload install tizen --skip-manifest-update \
 		--source $(WORKLOAD_PACKS_OUTDIR) --temp-dir=$(TMPDIR)
 	@touch $@
 
@@ -69,13 +69,13 @@ install: packs $(TMPDIR)/.stamp-install-workload
 # Uninstall workload from the dotnet sdk
 .PHONY: uninstall
 uninstall:
-	@$(DOTNET7) workload uninstall tizen
+	@$(DOTNET) workload uninstall tizen
 	@rm -f $(TMPDIR)/.stamp-install-workload
 
 # Create MSI windows installer
 define CreateMsi
 $(WORKLOAD_MSI_OUTDIR)/Samsung.NET.Workload.Tizen.$(1).wix: | $(TMPDIR)/msi
-	@$(DOTNET7) msbuild --nologo $(TOP)/build/GenerateWixFile.proj \
+	@$(DOTNET) msbuild --nologo $(TOP)/build/GenerateWixFile.proj \
 									-t:Generate \
 									-p:MSIVersion=$(TIZEN_WORKLOAD_VERSION_FULL) \
 									-p:SourceDirectory=$(TMPDIR)/msi \
@@ -89,13 +89,13 @@ endef
 
 $(TMPDIR)/msi: install
 	@mkdir -p $@/sdk-manifests/$(DOTNET_VERSION_BAND)
-	@cp -fr $(DOTNET7_MANIFESTS_DESTDIR) $@/sdk-manifests/$(DOTNET_VERSION_BAND)
+	@cp -fr $(DOTNET_MANIFESTS_DESTDIR) $@/sdk-manifests/$(DOTNET_VERSION_BAND)
 	@mkdir -p $@/packs
-	@cp -fr $(DOTNET7_DESTDIR)/packs/Samsung.Tizen.Sdk $@/packs
-	@cp -fr $(DOTNET7_DESTDIR)/packs/Samsung.Tizen.Ref $@/packs
-	@cp -fr $(DOTNET7_DESTDIR)/packs/Samsung.NETCore.App.Runtime.* $@/packs
+	@cp -fr $(DOTNET_DESTDIR)/packs/Samsung.Tizen.Sdk $@/packs
+	@cp -fr $(DOTNET_DESTDIR)/packs/Samsung.Tizen.Ref $@/packs
+	@cp -fr $(DOTNET_DESTDIR)/packs/Samsung.NETCore.App.Runtime.* $@/packs
 	@mkdir -p $@/template-packs
-	@cp -f $(DOTNET7_DESTDIR)/template-packs/samsung.tizen.templates.*.nupkg $@/template-packs
+	@cp -f $(DOTNET_DESTDIR)/template-packs/samsung.tizen.templates.*.nupkg $@/template-packs
 
 $(eval $(call CreateMsi,$(TIZEN_WORKLOAD_VERSION_FULL)))
 
@@ -107,8 +107,8 @@ msi: $(MSI_TARGET)
 test: install
 	@rm -fr $(TMPDIR)/test
 	@mkdir -p $(TMPDIR)/test
-	@$(DOTNET7) new tizen --output $(TMPDIR)/test
-	@$(DOTNET7) build $(TMPDIR)/test
+	@$(DOTNET) new tizen --output $(TMPDIR)/test
+	@$(DOTNET) build $(TMPDIR)/test
 
 
 # Remove artifacts and temporary files

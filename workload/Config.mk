@@ -5,13 +5,13 @@ $(TMPDIR)/dotnet-version.config: $(TOP)/build/Versions.props
 	@grep "<MicrosoftDotnetSdkInternalPackageVersion>" build/Versions.props | sed -e 's/<\/*MicrosoftDotnetSdkInternalPackageVersion>//g' -e 's/[ \t]*/DOTNET_VERSION=/' > $@
 DOTNET_VERSION_BAND = $(firstword $(subst -, ,$(DOTNET_VERSION)))
 
-# DOTNET7_DESTDIR
+# DOTNET_DESTDIR
 ifeq ($(DESTDIR),)
-DOTNET7_DESTDIR = $(OUTDIR)/dotnet
+DOTNET_DESTDIR = $(OUTDIR)/dotnet
 else
-DOTNET7_DESTDIR = $(abspath $(DESTDIR))
+DOTNET_DESTDIR = $(abspath $(DESTDIR))
 endif
-DOTNET7_MANIFESTS_DESTDIR=$(DOTNET7_DESTDIR)/sdk-manifests/$(DOTNET_VERSION_BAND)/samsung.net.sdk.tizen
+DOTNET_MANIFESTS_DESTDIR=$(DOTNET_DESTDIR)/sdk-manifests/$(DOTNET_VERSION_BAND)/samsung.net.sdk.tizen
 
 # TIZEN_WORKLOAD_VERSION
 -include $(TMPDIR)/workload-version.config
