@@ -45,6 +45,14 @@ Copyright (c) Samsung All rights reserved.
   </ItemGroup>
 
   <ItemGroup>
+
+    <KnownFrameworkReference
+      Include="Samsung.Tizen"
+      TargetFramework="net7.0-tizen$(_DefaultTargetPlatformVersion)"
+      TargetingPackName="Samsung.Tizen.Ref"
+      TargetingPackVersion="**FromWorkload**"
+      Profile="Tizen"
+    />
     <KnownFrameworkReference
       Include="Samsung.Tizen"
       TargetFramework="net6.0-tizen$(_DefaultTargetPlatformVersion)"
