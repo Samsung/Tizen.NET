@@ -1,17 +1,17 @@
-# DOTNET6_VERSION
+# DOTNET7_VERSION
 -include $(TMPDIR)/dotnet-version.config
 $(TMPDIR)/dotnet-version.config: $(TOP)/build/Versions.props
 	@mkdir -p $(TMPDIR)
-	@grep "<MicrosoftDotnetSdkInternalPackageVersion>" build/Versions.props | sed -e 's/<\/*MicrosoftDotnetSdkInternalPackageVersion>//g' -e 's/[ \t]*/DOTNET6_VERSION=/' > $@
-DOTNET6_VERSION_BAND = $(firstword $(subst -, ,$(DOTNET6_VERSION)))
+	@grep "<MicrosoftDotnetSdkInternalPackageVersion>" build/Versions.props | sed -e 's/<\/*MicrosoftDotnetSdkInternalPackageVersion>//g' -e 's/[ \t]*/DOTNET7_VERSION=/' > $@
+DOTNET7_VERSION_BAND = $(firstword $(subst -, ,$(DOTNET7_VERSION)))
 
-# DOTNET6_DESTDIR
+# DOTNET7_DESTDIR
 ifeq ($(DESTDIR),)
-DOTNET6_DESTDIR = $(OUTDIR)/dotnet
+DOTNET7_DESTDIR = $(OUTDIR)/dotnet
 else
-DOTNET6_DESTDIR = $(abspath $(DESTDIR))
+DOTNET7_DESTDIR = $(abspath $(DESTDIR))
 endif
-DOTNET6_MANIFESTS_DESTDIR=$(DOTNET6_DESTDIR)/sdk-manifests/$(DOTNET6_VERSION_BAND)/samsung.net.sdk.tizen
+DOTNET7_MANIFESTS_DESTDIR=$(DOTNET7_DESTDIR)/sdk-manifests/$(DOTNET7_VERSION_BAND)/samsung.net.sdk.tizen
 
 # TIZEN_WORKLOAD_VERSION
 -include $(TMPDIR)/workload-version.config
