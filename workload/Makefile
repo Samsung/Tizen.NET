@@ -22,7 +22,7 @@ $(DIRECTORIES):
 DOTNET7 := $(DOTNET7_DESTDIR)/dotnet
 
 $(DOTNET7): | $(TMPDIR)/dotnet-install.sh
-	@bash $(TMPDIR)/dotnet-install.sh -v $(DOTNET7_VERSION) -i $(DOTNET7_DESTDIR)
+	@bash $(TMPDIR)/dotnet-install.sh -v $(DOTNET_VERSION) -i $(DOTNET7_DESTDIR)
 
 $(TMPDIR)/dotnet-install.sh: | $(OUTDIR)
 	@curl -o $@ \
@@ -42,7 +42,7 @@ $(WORKLOAD_PACKS_OUTDIR)/$(1)$(3).$(2).nupkg: $(DOTNET7)
 NUPKG_TARGETS += $(WORKLOAD_PACKS_OUTDIR)/$(1)$(3).$(2).nupkg
 endef
 
-$(eval $(call CreateNuGetPkgs,Samsung.NET.Sdk.Tizen,$(TIZEN_WORKLOAD_VERSION_FULL),.Manifest-$(DOTNET7_VERSION_BAND),$(DOTNET7_VERSION_BAND)))
+$(eval $(call CreateNuGetPkgs,Samsung.NET.Sdk.Tizen,$(TIZEN_WORKLOAD_VERSION_FULL),.Manifest-$(DOTNET_VERSION_BAND),$(DOTNET_VERSION_BAND)))
 $(eval $(call CreateNuGetPkgs,Samsung.Tizen.Sdk,$(TIZEN_WORKLOAD_VERSION_FULL)))
 $(eval $(call CreateNuGetPkgs,Samsung.Tizen.Ref,$(TIZEN_WORKLOAD_VERSION_FULL)))
 $(eval $(call CreateNuGetPkgs,Samsung.Tizen.Templates,$(TIZEN_WORKLOAD_VERSION_FULL)))
@@ -88,8 +88,8 @@ MSI_TARGET := $(WORKLOAD_MSI_OUTDIR)/Samsung.NET.Workload.Tizen.$(1).msi
 endef
 
 $(TMPDIR)/msi: install
-	@mkdir -p $@/sdk-manifests/$(DOTNET7_VERSION_BAND)
-	@cp -fr $(DOTNET7_MANIFESTS_DESTDIR) $@/sdk-manifests/$(DOTNET7_VERSION_BAND)
+	@mkdir -p $@/sdk-manifests/$(DOTNET_VERSION_BAND)
+	@cp -fr $(DOTNET7_MANIFESTS_DESTDIR) $@/sdk-manifests/$(DOTNET_VERSION_BAND)
 	@mkdir -p $@/packs
 	@cp -fr $(DOTNET7_DESTDIR)/packs/Samsung.Tizen.Sdk $@/packs
 	@cp -fr $(DOTNET7_DESTDIR)/packs/Samsung.Tizen.Ref $@/packs
