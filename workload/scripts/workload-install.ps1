@@ -148,7 +148,7 @@ if (Get-Command $DotnetCommand -ErrorAction SilentlyContinue)
     $SplitVersion = $DotnetVersion.Split($VersionSplitSymbol)
 
     $CurrentDotnetVersion = [Version]"$($SplitVersion[0]).$($SplitVersion[1])"
-    if ($SplitVersion[0] -lt $SupportedDotnetVersion)
+    if ($CurrentDotnetVersion -lt $SupportedDotnetVersion)
     {
         Write-Host "Current .NET version is $CurrentDotnetVersion. .NET SDK version $SupportedDotnetVersion or later is required."
         Exit 0
