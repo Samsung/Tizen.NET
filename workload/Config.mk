@@ -1,17 +1,17 @@
-# DOTNET6_VERSION
+# DOTNET_VERSION
 -include $(TMPDIR)/dotnet-version.config
 $(TMPDIR)/dotnet-version.config: $(TOP)/build/Versions.props
 	@mkdir -p $(TMPDIR)
-	@grep "<MicrosoftDotnetSdkInternalPackageVersion>" build/Versions.props | sed -e 's/<\/*MicrosoftDotnetSdkInternalPackageVersion>//g' -e 's/[ \t]*/DOTNET6_VERSION=/' > $@
-DOTNET6_VERSION_BAND = $(firstword $(subst -, ,$(DOTNET6_VERSION)))
+	@grep "<MicrosoftDotnetSdkInternalPackageVersion>" build/Versions.props | sed -e 's/<\/*MicrosoftDotnetSdkInternalPackageVersion>//g' -e 's/[ \t]*/DOTNET_VERSION=/' > $@
+DOTNET_VERSION_BAND = $(firstword $(subst -, ,$(DOTNET_VERSION)))
 
-# DOTNET6_DESTDIR
+# DOTNET_DESTDIR
 ifeq ($(DESTDIR),)
-DOTNET6_DESTDIR = $(OUTDIR)/dotnet
+DOTNET_DESTDIR = $(OUTDIR)/dotnet
 else
-DOTNET6_DESTDIR = $(abspath $(DESTDIR))
+DOTNET_DESTDIR = $(abspath $(DESTDIR))
 endif
-DOTNET6_MANIFESTS_DESTDIR=$(DOTNET6_DESTDIR)/sdk-manifests/$(DOTNET6_VERSION_BAND)/samsung.net.sdk.tizen
+DOTNET_MANIFESTS_DESTDIR=$(DOTNET_DESTDIR)/sdk-manifests/$(DOTNET_VERSION_BAND)/samsung.net.sdk.tizen
 
 # TIZEN_WORKLOAD_VERSION
 -include $(TMPDIR)/workload-version.config
@@ -33,13 +33,14 @@ endif
 
 # PRERELEASE_TAG, PULLREQUEST_ID
 ifneq ($(PRERELEASE_TAG),)
-PRERELEASE_VERSION := $(PRERELEASE_TAG)
+	PRERELEASE_VERSION := $(PRERELEASE_TAG)
 else
-ifneq ($(PULLREQUEST_ID),)
-PRERELEASE_VERSION := ci.pr.gh$(PULLREQUEST_ID)
-else
-PRERELEASE_VERSION := ci.$(CURRENT_BRANCH)
-endif
+	ifneq ($(PULLREQUEST_ID),)
+		PRERELEASE_VERSION := ci.pr.gh$(PULLREQUEST_ID)
+	else
+		PRERELEASE_VERSION := ci.$(CURRENT_BRANCH)
+	endif
 endif
 
-TIZEN_WORKLOAD_VERSION_FULL := $(TIZEN_WORKLOAD_VERSION)
+TIZEN_WORKLOAD_VERSION_FULL := $(TIZEN_WORKLOAD_VERSION)-$(PRERELEASE_VERSION).$(TIZEN_COMMIT_DISTANCE)
+#TIZEN_WORKLOAD_VERSION_FULL := $(TIZEN_WORKLOAD_VERSION)
