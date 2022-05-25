@@ -113,19 +113,28 @@ if [[ "$DOTNET_TARGET_VERSION_BAND" == "<auto>" ]]; then
     DOTNET_TARGET_VERSION_BAND=$DOTNET_VERSION_BAND
 fi
 
-declare -A LatestVersionMap=(
-    ["$MANIFEST_BASE_NAME-6.0.100"]="6.5.100-rc.1.120"
-    ["$MANIFEST_BASE_NAME-6.0.200"]="7.0.100-preview.13.6"
-    ["$MANIFEST_BASE_NAME-6.0.300"]="7.0.303"
+LatestVersionMap=(
+    "$MANIFEST_BASE_NAME-6.0.100=6.5.100-rc.1.120"
+    "$MANIFEST_BASE_NAME-6.0.200=7.0.100-preview.13.6"
+    "$MANIFEST_BASE_NAME-6.0.300=7.0.303"
     )
+
+function getLatestVersion () {
+    for index in "${LatestVersionMap[@]}"; do
+         if [ "${index%%=*}" = "${1}" ]; then
+             echo "${index#*=}"
+         fi
+    done
+    echo ""
+}
 
 # Check latest version of manifest.
 if [[ "$MANIFEST_VERSION" == "<latest>" ]]; then
     MANIFEST_VERSION=$(curl -s https://api.nuget.org/v3-flatcontainer/$MANIFEST_NAME/index.json | grep \" | tail -n 1 | tr -d '\r' | xargs)
     if [ ! "$MANIFEST_VERSION" ]; then
-        if [ ! -z ${LatestVersionMap[$MANIFEST_NAME]} ]; then
-            echo "Return cached latest version."
-            MANIFEST_VERSION=${LatestVersionMap[$MANIFEST_NAME]}
+        MANIFEST_VERSION=$(getLatestVersion "$MANIFEST_NAME")
+        if [[ -n $MANIFEST_VERSION ]]; then
+            echo "Return cached latest version: $MANIFEST_VERSION"
         else
             echo "Failed to get the latest version of $MANIFEST_NAME."
             exit 1
