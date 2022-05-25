@@ -6,7 +6,7 @@
 #!/bin/bash -e
 
 MANIFEST_BASE_NAME="samsung.net.sdk.tizen.manifest"
-SupportedDotnetVersion="6"
+SUPPORTED_DOTNET_VERSION="6"
 MANIFEST_VERSION="<latest>"
 DOTNET_INSTALL_DIR="<auto>"
 DOTNET_TARGET_VERSION_BAND="<auto>"
@@ -100,14 +100,15 @@ fi
 
 DOTNET_VERSION=$($DOTNET_COMMAND --version)
 IFS='.' read -r -a array <<< "$DOTNET_VERSION"
-if [[ ${array[0]} != $SupportedDotnetVersion ]]; then
-    echo "Current .NET version is ${DOTNET_VERSION}. .NET 6.0 SDK is required."
+
+CURRENT_DOTNET_VERSION=${array[0]}
+if [[ $CURRENT_DOTNET_VERSION -lt $SUPPORTED_DOTNET_VERSION ]]; then
+    echo "Current .NET version is $CURRENT_DOTNET_VERSION. .NET SDK version $SUPPORTED_DOTNET_VERSION or later is required."
     exit 0
 fi
 
 DOTNET_VERSION_BAND="${array[0]}.${array[1]}.${array[2]:0:1}00"
 MANIFEST_NAME="$MANIFEST_BASE_NAME-$DOTNET_VERSION_BAND"
-
 
 if [[ "$DOTNET_TARGET_VERSION_BAND" == "<auto>" ]]; then
     DOTNET_TARGET_VERSION_BAND=$DOTNET_VERSION_BAND
