@@ -111,7 +111,11 @@ DOTNET_VERSION_BAND="${array[0]}.${array[1]}.${array[2]:0:1}00"
 MANIFEST_NAME="$MANIFEST_BASE_NAME-$DOTNET_VERSION_BAND"
 
 if [[ "$DOTNET_TARGET_VERSION_BAND" == "<auto>" ]]; then
-    DOTNET_TARGET_VERSION_BAND=$DOTNET_VERSION_BAND
+    if [[ "$DOTNET_VERSION" == *"-preview"* || $DOTNET_VERSION == *"-rc"* || $DOTNET_VERSION == *"-alpha"* ]] && [[ ${#array[@]} -ge 4 ]]; then
+        DOTNET_TARGET_VERSION_BAND="$DOTNET_VERSION_BAND${array[2]:3}.${array[3]}"
+    else
+        DOTNET_TARGET_VERSION_BAND=$DOTNET_VERSION_BAND
+    fi
 fi
 
 LatestVersionMap=(
