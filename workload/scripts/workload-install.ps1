@@ -162,9 +162,15 @@ else
 }
 
 if ($DotnetTargetVersionBand -eq "<auto>") {
-    $IsPreviewVersion = $DotnetVersion.Contains("-preview") -or $DotnetVersion.Contains("-rc") -or $DotnetVersion.Contains("-alpha")
-    if ($IsPreviewVersion -and ($SplitVersion.Count -ge 4)) {
-        $DotnetTargetVersionBand = $DotnetVersionBand + $SplitVersion[2].SubString(3) + $VersionSplitSymbol + $($SplitVersion[3])
+    if ($CurrentDotnetVersion -ge "7.0")
+    {
+        $IsPreviewVersion = $DotnetVersion.Contains("-preview") -or $DotnetVersion.Contains("-rc") -or $DotnetVersion.Contains("-alpha")
+        if ($IsPreviewVersion -and ($SplitVersion.Count -ge 4)) {
+            $DotnetTargetVersionBand = $DotnetVersionBand + $SplitVersion[2].SubString(3) + $VersionSplitSymbol + $($SplitVersion[3])
+        }
+        else {
+            $DotnetTargetVersionBand = $DotnetVersionBand
+        }
     }
     else {
         $DotnetTargetVersionBand = $DotnetVersionBand
