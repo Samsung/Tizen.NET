@@ -1,17 +1,36 @@
-# DOTNET6_VERSION
+# DOTNET_VERSION
 -include $(TMPDIR)/dotnet-version.config
 $(TMPDIR)/dotnet-version.config: $(TOP)/build/Versions.props
 	@mkdir -p $(TMPDIR)
-	@grep "<MicrosoftDotnetSdkInternalPackageVersion>" build/Versions.props | sed -e 's/<\/*MicrosoftDotnetSdkInternalPackageVersion>//g' -e 's/[ \t]*/DOTNET6_VERSION=/' > $@
-DOTNET6_VERSION_BAND = $(firstword $(subst -, ,$(DOTNET6_VERSION)))
+	@grep "<MicrosoftDotnetSdkInternalPackageVersion>" build/Versions.props | sed -e 's/<\/*MicrosoftDotnetSdkInternalPackageVersion>//g' -e 's/[ \t]*/DOTNET_VERSION=/' > $@
+DOTNET_VERSION_BAND = $(firstword $(subst -, ,$(DOTNET_VERSION)))
 
-# DOTNET6_DESTDIR
-ifeq ($(DESTDIR),)
-DOTNET6_DESTDIR = $(OUTDIR)/dotnet
-else
-DOTNET6_DESTDIR = $(abspath $(DESTDIR))
+IS_PRERELEASE=$(findstring -,$(DOTNET_VERSION))
+VERSIONS=$(shell echo $(DOTNET_VERSION) | tr "." "\n")
+ifneq ($(IS_PRERELEASE),)
+	VERSIONS := $(shell echo $(VERSIONS) | tr "-" "\n")
 endif
-DOTNET6_MANIFESTS_DESTDIR=$(DOTNET6_DESTDIR)/sdk-manifests/$(DOTNET6_VERSION_BAND)/samsung.net.sdk.tizen
+
+MAJOR = $(word 1,$(VERSIONS))
+MINOR = $(word 2,$(VERSIONS))
+BAND = $(word 3,$(VERSIONS))
+PRERELEASE = $(word 4,$(VERSIONS))
+PRERELEASE_VERSION = $(word 5,$(VERSIONS))
+
+# DOTNET_DESTDIR
+ifeq ($(DESTDIR),)
+	DOTNET_DESTDIR = $(OUTDIR)/dotnet
+else
+	DOTNET_DESTDIR = $(abspath $(DESTDIR))
+endif
+
+ifeq ($(MAJOR),6)
+	DOTNET6_MANIFESTS_DESTDIR := $(MAJOR).$(MINOR).$(BAND)
+	DOTNET_MANIFESTS_DESTDIR := $(DOTNET_DESTDIR)/sdk-manifests/$(DOTNET6_MANIFESTS_DESTDIR)/samsung.net.sdk.tizen
+else
+	DOTNET7_MANIFESTS_DESTDIR := $(MAJOR).$(MINOR).$(BAND)-$(PRERELEASE).$(PRERELEASE_VERSION)
+	DOTNET_MANIFESTS_DESTDIR = $(DOTNET_DESTDIR)/sdk-manifests/$(DOTNET7_MANIFESTS_DESTDIR)/samsung.net.sdk.tizen
+endif
 
 # TIZEN_WORKLOAD_VERSION
 -include $(TMPDIR)/workload-version.config
@@ -33,13 +52,14 @@ endif
 
 # PRERELEASE_TAG, PULLREQUEST_ID
 ifneq ($(PRERELEASE_TAG),)
-PRERELEASE_VERSION := $(PRERELEASE_TAG)
+	PRERELEASE_VERSION := $(PRERELEASE_TAG)
 else
-ifneq ($(PULLREQUEST_ID),)
-PRERELEASE_VERSION := ci.pr.gh$(PULLREQUEST_ID)
-else
-PRERELEASE_VERSION := ci.$(CURRENT_BRANCH)
-endif
+	ifneq ($(PULLREQUEST_ID),)
+		PRERELEASE_VERSION := ci.pr.gh$(PULLREQUEST_ID)
+	else
+		PRERELEASE_VERSION := ci.$(CURRENT_BRANCH)
+	endif
 endif
 
-TIZEN_WORKLOAD_VERSION_FULL := $(TIZEN_WORKLOAD_VERSION)
+TIZEN_WORKLOAD_VERSION_FULL := $(TIZEN_WORKLOAD_VERSION)-$(PRERELEASE_VERSION).$(TIZEN_COMMIT_DISTANCE)
+#TIZEN_WORKLOAD_VERSION_FULL := $(TIZEN_WORKLOAD_VERSION)
