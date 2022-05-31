@@ -126,6 +126,7 @@ LatestVersionMap=(
     "$MANIFEST_BASE_NAME-6.0.100=6.5.100-rc.1.120"
     "$MANIFEST_BASE_NAME-6.0.200=7.0.100-preview.13.6"
     "$MANIFEST_BASE_NAME-6.0.300=7.0.303"
+    "$MANIFEST_BASE_NAME-6.0.400=7.0.400-preview.1.0"
     )
 
 function getLatestVersion () {
