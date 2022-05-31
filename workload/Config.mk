@@ -5,13 +5,31 @@ $(TMPDIR)/dotnet-version.config: $(TOP)/build/Versions.props
 	@grep "<MicrosoftDotnetSdkInternalPackageVersion>" build/Versions.props | sed -e 's/<\/*MicrosoftDotnetSdkInternalPackageVersion>//g' -e 's/[ \t]*/DOTNET_VERSION=/' > $@
 DOTNET_VERSION_BAND = $(firstword $(subst -, ,$(DOTNET_VERSION)))
 
+IS_PRERELEASE=$(findstring -,$(DOTNET_VERSION))
+VERSIONS=$(shell echo $(DOTNET_VERSION) | tr "." "\n")
+ifneq ($(IS_PRERELEASE),)
+	VERSIONS := $(shell echo $(VERSIONS) | tr "-" "\n")
+endif
+
+MAJOR = $(word 1,$(VERSIONS))
+MINOR = $(word 2,$(VERSIONS))
+BAND = $(word 3,$(VERSIONS))
+PRERELEASE = $(word 4,$(VERSIONS))
+PRERELEASE_VERSION = $(word 5,$(VERSIONS))
+
 # DOTNET_DESTDIR
 ifeq ($(DESTDIR),)
 DOTNET_DESTDIR = $(OUTDIR)/dotnet
 else
 DOTNET_DESTDIR = $(abspath $(DESTDIR))
 endif
-DOTNET_MANIFESTS_DESTDIR=$(DOTNET_DESTDIR)/sdk-manifests/$(DOTNET_VERSION_BAND)/samsung.net.sdk.tizen
+
+ifeq ($(MAJOR),6)
+	DOTNET_MANIFESTS_DESTDIR=$(DOTNET_DESTDIR)/sdk-manifests/$(DOTNET_MANIFESTS_DESTDIR)/samsung.net.sdk.tizen
+else
+	DOTNET7_MANIFESTS_DESTDIR := $(MAJOR).$(MINOR).$(BAND)-$(PRERELEASE).$(PRERELEASE_VERSION)
+	DOTNET_MANIFESTS_DESTDIR=$(DOTNET_DESTDIR)/sdk-manifests/$(DOTNET7_MANIFESTS_DESTDIR)/samsung.net.sdk.tizen
+endif
 
 # TIZEN_WORKLOAD_VERSION
 -include $(TMPDIR)/workload-version.config
