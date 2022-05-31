@@ -17,8 +17,7 @@ DIRECTORIES += \
 $(DIRECTORIES):
 	@mkdir -p $@
 
-
-# Install dotnet 7.0 sdk for internal use
+# Install dotnet sdk for internal use
 DOTNET := $(DOTNET_DESTDIR)/dotnet
 
 $(DOTNET): | $(TMPDIR)/dotnet-install.sh
