@@ -9,8 +9,18 @@ workload manifest pack containing information about the Tizen .NET workload.
 <Project Sdk="Microsoft.Build.NoTargets">
 
   <PropertyGroup>
-    <!-- Hotfix for net7.0 version band to release -->
-    <DotNetPreviewVersionBand Condition=" '$(DotNetPreviewVersionBand)' == '' ">7.0.100-preview.6</DotNetPreviewVersionBand>
+    <!-- Trim all characters after first `-` or `+` is encountered. -->
+    <DotNetPreviewVersionBand Condition=" '$(DotNetPreviewVersionBand)' == '' ">$([System.Text.RegularExpressions.Regex]::Replace($(MicrosoftDotnetSdkInternalPackageVersion), `[-+].*$`, ""))</DotNetPreviewVersionBand>
+  </PropertyGroup>
+
+  <!-- Apply featured version band for net 7.0 or above -->
+  <PropertyGroup Condition=" '$(DotNetPreviewVersionBand.StartsWith(6))' == 'False' ">
+    <IsPreview Condition="$(MicrosoftDotnetSdkInternalPackageVersion.Contains('-preview'))">True</IsPreview>
+    <IsPreview Condition="$(MicrosoftDotnetSdkInternalPackageVersion.Contains('-rc'))">True</IsPreview>
+    <IsPreview Condition="$(MicrosoftDotnetSdkInternalPackageVersion.Contains('-alpha'))">True</IsPreview>
+    <PreviewTag Condition=" '$(IsPreview)' == 'True' ">$(MicrosoftDotnetSdkInternalPackageVersion.Replace(`-`, `.`).Split(`.`)[3])</PreviewTag>
+    <PreviewTagVersion Condition=" '$(IsPreview)' == 'True' ">$(MicrosoftDotnetSdkInternalPackageVersion.Replace(`-`, `.`).Split(`.`)[4])</PreviewTagVersion>
+    <DotNetPreviewVersionBand Condition=" '$(IsPreview)' == 'True' ">$(DotNetPreviewVersionBand)-$(PreviewTag).$(PreviewTagVersion)</DotNetPreviewVersionBand>
   </PropertyGroup>
 
   <PropertyGroup>
