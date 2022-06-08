@@ -5,17 +5,17 @@ $(TMPDIR)/dotnet-version.config: $(TOP)/build/Versions.props
 	@grep "<MicrosoftDotnetSdkInternalPackageVersion>" build/Versions.props | sed -e 's/<\/*MicrosoftDotnetSdkInternalPackageVersion>//g' -e 's/[ \t]*/DOTNET_VERSION=/' > $@
 DOTNET_VERSION_BAND = $(firstword $(subst -, ,$(DOTNET_VERSION)))
 
-IS_PRERELEASE=$(findstring -,$(DOTNET_VERSION))
+IS_PRERELEASE_DOTNET=$(findstring -,$(DOTNET_VERSION))
 VERSIONS=$(shell echo $(DOTNET_VERSION) | tr "." "\n")
-ifneq ($(IS_PRERELEASE),)
+ifneq ($(IS_PRERELEASE_DOTNET),)
 	VERSIONS := $(shell echo $(VERSIONS) | tr "-" "\n")
 endif
 
 MAJOR = $(word 1,$(VERSIONS))
 MINOR = $(word 2,$(VERSIONS))
 BAND = $(word 3,$(VERSIONS))
-PRERELEASE = $(word 4,$(VERSIONS))
-PRERELEASE_VERSION = $(word 5,$(VERSIONS))
+PRERELEASE_DOTNET = $(word 4,$(VERSIONS))
+PRERELEASE_DOTNET_VERSION = $(word 5,$(VERSIONS))
 
 # DOTNET_DESTDIR
 ifeq ($(DESTDIR),)
@@ -25,12 +25,15 @@ else
 endif
 
 ifeq ($(MAJOR),6)
-	DOTNET6_MANIFESTS_DESTDIR := $(MAJOR).$(MINOR).$(BAND)
-	DOTNET_MANIFESTS_DESTDIR := $(DOTNET_DESTDIR)/sdk-manifests/$(DOTNET6_MANIFESTS_DESTDIR)/samsung.net.sdk.tizen
+	DOTNET_VERSION_BAND := $(MAJOR).$(MINOR).$(BAND)
 else
-	DOTNET7_MANIFESTS_DESTDIR := $(MAJOR).$(MINOR).$(BAND)-$(PRERELEASE).$(PRERELEASE_VERSION)
-	DOTNET_MANIFESTS_DESTDIR = $(DOTNET_DESTDIR)/sdk-manifests/$(DOTNET7_MANIFESTS_DESTDIR)/samsung.net.sdk.tizen
+	ifneq ($(IS_PRERELEASE_DOTNET),)
+		DOTNET_VERSION_BAND := $(MAJOR).$(MINOR).$(BAND)-$(PRERELEASE_DOTNET).$(PRERELEASE_DOTNET_VERSION)
+	else
+		DOTNET_VERSION_BAND := $(MAJOR).$(MINOR).$(BAND)
+	endif
 endif
+DOTNET_MANIFESTS_DESTDIR = $(DOTNET_DESTDIR)/sdk-manifests/$(DOTNET_VERSION_BAND)/samsung.net.sdk.tizen
 
 # TIZEN_WORKLOAD_VERSION
 -include $(TMPDIR)/workload-version.config
@@ -45,9 +48,9 @@ CURRENT_HASH := $(shell git log -1 --pretty=%h)
 
 # BRANCH_NAME
 ifeq ($(BRANCH_NAME),)
-	CURRENT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
+	BRANCH_NAME := $(shell git rev-parse --abbrev-ref HEAD)
 else
-	CURRENT_BRANCH := $(BRANCH_NAME)
+	BRANCH_NAME := $(BRANCH_NAME)
 endif
 
 # PRERELEASE_TAG, PULLREQUEST_ID
@@ -57,7 +60,7 @@ else
 	ifneq ($(PULLREQUEST_ID),)
 		PRERELEASE_VERSION := ci.pr.gh$(PULLREQUEST_ID)
 	else
-		PRERELEASE_VERSION := ci.$(CURRENT_BRANCH)
+		PRERELEASE_VERSION := ci.$(BRANCH_NAME)
 	endif
 endif
 
