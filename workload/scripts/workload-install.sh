@@ -184,3 +184,5 @@ $DOTNET_INSTALL_DIR/dotnet workload install tizen --skip-manifest-update
 
 # Clean-up
 rm -fr $TMPDIR
+
+echo "Done installing Tizen workload $MANIFEST_VERSION"
