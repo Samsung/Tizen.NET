@@ -227,3 +227,5 @@ if (Test-Path $(Join-Path -Path $DotnetInstallDir -ChildPath "metadata\workloads
 
 # Clean up
 Remove-Item -Path $TempDir -Force -Recurse
+
+Write-Host "Done installing Tizen workload $Version"
