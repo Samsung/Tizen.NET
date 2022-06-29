@@ -21,6 +21,23 @@
       "description": "Overrides the package name in the tizen-manifest.xml",
       "datatype": "string",
       "replaces": "com.companyname.TizenApp1"
+    },
+    "framework": {
+      "type": "parameter",
+      "description": "Decide the target framework version",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "net6.0",
+          "description": "target framework version is net6.0-tizen"
+        },
+        {
+          "choice": "net7.0",
+          "description": "target framework version is net7.0-tizen"
+        }
+      ],
+      "replaces": "net7.0",
+      "defaultValue": "net7.0"
     }
   },
   "defaultName": "TizenApp1"
