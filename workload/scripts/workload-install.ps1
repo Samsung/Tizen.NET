@@ -33,7 +33,7 @@ $LatestVersionMap = @{
     "$ManifestBaseName-6.0.200" = "7.0.100-preview.13.6";
     "$ManifestBaseName-6.0.300" = "7.0.303"
     "$ManifestBaseName-6.0.400" = "7.0.400-preview.1.0"
-    "$ManifestBaseName-7.0.100-preview.6" = "7.0.100-preview.6.7";
+    "$ManifestBaseName-7.0.100-preview.6" = "7.0.100-preview.6.14";
 }
 
 function New-TemporaryDirectory {
