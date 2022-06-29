@@ -32,7 +32,8 @@ $LatestVersionMap = @{
     "$ManifestBaseName-6.0.100" = "6.5.100-rc.1.120";
     "$ManifestBaseName-6.0.200" = "7.0.100-preview.13.6";
     "$ManifestBaseName-6.0.300" = "7.0.303";
-    "$ManifestBaseName-6.0.400" = "7.0.400-preview.1.0"
+    "$ManifestBaseName-6.0.400" = "7.0.400-preview.1.0";
+    "$ManifestBaseName-7.0.100-preview.6" = "7.0.100-preview.6.14";
 }
 
 function New-TemporaryDirectory {
@@ -168,6 +169,7 @@ if ($DotnetTargetVersionBand -eq "<auto>") {
         $IsPreviewVersion = $DotnetVersion.Contains("-preview") -or $DotnetVersion.Contains("-rc") -or $DotnetVersion.Contains("-alpha")
         if ($IsPreviewVersion -and ($SplitVersion.Count -ge 4)) {
             $DotnetTargetVersionBand = $DotnetVersionBand + $SplitVersion[2].SubString(3) + $VersionSplitSymbol + $($SplitVersion[3])
+            $ManifestName = "$ManifestBaseName-$DotnetTargetVersionBand"
         }
         else {
             $DotnetTargetVersionBand = $DotnetVersionBand

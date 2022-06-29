@@ -114,6 +114,7 @@ if [[ "$DOTNET_TARGET_VERSION_BAND" == "<auto>" ]]; then
     if [[ "$CURRENT_DOTNET_VERSION" -ge "7" ]]; then
         if [[ "$DOTNET_VERSION" == *"-preview"* || $DOTNET_VERSION == *"-rc"* || $DOTNET_VERSION == *"-alpha"* ]] && [[ ${#array[@]} -ge 4 ]]; then
             DOTNET_TARGET_VERSION_BAND="$DOTNET_VERSION_BAND${array[2]:3}.${array[3]}"
+            MANIFEST_NAME="$MANIFEST_BASE_NAME-$DOTNET_TARGET_VERSION_BAND"
         else
             DOTNET_TARGET_VERSION_BAND=$DOTNET_VERSION_BAND
         fi
@@ -127,6 +128,7 @@ LatestVersionMap=(
     "$MANIFEST_BASE_NAME-6.0.200=7.0.100-preview.13.6"
     "$MANIFEST_BASE_NAME-6.0.300=7.0.303"
     "$MANIFEST_BASE_NAME-6.0.400=7.0.400-preview.1.0"
+    "$MANIFEST_BASE_NAME-7.0.100-preview.6=7.0.100-preview.6.14"
     )
 
 function getLatestVersion () {
