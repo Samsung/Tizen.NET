@@ -48,7 +48,7 @@ CURRENT_HASH := $(shell git log -1 --pretty=%h)
 
 # BRANCH_NAME
 ifeq ($(BRANCH_NAME),)
-	BRANCH_NAME := $(shell git rev-parse --abbrev-ref HEAD)
+	BRANCH_NAME := $(shell git rev-parse --abbrev-ref HEAD | sed 's/.*\///')
 else
 	BRANCH_NAME := $(BRANCH_NAME)
 endif
