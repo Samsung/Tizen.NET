@@ -4,11 +4,14 @@ on:
   push:
     branches:
     - main
+    - net7.0
     paths:
     - 'workload/**'
     - '.github/workflows/**'
   pull_request:
-    branches: [ main ]
+    branches:
+    - main
+    - net7.0
     paths:
     - 'workload/**'
     - '.github/workflows/**'

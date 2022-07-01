@@ -31,9 +31,9 @@ $SupportedDotnetVersion = [Version]"6.0"
 $LatestVersionMap = @{
     "$ManifestBaseName-6.0.100" = "6.5.100-rc.1.120";
     "$ManifestBaseName-6.0.200" = "7.0.100-preview.13.6";
-    "$ManifestBaseName-6.0.300" = "7.0.303"
-    "$ManifestBaseName-6.0.400" = "7.0.400-preview.1.0"
-    "$ManifestBaseName-7.0.100-preview.6" = "7.0.100-preview.6.7";
+    "$ManifestBaseName-6.0.300" = "7.0.303";
+    "$ManifestBaseName-6.0.400" = "7.0.400-preview.1.0";
+    "$ManifestBaseName-7.0.100-preview.6" = "7.0.100-preview.6.14";
 }
 
 function New-TemporaryDirectory {
@@ -229,3 +229,5 @@ if (Test-Path $(Join-Path -Path $DotnetInstallDir -ChildPath "metadata\workloads
 
 # Clean up
 Remove-Item -Path $TempDir -Force -Recurse
+
+Write-Host "Done installing Tizen workload $Version"
