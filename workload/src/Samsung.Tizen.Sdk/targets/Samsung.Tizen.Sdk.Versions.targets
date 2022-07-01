@@ -45,7 +45,6 @@ Copyright (c) Samsung All rights reserved.
   </ItemGroup>
 
   <ItemGroup>
-
     <KnownFrameworkReference
       Include="Samsung.Tizen"
       TargetFramework="net7.0-tizen7.0"
