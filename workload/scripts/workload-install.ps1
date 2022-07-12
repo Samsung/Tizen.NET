@@ -195,16 +195,20 @@ Ensure-Directory $ManifestDir
 if (Test-Path $TizenManifestFile) {
     $ManifestJson = $(Get-Content $TizenManifestFile | ConvertFrom-Json)
     $OldVersion = $ManifestJson.version
-    if ($OldVersion -ne $Version) {
-        Write-Host "Removing $ManifestName/$OldVersion from $ManifestDir..."
-        Remove-Pack -Id $ManifestName -Version $OldVersion -Kind "manifest"
-        $ManifestJson.packs.PSObject.Properties | ForEach-Object {
-            Write-Host "Removing $($_.Name)/$($_.Value.version)..."
-            Remove-Pack -Id $_.Name -Version $_.Value.version -Kind $_.Value.kind
+    if ($OldVersion -eq $Version) {
+        $DotnetWorkloadList = Invoke-Expression "& '$DotnetCommand' workload list | Select-String -Pattern '^tizen'"
+        if ($DotnetWorkloadList)
+        {
+            Write-Host "$Version version is already installed."
+            Exit 0
         }
-    } else {
-        Write-Host "$Version version is already installed."
-        Exit 0
+    }
+
+    Write-Host "Removing $ManifestName/$OldVersion from $ManifestDir..."
+    Remove-Pack -Id $ManifestName -Version $OldVersion -Kind "manifest"
+    $ManifestJson.packs.PSObject.Properties | ForEach-Object {
+        Write-Host "Removing $($_.Name)/$($_.Value.version)..."
+        Remove-Pack -Id $_.Name -Version $_.Value.version -Kind $_.Value.kind
     }
 }
 
