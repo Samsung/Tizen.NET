@@ -196,16 +196,17 @@ if (Test-Path $TizenManifestFile) {
     $ManifestJson = $(Get-Content $TizenManifestFile | ConvertFrom-Json)
     $OldVersion = $ManifestJson.version
     if ($OldVersion -eq $Version) {
-        $DotnetWorkloadList = Invoke-Expression "& '$DotnetCommand' workload list"
+        $DotnetWorkloadList = Invoke-Expression "& '$DotnetCommand' workload list | Select-String 'tizen'"
         foreach ($Item in $DotnetWorkloadList)
         {
-            if ($Item.StartsWith("tizen"))
+            if ($Item.Line.StartsWith("tizen"))
             {
                 Write-Host "$Version version is already installed."
                 Exit 0
             }
         }
     }
+
     Write-Host "Removing $ManifestName/$OldVersion from $ManifestDir..."
     Remove-Pack -Id $ManifestName -Version $OldVersion -Kind "manifest"
     $ManifestJson.packs.PSObject.Properties | ForEach-Object {
