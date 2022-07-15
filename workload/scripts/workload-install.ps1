@@ -145,7 +145,7 @@ function Install-TizenWorkload([string]$DotnetVersion)
     $DotnetVersionBand = $SplitVersion[0] + $VersionSplitSymbol + $SplitVersion[1] + $VersionSplitSymbol + $SplitVersion[2][0] + "00"
     $ManifestName = "$ManifestBaseName-$DotnetVersionBand"
 
-    if ($DotnetTargetVersionBand -eq "<auto>") {
+    if ($DotnetTargetVersionBand -eq "<auto>" -or $UpdateAllWorkloads.IsPresent) {
         if ($CurrentDotnetVersion -ge "7.0")
         {
             $IsPreviewVersion = $DotnetVersion.Contains("-preview") -or $DotnetVersion.Contains("-rc") -or $DotnetVersion.Contains("-alpha")
@@ -163,7 +163,7 @@ function Install-TizenWorkload([string]$DotnetVersion)
     }
 
     # Check latest version of manifest.
-    if ($Version -eq "<latest>") {
+    if ($Version -eq "<latest>" -or $UpdateAllWorkloads.IsPresent) {
         $Version = Get-LatestVersion -Id $ManifestName
     }
 
