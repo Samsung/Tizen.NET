@@ -27,7 +27,6 @@ $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
 
 $ManifestBaseName = "Samsung.NET.Sdk.Tizen.Manifest"
-$SupportedDotnetVersion = [Version]"6.0"
 
 $LatestVersionMap = @{
     "$ManifestBaseName-6.0.100" = "6.5.100-rc.1.120";
@@ -137,11 +136,6 @@ function Install-TizenWorkload([string]$DotnetVersion)
     $SplitVersion = $DotnetVersion.Split($VersionSplitSymbol)
 
     $CurrentDotnetVersion = [Version]"$($SplitVersion[0]).$($SplitVersion[1])"
-    if ($CurrentDotnetVersion -lt $SupportedDotnetVersion)
-    {
-        Write-Host "Current .NET version is $CurrentDotnetVersion. .NET SDK version $SupportedDotnetVersion or later is required."
-        Exit 0
-    }
     $DotnetVersionBand = $SplitVersion[0] + $VersionSplitSymbol + $SplitVersion[1] + $VersionSplitSymbol + $SplitVersion[2][0] + "00"
     $ManifestName = "$ManifestBaseName-$DotnetVersionBand"
 
@@ -250,16 +244,24 @@ else
     Write-Error "'$DotnetCommand' occurs an error."
 }
 
-foreach ($DotnetSdk in $InstalledDotnetSdks)
+if (-Not $InstalledDotnetSdks)
 {
-    try {
-        Write-Host "`nCheck Tizen Workload for sdk $DotnetSdk"
-        Install-TizenWorkload -DotnetVersion $DotnetSdk
-    }
-    catch {
-        Write-Host "Failed to install Tizen Workload for sdk $DotnetSdk"
-        Write-Host "$_"
-        Continue
+    Write-Host "`n.NET SDK version 6 or later is required to install Tizen Workload."
+}
+else
+{
+    foreach ($DotnetSdk in $InstalledDotnetSdks)
+    {
+        try {
+            Write-Host "`nCheck Tizen Workload for sdk $DotnetSdk"
+            Install-TizenWorkload -DotnetVersion $DotnetSdk
+        }
+        catch {
+            Write-Host "Failed to install Tizen Workload for sdk $DotnetSdk"
+            Write-Host "$_"
+            Continue
+        }
     }
 }
+
 Write-Host "`nDone"
