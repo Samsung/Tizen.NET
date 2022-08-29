@@ -37,13 +37,3 @@ jobs:
                       -s https://api.nuget.org/v3/index.json \
                       -t 3000
 
-    - name: Upload msi package to S3
-      uses: TizenAPI/tizenfx-build-actions/s3-upload@master
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      with:
-        region: ap-northeast-2
-        bucket: workload-bin
-        file: ./workload/out/windows/Samsung.NET.Workload.Tizen.*.msi
-        folder: windows
