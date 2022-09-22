@@ -35,6 +35,8 @@ $LatestVersionMap = @{
     "$ManifestBaseName-6.0.400" = "7.0.400";
     "$ManifestBaseName-7.0.100-preview.6" = "7.0.100-preview.6.14";
     "$ManifestBaseName-7.0.100-preview.7" = "7.0.100-preview.7.20";
+    "$ManifestBaseName-7.0.100-rc.1" = "7.0.100-rc.1.22";
+    "$ManifestBaseName-7.0.100-rc.2" = "7.0.100-rc.2.24";
 }
 
 function New-TemporaryDirectory {
@@ -203,8 +205,10 @@ function Install-TizenWorkload([string]$DotnetVersion)
     }
 
     # Add tizen to the installed workload metadata.
-    New-Item -Path $(Join-Path -Path $DotnetInstallDir -ChildPath "metadata\workloads\$DotnetTargetVersionBand\InstalledWorkloads\tizen") -Force | Out-Null
-    if (Test-Path $(Join-Path -Path $DotnetInstallDir -ChildPath "metadata\workloads\$DotnetTargetVersionBand\InstallerType\msi")) {
+    # Featured version band for metadata does NOT include any preview specifier.
+    # https://github.com/dotnet/sdk/blob/main/documentation/general/workloads/user-local-workloads.md
+    New-Item -Path $(Join-Path -Path $DotnetInstallDir -ChildPath "metadata\workloads\$DotnetVersionBand\InstalledWorkloads\tizen") -Force | Out-Null
+    if (Test-Path $(Join-Path -Path $DotnetInstallDir -ChildPath "metadata\workloads\$DotnetVersionBand\InstallerType\msi")) {
         New-Item -Path "HKLM:\SOFTWARE\Microsoft\dotnet\InstalledWorkloads\Standalone\x64\$DotnetTargetVersionBand\tizen" -Force | Out-Null
     }
 
