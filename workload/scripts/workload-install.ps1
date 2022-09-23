@@ -18,7 +18,8 @@ Dotnet SDK Location installed
 param(
     [Alias('v')][string]$Version="<latest>",
     [Alias('d')][string]$DotnetInstallDir="<auto>",
-    [Alias('t')][string]$DotnetTargetVersionBand="<auto>"
+    [Alias('t')][string]$DotnetTargetVersionBand="<auto>",
+    [Alias('u')][switch]$UpdateAllWorkloads
 )
 
 Set-StrictMode -Version Latest
@@ -26,15 +27,16 @@ $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
 
 $ManifestBaseName = "Samsung.NET.Sdk.Tizen.Manifest"
-$SupportedDotnetVersion = [Version]"6.0"
 
 $LatestVersionMap = @{
     "$ManifestBaseName-6.0.100" = "6.5.100-rc.1.120";
     "$ManifestBaseName-6.0.200" = "7.0.100-preview.13.6";
-    "$ManifestBaseName-6.0.300" = "7.0.303";
-    "$ManifestBaseName-6.0.400" = "7.0.400-preview.2.6";
+    "$ManifestBaseName-6.0.300" = "7.0.304";
+    "$ManifestBaseName-6.0.400" = "7.0.400";
     "$ManifestBaseName-7.0.100-preview.6" = "7.0.100-preview.6.14";
     "$ManifestBaseName-7.0.100-preview.7" = "7.0.100-preview.7.20";
+    "$ManifestBaseName-7.0.100-rc.1" = "7.0.100-rc.1.22";
+    "$ManifestBaseName-7.0.100-rc.2" = "7.0.100-rc.2.24";
 }
 
 function New-TemporaryDirectory {
@@ -45,7 +47,7 @@ function New-TemporaryDirectory {
 
 function Ensure-Directory([string]$TestDir) {
     Try {
-        New-Item -ItemType Directory -Path $TestDir -Force -ErrorAction stop
+        New-Item -ItemType Directory -Path $TestDir -Force -ErrorAction stop | Out-Null
         [io.file]::OpenWrite($(Join-Path -Path $TestDir -ChildPath ".test-write-access")).Close()
         Remove-Item -Path $(Join-Path -Path $TestDir -ChildPath ".test-write-access") -Force
     }
@@ -130,6 +132,92 @@ function Remove-Pack([string]$Id, [string]$Version, [string]$Kind) {
     }
 }
 
+function Install-TizenWorkload([string]$DotnetVersion)
+{
+    $VersionSplitSymbol = '.'
+    $SplitVersion = $DotnetVersion.Split($VersionSplitSymbol)
+
+    $CurrentDotnetVersion = [Version]"$($SplitVersion[0]).$($SplitVersion[1])"
+    $DotnetVersionBand = $SplitVersion[0] + $VersionSplitSymbol + $SplitVersion[1] + $VersionSplitSymbol + $SplitVersion[2][0] + "00"
+    $ManifestName = "$ManifestBaseName-$DotnetVersionBand"
+
+    if ($DotnetTargetVersionBand -eq "<auto>" -or $UpdateAllWorkloads.IsPresent) {
+        if ($CurrentDotnetVersion -ge "7.0")
+        {
+            $IsPreviewVersion = $DotnetVersion.Contains("-preview") -or $DotnetVersion.Contains("-rc") -or $DotnetVersion.Contains("-alpha")
+            if ($IsPreviewVersion -and ($SplitVersion.Count -ge 4)) {
+                $DotnetTargetVersionBand = $DotnetVersionBand + $SplitVersion[2].SubString(3) + $VersionSplitSymbol + $($SplitVersion[3])
+                $ManifestName = "$ManifestBaseName-$DotnetTargetVersionBand"
+            }
+            else {
+                $DotnetTargetVersionBand = $DotnetVersionBand
+            }
+        }
+        else {
+            $DotnetTargetVersionBand = $DotnetVersionBand
+        }
+    }
+
+    # Check latest version of manifest.
+    if ($Version -eq "<latest>" -or $UpdateAllWorkloads.IsPresent) {
+        $Version = Get-LatestVersion -Id $ManifestName
+    }
+
+    # Check workload manifest directory.
+    $ManifestDir = Join-Path -Path $DotnetInstallDir -ChildPath "sdk-manifests" | Join-Path -ChildPath $DotnetTargetVersionBand
+    $TizenManifestDir = Join-Path -Path $ManifestDir -ChildPath "samsung.net.sdk.tizen"
+    $TizenManifestFile = Join-Path -Path $TizenManifestDir -ChildPath "WorkloadManifest.json"
+
+    # Check and remove already installed old version.
+    if (Test-Path $TizenManifestFile) {
+        $ManifestJson = $(Get-Content $TizenManifestFile | ConvertFrom-Json)
+        $OldVersion = $ManifestJson.version
+        if ($OldVersion -eq $Version) {
+            $DotnetWorkloadList = Invoke-Expression "& '$DotnetCommand' workload list | Select-String -Pattern '^tizen'"
+            if ($DotnetWorkloadList)
+            {
+                Write-Host "Tizen Workload $Version version is already installed."
+                Continue
+            }
+        }
+
+        Ensure-Directory $ManifestDir
+        Write-Host "Removing $ManifestName/$OldVersion from $ManifestDir..."
+        Remove-Pack -Id $ManifestName -Version $OldVersion -Kind "manifest"
+        $ManifestJson.packs.PSObject.Properties | ForEach-Object {
+            Write-Host "Removing $($_.Name)/$($_.Value.version)..."
+            Remove-Pack -Id $_.Name -Version $_.Value.version -Kind $_.Value.kind
+        }
+    }
+
+    Ensure-Directory $ManifestDir
+    $TempDir = $(New-TemporaryDirectory)
+
+    # Install workload manifest.
+    Write-Host "Installing $ManifestName/$Version to $ManifestDir..."
+    Install-Pack -Id $ManifestName -Version $Version -Kind "manifest"
+
+    # Download and install workload packs.
+    $NewManifestJson = $(Get-Content $TizenManifestFile | ConvertFrom-Json)
+    $NewManifestJson.packs.PSObject.Properties | ForEach-Object {
+        Write-Host "Installing $($_.Name)/$($_.Value.version)..."
+        Install-Pack -Id $_.Name -Version $_.Value.version -Kind $_.Value.kind
+    }
+
+    # Add tizen to the installed workload metadata.
+    # Featured version band for metadata does NOT include any preview specifier.
+    # https://github.com/dotnet/sdk/blob/main/documentation/general/workloads/user-local-workloads.md
+    New-Item -Path $(Join-Path -Path $DotnetInstallDir -ChildPath "metadata\workloads\$DotnetVersionBand\InstalledWorkloads\tizen") -Force | Out-Null
+    if (Test-Path $(Join-Path -Path $DotnetInstallDir -ChildPath "metadata\workloads\$DotnetVersionBand\InstallerType\msi")) {
+        New-Item -Path "HKLM:\SOFTWARE\Microsoft\dotnet\InstalledWorkloads\Standalone\x64\$DotnetTargetVersionBand\tizen" -Force | Out-Null
+    }
+
+    # Clean up
+    Remove-Item -Path $TempDir -Force -Recurse
+
+    Write-Host "Done installing Tizen workload $Version"
+}
+
 # Check dotnet install directory.
 if ($DotnetInstallDir -eq "<auto>") {
     if ($Env:DOTNET_ROOT -And $(Test-Path "$Env:DOTNET_ROOT")) {
@@ -146,89 +234,38 @@ if (-Not $(Test-Path "$DotnetInstallDir")) {
 $DotnetCommand = "$DotnetInstallDir\dotnet"
 if (Get-Command $DotnetCommand -ErrorAction SilentlyContinue)
 {
-    $DotnetVersion = Invoke-Expression "& '$DotnetCommand' --version"
-    $VersionSplitSymbol = '.'
-    $SplitVersion = $DotnetVersion.Split($VersionSplitSymbol)
-
-    $CurrentDotnetVersion = [Version]"$($SplitVersion[0]).$($SplitVersion[1])"
-    if ($CurrentDotnetVersion -lt $SupportedDotnetVersion)
+    if ($UpdateAllWorkloads.IsPresent)
     {
-        Write-Host "Current .NET version is $CurrentDotnetVersion. .NET SDK version $SupportedDotnetVersion or later is required."
-        Exit 0
+        $InstalledDotnetSdks = Invoke-Expression "& '$DotnetCommand' --list-sdks | Select-String -Pattern '^6|^7'" | ForEach-Object {$_ -replace (" \[.*","")}
     }
-    $DotnetVersionBand = $SplitVersion[0] + $VersionSplitSymbol + $SplitVersion[1] + $VersionSplitSymbol + $SplitVersion[2][0] + "00"
-    $ManifestName = "$ManifestBaseName-$DotnetVersionBand"
+    else
+    {
+        $InstalledDotnetSdks = Invoke-Expression "& '$DotnetCommand' --version"
+    }
 }
 else
 {
     Write-Error "'$DotnetCommand' occurs an error."
 }
 
-if ($DotnetTargetVersionBand -eq "<auto>") {
-    if ($CurrentDotnetVersion -ge "7.0")
+if (-Not $InstalledDotnetSdks)
+{
+    Write-Host "`n.NET SDK version 6 or later is required to install Tizen Workload."
+}
+else
+{
+    foreach ($DotnetSdk in $InstalledDotnetSdks)
     {
-        $IsPreviewVersion = $DotnetVersion.Contains("-preview") -or $DotnetVersion.Contains("-rc") -or $DotnetVersion.Contains("-alpha")
-        if ($IsPreviewVersion -and ($SplitVersion.Count -ge 4)) {
-            $DotnetTargetVersionBand = $DotnetVersionBand + $SplitVersion[2].SubString(3) + $VersionSplitSymbol + $($SplitVersion[3])
-            $ManifestName = "$ManifestBaseName-$DotnetTargetVersionBand"
+        try {
+            Write-Host "`nCheck Tizen Workload for sdk $DotnetSdk"
+            Install-TizenWorkload -DotnetVersion $DotnetSdk
         }
-        else {
-            $DotnetTargetVersionBand = $DotnetVersionBand
+        catch {
+            Write-Host "Failed to install Tizen Workload for sdk $DotnetSdk"
+            Write-Host "$_"
+            Continue
         }
-    }
-    else {
-        $DotnetTargetVersionBand = $DotnetVersionBand
     }
 }
 
-# Check latest version of manifest.
-if ($Version -eq "<latest>") {
-    $Version = Get-LatestVersion -Id $ManifestName
-}
-
-# Check workload manifest directory.
-$ManifestDir = Join-Path -Path $DotnetInstallDir -ChildPath "sdk-manifests" | Join-Path -ChildPath $DotnetTargetVersionBand
-$TizenManifestDir = Join-Path -Path $ManifestDir -ChildPath "samsung.net.sdk.tizen"
-$TizenManifestFile = Join-Path -Path $TizenManifestDir -ChildPath "WorkloadManifest.json"
-Ensure-Directory $ManifestDir
-
-# Check and remove already installed old version.
-if (Test-Path $TizenManifestFile) {
-    $ManifestJson = $(Get-Content $TizenManifestFile | ConvertFrom-Json)
-    $OldVersion = $ManifestJson.version
-    if ($OldVersion -ne $Version) {
-        Write-Host "Removing $ManifestName/$OldVersion from $ManifestDir..."
-        Remove-Pack -Id $ManifestName -Version $OldVersion -Kind "manifest"
-        $ManifestJson.packs.PSObject.Properties | ForEach-Object {
-            Write-Host "Removing $($_.Name)/$($_.Value.version)..."
-            Remove-Pack -Id $_.Name -Version $_.Value.version -Kind $_.Value.kind
-        }
-    } else {
-        Write-Host "$Version version is already installed."
-        Exit 0
-    }
-}
-
-$TempDir = $(New-TemporaryDirectory)
-
-# Install workload manifest.
-Write-Host "Installing $ManifestName/$Version to $ManifestDir..."
-Install-Pack -Id $ManifestName -Version $Version -Kind "manifest"
-
-# Download and install workload packs.
-$NewManifestJson = $(Get-Content $TizenManifestFile | ConvertFrom-Json)
-$NewManifestJson.packs.PSObject.Properties | ForEach-Object {
-    Write-Host "Installing $($_.Name)/$($_.Value.version)..."
-    Install-Pack -Id $_.Name -Version $_.Value.version -Kind $_.Value.kind
-}
-
-# Add tizen to the installed workload metadata.
-New-Item -Path $(Join-Path -Path $DotnetInstallDir -ChildPath "metadata\workloads\$DotnetTargetVersionBand\InstalledWorkloads\tizen") -Force | Out-Null
-if (Test-Path $(Join-Path -Path $DotnetInstallDir -ChildPath "metadata\workloads\$DotnetTargetVersionBand\InstallerType\msi")) {
-    New-Item -Path "HKLM:\SOFTWARE\Microsoft\dotnet\InstalledWorkloads\Standalone\x64\$DotnetTargetVersionBand\tizen" -Force | Out-Null
-}
-
-# Clean up
-Remove-Item -Path $TempDir -Force -Recurse
-
-Write-Host "Done installing Tizen workload $Version"
+Write-Host "`nDone"
