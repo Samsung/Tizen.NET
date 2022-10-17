@@ -39,6 +39,7 @@ Tizen.Location.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.Location.Geofence.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.Log.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.MachineLearning.Inference.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
+Tizen.MachineLearning.Train.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.Maps.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.Messaging.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.Messaging.Push.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
@@ -67,6 +68,7 @@ Tizen.Nlp.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.NUI.Components.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.NUI.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.NUI.Extension.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
+Tizen.NUI.Scene3D.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.NUI.Wearable.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.NUI.WindowSystem.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.PhonenumberUtils.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
@@ -84,6 +86,7 @@ Tizen.System.Information.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.System.MediaKey.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.System.PlatformConfig.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.System.PowerUsage.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
+Tizen.System.Resource.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.System.Storage.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.System.SystemSettings.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.System.Usb.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
@@ -91,6 +94,7 @@ Tizen.Telephony.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.Tracer.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.Uix.InputMethod.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.Uix.InputMethodManager.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
+Tizen.Uix.Sticker.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.Uix.Stt.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.Uix.SttEngine.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
 Tizen.Uix.Tts.dll|Samsung.Tizen.Ref|4.0.0.0|4.0.0.0
