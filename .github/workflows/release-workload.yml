@@ -6,6 +6,11 @@ on:
       prerelease:
         description: 'Pre-release tag name'
         required: true
+      isStableRelease:
+        description: 'Stable release?'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   release:
@@ -21,6 +26,7 @@ jobs:
     - name: Build
       env:
         PRERELEASE_TAG: ${{ github.event.inputs.prerelease }}
+        IS_STABLE_RELEASE_TAG: ${{ fromJson(github.event.inputs.isStableRelease) }}
       run: make msi
       working-directory: ./workload
 
