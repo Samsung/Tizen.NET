@@ -26,7 +26,7 @@
     This version is used to generate Samsung.Tizen.Ref package.
   -->
   <PropertyGroup>
-    <TizenFXVersion>10.0.0.17305</TizenFXVersion>
+    <TizenFXVersion>10.0.0.17515</TizenFXVersion>
   </PropertyGroup>
 
   <!--
