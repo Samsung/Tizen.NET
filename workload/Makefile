@@ -21,7 +21,7 @@ $(DIRECTORIES):
 DOTNET := $(DOTNET_DESTDIR)/dotnet
 
 $(DOTNET): | $(TMPDIR)/dotnet-install.sh
-	@bash $(TMPDIR)/dotnet-install.sh -v $(DOTNET_VERSION) -i $(DOTNET_DESTDIR)
+	@bash $(TMPDIR)/dotnet-install.sh -v 7.0.100-rtm.22519.39 -i $(DOTNET_DESTDIR)
 
 $(TMPDIR)/dotnet-install.sh: | $(OUTDIR)
 	@curl -o $@ \
