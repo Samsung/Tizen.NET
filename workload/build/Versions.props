@@ -2,8 +2,8 @@
   <!--
     Workload version:
     * The first two numbers represent the major and minor version of the Tizen OS.
-    * The third number is the sdk version band with release count.
-    * However, the first digit of the third number starts at 100.
+    * The third number is the workload release count.
+    * However, the first digit of the third number starts at 101.
 
     Pre-release version:
     1) CI Versions
