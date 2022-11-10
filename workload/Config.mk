@@ -5,15 +5,17 @@ $(TMPDIR)/dotnet-version.config: $(TOP)/build/Versions.props
 	@grep "<MicrosoftDotnetSdkInternalPackageVersion>" build/Versions.props | sed -e 's/<\/*MicrosoftDotnetSdkInternalPackageVersion>//g' -e 's/[ \t]*/DOTNET_VERSION=/' > $@
 DOTNET_VERSION_BAND = $(firstword $(subst -, ,$(DOTNET_VERSION)))
 
-IS_PRERELEASE_DOTNET=$(findstring -,$(DOTNET_VERSION))
+IS_PRERELEASE=$(findstring -,$(DOTNET_VERSION))
 VERSIONS=$(shell echo $(DOTNET_VERSION) | tr "." "\n")
-ifneq ($(IS_PRERELEASE_DOTNET),)
+ifneq ($(IS_PRERELEASE),)
 	VERSIONS := $(shell echo $(VERSIONS) | tr "-" "\n")
 endif
 
 MAJOR = $(word 1,$(VERSIONS))
 MINOR = $(word 2,$(VERSIONS))
-BAND = $(word 3,$(VERSIONS))
+MICRO = $(word 3,$(VERSIONS))
+BAND := $(shell echo "${MICRO}" |  cut -c1)00
+
 PRERELEASE_DOTNET = $(word 4,$(VERSIONS))
 PRERELEASE_DOTNET_VERSION = $(word 5,$(VERSIONS))
 
@@ -25,15 +27,18 @@ else
 endif
 
 ifeq ($(MAJOR),6)
+	DOTNET6_MANIFESTS_DESTDIR := $(MAJOR).$(MINOR).$(BAND)
+	DOTNET_MANIFESTS_DESTDIR := $(DOTNET_DESTDIR)/sdk-manifests/$(DOTNET6_MANIFESTS_DESTDIR)/samsung.net.sdk.tizen
 	DOTNET_VERSION_BAND := $(MAJOR).$(MINOR).$(BAND)
 else
-	ifneq ($(IS_PRERELEASE_DOTNET),)
-		DOTNET_VERSION_BAND := $(MAJOR).$(MINOR).$(BAND)-$(PRERELEASE_DOTNET).$(PRERELEASE_DOTNET_VERSION)
+	ifneq ($(IS_PRERELEASE),)
+		DOTNET_VERSION_BAND := $(MAJOR).$(MINOR).$(MICRO)-$(PRERELEASE_DOTNET).$(PRERELEASE_DOTNET_VERSION)
 	else
-		DOTNET_VERSION_BAND := $(MAJOR).$(MINOR).$(BAND)
+		DOTNET_VERSION_BAND := $(MAJOR).$(MINOR).$(MICRO)
 	endif
+	DOTNET_MANIFESTS_DESTDIR = $(DOTNET_DESTDIR)/sdk-manifests/$(DOTNET_VERSION_BAND)/samsung.net.sdk.tizen
 endif
-DOTNET_MANIFESTS_DESTDIR = $(DOTNET_DESTDIR)/sdk-manifests/$(DOTNET_VERSION_BAND)/samsung.net.sdk.tizen
+
 
 # TIZEN_WORKLOAD_VERSION
 -include $(TMPDIR)/workload-version.config
@@ -48,7 +53,7 @@ CURRENT_HASH := $(shell git log -1 --pretty=%h)
 
 # BRANCH_NAME
 ifeq ($(BRANCH_NAME),)
-	CURRENT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD | sed 's/.*\///')
+	CURRENT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 else
 	CURRENT_BRANCH := $(BRANCH_NAME)
 endif
