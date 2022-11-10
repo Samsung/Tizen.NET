@@ -29,7 +29,7 @@ $ProgressPreference = "SilentlyContinue"
 $ManifestBaseName = "Samsung.NET.Sdk.Tizen.Manifest"
 
 $LatestVersionMap = @{
-    "$ManifestBaseName-6.0.100" = "6.5.100-rc.1.120";
+    "$ManifestBaseName-6.0.100" = "7.0.101";
     "$ManifestBaseName-6.0.200" = "7.0.100-preview.13.6";
     "$ManifestBaseName-6.0.300" = "7.0.304";
     "$ManifestBaseName-6.0.400" = "7.0.400";
@@ -37,6 +37,7 @@ $LatestVersionMap = @{
     "$ManifestBaseName-7.0.100-preview.7" = "7.0.100-preview.7.20";
     "$ManifestBaseName-7.0.100-rc.1" = "7.0.100-rc.1.22";
     "$ManifestBaseName-7.0.100-rc.2" = "7.0.100-rc.2.24";
+    "$ManifestBaseName-7.0.100" = "7.0.100";
 }
 
 function New-TemporaryDirectory {
