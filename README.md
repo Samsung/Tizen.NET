@@ -22,7 +22,6 @@ Tizen .NET is :
 
 **- Tizen .NET Workload**
   * [Installing Tizen .NET Workload using Visual Studio / Visual Studio Code / CLI](https://github.com/Samsung/Tizen.NET/wiki/Installing-Tizen-.NET-Workload).
-  > This is an early preview of Tizen in .NET 6 not for production use. Expect breaking changes as this is still in development for .NET 6.
 
 ## Getting Started with Visual Studio 2022
 See [here](https://github.com/Samsung/Tizen.NET/wiki/Build-your-first-(.NET6)-Tizen-App-using-Visual-Studio-2022) for more details.
@@ -64,7 +63,7 @@ When the project is successfully created, the following files are created.
     └── tizen-manifest.xml
 ```
 
-> This is a Tizen .NET app, not a .NET MAUI app. A .NET MAUI app that supports Tizen is currently under development and will be released as soon as possible.
+> This is a Tizen .NET app, not a .NET MAUI app.
 
 
 #### 3. Build the application
@@ -93,9 +92,8 @@ Time Elapsed 00:00:04.83
 ```
 
 #### 4. Run the application 
-Unfortunately `dotnet run` is not yet integrated. So for now you need to use `sdb` to install the app.
 ```sh
-sdb install bin/Debug/net6.0-tizen/com.companyname.HelloTizenNet6-1.0.0.tpk
+dotnet build HelloTizenNet6/HelloTizenNet6.csproj -f net6.0-tizen -t:Run
 ```
 
-> Tizen emulators and devices that support .NET 6 have not yet been officially released, and we will announce a binary for testing soon.
+> ℹ️ You need to use Tizen emulator 7.0 or higher version to run .NET 6 based app.
