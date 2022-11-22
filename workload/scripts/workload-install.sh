@@ -22,7 +22,8 @@ LatestVersionMap=(
     "$MANIFEST_BASE_NAME-7.0.100-preview.7=7.0.100-preview.7.20"
     "$MANIFEST_BASE_NAME-7.0.100-rc.1=7.0.100-rc.1.22"
     "$MANIFEST_BASE_NAME-7.0.100-rc.2=7.0.100-rc.2.24"
-    "$MANIFEST_BASE_NAME-7.0.100=7.0.100"
+    "$MANIFEST_BASE_NAME-7.0.100=7.0.103"
+    "$MANIFEST_BASE_NAME-8.0.100-alpha.1=7.0.104"
     )
 
 while [ $# -ne 0 ]; do
