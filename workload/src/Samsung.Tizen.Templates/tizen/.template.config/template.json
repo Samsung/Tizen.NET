@@ -34,10 +34,14 @@
         {
           "choice": "net7.0",
           "description": "target framework version is net7.0-tizen"
+        },
+        {
+          "choice": "net8.0",
+          "description": "target framework version is net8.0-tizen"
         }
       ],
-      "replaces": "net7.0",
-      "defaultValue": "net7.0"
+      "replaces": "net8.0",
+      "defaultValue": "net8.0"
     }
   },
   "defaultName": "TizenApp1"

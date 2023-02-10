@@ -15,7 +15,7 @@
        example: -preview.3.100+sha12345
   -->
   <PropertyGroup>
-    <TizenWorkloadVersion>7.0.104</TizenWorkloadVersion>
+    <TizenWorkloadVersion>7.0.105</TizenWorkloadVersion>
   </PropertyGroup>
 
   <!-- 
@@ -33,7 +33,7 @@
     Dotnet SDK versions for building the workload.
    -->
   <PropertyGroup>
-    <MicrosoftDotnetSdkInternalPackageVersion>8.0.100-alpha.1.22567.28</MicrosoftDotnetSdkInternalPackageVersion>
+    <MicrosoftDotnetSdkInternalPackageVersion>8.0.100-preview.2.23109.11</MicrosoftDotnetSdkInternalPackageVersion>
     <MicrosoftDotNetBuildTasksFeedPackageVersion>7.0.0-beta.22513.4</MicrosoftDotNetBuildTasksFeedPackageVersion>
   </PropertyGroup>
 </Project>
