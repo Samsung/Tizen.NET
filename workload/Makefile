@@ -81,7 +81,7 @@ $(WORKLOAD_MSI_OUTDIR)/Samsung.NET.Workload.Tizen.$(1).wix: | $(TMPDIR)/msi
 									-p:DestinationFile="$$@"
 
 $(WORKLOAD_MSI_OUTDIR)/Samsung.NET.Workload.Tizen.$(1).msi: $(WORKLOAD_MSI_OUTDIR)/Samsung.NET.Workload.Tizen.$(1).wix
-	@wixl -o "$$@" "$$<" -a x64
+	@wixl -o "$$@" "$$<" -a x64 -v
 
 MSI_TARGET := $(WORKLOAD_MSI_OUTDIR)/Samsung.NET.Workload.Tizen.$(1).msi
 endef
