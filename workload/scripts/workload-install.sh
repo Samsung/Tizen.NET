@@ -24,10 +24,13 @@ LatestVersionMap=(
     "$MANIFEST_BASE_NAME-7.0.100-rc.2=7.0.100-rc.2.24"
     "$MANIFEST_BASE_NAME-7.0.100=7.0.103"
     "$MANIFEST_BASE_NAME-7.0.200=7.0.105"
+    "$MANIFEST_BASE_NAME-7.0.300=7.0.111"
     "$MANIFEST_BASE_NAME-8.0.100-alpha.1=7.0.104"
     "$MANIFEST_BASE_NAME-8.0.100-preview.2=7.0.106"
     "$MANIFEST_BASE_NAME-8.0.100-preview.3=7.0.107"
     "$MANIFEST_BASE_NAME-8.0.100-preview.4=7.0.108"
+    "$MANIFEST_BASE_NAME-8.0.100-preview.5=7.0.110"
+    "$MANIFEST_BASE_NAME-8.0.100-preview.6=7.0.112"
     )
 
 while [ $# -ne 0 ]; do
