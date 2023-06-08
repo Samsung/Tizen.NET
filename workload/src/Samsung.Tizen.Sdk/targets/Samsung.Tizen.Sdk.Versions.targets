@@ -13,7 +13,7 @@ Copyright (c) Samsung All rights reserved.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <_DefaultTargetPlatformVersion>7.0</_DefaultTargetPlatformVersion>
+    <_DefaultTargetPlatformVersion>8.0</_DefaultTargetPlatformVersion>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -33,11 +33,13 @@ Copyright (c) Samsung All rights reserved.
     <SupportedAPILevel Include="v8.0" MappedAPIVersion="6.0"/>
     <SupportedAPILevel Include="v9.0" MappedAPIVersion="6.5"/>
     <SupportedAPILevel Include="v10.0" MappedAPIVersion="7.0"/>
+    <SupportedAPILevel Include="v11.0" MappedAPIVersion="8.0"/>
   </ItemGroup>
 
   <ItemGroup>
     <TizenSdkSupportedTargetPlatformVersion Include="6.5" />
     <TizenSdkSupportedTargetPlatformVersion Include="7.0" />
+    <TizenSdkSupportedTargetPlatformVersion Include="8.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -57,13 +59,6 @@ Copyright (c) Samsung All rights reserved.
       TargetFramework="net6.0-tizen$(_DefaultTargetPlatformVersion)"
       TargetingPackName="Samsung.Tizen.Ref"
       TargetingPackVersion="**FromWorkload**"
-      Profile="Tizen"
-    />
-    <KnownFrameworkReference
-      Include="Samsung.Tizen"
-      TargetFramework="net6.0-tizen6.5"
-      TargetingPackName="Samsung.Tizen.Ref"
-      TargetingPackVersion="6.5.100-rc.1.120"
       Profile="Tizen"
     />
   </ItemGroup>
