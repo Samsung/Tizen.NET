@@ -66,29 +66,29 @@ function Ensure-Directory([string]$TestDir) {
 }
 
 function Get-LatestVersion([string]$Id) {
-    $attempts=3
-    $sleepInSeconds=3
-    do
-    {
-        try
-        {
-            $Response = Invoke-WebRequest -Uri https://api.nuget.org/v3-flatcontainer/$Id/index.json -UseBasicParsing | ConvertFrom-Json
-            return $Response.versions | Select-Object -Last 1
-        }
-        catch {
-            Write-Host "Id: $Id"
-            Write-Host "An exception was caught: $($_.Exception.Message)"
-        }
-
-        $attempts--
-        if ($attempts -gt 0) { Start-Sleep $sleepInSeconds }
-    } while ($attempts -gt 0)
-
     if ($LatestVersionMap.ContainsKey($Id))
     {
         Write-Host "Return cached latest version."
         return $LatestVersionMap.$Id
     } else {
+        $attempts=3
+        $sleepInSeconds=3
+        do
+        {
+            try
+            {
+                $Response = Invoke-WebRequest -Uri https://api.nuget.org/v3-flatcontainer/$Id/index.json -UseBasicParsing | ConvertFrom-Json
+                return $Response.versions | Select-Object -Last 1
+            }
+            catch {
+                Write-Host "Id: $Id"
+                Write-Host "An exception was caught: $($_.Exception.Message)"
+            }
+
+            $attempts--
+            if ($attempts -gt 0) { Start-Sleep $sleepInSeconds }
+        } while ($attempts -gt 0)
+
         Write-Error "Wrong Id: $Id"
     }
 }
