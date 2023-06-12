@@ -13,12 +13,13 @@ Copyright (c) Samsung All rights reserved.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <_DefaultTargetPlatformVersion>8.0</_DefaultTargetPlatformVersion>
+    <_DefaultTargetPlatformVersion>7.0</_DefaultTargetPlatformVersion>
   </PropertyGroup>
 
   <PropertyGroup>
     <TargetPlatformSupported>true</TargetPlatformSupported>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">$(_DefaultTargetPlatformVersion)</TargetPlatformVersion>
+    <TargetFramework Condition="$(TargetFramework.EndsWith('tizen'))">$(TargetFramework)$(_DefaultTargetPlatformVersion)</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -49,21 +50,7 @@ Copyright (c) Samsung All rights reserved.
   <ItemGroup>
     <KnownFrameworkReference
       Include="Samsung.Tizen"
-      TargetFramework="net8.0-tizen$(_DefaultTargetPlatformVersion)"
-      TargetingPackName="Samsung.Tizen.Ref"
-      TargetingPackVersion="**FromWorkload**"
-      Profile="Tizen"
-    />
-    <KnownFrameworkReference
-      Include="Samsung.Tizen"
-      TargetFramework="net7.0-tizen$(_DefaultTargetPlatformVersion)"
-      TargetingPackName="Samsung.Tizen.Ref"
-      TargetingPackVersion="**FromWorkload**"
-      Profile="Tizen"
-    />
-    <KnownFrameworkReference
-      Include="Samsung.Tizen"
-      TargetFramework="net6.0-tizen$(_DefaultTargetPlatformVersion)"
+      TargetFramework="$(TargetFramework)"
       TargetingPackName="Samsung.Tizen.Ref"
       TargetingPackVersion="**FromWorkload**"
       Profile="Tizen"
