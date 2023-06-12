@@ -5,6 +5,7 @@ on:
     branches:
     - main
     - net7.0
+    - net8.0
     paths:
     - 'workload/**'
     - '.github/workflows/**'
