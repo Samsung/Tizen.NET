@@ -19,7 +19,8 @@ Copyright (c) Samsung All rights reserved.
   <PropertyGroup>
     <TargetPlatformSupported>true</TargetPlatformSupported>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">$(_DefaultTargetPlatformVersion)</TargetPlatformVersion>
-    <TargetFramework Condition="$(TargetFramework.EndsWith('tizen'))">$(TargetFramework)$(_DefaultTargetPlatformVersion)</TargetFramework>
+    <_TargetFramework Condition="$(TargetFramework.EndsWith('tizen'))">$(TargetFramework)$(_DefaultTargetPlatformVersion)</_TargetFramework>
+    <_TargetFramework Condition="!$(TargetFramework.EndsWith('tizen'))">$(TargetFramework)</_TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -50,7 +51,7 @@ Copyright (c) Samsung All rights reserved.
   <ItemGroup>
     <KnownFrameworkReference
       Include="Samsung.Tizen"
-      TargetFramework="$(TargetFramework)"
+      TargetFramework="$(_TargetFramework)"
       TargetingPackName="Samsung.Tizen.Ref"
       TargetingPackVersion="**FromWorkload**"
       Profile="Tizen"
