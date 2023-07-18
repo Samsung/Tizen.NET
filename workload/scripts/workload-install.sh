@@ -31,6 +31,7 @@ LatestVersionMap=(
     "$MANIFEST_BASE_NAME-8.0.100-preview.4=7.0.108"
     "$MANIFEST_BASE_NAME-8.0.100-preview.5=7.0.110"
     "$MANIFEST_BASE_NAME-8.0.100-preview.6=7.0.121"
+    "$MANIFEST_BASE_NAME-8.0.100-preview.7=7.0.122"
     )
 
 while [ $# -ne 0 ]; do
