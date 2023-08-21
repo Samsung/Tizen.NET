@@ -36,4 +36,3 @@ jobs:
                       -k ${{ secrets.NUGET_APIKEY }} \
                       -s https://api.nuget.org/v3/index.json \
                       -t 3000
-
