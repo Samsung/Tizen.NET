@@ -50,7 +50,7 @@ $LatestVersionMap = @{
     "$ManifestBaseName-8.0.100-preview.7" = "7.0.122";
     "$ManifestBaseName-8.0.100-rc.1" = "7.0.124";
     "$ManifestBaseName-8.0.100-rc.2" = "7.0.125";
-    "$ManifestBaseName-8.0.100-rtm.23511" = "7.0.126";
+    "$ManifestBaseName-8.0.100-rtm" = "7.0.127";
 }
 
 function New-TemporaryDirectory {
@@ -161,6 +161,10 @@ function Install-TizenWorkload([string]$DotnetVersion)
             $IsPreviewVersion = $DotnetVersion.Contains("-preview") -or $DotnetVersion.Contains("-rc") -or $DotnetVersion.Contains("-alpha")
             if ($IsPreviewVersion -and ($SplitVersion.Count -ge 4)) {
                 $DotnetTargetVersionBand = $DotnetVersionBand + $SplitVersion[2].SubString(3) + $VersionSplitSymbol + $($SplitVersion[3])
+                $ManifestName = "$ManifestBaseName-$DotnetTargetVersionBand"
+            }
+            elseif ($DotnetVersion.Contains("-rtm") -and ($SplitVersion.Count -ge 3)) {
+                $DotnetTargetVersionBand = $DotnetVersionBand + $SplitVersion[2].SubString(3)
                 $ManifestName = "$ManifestBaseName-$DotnetTargetVersionBand"
             }
             else {

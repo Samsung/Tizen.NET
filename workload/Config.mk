@@ -6,6 +6,7 @@ $(TMPDIR)/dotnet-version.config: $(TOP)/build/Versions.props
 DOTNET_VERSION_BAND = $(firstword $(subst -, ,$(DOTNET_VERSION)))
 
 IS_PRERELEASE=$(findstring -,$(DOTNET_VERSION))
+IS_RTM=$(findstring -rtm,$(DOTNET_VERSION))
 VERSIONS=$(shell echo $(DOTNET_VERSION) | tr "." "\n")
 ifneq ($(IS_PRERELEASE),)
 	VERSIONS := $(shell echo $(VERSIONS) | tr "-" "\n")
@@ -32,7 +33,11 @@ ifeq ($(MAJOR),6)
 	DOTNET_VERSION_BAND := $(MAJOR).$(MINOR).$(BAND)
 else
 	ifneq ($(IS_PRERELEASE),)
-		DOTNET_VERSION_BAND := $(MAJOR).$(MINOR).$(MICRO)-$(PRERELEASE).$(PRERELEASE_VERSION)
+		ifneq ($(IS_RTM),)
+			DOTNET_VERSION_BAND := $(MAJOR).$(MINOR).$(MICRO)-$(PRERELEASE)
+		else
+			DOTNET_VERSION_BAND := $(MAJOR).$(MINOR).$(MICRO)-$(PRERELEASE).$(PRERELEASE_VERSION)
+		endif
 	else
 		DOTNET_VERSION_BAND := $(MAJOR).$(MINOR).$(MICRO)
 	endif

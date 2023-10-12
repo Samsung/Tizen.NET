@@ -35,7 +35,7 @@ LatestVersionMap=(
     "$MANIFEST_BASE_NAME-8.0.100-preview.7=7.0.122"
     "$MANIFEST_BASE_NAME-8.0.100-rc.1=7.0.124"
     "$MANIFEST_BASE_NAME-8.0.100-rc.2=7.0.125"
-    "$MANIFEST_BASE_NAME-8.0.100-rtm.23511=7.0.126"
+    "$MANIFEST_BASE_NAME-8.0.100-rtm=7.0.127"
     )
 
 while [ $# -ne 0 ]; do
@@ -153,6 +153,9 @@ function install_tizenworkload() {
         if [[ "$CURRENT_DOTNET_VERSION" -ge "7" ]]; then
             if [[ "$DOTNET_VERSION" == *"-preview"* || $DOTNET_VERSION == *"-rc"* || $DOTNET_VERSION == *"-alpha"* ]] && [[ ${#array[@]} -ge 4 ]]; then
                 DOTNET_TARGET_VERSION_BAND="$DOTNET_VERSION_BAND${array[2]:3}.${array[3]}"
+                MANIFEST_NAME="$MANIFEST_BASE_NAME-$DOTNET_TARGET_VERSION_BAND"
+            elif [[ "$DOTNET_VERSION" == *"-rtm"* ]] && [[ ${#array[@]} -ge 3 ]]; then
+                DOTNET_TARGET_VERSION_BAND="$DOTNET_VERSION_BAND${array[2]:3}"
                 MANIFEST_NAME="$MANIFEST_BASE_NAME-$DOTNET_TARGET_VERSION_BAND"
             else
                 DOTNET_TARGET_VERSION_BAND=$DOTNET_VERSION_BAND
