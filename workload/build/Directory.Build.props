@@ -9,7 +9,7 @@
 
   <PropertyGroup>
     <Configuration>Release</Configuration>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <PackageType>DotnetPlatform</PackageType>
     <Authors>Samsung Electronics</Authors>
     <OutputPath>$(_ProjectRootDirectory)out\nuget-unsigned\</OutputPath>

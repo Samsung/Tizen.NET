@@ -13,7 +13,7 @@ Copyright (c) Samsung All rights reserved.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <_DefaultTargetPlatformVersion>7.0</_DefaultTargetPlatformVersion>
+    <_DefaultTargetPlatformVersion>8.0</_DefaultTargetPlatformVersion>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -21,6 +21,10 @@ Copyright (c) Samsung All rights reserved.
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">$(_DefaultTargetPlatformVersion)</TargetPlatformVersion>
     <_TargetFramework Condition="$(TargetFramework.EndsWith('tizen'))">$(TargetFramework)$(_DefaultTargetPlatformVersion)</_TargetFramework>
     <_TargetFramework Condition="!$(TargetFramework.EndsWith('tizen'))">$(TargetFramework)</_TargetFramework>
+
+    <!-- Tizen7.0 refers TizenFX 10.0.0.17508. Tizen8.0 refers TizenFX 11.0.0.XXXXX. -->
+    <_TargetingPackVersion>7.0.123</_TargetingPackVersion>
+    <_TargetingPackVersion Condition="$(_TargetFramework.EndsWith('8.0'))">**FromWorkload**</_TargetingPackVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -53,7 +57,7 @@ Copyright (c) Samsung All rights reserved.
       Include="Samsung.Tizen"
       TargetFramework="$(_TargetFramework)"
       TargetingPackName="Samsung.Tizen.Ref"
-      TargetingPackVersion="**FromWorkload**"
+      TargetingPackVersion="$(_TargetingPackVersion)"
       Profile="Tizen"
     />
   </ItemGroup>

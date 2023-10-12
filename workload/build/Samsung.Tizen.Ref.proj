@@ -48,7 +48,7 @@ by projects that use the Tizen .NET framework in .NET 5.
 
     <ItemGroup>
       <_TizenFXNugetPathItem Include="$(TizenFXNuGetPathVariable)" />
-      <_TizenRefPackAssemblies Include="$(%(_TizenFXNugetPathItem.Identity))\ref\netstandard2.0\*.dll" />
+      <_TizenRefPackAssemblies Include="$(%(_TizenFXNugetPathItem.Identity))\ref\net6.0\*.dll" />
       <FrameworkListFileClass Include="@(_TizenRefPackAssemblies->'%(Filename)%(Extension)')" Profile="Tizen" />
     </ItemGroup>
 
