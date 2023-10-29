@@ -207,10 +207,21 @@ function install_tizenworkload() {
     fi
 
     # Install workload packs.
-    $DOTNET_INSTALL_DIR/dotnet workload install tizen --sdk-version $DOTNET_VERSION --skip-manifest-update
+    if [ -f global.json ]; then
+        CACHE_GLOBAL_JSON="true"
+        mv global.json global.json.bak
+    else
+        CACHE_GLOBAL_JSON="false"
+    fi
+    dotnet new globaljson --sdk-version $DOTNET_VERSION
+    $DOTNET_INSTALL_DIR/dotnet workload install tizen --skip-manifest-update
 
     # Clean-up
     rm -fr $TMPDIR
+    rm global.json
+    if [[ "$CACHE_GLOBAL_JSON" == "true" ]]; then
+        mv global.json.bak global.json
+    fi
 
     echo "Done installing Tizen workload $MANIFEST_VERSION"
     echo ""
