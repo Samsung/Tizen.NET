@@ -13,7 +13,8 @@ Copyright (c) Samsung All rights reserved.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <_DefaultTargetPlatformVersion>8.0</_DefaultTargetPlatformVersion>
+    <_DefaultTargetPlatformVersion>7.0</_DefaultTargetPlatformVersion>
+    <_DefaultTargetPlatformVersion Condition="$(TargetFramework.StartsWith('net8.0'))">8.0</_DefaultTargetPlatformVersion>
   </PropertyGroup>
 
   <PropertyGroup>
