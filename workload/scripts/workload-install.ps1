@@ -50,6 +50,9 @@ $LatestVersionMap = @{
     "$ManifestBaseName-8.0.100-preview.7" = "7.0.122";
     "$ManifestBaseName-8.0.100-rc.1" = "7.0.124";
     "$ManifestBaseName-8.0.100-rc.2" = "7.0.125";
+    "$ManifestBaseName-8.0.100-rtm" = "7.0.127";
+    "$ManifestBaseName-8.0.100" = "8.0.130";
+    "$ManifestBaseName-9.0.100-alpha.1" = "8.0.131";
 }
 
 function New-TemporaryDirectory {
@@ -70,29 +73,29 @@ function Ensure-Directory([string]$TestDir) {
 }
 
 function Get-LatestVersion([string]$Id) {
+    $attempts=3
+    $sleepInSeconds=3
+    do
+    {
+        try
+        {
+            $Response = Invoke-WebRequest -Uri https://api.nuget.org/v3-flatcontainer/$Id/index.json -UseBasicParsing | ConvertFrom-Json
+            return $Response.versions | Select-Object -Last 1
+        }
+        catch {
+            Write-Host "Id: $Id"
+            Write-Host "An exception was caught: $($_.Exception.Message)"
+        }
+
+        $attempts--
+        if ($attempts -gt 0) { Start-Sleep $sleepInSeconds }
+    } while ($attempts -gt 0)
+
     if ($LatestVersionMap.ContainsKey($Id))
     {
         Write-Host "Return cached latest version."
         return $LatestVersionMap.$Id
     } else {
-        $attempts=3
-        $sleepInSeconds=3
-        do
-        {
-            try
-            {
-                $Response = Invoke-WebRequest -Uri https://api.nuget.org/v3-flatcontainer/$Id/index.json -UseBasicParsing | ConvertFrom-Json
-                return $Response.versions | Select-Object -Last 1
-            }
-            catch {
-                Write-Host "Id: $Id"
-                Write-Host "An exception was caught: $($_.Exception.Message)"
-            }
-
-            $attempts--
-            if ($attempts -gt 0) { Start-Sleep $sleepInSeconds }
-        } while ($attempts -gt 0)
-
         Write-Error "Wrong Id: $Id"
     }
 }
@@ -160,6 +163,10 @@ function Install-TizenWorkload([string]$DotnetVersion)
             $IsPreviewVersion = $DotnetVersion.Contains("-preview") -or $DotnetVersion.Contains("-rc") -or $DotnetVersion.Contains("-alpha")
             if ($IsPreviewVersion -and ($SplitVersion.Count -ge 4)) {
                 $DotnetTargetVersionBand = $DotnetVersionBand + $SplitVersion[2].SubString(3) + $VersionSplitSymbol + $($SplitVersion[3])
+                $ManifestName = "$ManifestBaseName-$DotnetTargetVersionBand"
+            }
+            elseif ($DotnetVersion.Contains("-rtm") -and ($SplitVersion.Count -ge 3)) {
+                $DotnetTargetVersionBand = $DotnetVersionBand + $SplitVersion[2].SubString(3)
                 $ManifestName = "$ManifestBaseName-$DotnetTargetVersionBand"
             }
             else {
