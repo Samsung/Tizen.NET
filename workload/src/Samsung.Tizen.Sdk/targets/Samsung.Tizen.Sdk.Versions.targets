@@ -46,6 +46,7 @@ Copyright (c) Samsung All rights reserved.
     <TizenSdkSupportedTargetPlatformVersion Include="6.5" />
     <TizenSdkSupportedTargetPlatformVersion Include="7.0" />
     <TizenSdkSupportedTargetPlatformVersion Include="8.0" />
+    <TizenSdkSupportedTargetPlatformVersion Include="9.0" />
   </ItemGroup>
 
   <ItemGroup>

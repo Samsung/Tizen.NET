@@ -15,7 +15,7 @@
        example: -preview.3.100+sha12345
   -->
   <PropertyGroup>
-    <TizenWorkloadVersion>7.0.119</TizenWorkloadVersion>
+    <TizenWorkloadVersion>8.0.132</TizenWorkloadVersion>
   </PropertyGroup>
 
   <!-- 
@@ -26,7 +26,7 @@
     This version is used to generate Samsung.Tizen.Ref package.
   -->
   <PropertyGroup>
-    <TizenFXVersion>11.0.0.18030</TizenFXVersion>
+    <TizenFXVersion>11.0.0.18033</TizenFXVersion>
   </PropertyGroup>
 
   <!--
