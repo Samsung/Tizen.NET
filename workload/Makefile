@@ -4,6 +4,7 @@ TMPDIR := $(TOP)/.tmp
 OUTDIR := $(TOP)/out
 WORKLOAD_PACKS_OUTDIR := $(OUTDIR)/nuget-unsigned
 WORKLOAD_MSI_OUTDIR := $(OUTDIR)/windows
+NUGET_ORG := https://api.nuget.org/v3/index.json
 
 .DEFAULT_GOAL := packs
 
@@ -58,7 +59,7 @@ $(TMPDIR)/.stamp-install-workload: | $(DOTNET_MANIFESTS_DESTDIR)
 		$(WORKLOAD_PACKS_OUTDIR)/workload-manifest/WorkloadManifest.json \
 		$(DOTNET_MANIFESTS_DESTDIR)
 	@$(DOTNET) workload install tizen --skip-manifest-update \
-		--source $(WORKLOAD_PACKS_OUTDIR) --temp-dir=$(TMPDIR)
+		--source $(WORKLOAD_PACKS_OUTDIR) --source $(NUGET_ORG) --temp-dir=$(TMPDIR)
 	@touch $@
 
 .PHONY: install
