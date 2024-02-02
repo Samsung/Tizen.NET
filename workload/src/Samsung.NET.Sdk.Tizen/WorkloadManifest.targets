@@ -1,6 +1,4 @@
 <Project>
-  <Import Project="Sdk.targets" Sdk="Samsung.Tizen.Sdk.net9" Condition=" ('$(TargetPlatformIdentifier)' == 'tizen') and ($([MSBuild]::VersionEquals($(TargetFrameworkVersion), '9.0')))" />
-  <Import Project="Sdk.targets" Sdk="Samsung.Tizen.Sdk.net8" Condition=" ('$(TargetPlatformIdentifier)' == 'tizen') and ($([MSBuild]::VersionEquals($(TargetFrameworkVersion), '8.0')))" />
   <Import Project="Sdk.targets" Sdk="Samsung.Tizen.Sdk.net7" Condition=" ('$(TargetPlatformIdentifier)' == 'tizen') and ($([MSBuild]::VersionEquals($(TargetFrameworkVersion), '7.0')))" />
   <Import Project="Sdk.targets" Sdk="Samsung.Tizen.Sdk.net6" Condition=" ('$(TargetPlatformIdentifier)' == 'tizen') and ($([MSBuild]::VersionEquals($(TargetFrameworkVersion), '6.0')))" />
 
