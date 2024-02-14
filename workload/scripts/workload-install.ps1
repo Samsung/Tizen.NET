@@ -52,6 +52,7 @@ $LatestVersionMap = @{
     "$ManifestBaseName-8.0.100-rc.2" = "7.0.125";
     "$ManifestBaseName-8.0.100-rtm" = "7.0.127";
     "$ManifestBaseName-8.0.100" = "8.0.130";
+    "$ManifestBaseName-8.0.200" = "8.0.138";
     "$ManifestBaseName-9.0.100-alpha.1" = "8.0.134";
     "$ManifestBaseName-9.0.100-preview.1" = "8.0.135";
     "$ManifestBaseName-9.0.100-preview.2" = "8.0.137";
