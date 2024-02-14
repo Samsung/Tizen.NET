@@ -106,7 +106,13 @@ function Get-LatestVersion([string]$Id) {
 function Get-Package([string]$Id, [string]$Version, [string]$Destination, [string]$FileExt = "nupkg") {
     $OutFileName = "$Id.$Version.$FileExt"
     $OutFilePath = Join-Path -Path $Destination -ChildPath $OutFileName
+
+    if ($Id -match ".net[0-9]+$") {
+        $Id = $Id -replace (".net[0-9]+", "")
+    }
+
     Invoke-WebRequest -Uri "https://www.nuget.org/api/v2/package/$Id/$Version" -OutFile $OutFilePath
+
     return $OutFilePath
 }
 
