@@ -215,7 +215,7 @@ Copyright (c) Samsung All rights reserved.
     <ItemGroup>
       <!-- Copy all the assemblies -->
       <TizenTpkAssemblyFiles Include="@(ResolvedFileToPublish)" KeepMetadata="$(TpkKeepMeta)" Condition="'%(RelativePath)' != '$(ProjectDepsFileName)'">
-        <TizenTpkSubDir>$(TizenTpkAssemblyDirName)</TizenTpkSubDir>
+        <TizenTpkSubDir>$(TizenTpkAssemblyDirName)\</TizenTpkSubDir>
         <TizenTpkFileName>%(RelativePath)</TizenTpkFileName>
       </TizenTpkAssemblyFiles>
       <!-- Copy Current Projects deps.json to tpk root folder -->
