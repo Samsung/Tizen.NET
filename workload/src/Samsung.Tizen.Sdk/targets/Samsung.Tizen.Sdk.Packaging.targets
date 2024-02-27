@@ -209,12 +209,13 @@ Copyright (c) Samsung All rights reserved.
   -->
   <Target Name="TizenComputeTpkAssemblyFiles" DependsOnTargets="ComputeFilesToPublish" Condition="'$(WebProject)' != 'true'">
     <PropertyGroup>
+      <TizenTpkAssemblyDirName Condition=" '$(TizenTpkAssemblyDirName)' == '' ">bin</TizenTpkAssemblyDirName>
       <PublishDepsFile>$(OutDir)$(ProjectDepsFileName)</PublishDepsFile>
     </PropertyGroup>
     <ItemGroup>
       <!-- Copy all the assemblies -->
       <TizenTpkAssemblyFiles Include="@(ResolvedFileToPublish)" KeepMetadata="$(TpkKeepMeta)" Condition="'%(RelativePath)' != '$(ProjectDepsFileName)'">
-        <TizenTpkSubDir>bin\</TizenTpkSubDir>
+        <TizenTpkSubDir>$(TizenTpkAssemblyDirName)</TizenTpkSubDir>
         <TizenTpkFileName>%(RelativePath)</TizenTpkFileName>
       </TizenTpkAssemblyFiles>
       <!-- Copy Current Projects deps.json to tpk root folder -->
