@@ -128,6 +128,9 @@ function Install-Pack([string]$Id, [string]$Version, [string]$Kind) {
         }
         {($_ -eq "sdk") -or ($_ -eq "framework")} {
             Expand-Archive -Path $TempZipFile -DestinationPath $TempUnzipDir
+            if ( ($kind -eq "sdk") -and ($Id -match ".net[0-9]+$")) {
+                $Id = $Id -replace (".net[0-9]+", "")
+            }
             $TargetDirectory = $(Join-Path -Path $DotnetInstallDir -ChildPath "packs\$Id\$Version")
             New-Item -Path $TargetDirectory -ItemType "directory" -Force | Out-Null
             Copy-Item -Path "$TempUnzipDir/*" -Destination $TargetDirectory -Recurse -Force
