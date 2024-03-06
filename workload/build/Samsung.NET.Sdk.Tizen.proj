@@ -24,7 +24,7 @@ workload manifest pack containing information about the Tizen .NET workload.
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageId>Samsung.NET.Sdk.Tizen.Manifest-9.0.100</PackageId>
+    <PackageId>Samsung.NET.Sdk.Tizen.Manifest-$(DotNetPreviewVersionBand)</PackageId>
     <Description>Tizen .NET workload manifest. Please do not reference directly.</Description>
   </PropertyGroup>
 
