@@ -16,8 +16,8 @@ UPDATE_ALL_WORKLOADS="false"
 LatestVersionMap=(
     "$MANIFEST_BASE_NAME-6.0.100=7.0.101"
     "$MANIFEST_BASE_NAME-6.0.200=7.0.100-preview.13.6"
-    "$MANIFEST_BASE_NAME-6.0.300=7.0.304"
-    "$MANIFEST_BASE_NAME-6.0.400=7.0.119"
+    "$MANIFEST_BASE_NAME-6.0.300=8.0.133"
+    "$MANIFEST_BASE_NAME-6.0.400=8.0.140"
     "$MANIFEST_BASE_NAME-7.0.100-preview.6=7.0.100-preview.6.14"
     "$MANIFEST_BASE_NAME-7.0.100-preview.7=7.0.100-preview.7.20"
     "$MANIFEST_BASE_NAME-7.0.100-rc.1=7.0.100-rc.1.22"
@@ -25,7 +25,7 @@ LatestVersionMap=(
     "$MANIFEST_BASE_NAME-7.0.100=7.0.103"
     "$MANIFEST_BASE_NAME-7.0.200=7.0.105"
     "$MANIFEST_BASE_NAME-7.0.300=7.0.120"
-    "$MANIFEST_BASE_NAME-7.0.400=7.0.123"
+    "$MANIFEST_BASE_NAME-7.0.400=7.0.141"
     "$MANIFEST_BASE_NAME-8.0.100-alpha.1=7.0.104"
     "$MANIFEST_BASE_NAME-8.0.100-preview.2=7.0.106"
     "$MANIFEST_BASE_NAME-8.0.100-preview.3=7.0.107"
@@ -36,7 +36,8 @@ LatestVersionMap=(
     "$MANIFEST_BASE_NAME-8.0.100-rc.1=7.0.124"
     "$MANIFEST_BASE_NAME-8.0.100-rc.2=7.0.125"
     "$MANIFEST_BASE_NAME-8.0.100-rtm=7.0.127"
-    "$MANIFEST_BASE_NAME-8.0.100=8.0.130"
+    "$MANIFEST_BASE_NAME-8.0.100=8.0.144"
+    "$MANIFEST_BASE_NAME-8.0.200=8.0.145"
     "$MANIFEST_BASE_NAME-9.0.100-alpha.1=8.0.134"
     "$MANIFEST_BASE_NAME-9.0.100-preview.1=8.0.135"
     "$MANIFEST_BASE_NAME-9.0.100-preview.2=8.0.137"
@@ -157,6 +158,9 @@ function install_tizenworkload() {
         if [[ "$CURRENT_DOTNET_VERSION" -ge "7" ]]; then
             if [[ "$DOTNET_VERSION" == *"-preview"* || $DOTNET_VERSION == *"-rc"* || $DOTNET_VERSION == *"-alpha"* ]] && [[ ${#array[@]} -ge 4 ]]; then
                 DOTNET_TARGET_VERSION_BAND="$DOTNET_VERSION_BAND${array[2]:3}.${array[3]}"
+                MANIFEST_NAME="$MANIFEST_BASE_NAME-$DOTNET_TARGET_VERSION_BAND"
+            elif [[ "$DOTNET_VERSION" == *"-rtm"* ]] && [[ ${#array[@]} -ge 3 ]]; then
+                DOTNET_TARGET_VERSION_BAND="$DOTNET_VERSION_BAND${array[2]:3}"
                 MANIFEST_NAME="$MANIFEST_BASE_NAME-$DOTNET_TARGET_VERSION_BAND"
             else
                 DOTNET_TARGET_VERSION_BAND=$DOTNET_VERSION_BAND
