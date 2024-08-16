@@ -27,8 +27,9 @@ $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
 
 $ManifestBaseName = "Samsung.NET.Sdk.Tizen.Manifest"
+$global:FallbackId = ""
 
-$LatestVersionMap = @{
+$LatestVersionMap = [ordered]@{
     "$ManifestBaseName-6.0.100" = "7.0.101";
     "$ManifestBaseName-6.0.200" = "7.0.100-preview.13.6";
     "$ManifestBaseName-6.0.300" = "8.0.133";
@@ -95,13 +96,32 @@ function Get-LatestVersion([string]$Id) {
         if ($attempts -gt 0) { Start-Sleep $sleepInSeconds }
     } while ($attempts -gt 0)
 
-    if ($LatestVersionMap.ContainsKey($Id))
+    if ($LatestVersionMap.Contains($Id))
     {
         Write-Host "Return cached latest version."
         return $LatestVersionMap.$Id
-    } else {
-        Write-Error "Wrong Id: $Id"
     }
+    else
+    {
+        $SubStringId = $Id.Substring(0, $ManifestBaseName.Length + 2);
+        $MatchingFallbackId = @()
+        $MatchingFallbackVersion = @()
+        foreach ($key in $LatestVersionMap.Keys) {
+            if ($key -like "$SubStringId*") {
+                $MatchingFallbackId += $key
+                $MatchingFallbackVersion += $LatestVersionMap[$key]
+            }
+        }
+        if ($MatchingFallbackVersion)
+        {
+            $global:FallbackId = $MatchingFallbackId[-1]
+            $FallbackVersion = $MatchingFallbackVersion[-1]
+            Write-Host "Return fallback version: $FallbackVersion"
+            return $FallbackVersion
+        }
+    }
+
+    Write-Error "Wrong Id: $Id"
 }
 
 function Get-Package([string]$Id, [string]$Version, [string]$Destination, [string]$FileExt = "nupkg") {
@@ -228,7 +248,11 @@ function Install-TizenWorkload([string]$DotnetVersion)
 
     # Install workload manifest.
     Write-Host "Installing $ManifestName/$Version to $ManifestDir..."
-    Install-Pack -Id $ManifestName -Version $Version -Kind "manifest"
+    if ($global:FallbackId) {
+        Install-Pack -Id $global:FallbackId -Version $Version -Kind "manifest"
+    } else {
+        Install-Pack -Id $ManifestName -Version $Version -Kind "manifest"
+    }
 
     # Download and install workload packs.
     $NewManifestJson = $(Get-Content $TizenManifestFile | ConvertFrom-Json)
