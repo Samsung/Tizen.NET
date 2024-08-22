@@ -129,8 +129,21 @@ function getLatestVersion () {
     for index in "${LatestVersionMap[@]}"; do
          if [ "${index%%=*}" = "${1}" ]; then
              echo "${index#*=}"
+             return
          fi
     done
+    # return fallback version
+    local manifestId="$1"
+    local prefix="${manifestId%.*}"
+    local fallbackVersion=""
+    for entry in "${LatestVersionMap[@]}"; do
+        mapKey="${entry%%=*}"
+        mapValue="${entry#*=}"
+        if [[ "$mapKey" == "$prefix"* ]]; then
+            fallbackVersion="$mapValue"
+        fi
+    done
+    echo "$fallbackVersion"
 }
 
 # Check installed dotnet version
