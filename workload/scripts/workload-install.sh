@@ -187,7 +187,7 @@ function install_tizenworkload() {
     # Check latest version of manifest.
     if [[ "$MANIFEST_VERSION" == "<latest>" ]]; then
         MANIFEST_VERSION=$(curl -s https://api.nuget.org/v3-flatcontainer/$MANIFEST_NAME/index.json | grep \" | tail -n 1 | tr -d '\r' | xargs)
-        if [ ! "$MANIFEST_VERSION" ]; then
+        if [ -n "$MANIFEST_VERSION" ] && echo "$MANIFEST_VERSION" | grep -q "BlobNotFound"; then
             MANIFEST_VERSION=$(getLatestVersion "$MANIFEST_NAME")
             if [[ -n $MANIFEST_VERSION ]]; then
                 echo "Return cached latest version: $MANIFEST_VERSION"
