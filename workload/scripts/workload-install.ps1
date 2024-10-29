@@ -85,7 +85,7 @@ function Get-LatestVersion([string]$Id) {
     {
         try
         {
-            $Response = Invoke-WebRequest -Uri https://api.nuget.org/v3-flatcontainer/$Id/index.json -UseBasicParsing | ConvertFrom-Json
+            $Response = Invoke-WebRequest -Uri https://api.nuget.org/v3-flatcontainer/$($Id.ToLowerInvariant())/index.json -UseBasicParsing | ConvertFrom-Json
             return $Response.versions | Select-Object -Last 1
         }
         catch {
