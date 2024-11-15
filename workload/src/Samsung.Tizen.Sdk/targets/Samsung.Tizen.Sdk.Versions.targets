@@ -41,6 +41,7 @@ Copyright (c) Samsung All rights reserved.
     <SupportedAPILevel Include="v10.0" MappedAPIVersion="7.0"/>
     <SupportedAPILevel Include="v11.0" MappedAPIVersion="8.0"/>
     <SupportedAPILevel Include="v12.0" MappedAPIVersion="9.0"/>
+    <SupportedAPILevel Include="v13.0" MappedAPIVersion="10.0"/>
   </ItemGroup>
 
   <ItemGroup>
@@ -48,6 +49,7 @@ Copyright (c) Samsung All rights reserved.
     <TizenSdkSupportedTargetPlatformVersion Include="7.0" />
     <TizenSdkSupportedTargetPlatformVersion Include="8.0" />
     <TizenSdkSupportedTargetPlatformVersion Include="9.0" />
+    <TizenSdkSupportedTargetPlatformVersion Include="10.0" />
   </ItemGroup>
 
   <ItemGroup>
