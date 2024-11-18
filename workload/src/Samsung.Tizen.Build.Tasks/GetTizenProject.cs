@@ -48,8 +48,7 @@ namespace Samsung.Tizen.Build.Tasks
             var properties = new Dictionary<string, string>
             {
               { "Configuration", "$(Configuration)" },
-              { "Platform", "$(Platform)" },
-              { "TargetFramework", "$(TargetFramework)" }
+              { "Platform", "$(Platform)" }
             };
 
             Log.LogMessage(MessageImportance.High, "Configuration : {0}", Configuration);
@@ -64,8 +63,11 @@ namespace Samsung.Tizen.Build.Tasks
                 // we don't get a redundant-project-load error.
                 var collection = new ProjectCollection(properties);
                 var project = collection.LoadProject(pItem.ItemSpec);
-                ProjectProperty pp = project.Properties.Where(p => p.Name == "TizenProject" && p.EvaluatedValue == "true").FirstOrDefault();
-                if (pp != null)
+
+                var targetFrameworkValue = project.GetPropertyValue("TargetFramework");
+                var targetFrameworksValue = project.GetPropertyValue("TargetFrameworks");
+
+                if (targetFrameworkValue.Contains("-tizen") || targetFrameworksValue.Contains("-tizen"))
                 {
                     tizenList.Add(pItem);
                 }
