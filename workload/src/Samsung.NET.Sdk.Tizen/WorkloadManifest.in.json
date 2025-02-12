@@ -21,14 +21,14 @@
     },
     "Samsung.Tizen.Sdk.net6": {
       "kind": "sdk",
-      "version": "8.0.154",
+      "version": "9.0.101",
       "alias-to": {
         "any": "Samsung.Tizen.Sdk"
       }
     },
     "Samsung.Tizen.Sdk.net7": {
       "kind": "sdk",
-      "version": "8.0.141",
+      "version": "10.0.102",
       "alias-to": {
         "any": "Samsung.Tizen.Sdk"
       }
