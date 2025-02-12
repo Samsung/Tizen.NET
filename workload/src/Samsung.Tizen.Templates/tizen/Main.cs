@@ -15,7 +15,7 @@ namespace TizenApp1
 
         void Initialize()
         {
-            Window.Instance.KeyEvent += OnKeyEvent;
+            Window.Default.KeyEvent += OnKeyEvent;
 
             TextLabel text = new TextLabel("Hello Tizen") {
                 HorizontalAlignment = HorizontalAlignment.Center,
@@ -25,7 +25,7 @@ namespace TizenApp1
                 HeightResizePolicy = ResizePolicyType.FillToParent,
                 WidthResizePolicy = ResizePolicyType.FillToParent
             };
-            Window.Instance.GetDefaultLayer().Add(text);
+            Window.Default.GetDefaultLayer().Add(text);
 
             Animation animation = new Animation(2000);
             animation.AnimateTo(text, "Orientation", new Rotation(new Radian(new Degree(180.0f)), PositionAxis.X), 0, 500);
