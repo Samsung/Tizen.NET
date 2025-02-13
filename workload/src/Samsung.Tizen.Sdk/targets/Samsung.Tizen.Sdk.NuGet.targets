@@ -17,15 +17,11 @@ Copyright (c) Samsung All rights reserved.
   <PropertyGroup>
     <AssetTargetFallback></AssetTargetFallback>
     <PackageTargetFallback>
-      net9.0-tizen8.0;
-      net9.0-tizen7.0;
-      net8.0-tizen8.0;
-      net8.0-tizen7.0;
-      net7.0-tizen8.0;
-      net7.0-tizen7.0;
+      net9.0-tizen10.0;
+      net8.0-tizen10.0;
+      net6.0-tizen9.0;
       net6.0-tizen8.0;
       net6.0-tizen7.0;
-      net6.0-tizen6.5;
       tizen10.0;
       tizen90;
       tizen80;
