@@ -24,8 +24,8 @@ $(DOTNET): | $(TMPDIR)/dotnet-install.sh
 	@bash $(TMPDIR)/dotnet-install.sh -v $(DOTNET_VERSION) -i $(DOTNET_DESTDIR)
 
 $(TMPDIR)/dotnet-install.sh: | $(OUTDIR)
-	@curl -o $@ \
-		https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.sh
+	@curl -L -o $@ \
+		 https://dot.net/v1/dotnet-install.sh
 
 
 # Create nuget packages for manifest and packs
