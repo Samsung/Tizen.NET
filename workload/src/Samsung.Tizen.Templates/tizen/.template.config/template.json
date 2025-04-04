@@ -42,10 +42,14 @@
         {
           "choice": "net9.0",
           "description": "target framework version is net9.0-tizen"
+        },
+        {
+          "choice": "net10.0",
+          "description": "target framework version is net10.0-tizen"
         }
       ],
-      "replaces": "net9.0",
-      "defaultValue": "net9.0"
+      "replaces": "net10.0",
+      "defaultValue": "net10.0"
     }
   },
   "defaultName": "TizenApp1"

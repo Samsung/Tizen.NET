@@ -1,2 +1,2 @@
-<FileList TargetFrameworkIdentifier=".NETCoreApp" TargetFrameworkVersion="9.0" FrameworkName="Microsoft.NETCore.App" Name=".NET Runtime">
+<FileList TargetFrameworkIdentifier=".NETCoreApp" TargetFrameworkVersion="10.0" FrameworkName="Microsoft.NETCore.App" Name=".NET Runtime">
 </FileList>

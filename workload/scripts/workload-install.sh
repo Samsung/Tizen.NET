@@ -25,7 +25,7 @@ LatestVersionMap=(
     "$MANIFEST_BASE_NAME-7.0.100=7.0.103"
     "$MANIFEST_BASE_NAME-7.0.200=7.0.105"
     "$MANIFEST_BASE_NAME-7.0.300=7.0.120"
-    "$MANIFEST_BASE_NAME-7.0.400=7.0.141"
+    "$MANIFEST_BASE_NAME-7.0.400=10.0.102"
     "$MANIFEST_BASE_NAME-8.0.100-alpha.1=7.0.104"
     "$MANIFEST_BASE_NAME-8.0.100-preview.2=7.0.106"
     "$MANIFEST_BASE_NAME-8.0.100-preview.3=7.0.107"
@@ -39,7 +39,7 @@ LatestVersionMap=(
     "$MANIFEST_BASE_NAME-8.0.100=8.0.144"
     "$MANIFEST_BASE_NAME-8.0.200=8.0.157"
     "$MANIFEST_BASE_NAME-8.0.300=8.0.156"
-    "$MANIFEST_BASE_NAME-8.0.400=10.0.101"
+    "$MANIFEST_BASE_NAME-8.0.400=10.0.103"
     "$MANIFEST_BASE_NAME-9.0.100-alpha.1=8.0.134"
     "$MANIFEST_BASE_NAME-9.0.100-preview.1=8.0.135"
     "$MANIFEST_BASE_NAME-9.0.100-preview.2=8.0.137"
@@ -134,8 +134,21 @@ function getLatestVersion () {
     for index in "${LatestVersionMap[@]}"; do
          if [ "${index%%=*}" = "${1}" ]; then
              echo "${index#*=}"
+             return
          fi
     done
+    # return fallback version
+    local manifestId="$1"
+    local prefix="${manifestId%.*}"
+    local fallbackVersion=""
+    for entry in "${LatestVersionMap[@]}"; do
+        mapKey="${entry%%=*}"
+        mapValue="${entry#*=}"
+        if [[ "$mapKey" == "$prefix"* ]]; then
+            fallbackVersion="$mapValue"
+        fi
+    done
+    echo "$fallbackVersion"
 }
 
 # Check installed dotnet version
@@ -178,8 +191,8 @@ function install_tizenworkload() {
 
     # Check latest version of manifest.
     if [[ "$MANIFEST_VERSION" == "<latest>" ]]; then
-        MANIFEST_VERSION=$(curl -s https://api.nuget.org/v3-flatcontainer/$MANIFEST_NAME/index.json | grep \" | tail -n 1 | tr -d '\r' | xargs)
-        if [ ! "$MANIFEST_VERSION" ]; then
+        MANIFEST_VERSION=$(curl -s https://api.nuget.org/v3-flatcontainer/${MANIFEST_NAME,,}/index.json | grep \" | tail -n 1 | tr -d '\r' | xargs)
+        if [ -n "$MANIFEST_VERSION" ] && echo "$MANIFEST_VERSION" | grep -q "BlobNotFound"; then
             MANIFEST_VERSION=$(getLatestVersion "$MANIFEST_NAME")
             if [[ -n $MANIFEST_VERSION ]]; then
                 echo "Return cached latest version: $MANIFEST_VERSION"

@@ -9,6 +9,7 @@
         "Samsung.Tizen.Sdk.net7",
         "Samsung.Tizen.Sdk.net8",
         "Samsung.Tizen.Sdk.net9",
+        "Samsung.Tizen.Sdk.net10",
         "Samsung.Tizen.Ref",
         "Samsung.Tizen.Templates",
         "Samsung.NETCore.App.Runtime.tizen"
@@ -42,6 +43,13 @@
       }
     },
     "Samsung.Tizen.Sdk.net9": {
+      "kind": "sdk",
+      "version": "10.0.105",
+      "alias-to": {
+        "any": "Samsung.Tizen.Sdk"
+      }
+    },
+    "Samsung.Tizen.Sdk.net10": {
       "kind": "sdk",
       "version": "@TIZEN_WORKLOAD_VERSION@",
       "alias-to": {

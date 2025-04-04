@@ -53,7 +53,7 @@ by projects that use the Tizen .NET framework in .NET 5.
     </ItemGroup>
 
     <ItemGroup>
-      <_PackageFiles Include="@(_TizenRefPackAssemblies)" PackagePath="ref\net9.0" TargetPath="ref\net9.0" />
+      <_PackageFiles Include="@(_TizenRefPackAssemblies)" PackagePath="ref\net10.0" TargetPath="ref\net10.0" />
       <_PackageFiles Include="$(_ProjectSourceDirectory)Samsung.Tizen.Ref/data/*.txt" PackagePath="data" />
       <_PackageFiles Include="$(_ProjectSourceDirectory)Samsung.Tizen.Ref/runtime.json" PackagePath=".\" />
     </ItemGroup>
@@ -66,9 +66,9 @@ by projects that use the Tizen .NET framework in .NET 5.
   <Target Name="_GenerateFrameworkListFile" >
     <!-- Hardcode framework attributes -->
     <ItemGroup>
-      <FrameworkListRootAttributes Include="Name" Value=".NET 9.0 - Tizen" />
+      <FrameworkListRootAttributes Include="Name" Value=".NET 10.0 - Tizen" />
       <FrameworkListRootAttributes Include="TargetFrameworkIdentifier" Value=".NETCoreApp" />
-      <FrameworkListRootAttributes Include="TargetFrameworkVersion" Value="9.0" />
+      <FrameworkListRootAttributes Include="TargetFrameworkVersion" Value="10.0" />
       <FrameworkListRootAttributes Include="FrameworkName" Value="Samsung.Tizen" />
     </ItemGroup>
 
