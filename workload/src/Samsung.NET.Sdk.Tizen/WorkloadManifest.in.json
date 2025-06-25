@@ -20,7 +20,7 @@
     },
     "Samsung.Tizen.Sdk.net6": {
       "kind": "sdk",
-      "version": "9.0.101",
+      "version": "9.0.102",
       "alias-to": {
         "any": "Samsung.Tizen.Sdk"
       }

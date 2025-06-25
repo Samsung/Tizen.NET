@@ -15,7 +15,7 @@
        example: -preview.3.100+sha12345
   -->
   <PropertyGroup>
-    <TizenWorkloadVersion>10.0.102</TizenWorkloadVersion>
+    <TizenWorkloadVersion>10.0.106</TizenWorkloadVersion>
   </PropertyGroup>
 
   <!-- 
