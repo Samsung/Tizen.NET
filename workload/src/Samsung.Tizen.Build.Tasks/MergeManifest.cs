@@ -55,6 +55,7 @@ namespace Samsung.Tizen.Build.Tasks
                     return !Log.HasLoggedErrors;
                 }
 
+
                 if (processedManifests.Contains(subManifest.ItemSpec))
                 {
                     Log.LogMessage(MessageImportance.High, "Skipping duplicate sub manifest file : {0}", subManifest.ItemSpec);
