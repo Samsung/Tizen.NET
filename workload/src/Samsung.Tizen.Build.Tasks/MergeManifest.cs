@@ -38,13 +38,13 @@ namespace Samsung.Tizen.Build.Tasks
             Log.LogMessage(MessageImportance.High, "Base manifest file : {0}", MainManifestFile);
 
             foreach (var subManifest in subManifestFileList)
-                Log.LogMessage(MessageImportance.High, "Sub manifest file : {0}", subManifest.ItemSpec);
+                Log.LogMessage(MessageImportance.High, "Sub manifest file new : {0}", subManifest.ItemSpec);
 
-            Log.LogMessage(MessageImportance.High, "Result manifest file : {0}", ResultManifestFile);
+            Log.LogMessage(MessageImportance.High, "Result manifest file new : {0}", ResultManifestFile);
 
             var mainDoc = XDocument.Load(MainManifestFile);
             var ns = mainDoc.Root.GetDefaultNamespace();
-            string previousSubManifestSpec = null;
+            var processedManifests = new List<string>();
 
             //Merge sub manifest to base manifest
             foreach (var subManifest in subManifestFileList)
@@ -55,7 +55,8 @@ namespace Samsung.Tizen.Build.Tasks
                     return !Log.HasLoggedErrors;
                 }
 
-                if (previousSubManifestSpec != null && previousSubManifestSpec == subManifest.ItemSpec)
+
+                if (processedManifests.Contains(subManifest.ItemSpec))
                 {
                     Log.LogMessage(MessageImportance.High, "Skipping duplicate sub manifest file : {0}", subManifest.ItemSpec);
                     continue;
@@ -103,7 +104,7 @@ namespace Samsung.Tizen.Build.Tasks
                         mainDoc.Root.Add(subapp);
                     }
                 }
-                previousSubManifestSpec = subManifest.ItemSpec;
+                processedManifests.Add(subManifest.ItemSpec);
             }
 
             // Remove duplicate privilege
