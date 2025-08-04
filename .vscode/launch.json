@@ -1,0 +1,25 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Tizen .NET Debug (netcoredbg)",
+            "type": "tizen-netcoredbg",
+            "request": "launch",
+            "projectInfo": "${command:getProjectInfo}",
+            "port": 4711
+        },
+        {
+            "name": "Tizen Native Debug: Launch (gdb)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${command:tizen-get-native-exec}",
+            "MIMode": "gdb",
+            "cwd": "${workspaceRoot}",
+            "miDebuggerPath": "${command:tizen-get-gdb-path}",
+            "miDebuggerServerAddress": ":1234"
+        }
+    ]
+}

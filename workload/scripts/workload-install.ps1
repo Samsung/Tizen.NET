@@ -33,7 +33,7 @@ $LatestVersionMap = [ordered]@{
     "$ManifestBaseName-6.0.100" = "7.0.101";
     "$ManifestBaseName-6.0.200" = "7.0.100-preview.13.6";
     "$ManifestBaseName-6.0.300" = "8.0.133";
-    "$ManifestBaseName-6.0.400" = "9.0.102";
+    "$ManifestBaseName-6.0.400" = "9.0.103";
     "$ManifestBaseName-7.0.100-preview.6" = "7.0.100-preview.6.14";
     "$ManifestBaseName-7.0.100-preview.7" = "7.0.100-preview.7.20";
     "$ManifestBaseName-7.0.100-rc.1" = "7.0.100-rc.1.22";
@@ -41,7 +41,7 @@ $LatestVersionMap = [ordered]@{
     "$ManifestBaseName-7.0.100" = "7.0.103";
     "$ManifestBaseName-7.0.200" = "7.0.105";
     "$ManifestBaseName-7.0.300" = "7.0.120";
-    "$ManifestBaseName-7.0.400" = "10.0.102";
+    "$ManifestBaseName-7.0.400" = "10.0.106";
     "$ManifestBaseName-8.0.100-alpha.1" = "7.0.104";
     "$ManifestBaseName-8.0.100-preview.2" = "7.0.106";
     "$ManifestBaseName-8.0.100-preview.3" = "7.0.107";
@@ -55,12 +55,13 @@ $LatestVersionMap = [ordered]@{
     "$ManifestBaseName-8.0.100" = "8.0.144";
     "$ManifestBaseName-8.0.200" = "8.0.157";
     "$ManifestBaseName-8.0.300" = "8.0.156";
-    "$ManifestBaseName-8.0.400" = "10.0.103";
+    "$ManifestBaseName-8.0.400" = "10.0.109";
     "$ManifestBaseName-9.0.100-alpha.1" = "8.0.134";
     "$ManifestBaseName-9.0.100-preview.1" = "8.0.135";
     "$ManifestBaseName-9.0.100-preview.2" = "8.0.137";
     "$ManifestBaseName-9.0.100" = "10.0.104";
-    "$ManifestBaseName-9.0.200" = "10.0.105";
+    "$ManifestBaseName-9.0.200" = "10.0.110";
+    "$ManifestBaseName-9.0.300" = "10.0.111";
 }
 
 function New-TemporaryDirectory {
