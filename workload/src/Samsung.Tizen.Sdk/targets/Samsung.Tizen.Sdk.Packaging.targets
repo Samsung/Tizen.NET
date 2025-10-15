@@ -22,7 +22,7 @@ Copyright (c) Samsung All rights reserved.
   <UsingTask AssemblyFile="$(_TizenTaskAssemblyName)" TaskName="Samsung.Tizen.Build.Tasks.CheckApiVersion" />
 
   <PropertyGroup>
-    <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+<!--    <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck> -->
     <TizenCreateTpkOnBuild Condition="'$(TizenCreateTpkOnBuild)' == '' and '$(OutputType)' == 'Exe'">true</TizenCreateTpkOnBuild>
     <TizenPackageOutputPath>$(OutputPath)tpkroot\</TizenPackageOutputPath>
   </PropertyGroup>
