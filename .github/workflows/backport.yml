@@ -1,0 +1,21 @@
+name: Backport Patch
+
+on:
+  pull_request_target:
+    types: [closed, labeled]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  backport:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Run backport action
+      uses: korthout/backport-action@v3
+      with:
+        label_pattern: 'backport/(?<target>.+)'
+        github_token: ${{secrets.JAY_GITHUB_TOKEN }}
+        cherry-picking: 'auto'
