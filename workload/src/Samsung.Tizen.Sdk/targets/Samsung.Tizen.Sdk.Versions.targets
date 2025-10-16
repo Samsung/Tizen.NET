@@ -26,7 +26,7 @@ Copyright (c) Samsung All rights reserved.
     <_TargetingPackVersion>**FromWorkload**</_TargetingPackVersion>
     <_TargetingPackVersion Condition="$(_TargetFramework.EndsWith('7.0'))">7.0.123</_TargetingPackVersion>
     <_TargetingPackVersion Condition="$(_TargetFramework.EndsWith('8.0'))">8.0.154</_TargetingPackVersion>
-    <_TargetingPackVersion Condition="$(_TargetFramework.EndsWith('9.0'))">9.0.102</_TargetingPackVersion>
+    <_TargetingPackVersion Condition="$(_TargetFramework.EndsWith('9.0'))">9.0.103</_TargetingPackVersion>
   </PropertyGroup>
 
   <ItemGroup>
