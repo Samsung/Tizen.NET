@@ -23,28 +23,28 @@
     },
     "Samsung.Tizen.Sdk.net6": {
       "kind": "sdk",
-      "version": "9.0.101",
+      "version": "9.0.103",
       "alias-to": {
         "any": "Samsung.Tizen.Sdk"
       }
     },
     "Samsung.Tizen.Sdk.net7": {
       "kind": "sdk",
-      "version": "10.0.102",
+      "version": "10.0.116",
       "alias-to": {
         "any": "Samsung.Tizen.Sdk"
       }
     },
     "Samsung.Tizen.Sdk.net8": {
       "kind": "sdk",
-      "version": "10.0.103",
+      "version": "10.0.115",
       "alias-to": {
         "any": "Samsung.Tizen.Sdk"
       }
     },
     "Samsung.Tizen.Sdk.net9": {
       "kind": "sdk",
-      "version": "10.0.105",
+      "version": "10.0.117",
       "alias-to": {
         "any": "Samsung.Tizen.Sdk"
       }

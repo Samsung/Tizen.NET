@@ -15,7 +15,7 @@
        example: -preview.3.100+sha12345
   -->
   <PropertyGroup>
-    <TizenWorkloadVersion>10.0.106</TizenWorkloadVersion>
+    <TizenWorkloadVersion>10.0.118</TizenWorkloadVersion>
   </PropertyGroup>
 
   <!-- 
@@ -26,14 +26,14 @@
     This version is used to generate Samsung.Tizen.Ref package.
   -->
   <PropertyGroup>
-    <TizenFXVersion>13.0.0.18774</TizenFXVersion>
+    <TizenFXVersion>13.0.0.19191</TizenFXVersion>
   </PropertyGroup>
 
   <!--
     Dotnet SDK versions for building the workload.
    -->
   <PropertyGroup>
-    <MicrosoftDotnetSdkInternalPackageVersion>10.0.100-preview.5.25277.114</MicrosoftDotnetSdkInternalPackageVersion>
-    <MicrosoftDotNetBuildTasksFeedPackageVersion>10.0.0-beta.25326.112</MicrosoftDotNetBuildTasksFeedPackageVersion>
+    <MicrosoftDotnetSdkInternalPackageVersion>10.0.100-rc.2.25502.107</MicrosoftDotnetSdkInternalPackageVersion>
+    <MicrosoftDotNetBuildTasksFeedPackageVersion>10.0.0-beta.25512.102</MicrosoftDotNetBuildTasksFeedPackageVersion>
   </PropertyGroup>
 </Project>
