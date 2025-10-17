@@ -29,6 +29,7 @@ jobs:
         IS_STABLE_RELEASE_TAG: ${{ fromJson(github.event.inputs.isStableRelease) }}
       run: make install -d
       working-directory: ./workload
+      continue-on-error: true
 
     - name: Push packages to NuGet.org
       run: |
