@@ -14,9 +14,9 @@ on:
 
 jobs:
   release:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         fetch-depth: 0
 
@@ -27,7 +27,7 @@ jobs:
       env:
         PRERELEASE_TAG: ${{ github.event.inputs.prerelease }}
         IS_STABLE_RELEASE_TAG: ${{ fromJson(github.event.inputs.isStableRelease) }}
-      run: make msi
+      run: make install
       working-directory: ./workload
 
     - name: Push packages to NuGet.org
