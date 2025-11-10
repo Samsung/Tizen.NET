@@ -23,6 +23,12 @@
         "linux-arm64"
       ]
     },
+    "tizen-x64": {
+      "#import": [
+        "tizen",
+        "linux-x64"
+      ]
+    },
     "tizen.4.0.0": {
       "#import": [
         "tizen"
@@ -210,6 +216,12 @@
       "#import": [
         "tizen.10.0.0",
         "tizen.9.0.0-arm64"
+      ]
+    },
+    "tizen.10.0.0-x64": {
+      "#import": [
+        "tizen.10.0.0",
+        "tizen-x64"
       ]
     }
   }
