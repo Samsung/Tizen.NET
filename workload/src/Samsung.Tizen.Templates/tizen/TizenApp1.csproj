@@ -4,4 +4,8 @@
     <RootNamespace Condition="'$(name)' != '$(name{-VALUE-FORMS-}safe_namespace)'">TizenApp1</RootNamespace>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Tizen.UI.Components.Material" Version="1.0.0-*" />
+  </ItemGroup>
 </Project>

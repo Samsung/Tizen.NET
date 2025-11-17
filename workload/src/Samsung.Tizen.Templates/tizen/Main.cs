@@ -1,45 +1,33 @@
-using System;
-
-using Tizen.NUI;
-using Tizen.NUI.BaseComponents;
+using Tizen.UI;
+using Tizen.UI.Components;
+using Tizen.UI.Components.Material;
 
 namespace TizenApp1
 {
-    class Program : NUIApplication
+    class Program : MaterialApplication
     {
         protected override void OnCreate()
         {
             base.OnCreate();
-            Initialize();
-        }
-
-        void Initialize()
-        {
-            Window.Default.KeyEvent += OnKeyEvent;
-
-            TextLabel text = new TextLabel("Hello Tizen") {
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center,
-                TextColor = Color.Blue,
-                PointSize = 12.0f,
-                HeightResizePolicy = ResizePolicyType.FillToParent,
-                WidthResizePolicy = ResizePolicyType.FillToParent
-            };
-            Window.Default.GetDefaultLayer().Add(text);
-
-            Animation animation = new Animation(2000);
-            animation.AnimateTo(text, "Orientation", new Rotation(new Radian(new Degree(180.0f)), PositionAxis.X), 0, 500);
-            animation.AnimateTo(text, "Orientation", new Rotation(new Radian(new Degree(0.0f)), PositionAxis.X), 500, 1000);
-            animation.Looping = true;
-            animation.Play();
-        }
-
-        public void OnKeyEvent(object sender, Window.KeyEventArgs e)
-        {
-            if (e.Key.State == Key.StateType.Down && (e.Key.KeyPressedName == "XF86Back" || e.Key.KeyPressedName == "Escape"))
+            FocusManager.Instance.EnableDefaultFocusAlgorithm(true);
+            Window.Default.AddAvailableOrientation(WindowOrientation.Portrait);
+            Window.Default.AddAvailableOrientation(WindowOrientation.Landscape);
+            Window.Default.AddAvailableOrientation(WindowOrientation.PortraitInverse);
+            Window.Default.AddAvailableOrientation(WindowOrientation.LandscapeInverse);
+            Window.Default.KeyEvent += (s, e) =>
             {
-                Exit();
-            }
+                if (e.KeyEvent.State == KeyState.Up && (e.KeyEvent.KeyPressedName == "BackSpace" || e.KeyEvent.KeyPressedName == "XF86Back"))
+                {
+                    if (!RootNavigateBack())
+                    {
+                        Window.Default.Dispose();
+                        Exit();
+                    }
+                }
+            };
+            var navigator = new Navigator();
+            Window.Default.DefaultLayer.Add(navigator);
+            navigator.PushAsync(new MainView());
         }
 
         static void Main(string[] args)
