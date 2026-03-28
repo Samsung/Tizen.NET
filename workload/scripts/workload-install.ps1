@@ -62,6 +62,7 @@ $LatestVersionMap = [ordered]@{
     "$ManifestBaseName-9.0.100" = "10.0.104";
     "$ManifestBaseName-9.0.200" = "10.0.110";
     "$ManifestBaseName-9.0.300" = "10.0.111";
+    "$ManifestBaseName-10.0.100" = "10.0.123";
 }
 
 function New-TemporaryDirectory {
@@ -297,7 +298,7 @@ if (Get-Command $DotnetCommand -ErrorAction SilentlyContinue)
 {
     if ($UpdateAllWorkloads.IsPresent)
     {
-        $InstalledDotnetSdks = Invoke-Expression "& '$DotnetCommand' --list-sdks | Select-String -Pattern '^6|^7'" | ForEach-Object {$_ -replace (" \[.*","")}
+        $InstalledDotnetSdks = Invoke-Expression "& '$DotnetCommand' --list-sdks | Select-String -Pattern '^6|^7|^8|^9|^10'" | ForEach-Object {$_ -replace (" \[.*","")}
     }
     else
     {
