@@ -46,6 +46,7 @@ LatestVersionMap=(
     "$MANIFEST_BASE_NAME-9.0.100=10.0.104"
     "$MANIFEST_BASE_NAME-9.0.200=10.0.110"
     "$MANIFEST_BASE_NAME-9.0.300=10.0.111"
+    "$MANIFEST_BASE_NAME-10.0.100=10.0.123"
     )
 
 while [ $# -ne 0 ]; do
@@ -251,7 +252,7 @@ function install_tizenworkload() {
 }
 
 if [[ "$UPDATE_ALL_WORKLOADS" == "true" ]]; then
-    INSTALLED_DOTNET_SDKS=$($DOTNET_COMMAND --list-sdks | sed -n '/^6\|^7/p' | sed 's/ \[.*//g')
+    INSTALLED_DOTNET_SDKS=$($DOTNET_COMMAND --list-sdks | sed -n '/^6\|^7\|^8\|^9\|^10/p' | sed 's/ \[.*//g')
 else
     INSTALLED_DOTNET_SDKS=$($DOTNET_COMMAND --version)
 fi
