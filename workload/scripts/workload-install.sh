@@ -18,7 +18,7 @@ LatestVersionMap=(
     "$MANIFEST_BASE_NAME-6.0.100=7.0.101"
     "$MANIFEST_BASE_NAME-6.0.200=7.0.100-preview.13.6"
     "$MANIFEST_BASE_NAME-6.0.300=8.0.133"
-    "$MANIFEST_BASE_NAME-6.0.400=9.0.103"
+    "$MANIFEST_BASE_NAME-6.0.400=9.0.104"
     "$MANIFEST_BASE_NAME-7.0.100-preview.6=7.0.100-preview.6.14"
     "$MANIFEST_BASE_NAME-7.0.100-preview.7=7.0.100-preview.7.20"
     "$MANIFEST_BASE_NAME-7.0.100-rc.1=7.0.100-rc.1.22"
@@ -26,7 +26,7 @@ LatestVersionMap=(
     "$MANIFEST_BASE_NAME-7.0.100=7.0.103"
     "$MANIFEST_BASE_NAME-7.0.200=7.0.105"
     "$MANIFEST_BASE_NAME-7.0.300=7.0.120"
-    "$MANIFEST_BASE_NAME-7.0.400=10.0.116"
+    "$MANIFEST_BASE_NAME-7.0.400=10.0.119"
     "$MANIFEST_BASE_NAME-8.0.100-alpha.1=7.0.104"
     "$MANIFEST_BASE_NAME-8.0.100-preview.2=7.0.106"
     "$MANIFEST_BASE_NAME-8.0.100-preview.3=7.0.107"
@@ -40,15 +40,15 @@ LatestVersionMap=(
     "$MANIFEST_BASE_NAME-8.0.100=8.0.144"
     "$MANIFEST_BASE_NAME-8.0.200=8.0.157"
     "$MANIFEST_BASE_NAME-8.0.300=8.0.156"
-    "$MANIFEST_BASE_NAME-8.0.400=10.0.115"
+    "$MANIFEST_BASE_NAME-8.0.400=10.0.120"
     "$MANIFEST_BASE_NAME-9.0.100-alpha.1=8.0.134"
     "$MANIFEST_BASE_NAME-9.0.100-preview.1=8.0.135"
     "$MANIFEST_BASE_NAME-9.0.100-preview.2=8.0.137"
     "$MANIFEST_BASE_NAME-9.0.100-preview.3=8.0.148"
     "$MANIFEST_BASE_NAME-9.0.100-rc.1=8.0.152"
     "$MANIFEST_BASE_NAME-9.0.100=10.0.104"
-    "$MANIFEST_BASE_NAME-9.0.200=10.0.105"
-    "$MANIFEST_BASE_NAME-9.0.300=10.0.117"
+    "$MANIFEST_BASE_NAME-9.0.200=10.0.110"
+    "$MANIFEST_BASE_NAME-9.0.300=10.0.121"
     "$MANIFEST_BASE_NAME-10.0.100-rc.2=10.0.118"
     "$MANIFEST_BASE_NAME-10.0.100=10.0.123"
     )
@@ -265,4 +265,4 @@ fi
 if [ -z "$INSTALLED_DOTNET_SDKS" ]; then
     echo ".NET SDK version 6 or later is required to install Tizen Workload."
 else
-    for DOTNET_SDK in $INSTALLED_DOTNET_SD
+    for DOTNET_SDK in $INSTALLED_DOTNET_SD                                                                                                                                      
