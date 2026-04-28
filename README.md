@@ -97,3 +97,23 @@ dotnet build HelloTizenNet6/HelloTizenNet6.csproj -f net6.0-tizen -t:Run
 ```
 
 > ℹ️ You need to use Tizen emulator 7.0 or higher version to run .NET 6 based app.
+
+
+## AI agent skills
+
+This repository ships [agentskills.io](https://agentskills.io)-compatible
+diagnostic skills under [`.agents/skills/`](./.agents/skills/). They help AI
+coding assistants (Claude Code, GitHub Copilot, Cursor, …) understand the
+Tizen .NET environment and build pipeline.
+
+| Skill | When it triggers |
+|---|---|
+| [`tizen-doctor`](./.agents/skills/tizen-doctor/) | `dotnet build` failures on `net*-tizen*.0` TFMs (NETSDK1139, missing Tizen Workload, `Tizen.NET.Sdk` not found, etc.); fresh-machine setup; `sdb` / certificate tooling questions. |
+
+When working **inside this repo** with a compatible agent, these skills
+auto-load on relevant prompts.
+
+When working **on your own Tizen .NET app** elsewhere, install via the
+mirrored marketplace:
+
+```bash
