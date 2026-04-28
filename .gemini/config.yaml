@@ -1,0 +1,35 @@
+# Gemini Code Assist configuration for Samsung/Tizen.NET
+# Docs: https://developers.google.com/gemini-code-assist/docs/customize-gemini-behavior-github
+
+have_fun: false
+
+code_review:
+  disable: false
+  # MEDIUM: only flag meaningful issues. Lower (LOW) = noisy, higher (HIGH) = misses subtle bugs.
+  comment_severity_threshold: MEDIUM
+  # Hard cap to avoid drowning contributors in bot noise on large PRs.
+  max_review_comments: 5
+  pull_request_opened:
+    help: false
+    summary: true
+    code_review: true
+
+# Skip generated, vendored, and non-source files.
+ignore_patterns:
+  # Build / IDE artifacts
+  - "**/bin/**"
+  - "**/obj/**"
+  - "**/.vs/**"
+  - "**/*.Designer.cs"
+  - "**/*.generated.cs"
+
+  # Data file (workload version map) — not source code, line-by-line review adds noise.
+  - "workload/scripts/version-map.json"
+
+  # Docs and assets
+  - "**/*.md"
+  - "assets/**"
+
+  # Lockfiles / package metadata
+  - "**/packages.lock.json"
+  - "**/NuGet.config"
