@@ -1,0 +1,65 @@
+name: Build Matrix
+
+#
+# Runs the multi-TFM build matrix (`make test-matrix`) plus the metadata
+# consistency checks (`validate-workload-metadata.py`).
+#
+# This is intentionally a separate workflow from `Build Workload`:
+#   - `Build Workload` does the production pack build + single-TFM smoke test.
+#   - `Build Matrix` is purely verification — broader TFM coverage and
+#     cross-file consistency. It does not produce artifacts.
+#
+# Trigger scope is workload/ and the workflow YAMLs themselves.
+#
+
+on:
+  push:
+    branches:
+    - main
+    - net10.0
+    paths:
+    - 'workload/**'
+    - '.github/workflows/build-matrix.yml'
+  pull_request:
+    branches:
+    - main
+    - net10.0
+    paths:
+    - 'workload/**'
+    - '.github/workflows/build-matrix.yml'
+  workflow_dispatch: {}
+
+jobs:
+  validate-metadata:
+    name: Validate workload metadata
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Run validate-workload-metadata.py
+      run: python3 workload/scripts/validate-workload-metadata.py
+
+  test-matrix:
+    name: Multi-TFM build matrix
+    needs: validate-metadata
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Run make test-matrix
+      env:
+        PULLREQUEST_ID: ${{ github.event.number }}
+      working-directory: ./workload
+      run: make test-matrix
+
+    - name: Upload matrix logs on failure
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-matrix-logs
+        path: |
+          workload/.tmp/matrix/**/build.log
+          workload/.tmp/matrix/**/dotnet-new.log
+        if-no-files-found: ignore

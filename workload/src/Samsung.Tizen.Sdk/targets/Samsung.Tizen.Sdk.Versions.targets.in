@@ -2,9 +2,12 @@
 ***********************************************************************************************
 Samsung.Tizen.Sdk.Versions.targets
 
-WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
-          created a backup copy.  Incorrect changes to this file will make it
-          impossible to load or build your projects from the command-line or the IDE.
+WARNING:  DO NOT MODIFY this file directly — it is generated from
+          Samsung.Tizen.Sdk.Versions.targets.in at build time.
+          Edit the .in template and/or workload/build/Versions.props instead.
+
+          Incorrect changes to this file will make it impossible to load
+          or build your projects from the command-line or the IDE.
 
 Copyright (c) Samsung All rights reserved.
 ***********************************************************************************************
@@ -42,7 +45,7 @@ Copyright (c) Samsung All rights reserved.
   </ItemGroup>
 
   <ItemGroup>
-    <TizenSdkSupportedTargetPlatformVersion Include="7.0" />
+    <!-- 7.0 was a development-only platform during initial bring-up; removed. -->
     <TizenSdkSupportedTargetPlatformVersion Include="8.0" />
     <TizenSdkSupportedTargetPlatformVersion Include="9.0" />
     <TizenSdkSupportedTargetPlatformVersion Include="10.0" />
@@ -59,7 +62,7 @@ Copyright (c) Samsung All rights reserved.
       Include="Samsung.Tizen"
       TargetFramework="$(_TargetFramework)"
       TargetingPackName="Samsung.Tizen.Ref.API11"
-      TargetingPackVersion="11.0.0.18033"
+      TargetingPackVersion="@TizenFXAPI11Version@"
       Profile="Tizen"
     />
     <KnownFrameworkReference
@@ -67,7 +70,7 @@ Copyright (c) Samsung All rights reserved.
       Include="Samsung.Tizen"
       TargetFramework="$(_TargetFramework)"
       TargetingPackName="Samsung.Tizen.Ref.API12"
-      TargetingPackVersion="12.0.0.18510"
+      TargetingPackVersion="@TizenFXAPI12Version@"
       Profile="Tizen"
     />
     <KnownFrameworkReference
@@ -75,7 +78,7 @@ Copyright (c) Samsung All rights reserved.
       Include="Samsung.Tizen"
       TargetFramework="$(_TargetFramework)"
       TargetingPackName="Samsung.Tizen.Ref.API13"
-      TargetingPackVersion="13.0.0.19231"
+      TargetingPackVersion="@TizenFXAPI13Version@"
       Profile="Tizen"
     />
     <KnownFrameworkReference
@@ -83,7 +86,7 @@ Copyright (c) Samsung All rights reserved.
       Include="Samsung.Tizen"
       TargetFramework="$(_TargetFramework)"
       TargetingPackName="Samsung.Tizen.Ref.API13"
-      TargetingPackVersion="13.0.0.19231"
+      TargetingPackVersion="@TizenFXAPI13Version@"
       Profile="Tizen"
     />
   </ItemGroup>

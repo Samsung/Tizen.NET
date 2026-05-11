@@ -16,21 +16,49 @@ core workload sdk pack imported by the Samsung.NET.Sdk.Tizen.
   <PropertyGroup>
     <BeforePack>
       _GetPackageVersion;
+      _GenerateVersionsTargets;
       _GenerateSdkContent;
       $(BeforePack);
     </BeforePack>
   </PropertyGroup>
 
+  <!--
+    Regenerate Samsung.Tizen.Sdk.Versions.targets from the .in template, substituting
+    the TizenFXAPI*Version values from workload/build/Versions.props.
+    This is the workload-side SSOT counterpart to WorkloadManifest.in.json.
+  -->
+  <Target Name="_GenerateVersionsTargets">
+    <PropertyGroup>
+      <_GeneratedTargetsDir>$(IntermediateOutputPath)generated\targets\</_GeneratedTargetsDir>
+      <_VersionsTargetsSource>$(_ProjectSourceDirectory)Samsung.Tizen.Sdk\targets\Samsung.Tizen.Sdk.Versions.targets.in</_VersionsTargetsSource>
+      <_VersionsTargetsDest>$(_GeneratedTargetsDir)Samsung.Tizen.Sdk.Versions.targets</_VersionsTargetsDest>
+    </PropertyGroup>
+
+    <MakeDir Directories="$(_GeneratedTargetsDir)" />
+
+    <ReplaceFileContents
+        SourceFile="$(_VersionsTargetsSource)"
+        DestinationFile="$(_VersionsTargetsDest)"
+        Replacements="@TizenFXAPI11Version@=$(TizenFXAPI11Version);@TizenFXAPI12Version@=$(TizenFXAPI12Version);@TizenFXAPI13Version@=$(TizenFXAPI13Version);">
+    </ReplaceFileContents>
+  </Target>
+
   <Target Name="_GenerateSdkContent" DependsOnTargets="_GetBuildTasksAssets;_GetLicense">
     <PropertyGroup>
       <_SDKSourceDirectory>$(_ProjectSourceDirectory)Samsung.Tizen.Sdk\</_SDKSourceDirectory>
+      <_GeneratedTargetsDir>$(IntermediateOutputPath)generated\targets\</_GeneratedTargetsDir>
     </PropertyGroup>
 
     <ItemGroup>
       <_PackageFiles Include="$(_SDKSourceDirectory)certificate\*" PackagePath="certificate" />
       <_PackageFiles Include="$(_SDKSourceDirectory)Sdk\*" PackagePath="Sdk" />
       <_PackageFiles Include="$(_SDKSourceDirectory)tools\*" PackagePath="tools" />
-      <_PackageFiles Include="$(_SDKSourceDirectory)targets\*" PackagePath="targets" />
+      <!-- Source .targets except .in templates (the generated file is added below). -->
+      <_PackageFiles Include="$(_SDKSourceDirectory)targets\*"
+                     Exclude="$(_SDKSourceDirectory)targets\*.in"
+                     PackagePath="targets" />
+      <!-- Build-time generated targets (currently: Samsung.Tizen.Sdk.Versions.targets). -->
+      <_PackageFiles Include="$(_GeneratedTargetsDir)*.targets" PackagePath="targets" />
     </ItemGroup>
   </Target>
 

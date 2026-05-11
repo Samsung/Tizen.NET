@@ -109,13 +109,21 @@ $(eval $(call CreateMsi,$(TIZEN_WORKLOAD_VERSION_FULL)))
 msi: $(MSI_TARGET)
 	@rm -fr $(TMPDIR)
 
-# Test 'tizen' workload
+# Test 'tizen' workload (single-TFM smoke test using the template defaults)
 .PHONY: test
 test: install
 	@rm -fr $(TMPDIR)/test
 	@mkdir -p $(TMPDIR)/test
 	@$(DOTNET) new tizen --output $(TMPDIR)/test
 	@$(DOTNET) build $(TMPDIR)/test
+
+
+# Test 'tizen' workload across all officially supported TFM/api-version combinations.
+# Matrix is defined in scripts/test-matrix.sh.
+.PHONY: test-matrix
+test-matrix: install
+	@DOTNET=$(DOTNET) TEST_MATRIX_TMP=$(TMPDIR)/matrix \
+		bash $(TOP)/scripts/test-matrix.sh
 
 
 # Remove artifacts and temporary files

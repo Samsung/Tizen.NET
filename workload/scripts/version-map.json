@@ -1,5 +1,4 @@
 {
-  "$schema": "./version-map.schema.json",
   "_comment": [
     "Single source of truth for the Tizen workload version map.",
     "After editing this file, regenerate the install scripts by running:",
