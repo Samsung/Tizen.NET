@@ -13,6 +13,7 @@ DOTNET_DEFAULT_PATH_LINUX="/usr/share/dotnet"
 DOTNET_DEFAULT_PATH_MACOS="/usr/local/share/dotnet"
 UPDATE_ALL_WORKLOADS="false"
 
+# BEGIN AUTO-GENERATED VERSION MAP -- edit version-map.json and rerun Generate-InstallScripts.ps1
 LatestVersionMap=(
     "$MANIFEST_BASE_NAME-6.0.100=7.0.101"
     "$MANIFEST_BASE_NAME-6.0.200=7.0.100-preview.13.6"
@@ -49,6 +50,7 @@ LatestVersionMap=(
     "$MANIFEST_BASE_NAME-9.0.200=10.0.110"
     "$MANIFEST_BASE_NAME-9.0.300=10.0.121"
     )
+# END AUTO-GENERATED VERSION MAP
 
 while [ $# -ne 0 ]; do
     name=$1
