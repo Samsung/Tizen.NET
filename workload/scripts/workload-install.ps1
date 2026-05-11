@@ -29,41 +29,43 @@ $ProgressPreference = "SilentlyContinue"
 $ManifestBaseName = "Samsung.NET.Sdk.Tizen.Manifest"
 $global:FallbackId = ""
 
+# BEGIN AUTO-GENERATED VERSION MAP -- edit version-map.json and rerun Generate-InstallScripts.ps1
 $LatestVersionMap = [ordered]@{
-    "$ManifestBaseName-6.0.100" = "7.0.101";
-    "$ManifestBaseName-6.0.200" = "7.0.100-preview.13.6";
-    "$ManifestBaseName-6.0.300" = "8.0.133";
-    "$ManifestBaseName-6.0.400" = "9.0.104";
+    "$ManifestBaseName-6.0.100"           = "7.0.101";
+    "$ManifestBaseName-6.0.200"           = "7.0.100-preview.13.6";
+    "$ManifestBaseName-6.0.300"           = "8.0.133";
+    "$ManifestBaseName-6.0.400"           = "9.0.104";
     "$ManifestBaseName-7.0.100-preview.6" = "7.0.100-preview.6.14";
     "$ManifestBaseName-7.0.100-preview.7" = "7.0.100-preview.7.20";
-    "$ManifestBaseName-7.0.100-rc.1" = "7.0.100-rc.1.22";
-    "$ManifestBaseName-7.0.100-rc.2" = "7.0.100-rc.2.24";
-    "$ManifestBaseName-7.0.100" = "7.0.103";
-    "$ManifestBaseName-7.0.200" = "7.0.105";
-    "$ManifestBaseName-7.0.300" = "7.0.120";
-    "$ManifestBaseName-7.0.400" = "10.0.119";
-    "$ManifestBaseName-8.0.100-alpha.1" = "7.0.104";
+    "$ManifestBaseName-7.0.100-rc.1"      = "7.0.100-rc.1.22";
+    "$ManifestBaseName-7.0.100-rc.2"      = "7.0.100-rc.2.24";
+    "$ManifestBaseName-7.0.100"           = "7.0.103";
+    "$ManifestBaseName-7.0.200"           = "7.0.105";
+    "$ManifestBaseName-7.0.300"           = "7.0.120";
+    "$ManifestBaseName-7.0.400"           = "10.0.119";
+    "$ManifestBaseName-8.0.100-alpha.1"   = "7.0.104";
     "$ManifestBaseName-8.0.100-preview.2" = "7.0.106";
     "$ManifestBaseName-8.0.100-preview.3" = "7.0.107";
     "$ManifestBaseName-8.0.100-preview.4" = "7.0.108";
     "$ManifestBaseName-8.0.100-preview.5" = "7.0.110";
     "$ManifestBaseName-8.0.100-preview.6" = "7.0.121";
     "$ManifestBaseName-8.0.100-preview.7" = "7.0.122";
-    "$ManifestBaseName-8.0.100-rc.1" = "7.0.124";
-    "$ManifestBaseName-8.0.100-rc.2" = "7.0.125";
-    "$ManifestBaseName-8.0.100-rtm" = "7.0.127";
-    "$ManifestBaseName-8.0.100" = "8.0.144";
-    "$ManifestBaseName-8.0.200" = "8.0.157";
-    "$ManifestBaseName-8.0.300" = "8.0.156";
-    "$ManifestBaseName-8.0.400" = "10.0.120";
-    "$ManifestBaseName-9.0.100-alpha.1" = "8.0.134";
+    "$ManifestBaseName-8.0.100-rc.1"      = "7.0.124";
+    "$ManifestBaseName-8.0.100-rc.2"      = "7.0.125";
+    "$ManifestBaseName-8.0.100-rtm"       = "7.0.127";
+    "$ManifestBaseName-8.0.100"           = "8.0.144";
+    "$ManifestBaseName-8.0.200"           = "8.0.157";
+    "$ManifestBaseName-8.0.300"           = "8.0.156";
+    "$ManifestBaseName-8.0.400"           = "10.0.120";
+    "$ManifestBaseName-9.0.100-alpha.1"   = "8.0.134";
     "$ManifestBaseName-9.0.100-preview.1" = "8.0.135";
     "$ManifestBaseName-9.0.100-preview.2" = "8.0.137";
-    "$ManifestBaseName-9.0.100" = "10.0.104";
-    "$ManifestBaseName-9.0.200" = "10.0.110";
-    "$ManifestBaseName-9.0.300" = "10.0.121";
-    "$ManifestBaseName-10.0.100" = "10.0.123";
+    "$ManifestBaseName-9.0.100"           = "10.0.104";
+    "$ManifestBaseName-9.0.200"           = "10.0.110";
+    "$ManifestBaseName-9.0.300"           = "10.0.121";
+    "$ManifestBaseName-10.0.100"          = "10.0.123"
 }
+# END AUTO-GENERATED VERSION MAP
 
 function New-TemporaryDirectory {
     $parent = [System.IO.Path]::GetTempPath()

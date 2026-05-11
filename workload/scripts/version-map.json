@@ -1,0 +1,144 @@
+{
+  "_comment": [
+    "Single source of truth for the Tizen workload version map.",
+    "After editing this file, regenerate the install scripts by running:",
+    "    pwsh ./workload/scripts/Generate-InstallScripts.ps1",
+    "CI will fail if the generated sections in workload-install.sh / workload-install.ps1",
+    "are out of sync with this file."
+  ],
+  "manifestBaseName": "samsung.net.sdk.tizen.manifest",
+  "entries": [
+    {
+      "sdkBand": "6.0.100",
+      "workloadVersion": "7.0.101"
+    },
+    {
+      "sdkBand": "6.0.200",
+      "workloadVersion": "7.0.100-preview.13.6"
+    },
+    {
+      "sdkBand": "6.0.300",
+      "workloadVersion": "8.0.133"
+    },
+    {
+      "sdkBand": "6.0.400",
+      "workloadVersion": "9.0.104"
+    },
+    {
+      "sdkBand": "7.0.100-preview.6",
+      "workloadVersion": "7.0.100-preview.6.14"
+    },
+    {
+      "sdkBand": "7.0.100-preview.7",
+      "workloadVersion": "7.0.100-preview.7.20"
+    },
+    {
+      "sdkBand": "7.0.100-rc.1",
+      "workloadVersion": "7.0.100-rc.1.22"
+    },
+    {
+      "sdkBand": "7.0.100-rc.2",
+      "workloadVersion": "7.0.100-rc.2.24"
+    },
+    {
+      "sdkBand": "7.0.100",
+      "workloadVersion": "7.0.103"
+    },
+    {
+      "sdkBand": "7.0.200",
+      "workloadVersion": "7.0.105"
+    },
+    {
+      "sdkBand": "7.0.300",
+      "workloadVersion": "7.0.120"
+    },
+    {
+      "sdkBand": "7.0.400",
+      "workloadVersion": "10.0.119"
+    },
+    {
+      "sdkBand": "8.0.100-alpha.1",
+      "workloadVersion": "7.0.104"
+    },
+    {
+      "sdkBand": "8.0.100-preview.2",
+      "workloadVersion": "7.0.106"
+    },
+    {
+      "sdkBand": "8.0.100-preview.3",
+      "workloadVersion": "7.0.107"
+    },
+    {
+      "sdkBand": "8.0.100-preview.4",
+      "workloadVersion": "7.0.108"
+    },
+    {
+      "sdkBand": "8.0.100-preview.5",
+      "workloadVersion": "7.0.110"
+    },
+    {
+      "sdkBand": "8.0.100-preview.6",
+      "workloadVersion": "7.0.121"
+    },
+    {
+      "sdkBand": "8.0.100-preview.7",
+      "workloadVersion": "7.0.122"
+    },
+    {
+      "sdkBand": "8.0.100-rc.1",
+      "workloadVersion": "7.0.124"
+    },
+    {
+      "sdkBand": "8.0.100-rc.2",
+      "workloadVersion": "7.0.125"
+    },
+    {
+      "sdkBand": "8.0.100-rtm",
+      "workloadVersion": "7.0.127"
+    },
+    {
+      "sdkBand": "8.0.100",
+      "workloadVersion": "8.0.144"
+    },
+    {
+      "sdkBand": "8.0.200",
+      "workloadVersion": "8.0.157"
+    },
+    {
+      "sdkBand": "8.0.300",
+      "workloadVersion": "8.0.156"
+    },
+    {
+      "sdkBand": "8.0.400",
+      "workloadVersion": "10.0.120"
+    },
+    {
+      "sdkBand": "9.0.100-alpha.1",
+      "workloadVersion": "8.0.134"
+    },
+    {
+      "sdkBand": "9.0.100-preview.1",
+      "workloadVersion": "8.0.135"
+    },
+    {
+      "sdkBand": "9.0.100-preview.2",
+      "workloadVersion": "8.0.137"
+    },
+    {
+      "sdkBand": "9.0.100",
+      "workloadVersion": "10.0.104"
+    },
+    {
+      "sdkBand": "9.0.200",
+      "workloadVersion": "10.0.110"
+    },
+    {
+      "sdkBand": "9.0.300",
+      "workloadVersion": "10.0.121"
+    },
+    {
+      "sdkBand": "10.0.100",
+      "workloadVersion": "10.0.123"
+    }
+  ]
+}

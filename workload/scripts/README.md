@@ -28,38 +28,32 @@ or
 curl -sSL https://raw.githubusercontent.com/Samsung/Tizen.NET/main/workload/scripts/workload-install.sh | bash -s -- -v <version> -d <dotnet sdk location>
 ```
 
-## workload-uninstall (Windows only)
+## Editing the version map
 
-This script removes the Tizen workload from the installed .NET SDK, including the HKLM registry entry that `workload-install.ps1` writes on MSI-installed SDKs to make `dotnet workload list` show `tizen`.
+The `LatestVersionMap` table used inside `workload-install.sh` and `workload-install.ps1`
+is **generated** from a single source of truth: [`version-map.json`](./version-map.json).
 
-### When to use it
+To add or update an entry:
 
-On Windows, running `dotnet workload install/restore/update` for other workloads while the Tizen workload is installed can fail with an error like:
+1. Edit `workload/scripts/version-map.json`. Only add the new `(sdkBand, workloadVersion)` pair.
+2. Regenerate the install scripts:
+   ```
+   pwsh ./workload/scripts/Generate-InstallScripts.ps1
+   ```
+3. Commit all three files together (`version-map.json`, `workload-install.sh`, `workload-install.ps1`).
 
+**Do not hand-edit the blocks delimited by**
 ```
-Version X.Y.Z of package samsung.tizen.sdk.msi.x64 is not found in NuGet feeds
+# BEGIN AUTO-GENERATED VERSION MAP
+...
+# END AUTO-GENERATED VERSION MAP
 ```
+The CI workflow `validate-version-map.yml` runs `Generate-InstallScripts.ps1 -Check`
+on every PR and fails if the two scripts have drifted from `version-map.json`.
 
-and cause the entire transaction to roll back, including other workloads installed in the same session. The root cause is that the Tizen workload is currently distributed as raw NuGet packages via an install script rather than signed MSI NuGet packages, but the install script registers a Windows Installer entry so that `dotnet workload list` can see it. The SDK then treats Tizen as an MSI-installed workload and fails when it cannot find the MSI payload.
+### Why
 
-As a workaround, run `workload-uninstall.ps1` before `dotnet workload` operations for other workloads, then reinstall the Tizen workload with `workload-install.ps1`:
-
-```
-# 1) Uninstall Tizen workload (run PowerShell as Administrator)
-.\workload-uninstall.ps1
-
-# 2) Run your dotnet workload operations
-dotnet workload install maui
-# or dotnet workload restore / update, etc.
-
-# 3) Reinstall the Tizen workload
-.\workload-install.ps1
-```
-
-### Usage
-
-```
-workload-uninstall.ps1 [-d <Dotnet SDK Location>] [-t <Dotnet Version Band Target Folder>]
-```
-
-Must be run with administrator privileges when the .NET SDK is installed under `%ProgramFiles%\dotnet` (the default for MSI-installed SDKs).
+Previously, the same ~36 entries were maintained by hand in two different languages
+(bash array and PowerShell ordered hashtable). This was a common source of mistakes —
+see e.g. commit `f43fb9d Revert updating version map for 7.0.400`, and divergences
+between `.sh` and `.ps1` for the same SDK band.
