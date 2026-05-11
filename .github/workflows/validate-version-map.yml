@@ -1,0 +1,48 @@
+name: Validate Version Map
+
+# Runs on every push/PR that touches the install scripts or the version map.
+# Fails if workload-install.sh / workload-install.ps1 are out of sync with
+# version-map.json (i.e. someone edited the JSON but forgot to regenerate,
+# or edited the scripts by hand).
+#
+# Locally, developers fix drift by running:
+#     pwsh ./workload/scripts/Generate-InstallScripts.ps1
+
+on:
+  push:
+    branches: [ main, net7.0, net8.0, net9.0, net10.0 ]
+    paths:
+      - 'workload/scripts/version-map.json'
+      - 'workload/scripts/workload-install.sh'
+      - 'workload/scripts/workload-install.ps1'
+      - 'workload/scripts/Generate-InstallScripts.ps1'
+      - '.github/workflows/validate-version-map.yml'
+  pull_request:
+    paths:
+      - 'workload/scripts/version-map.json'
+      - 'workload/scripts/workload-install.sh'
+      - 'workload/scripts/workload-install.ps1'
+      - 'workload/scripts/Generate-InstallScripts.ps1'
+      - '.github/workflows/validate-version-map.yml'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check drift between version-map.json and install scripts
+        shell: pwsh
+        run: |
+          ./workload/scripts/Generate-InstallScripts.ps1 -Check
+
+      - name: Failure hint
+        if: failure()
+        shell: bash
+        run: |
+          echo "::error::workload/scripts/version-map.json is out of sync with the install scripts."
+          echo "::error::Fix it locally by running: pwsh ./workload/scripts/Generate-InstallScripts.ps1"
+          echo "::error::Then commit the regenerated workload-install.sh / workload-install.ps1."
+          exit 1
