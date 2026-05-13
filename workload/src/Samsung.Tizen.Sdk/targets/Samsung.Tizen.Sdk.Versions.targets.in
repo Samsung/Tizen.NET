@@ -41,7 +41,8 @@ Copyright (c) Samsung All rights reserved.
     <SupportedAPILevel Include="v11.0" MappedAPIVersion="8.0"/>
     <SupportedAPILevel Include="v12.0" MappedAPIVersion="9.0"/>
     <SupportedAPILevel Include="v13.0" MappedAPIVersion="10.0"/>
-    <SupportedAPILevel Include="v14.0" MappedAPIVersion="11.0"/>
+    <SupportedAPILevel Include="v14.0" MappedAPIVersion="10.1"/>
+    <SupportedAPILevel Include="v15.0" MappedAPIVersion="11.0"/>
   </ItemGroup>
 
   <ItemGroup>
@@ -49,6 +50,7 @@ Copyright (c) Samsung All rights reserved.
     <TizenSdkSupportedTargetPlatformVersion Include="8.0" />
     <TizenSdkSupportedTargetPlatformVersion Include="9.0" />
     <TizenSdkSupportedTargetPlatformVersion Include="10.0" />
+    <TizenSdkSupportedTargetPlatformVersion Include="10.1" />
     <TizenSdkSupportedTargetPlatformVersion Include="11.0" />
   </ItemGroup>
 
@@ -82,11 +84,19 @@ Copyright (c) Samsung All rights reserved.
       Profile="Tizen"
     />
     <KnownFrameworkReference
+      Condition="'$(TargetPlatformVersion)' == '10.1'"
+      Include="Samsung.Tizen"
+      TargetFramework="$(_TargetFramework)"
+      TargetingPackName="Samsung.Tizen.Ref.API14"
+      TargetingPackVersion="@TizenFXAPI14Version@"
+      Profile="Tizen"
+    />
+    <KnownFrameworkReference
       Condition="'$(TargetPlatformVersion)' == '11.0'"
       Include="Samsung.Tizen"
       TargetFramework="$(_TargetFramework)"
-      TargetingPackName="Samsung.Tizen.Ref.API13"
-      TargetingPackVersion="@TizenFXAPI13Version@"
+      TargetingPackName="Samsung.Tizen.Ref.API15"
+      TargetingPackVersion="@TizenFXAPI15Version@"
       Profile="Tizen"
     />
   </ItemGroup>

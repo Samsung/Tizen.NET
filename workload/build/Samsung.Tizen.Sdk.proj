@@ -39,7 +39,7 @@ core workload sdk pack imported by the Samsung.NET.Sdk.Tizen.
     <ReplaceFileContents
         SourceFile="$(_VersionsTargetsSource)"
         DestinationFile="$(_VersionsTargetsDest)"
-        Replacements="@TizenFXAPI11Version@=$(TizenFXAPI11Version);@TizenFXAPI12Version@=$(TizenFXAPI12Version);@TizenFXAPI13Version@=$(TizenFXAPI13Version);">
+        Replacements="@TizenFXAPI11Version@=$(TizenFXAPI11Version);@TizenFXAPI12Version@=$(TizenFXAPI12Version);@TizenFXAPI13Version@=$(TizenFXAPI13Version);@TizenFXAPI14Version@=$(TizenFXAPI14Version);@TizenFXAPI15Version@=$(TizenFXAPI15Version);">
     </ReplaceFileContents>
   </Target>
 

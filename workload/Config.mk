@@ -13,6 +13,8 @@ endif
 TizenFXAPI11Version=11.0.0.18033
 TizenFXAPI12Version=12.0.0.18510
 TizenFXAPI13Version=13.0.0.19231
+TizenFXAPI14Version=14.0.0.19300
+TizenFXAPI15Version=15.0.0.19371
 
 $(info DOTNET_VERSION is.. $(DOTNET_VERSION))
 

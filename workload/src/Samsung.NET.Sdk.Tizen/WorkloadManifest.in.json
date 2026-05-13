@@ -8,6 +8,8 @@
         "Samsung.Tizen.Ref.API11",
         "Samsung.Tizen.Ref.API12",
         "Samsung.Tizen.Ref.API13",
+        "Samsung.Tizen.Ref.API14",
+        "Samsung.Tizen.Ref.API15",
         "Samsung.Tizen.Templates",
         "Samsung.NETCore.App.Runtime.tizen"
       ]
@@ -29,6 +31,14 @@
     "Samsung.Tizen.Ref.API13": {
       "kind": "framework",
       "version": "@TizenFXAPI13Version@"
+    },
+    "Samsung.Tizen.Ref.API14": {
+      "kind": "framework",
+      "version": "@TizenFXAPI14Version@"
+    },
+    "Samsung.Tizen.Ref.API15": {
+      "kind": "framework",
+      "version": "@TizenFXAPI15Version@"
     },
     "Samsung.Tizen.Templates": {
       "kind": "template",

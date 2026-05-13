@@ -39,6 +39,7 @@ ONLY="${TEST_MATRIX_ONLY:-}"
 #   (e.g. workload/scripts/fixtures/legacy/) keyed off the row's TFM.
 MATRIX=(
     "net8.0-tizen10.0|10"
+    "net8.0-tizen10.1|10.1"
     "net8.0-tizen11.0|11"
     "net9.0-tizen10.0|10"
 )
