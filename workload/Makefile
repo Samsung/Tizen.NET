@@ -128,3 +128,15 @@ next-workload-version:
 .PHONY: bump-workload-version
 bump-workload-version:
 	@python3 $(TOP)/scripts/next-workload-version.py --apply --verbose
+
+# Compute the next TizenWorkloadVersion by inspecting every Samsung.NET.Sdk.Tizen.Manifest
+# package published to NuGet. Globally sequential — same answer regardless of branch.
+#   make next-workload-version     # print only
+#   make bump-workload-version     # update Versions.props in place
+.PHONY: next-workload-version
+next-workload-version:
+	@python3 $(TOP)/scripts/next-workload-version.py
+
+.PHONY: bump-workload-version
+bump-workload-version:
+	@python3 $(TOP)/scripts/next-workload-version.py --apply --verbose
