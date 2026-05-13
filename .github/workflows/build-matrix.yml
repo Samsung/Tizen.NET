@@ -29,12 +29,24 @@ on:
     - '.github/workflows/build-matrix.yml'
   workflow_dispatch: {}
 
+permissions:
+  contents: read
+  packages: read
+
 jobs:
   validate-metadata:
     name: Validate workload metadata
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
+
+    - name: Authenticate GitHub Packages NuGet source
+      run: |
+        dotnet nuget update source github \
+          --username github-actions \
+          --password ${{ secrets.GITHUB_TOKEN }} \
+          --store-password-in-clear-text \
+          --configfile workload/NuGet.config
 
     - name: Run validate-workload-metadata.py
       run: python3 workload/scripts/validate-workload-metadata.py
