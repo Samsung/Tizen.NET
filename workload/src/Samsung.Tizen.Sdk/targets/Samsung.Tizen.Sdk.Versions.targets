@@ -29,6 +29,8 @@ Copyright (c) Samsung All rights reserved.
     <_TargetingPackVersion Condition="$(_TargetFramework.EndsWith('8.0'))">8.0.154</_TargetingPackVersion>
     <_TargetingPackVersion Condition="$(_TargetFramework.EndsWith('9.0'))">9.0.104</_TargetingPackVersion>
     <_TargetingPackVersion Condition="$(_TargetFramework.EndsWith('10.0'))">**FromWorkload**</_TargetingPackVersion>
+    <_TargetingPackVersion Condition="$(_TargetFramework.EndsWith('10.1'))">**FromWorkload**</_TargetingPackVersion>
+    <_TargetingPackVersion Condition="$(_TargetFramework.EndsWith('11.0'))">**FromWorkload**</_TargetingPackVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -46,12 +48,16 @@ Copyright (c) Samsung All rights reserved.
     <SupportedAPILevel Include="v11.0" MappedAPIVersion="8.0"/>
     <SupportedAPILevel Include="v12.0" MappedAPIVersion="9.0"/>
     <SupportedAPILevel Include="v13.0" MappedAPIVersion="10.0"/>
+    <SupportedAPILevel Include="v14.0" MappedAPIVersion="10.1"/>
+    <SupportedAPILevel Include="v15.0" MappedAPIVersion="11.0"/>
   </ItemGroup>
 
   <ItemGroup>
     <TizenSdkSupportedTargetPlatformVersion Include="8.0" />
     <TizenSdkSupportedTargetPlatformVersion Include="9.0" />
     <TizenSdkSupportedTargetPlatformVersion Include="10.0" />
+    <TizenSdkSupportedTargetPlatformVersion Include="10.1" />
+    <TizenSdkSupportedTargetPlatformVersion Include="11.0" />
   </ItemGroup>
 
   <ItemGroup>
