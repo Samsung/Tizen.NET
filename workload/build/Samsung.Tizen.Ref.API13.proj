@@ -1,0 +1,88 @@
+<!--
+***********************************************************************************************
+Samsung.Tizen.Ref.API13.proj
+
+This project file is used to create the Samsung.Tizen.Ref.API13 NuGet, which is the
+targeting pack containing reference assemblies and other compile time assets required
+by projects that use the Tizen .NET framework in .NET 5.
+***********************************************************************************************
+-->
+<Project Sdk="Microsoft.Build.NoTargets">
+
+  <PropertyGroup>
+    <TizenFXAPILevel>$(TizenFXAPI13Version.Split(".")[0])</TizenFXAPILevel>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>Samsung.Tizen.Ref.API13</PackageId>
+    <Description>
+      Tizen .NET reference assemblies. Please do not reference directly.
+      - TizenFX API Level : $(TizenFXAPILevel)
+      - TizenFX Version : $(TizenFXAPI13Version)
+    </Description>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TizenFXPackageName>Tizen.NET.API$(TizenFXAPILevel)</TizenFXPackageName>
+    <TizenFXNuGetPathVariable>PkgTizen_NET_API$(TizenFXAPILevel)</TizenFXNuGetPathVariable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="$(TizenFXPackageName)" Version="$(TizenFXAPI13Version)" GeneratePathProperty="true" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <BeforePack>
+      _GetPackageVersion;
+      _GetTargetingPackItems;
+      _GenerateFrameworkListFile;
+      $(BeforePack);
+    </BeforePack>
+  </PropertyGroup>
+
+  <Target Name="_GetTargetingPackItems"
+      DependsOnTargets="_GetLicense">
+    <PropertyGroup>
+      <FrameworkListFile>$(IntermediateOutputPath)FrameworkList.xml</FrameworkListFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <_TizenFXNugetPathItem Include="$(TizenFXNuGetPathVariable)" />
+      <_TizenRefPackAssemblies Include="$(%(_TizenFXNugetPathItem.Identity))\ref\net6.0\*.dll" />
+      <FrameworkListFileClass Include="@(_TizenRefPackAssemblies->'%(Filename)%(Extension)')" Profile="Tizen" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_PackageFiles Include="@(_TizenRefPackAssemblies)" PackagePath="ref\net6.0" TargetPath="ref\net6.0" />
+      <_PackageFiles Include="$(_ProjectSourceDirectory)Samsung.Tizen.Ref/data/*.txt" PackagePath="data" />
+      <_PackageFiles Include="$(_ProjectSourceDirectory)Samsung.Tizen.Ref/runtime.json" PackagePath=".\" />
+    </ItemGroup>
+
+  </Target>
+
+  <UsingTask TaskName="CreateFrameworkListFile" AssemblyFile="$(DotNetSharedFrameworkTaskFile)"/>
+
+  <!-- https://github.com/dotnet/runtime/blob/0647ec314948904319da5eb15e9931f7c85ed1e2/src/installer/pkg/projects/Directory.Build.targets#L281 -->
+  <Target Name="_GenerateFrameworkListFile" >
+    <!-- Hardcode framework attributes -->
+    <ItemGroup>
+      <FrameworkListRootAttributes Include="Name" Value=".NET 10.0 - Tizen" />
+      <FrameworkListRootAttributes Include="TargetFrameworkIdentifier" Value=".NETCoreApp" />
+      <FrameworkListRootAttributes Include="TargetFrameworkVersion" Value="10.0" />
+      <FrameworkListRootAttributes Include="FrameworkName" Value="Samsung.Tizen" />
+    </ItemGroup>
+
+    <!-- https://github.com/dotnet/arcade/blob/5824baf1c9a900ee00c167f96201c750bba6a574/src/Microsoft.DotNet.SharedFramework.Sdk/src/CreateFrameworkListFile.cs -->
+    <CreateFrameworkListFile
+        Files="@(_PackageFiles)"
+        FileClassifications="@(FrameworkListFileClass)"
+        TargetFile="$(FrameworkListFile)"
+        TargetFilePrefixes="ref;runtimes"
+        RootAttributes="@(FrameworkListRootAttributes)"
+    />
+    <ItemGroup>
+      <_PackageFiles Include="$(FrameworkListFile)" PackagePath="data" />
+    </ItemGroup>
+  </Target>
+
+</Project>

@@ -44,7 +44,7 @@ workload manifest pack containing information about the Tizen .NET workload.
     <ReplaceFileContents
         SourceFile="$(_ProjectSourceDirectory)Samsung.NET.Sdk.Tizen\WorkloadManifest.in.json"
         DestinationFile="$(WorkloadManifestJsonPath)"
-        Replacements="@TIZEN_WORKLOAD_VERSION@=$(TizenPackVersion);">
+        Replacements="@TIZEN_WORKLOAD_VERSION@=$(TizenPackVersion);@TizenFXAPI11Version@=$(TizenFXAPI11Version);@TizenFXAPI12Version@=$(TizenFXAPI12Version);@TizenFXAPI13Version@=$(TizenFXAPI13Version);@TizenFXAPI14Version@=$(TizenFXAPI14Version);@TizenFXAPI15Version@=$(TizenFXAPI15Version);">
     </ReplaceFileContents>
 
     <ItemGroup>

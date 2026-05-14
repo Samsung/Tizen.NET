@@ -8,7 +8,11 @@
         "Samsung.Tizen.Sdk.net6",
         "Samsung.Tizen.Sdk.net7",
         "Samsung.Tizen.Sdk.net8",
-        "Samsung.Tizen.Ref",
+        "Samsung.Tizen.Ref.API11",
+        "Samsung.Tizen.Ref.API12",
+        "Samsung.Tizen.Ref.API13",
+        "Samsung.Tizen.Ref.API14",
+        "Samsung.Tizen.Ref.API15",
         "Samsung.Tizen.Templates",
         "Samsung.NETCore.App.Runtime.tizen"
       ]
@@ -40,9 +44,25 @@
         "any": "Samsung.Tizen.Sdk"
       }
     },
-    "Samsung.Tizen.Ref": {
+    "Samsung.Tizen.Ref.API11": {
       "kind": "framework",
-      "version": "@TIZEN_WORKLOAD_VERSION@"
+      "version": "@TizenFXAPI11Version@"
+    },
+    "Samsung.Tizen.Ref.API12": {
+      "kind": "framework",
+      "version": "@TizenFXAPI12Version@"
+    },
+    "Samsung.Tizen.Ref.API13": {
+      "kind": "framework",
+      "version": "@TizenFXAPI13Version@"
+    },
+    "Samsung.Tizen.Ref.API14": {
+      "kind": "framework",
+      "version": "@TizenFXAPI14Version@"
+    },
+    "Samsung.Tizen.Ref.API15": {
+      "kind": "framework",
+      "version": "@TizenFXAPI15Version@"
     },
     "Samsung.Tizen.Templates": {
       "kind": "template",
