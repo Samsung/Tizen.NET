@@ -18,15 +18,15 @@
     <TizenWorkloadVersion>10.0.121</TizenWorkloadVersion>
   </PropertyGroup>
 
-  <!-- 
-    TizenFX API version:
-    * The first number represents the API Level.
-    * The sencond and third numbers represents the reserved version.
-    * The fourth number represents the build number.
-    This version is used to generate Samsung.Tizen.Ref package.
+  <!--
+    TizenFX API version per API level (each Samsung.Tizen.Ref.APIxx pack).
   -->
   <PropertyGroup>
-    <TizenFXVersion>13.0.0.19191</TizenFXVersion>
+    <TizenFXAPI11Version>11.0.0.18033</TizenFXAPI11Version>
+    <TizenFXAPI12Version>12.0.0.18510</TizenFXAPI12Version>
+    <TizenFXAPI13Version>13.0.0.19198</TizenFXAPI13Version>
+    <TizenFXAPI14Version>14.0.0.19300</TizenFXAPI14Version>
+    <TizenFXAPI15Version>15.0.0.19371</TizenFXAPI15Version>
   </PropertyGroup>
 
   <!--

@@ -2,9 +2,12 @@
 ***********************************************************************************************
 Samsung.Tizen.Sdk.Versions.targets
 
-WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
-          created a backup copy.  Incorrect changes to this file will make it
-          impossible to load or build your projects from the command-line or the IDE.
+WARNING:  DO NOT MODIFY this file directly — it is generated from
+          Samsung.Tizen.Sdk.Versions.targets.in at build time.
+          Edit the .in template and/or workload/build/Versions.props instead.
+
+          Incorrect changes to this file will make it impossible to load
+          or build your projects from the command-line or the IDE.
 
 Copyright (c) Samsung All rights reserved.
 ***********************************************************************************************
@@ -21,14 +24,6 @@ Copyright (c) Samsung All rights reserved.
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">$(_DefaultTargetPlatformVersion)</TargetPlatformVersion>
     <_TargetFramework Condition="$(TargetFramework.EndsWith('tizen'))">$(TargetFramework)$(_DefaultTargetPlatformVersion)</_TargetFramework>
     <_TargetFramework Condition="!$(TargetFramework.EndsWith('tizen'))">$(TargetFramework)</_TargetFramework>
-
-    <!-- Tizen7.0 refers TizenFX 10.0.0.17508. Tizen8.0 refers TizenFX 11.0.0.18033. Tizen9.0 refers TizenFX 12.0.0.18510. Tizen10.0 refers TizenFX **FromWorkload**.-->
-    <_TargetingPackVersion>**FromWorkload**</_TargetingPackVersion>
-    <_TargetingPackVersion Condition="$(_TargetFramework.EndsWith('7.0'))">7.0.123</_TargetingPackVersion>
-    <_TargetingPackVersion Condition="$(_TargetFramework.EndsWith('8.0'))">8.0.154</_TargetingPackVersion>
-    <_TargetingPackVersion Condition="$(_TargetFramework.EndsWith('9.0'))">9.0.104</_TargetingPackVersion>
-    <_TargetingPackVersion Condition="$(_TargetFramework.EndsWith('10.1'))">**FromWorkload**</_TargetingPackVersion>
-    <_TargetingPackVersion Condition="$(_TargetFramework.EndsWith('11.0'))">**FromWorkload**</_TargetingPackVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -51,6 +46,7 @@ Copyright (c) Samsung All rights reserved.
   </ItemGroup>
 
   <ItemGroup>
+    <!-- 7.0 was a development-only platform during initial bring-up; removed. -->
     <TizenSdkSupportedTargetPlatformVersion Include="8.0" />
     <TizenSdkSupportedTargetPlatformVersion Include="9.0" />
     <TizenSdkSupportedTargetPlatformVersion Include="10.0" />
@@ -64,12 +60,40 @@ Copyright (c) Samsung All rights reserved.
 
   <ItemGroup>
     <KnownFrameworkReference
+      Condition="'$(TargetPlatformVersion)' == '8.0'"
       Include="Samsung.Tizen"
       TargetFramework="$(_TargetFramework)"
-      TargetingPackName="Samsung.Tizen.Ref"
-      TargetingPackVersion="$(_TargetingPackVersion)"
+      TargetingPackName="Samsung.Tizen.Ref.API11"
+      TargetingPackVersion="@TizenFXAPI11Version@"
       Profile="Tizen"
     />
-  </ItemGroup>
-
-</Project>
+    <KnownFrameworkReference
+      Condition="'$(TargetPlatformVersion)' == '9.0'"
+      Include="Samsung.Tizen"
+      TargetFramework="$(_TargetFramework)"
+      TargetingPackName="Samsung.Tizen.Ref.API12"
+      TargetingPackVersion="@TizenFXAPI12Version@"
+      Profile="Tizen"
+    />
+    <KnownFrameworkReference
+      Condition="'$(TargetPlatformVersion)' == '10.0'"
+      Include="Samsung.Tizen"
+      TargetFramework="$(_TargetFramework)"
+      TargetingPackName="Samsung.Tizen.Ref.API13"
+      TargetingPackVersion="@TizenFXAPI13Version@"
+      Profile="Tizen"
+    />
+    <KnownFrameworkReference
+      Condition="'$(TargetPlatformVersion)' == '10.1'"
+      Include="Samsung.Tizen"
+      TargetFramework="$(_TargetFramework)"
+      TargetingPackName="Samsung.Tizen.Ref.API14"
+      TargetingPackVersion="@TizenFXAPI14Version@"
+      Profile="Tizen"
+    />
+    <KnownFrameworkReference
+      Condition="'$(TargetPlatformVersion)' == '11.0'"
+      Include="Samsung.Tizen"
+      TargetFramework="$(_TargetFramework)"
+      TargetingPackName="Samsung.Tizen.Ref.API15"
+      Tar
