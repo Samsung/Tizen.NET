@@ -139,6 +139,10 @@
     {
       "sdkBand": "10.0.100",
       "workloadVersion": "10.0.123"
+    },
+    {
+      "sdkBand": "10.0.300",
+      "workloadVersion": "10.0.127"
     }
   ]
 }
