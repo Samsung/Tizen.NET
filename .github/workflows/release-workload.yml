@@ -129,8 +129,13 @@ jobs:
             continue
           fi
 
-          # It is ours. Is it finished?
-          STATE_OUT="$(python3 scripts/release-state.py --version "$V" --band "$BAND")"
+          # It is ours. Is it finished? (Checked explicitly: under `set -e` a failed
+          # command substitution in an assignment aborts the step with only python's
+          # stderr, so a transient feed error would have produced no usable diagnostic.)
+          if ! STATE_OUT="$(python3 scripts/release-state.py --version "$V" --band "$BAND")"; then
+            echo "::error::Could not determine the publication state of v$V (feed unreachable?). Re-run once nuget.org is reachable."
+            exit 1
+          fi
           STATE="$(echo "$STATE_OUT" | sed -n 's/^state=//p')"
           if gh release view "v$V" >/dev/null 2>&1; then RELEASED=true; else RELEASED=false; fi
           if [ "$STATE" = "published" ] && [ "$RELEASED" = "true" ]; then
@@ -361,10 +366,16 @@ jobs:
         VER="${{ steps.bump.outputs.workload_version }}"
         BAND="${{ steps.bump.outputs.band }}"
         for attempt in 1 2 3 4 5; do
-          OUT="$(python3 scripts/release-state.py --version "$VER" --band "$BAND")"
-          STATE="$(echo "$OUT" | sed -n 's/^state=//p')"
-          [ "$STATE" = "published" ] && { echo "All expected packages present for $VER."; exit 0; }
-          echo "Attempt $attempt: state=$STATE ($(echo "$OUT" | sed -n 's/^missing=//p')); feed may lag, retrying..."
+          # A transport error (release-state.py exit 2) must be retried like a lagging
+          # feed. Under `set -e` a failed command substitution in an assignment aborts the
+          # step immediately, so the query is checked explicitly.
+          if OUT="$(python3 scripts/release-state.py --version "$VER" --band "$BAND")"; then
+            STATE="$(echo "$OUT" | sed -n 's/^state=//p')"
+            [ "$STATE" = "published" ] && { echo "All expected packages present for $VER."; exit 0; }
+            echo "Attempt $attempt: state=$STATE ($(echo "$OUT" | sed -n 's/^missing=//p')); feed may lag, retrying..."
+          else
+            echo "Attempt $attempt: could not query the feed; retrying..."
+          fi
           sleep 30
         done
         echo "::error::Publication incomplete for $VER; not tagging. Re-run this workflow to resume."
