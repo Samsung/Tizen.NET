@@ -17,6 +17,7 @@ on:
     branches:
     - main
     - net10.0
+    - net11.0
     paths:
     - 'workload/**'
     - '.github/workflows/build-matrix.yml'
@@ -24,6 +25,7 @@ on:
     branches:
     - main
     - net10.0
+    - net11.0
     paths:
     - 'workload/**'
     - '.github/workflows/build-matrix.yml'
@@ -37,8 +39,21 @@ jobs:
   validate-metadata:
     name: Validate workload metadata
     runs-on: ubuntu-22.04
+    outputs:
+      net11_sdk: ${{ steps.versions.outputs.net11_sdk }}
     steps:
     - uses: actions/checkout@v3
+
+    - name: Resolve .NET 11 SDK version from Versions.props
+      id: versions
+      run: |
+        NET11=$(grep -oP '(?<=<DotNet11SdkVersion>)[^<]+' workload/build/Versions.props)
+        if [ -z "$NET11" ]; then
+          echo "::error::DotNet11SdkVersion not found in workload/build/Versions.props"
+          exit 1
+        fi
+        echo "net11_sdk=$NET11" >> "$GITHUB_OUTPUT"
+        echo "::notice ::.NET 11 SDK for CI: $NET11"
 
     - name: Authenticate GitHub Packages NuGet source
       run: |
@@ -51,10 +66,45 @@ jobs:
     - name: Run validate-workload-metadata.py
       run: python3 workload/scripts/validate-workload-metadata.py
 
+    - name: Run test-matrix.sh --self-test
+      run: bash workload/scripts/test-matrix.sh --self-test
+
+    - name: Run test-version-band.sh
+      run: bash workload/scripts/test-version-band.sh
+
+    - name: Run test-template-conditions.sh
+      run: bash workload/scripts/test-template-conditions.sh
+
+    - name: Run test-package-fallback.sh
+      run: bash workload/scripts/test-package-fallback.sh
+
+    - name: Run test-release-workflow.sh
+      run: bash workload/scripts/test-release-workflow.sh
+
+    - name: Run test-install-failure.sh
+      run: bash workload/scripts/test-install-failure.sh
+
   test-matrix:
-    name: Multi-TFM build matrix
+    name: Multi-TFM build matrix (${{ matrix.name }})
     needs: validate-metadata
     runs-on: ubuntu-22.04
+    # The .NET 11 leg BLOCKS by default. The SDK version is pinned exactly
+    # (DotNet11SdkVersion), so the leg is deterministic - and a branch whose purpose is
+    # .NET 11 support gains nothing from an advisory-only .NET 11 gate.
+    #
+    # Set the repository variable TIZEN_NET11_ADVISORY=true to temporarily downgrade it,
+    # e.g. while chasing an upstream preview-SDK regression.
+    continue-on-error: ${{ matrix.experimental && vars.TIZEN_NET11_ADVISORY == 'true' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: .NET 10
+            dotnet_version: ''
+            experimental: false
+          - name: .NET 11 preview
+            dotnet_version: ${{ needs.validate-metadata.outputs.net11_sdk }}
+            experimental: true
     steps:
     - uses: actions/checkout@v3
       with:
@@ -71,6 +121,7 @@ jobs:
     - name: Run make test-matrix
       env:
         PULLREQUEST_ID: ${{ github.event.number }}
+        DOTNET_VERSION: ${{ matrix.dotnet_version }}
       working-directory: ./workload
       run: make test-matrix
 
@@ -78,7 +129,7 @@ jobs:
       if: failure()
       uses: actions/upload-artifact@v4
       with:
-        name: test-matrix-logs
+        name: test-matrix-logs-${{ matrix.name }}
         path: |
           workload/.tmp/matrix/**/build.log
           workload/.tmp/matrix/**/dotnet-new.log

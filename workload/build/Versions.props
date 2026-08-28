@@ -54,4 +54,21 @@
   <PropertyGroup Condition="$(MicrosoftDotnetSdkInternalPackageVersion.StartsWith('10.0'))">
     <MicrosoftDotNetBuildTasksFeedPackageVersion>10.0.0-beta.25531.102</MicrosoftDotNetBuildTasksFeedPackageVersion>
   </PropertyGroup>
+
+  <!--
+    .NET 11 is still in preview (latest SDK at time of writing: 11.0.100-preview.7.26381.103).
+    Build a .NET 11 band manifest with:
+        make packs DOTNET_VERSION=$(DotNet11SdkVersion)
+    which produces Samsung.NET.Sdk.Tizen.Manifest-11.0.100-preview.7.
+
+    DotNet11SdkVersion is the single source of truth for the .NET 11 SDK used by CI.
+    The workflows grep it out of this file, so bumping the preview here is enough.
+  -->
+  <PropertyGroup>
+    <DotNet11SdkVersion>11.0.100-preview.7.26381.103</DotNet11SdkVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(MicrosoftDotnetSdkInternalPackageVersion.StartsWith('11.0'))">
+    <MicrosoftDotNetBuildTasksFeedPackageVersion>11.0.0-beta.26426.103</MicrosoftDotNetBuildTasksFeedPackageVersion>
+  </PropertyGroup>
 </Project>

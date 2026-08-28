@@ -5,6 +5,7 @@ on:
     branches:
     - main
     - net10.0
+    - net11.0
     paths:
     - 'workload/**'
     - '.github/workflows/**'
@@ -12,6 +13,7 @@ on:
     branches:
     - main
     - net10.0
+    - net11.0
     paths:
     - 'workload/**'
     - '.github/workflows/**'
@@ -41,10 +43,31 @@ jobs:
           --store-password-in-clear-text \
           --configfile workload/NuGet.config
 
+    # On a net11.0 branch (or a PR into one) .NET 11 is the product being built, so the
+    # workload must be built against the .NET 11 SDK rather than the Versions.props
+    # default. DotNet11SdkVersion in Versions.props is the single source of truth.
+    - name: Select target SDK band
+      id: sdk
+      run: |
+        TARGET_BRANCH="${{ github.base_ref || github.ref_name }}"
+        if [ "$TARGET_BRANCH" = "net11.0" ]; then
+          NET11=$(grep -oP '(?<=<DotNet11SdkVersion>)[^<]+' workload/build/Versions.props)
+          if [ -z "$NET11" ]; then
+            echo "::error::DotNet11SdkVersion not found in workload/build/Versions.props"
+            exit 1
+          fi
+          echo "dotnet_version=$NET11" >> "$GITHUB_OUTPUT"
+          echo "::notice ::Branch '$TARGET_BRANCH' builds against .NET 11 SDK $NET11"
+        else
+          echo "dotnet_version=" >> "$GITHUB_OUTPUT"
+          echo "::notice ::Branch '$TARGET_BRANCH' builds against the Versions.props default SDK band"
+        fi
+
     - name: Build
       env:
         PULLREQUEST_ID: ${{ github.event.number }}
         PRERELEASE_TAG: ${{ github.event.inputs.prerelease }}
+        DOTNET_VERSION: ${{ steps.sdk.outputs.dotnet_version }}
       run: make test
       working-directory: ./workload
 

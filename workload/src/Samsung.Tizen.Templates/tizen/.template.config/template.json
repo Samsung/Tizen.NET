@@ -46,6 +46,10 @@
         {
           "choice": "net10.0",
           "description": "target framework version is net10.0-tizen"
+        },
+        {
+          "choice": "net11.0",
+          "description": "target framework version is net11.0-tizen (requires a .NET 11 SDK)"
         }
       ],
       "replaces": "net10.0",

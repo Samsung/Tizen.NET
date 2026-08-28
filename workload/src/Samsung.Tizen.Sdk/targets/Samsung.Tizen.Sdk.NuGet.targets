@@ -14,26 +14,90 @@ Copyright (c) Samsung All rights reserved.
 
   <UsingTask TaskName="Samsung.Tizen.Build.Tasks.FixupNuGetReferences" AssemblyFile="$(_TizenTaskAssemblyName)" />
 
+  <!--
+    Fallback TFM folder names that FixupNuGetReferences may substitute for a package's
+    netstandard2.x assets.
+
+    This MUST be filtered to what the project being built can actually consume. The task
+    matches a package's lib/<name>/ sibling directories against this list by NAME ONLY -
+    it performs no compatibility check of its own - so an unfiltered cross-product lets a
+    net6.0-tizen8.0 build silently pick up net6.0-tizen11.0 (newer platform) or
+    net11.0-tizen8.0 (newer .NET) assets.
+
+    A candidate is compatible only when BOTH:
+      * its .NET version is <= the project's .NET version, and
+      * its Tizen platform version is <= the project's platform version.
+
+    Candidates are appended highest-first so the best compatible match is added to the
+    task's directory set first and wins its first-wins assembly selection.
+
+    Legacy Tizen-only TFMs (tizen40 .. tizen10.0) carry no .NET version constraint and use
+    0.0 so they are filtered on platform version alone.
+
+    NOTE: this is deliberately built from conditional PROPERTIES rather than filtered
+    items. MSBuild evaluates all top-level properties before any items, so a property
+    referencing @(item) here would silently expand to nothing.
+
+    Kept in sync with KnownRuntimePack x TizenSdkSupportedTargetPlatformVersion by
+    validate-workload-metadata.py check C8; the filtering itself is pinned by
+    scripts/test-package-fallback.sh.
+  -->
+  <!-- BEGIN TIZEN PACKAGE FALLBACK (covered by scripts/test-package-fallback.sh) -->
   <PropertyGroup>
     <AssetTargetFallback></AssetTargetFallback>
-    <PackageTargetFallback>
-      net10.0-tizen10.0;
-      net9.0-tizen10.0;
-      net8.0-tizen10.0;
-      net8.0-tizen10.1;
-      net8.0-tizen11.0;
-      net6.0-tizen9.0;
-      net6.0-tizen8.0;
-      tizen10.0;
-      tizen90;
-      tizen80;
-      tizen70;
-      tizen60;
-      tizen50;
-      tizen40;
-      $(PackageTargetFallback);
-    </PackageTargetFallback>
+
+    <!-- TargetFrameworkVersion is 'v11.0'-style; strip the leading v for comparison. -->
+    <_TizenFallbackNetVersion>$(TargetFrameworkVersion.TrimStart('vV'))</_TizenFallbackNetVersion>
+    <_TizenFallbackNetVersion Condition="'$(_TizenFallbackNetVersion)' == ''">0.0</_TizenFallbackNetVersion>
+    <_TizenFallbackPlatformVersion>$(TargetPlatformVersion)</_TizenFallbackPlatformVersion>
+    <_TizenFallbackPlatformVersion Condition="'$(_TizenFallbackPlatformVersion)' == ''">$(_DefaultTargetPlatformVersion)</_TizenFallbackPlatformVersion>
+    <_TizenFallbackPlatformVersion Condition="'$(_TizenFallbackPlatformVersion)' == ''">0.0</_TizenFallbackPlatformVersion>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('11.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('11.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net11.0-tizen11.0</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('11.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('10.1', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net11.0-tizen10.1</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('11.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('10.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net11.0-tizen10.0</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('11.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('9.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net11.0-tizen9.0</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('11.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('8.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net11.0-tizen8.0</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('10.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('11.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net10.0-tizen11.0</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('10.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('10.1', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net10.0-tizen10.1</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('10.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('10.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net10.0-tizen10.0</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('10.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('9.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net10.0-tizen9.0</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('10.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('8.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net10.0-tizen8.0</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('9.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('11.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net9.0-tizen11.0</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('9.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('10.1', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net9.0-tizen10.1</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('9.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('10.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net9.0-tizen10.0</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('9.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('9.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net9.0-tizen9.0</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('9.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('8.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net9.0-tizen8.0</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('8.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('11.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net8.0-tizen11.0</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('8.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('10.1', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net8.0-tizen10.1</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('8.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('10.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net8.0-tizen10.0</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('8.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('9.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net8.0-tizen9.0</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('8.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('8.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net8.0-tizen8.0</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('7.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('11.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net7.0-tizen11.0</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('7.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('10.1', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net7.0-tizen10.1</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('7.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('10.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net7.0-tizen10.0</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('7.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('9.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net7.0-tizen9.0</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('7.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('8.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net7.0-tizen8.0</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('6.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('11.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net6.0-tizen11.0</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('6.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('10.1', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net6.0-tizen10.1</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('6.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('10.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net6.0-tizen10.0</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('6.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('9.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net6.0-tizen9.0</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('6.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('8.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);net6.0-tizen8.0</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('0.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('10.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);tizen10.0</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('0.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('9.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);tizen90</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('0.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('8.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);tizen80</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('0.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('7.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);tizen70</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('0.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('6.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);tizen60</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('0.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('5.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);tizen50</_TizenFallbackList>
+    <_TizenFallbackList Condition="$([MSBuild]::VersionLessThanOrEquals('0.0', '$(_TizenFallbackNetVersion)')) And $([MSBuild]::VersionLessThanOrEquals('4.0', '$(_TizenFallbackPlatformVersion)'))">$(_TizenFallbackList);tizen40</_TizenFallbackList>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageTargetFallback>$(_TizenFallbackList.Trim(';'));$(PackageTargetFallback);</PackageTargetFallback>
+  </PropertyGroup>
+  <!-- END TIZEN PACKAGE FALLBACK -->
 
   <Target Name="_FixupNuGetReferences" AfterTargets="ResolvePackageAssets">
     <FixupNuGetReferences

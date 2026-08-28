@@ -1,12 +1,13 @@
 # DOTNET_VERSION
--include $(TMPDIR)/dotnet-version.config
-$(TMPDIR)/dotnet-version.config: $(TOP)/build/Versions.props
-ifeq ($(DOTNET_VERSION), )
-	@mkdir -p $(TMPDIR)
-	@grep "<MicrosoftDotnetSdkInternalPackageVersion>" build/Versions.props | sed -e 's/<\/*MicrosoftDotnetSdkInternalPackageVersion>//g' -e 's/[ \t]*/DOTNET_VERSION=/' > $@
-else
-	@mkdir -p $(TMPDIR)
-	@echo "DOTNET_VERSION=$(DOTNET_VERSION)" > $@
+#
+# Resolved immediately from the caller or, when unset, from Versions.props.
+#
+# This used to be cached in $(TMPDIR)/dotnet-version.config with Versions.props as its only
+# prerequisite. Because the cache file was then newer than Versions.props, make never
+# regenerated it, so a DIFFERENT DOTNET_VERSION passed into an existing tree was ignored and
+# the previous band's value was reused - silently building/testing the wrong band.
+ifeq ($(strip $(DOTNET_VERSION)),)
+DOTNET_VERSION := $(shell grep -oE '<MicrosoftDotnetSdkInternalPackageVersion>[^<]+' $(TOP)/build/Versions.props | sed 's/.*>//')
 endif
 
 # TizenFX API versions per API level — auto-extracted from Versions.props (SSOT)
@@ -17,6 +18,13 @@ $(TMPDIR)/tizen-fx-api-versions.config: $(TOP)/build/Versions.props
 	  | sed -E 's/<TizenFXAPI([0-9]+)Version>/TizenFXAPI\1Version=/' > $@
 
 $(info DOTNET_VERSION is.. $(DOTNET_VERSION))
+
+# NOTE: do not add a parse-time guard for an empty DOTNET_VERSION here. The value arrives
+# via `-include $(TMPDIR)/dotnet-version.config`, and on make's first parse pass (before it
+# regenerates that file and restarts) DOTNET_VERSION is legitimately empty.
+# Pass DOTNET_VERSION through the environment or omit it entirely; an explicit empty
+# command-line override (make DOTNET_VERSION=) wins over the generated file and yields an
+# empty band.
 
 DOTNET_VERSION_BAND = $(firstword $(subst -, ,$(DOTNET_VERSION)))
 
@@ -30,31 +38,36 @@ endif
 MAJOR = $(word 1,$(VERSIONS))
 MINOR = $(word 2,$(VERSIONS))
 MICRO = $(word 3,$(VERSIONS))
-BAND := $(shell echo "${MICRO}" |  cut -c1)00
+# Feature band: the patch component rounded down to the nearest hundred (404 -> 400).
+BAND = $(shell echo "$(MICRO)" | cut -c1)00
 
 PRERELEASE = $(word 4,$(VERSIONS))
 PRERELEASE_VERSION = $(word 5,$(VERSIONS))
 
 # DOTNET_DESTDIR
 ifeq ($(DESTDIR),)
-	DOTNET_DESTDIR = $(OUTDIR)/dotnet
+	# Keyed by the FULL SDK version, not the feature band. Band-keying meant 10.0.100 and
+	# 10.0.101 (or two different previews of one band) shared a bootstrap directory, so the
+	# second request silently reused the first SDK and tested the wrong build. Manifest
+	# paths stay band-based below, which is what the SDK itself expects.
+	DOTNET_DESTDIR = $(OUTDIR)/dotnet-$(DOTNET_VERSION)
 else
 	DOTNET_DESTDIR = $(abspath $(DESTDIR))
 endif
 
 ifeq ($(MAJOR),6)
-	DOTNET6_MANIFESTS_DESTDIR := $(MAJOR).$(MINOR).$(BAND)
-	DOTNET_MANIFESTS_DESTDIR := $(DOTNET_DESTDIR)/sdk-manifests/$(DOTNET6_MANIFESTS_DESTDIR)/samsung.net.sdk.tizen
 	DOTNET_VERSION_BAND := $(MAJOR).$(MINOR).$(BAND)
+	DOTNET6_MANIFESTS_DESTDIR := $(MAJOR).$(MINOR).$(BAND)
+	DOTNET_MANIFESTS_DESTDIR = $(DOTNET_DESTDIR)/sdk-manifests/$(DOTNET6_MANIFESTS_DESTDIR)/samsung.net.sdk.tizen
 else
 	ifneq ($(IS_PRERELEASE),)
 		ifneq ($(IS_RTM),)
-			DOTNET_VERSION_BAND := $(MAJOR).$(MINOR).$(MICRO)-$(PRERELEASE)
+			DOTNET_VERSION_BAND := $(MAJOR).$(MINOR).$(BAND)-$(PRERELEASE)
 		else
-			DOTNET_VERSION_BAND := $(MAJOR).$(MINOR).$(MICRO)-$(PRERELEASE).$(PRERELEASE_VERSION)
+			DOTNET_VERSION_BAND := $(MAJOR).$(MINOR).$(BAND)-$(PRERELEASE).$(PRERELEASE_VERSION)
 		endif
 	else
-		DOTNET_VERSION_BAND := $(MAJOR).$(MINOR).$(MICRO)
+		DOTNET_VERSION_BAND := $(MAJOR).$(MINOR).$(BAND)
 	endif
 	DOTNET_MANIFESTS_DESTDIR = $(DOTNET_DESTDIR)/sdk-manifests/$(DOTNET_VERSION_BAND)/samsung.net.sdk.tizen
 endif

@@ -21,6 +21,14 @@ permissions:
   contents: write
   packages: read
 
+# Only one release may be in flight at a time. Combined with the durable reservation ref
+# below, this prevents two runs (different branches/bands) from selecting the same global
+# workload version. `cancel-in-progress: false` so an in-flight release is never torn down
+# half-published.
+concurrency:
+  group: tizen-workload-release
+  cancel-in-progress: false
+
 jobs:
   release:
     runs-on: ubuntu-22.04
@@ -37,68 +45,342 @@ jobs:
           --store-password-in-clear-text \
           --configfile workload/NuGet.config
 
-    - name: Bump TizenWorkloadVersion (global sequential, NuGet-derived)
+    # Resolve, RESERVE and pin the release commit - before anything is built.
+    #
+    # Three problems are solved together here:
+    #
+    #  * Artifact provenance. The Makefile embeds `git log -1` into every package, so
+    #    building before the version-bump commit made the packages carry a different SHA
+    #    than the tag - and a resumed run, building from a different commit, produced
+    #    packages that disagreed with the ones already published. The release commit is
+    #    therefore created FIRST and everything is built from that exact SHA.
+    #
+    #  * Concurrency. The global workload version is shared by every branch/band, so two
+    #    runs could pick the same V. Ownership is claimed by atomically creating a
+    #    reservation ref (`refs/tizen-release/v<V>`); git rejects a non-fast-forward
+    #    create, so exactly one run wins. A run that finds a foreign reservation aborts.
+    #
+    #  * Re-run drift. A re-run checks out the SHA of the original event and a fresh
+    #    dispatch checks out whatever the branch points at now, so the reserved SHA is
+    #    recorded and explicitly checked out below.
+    - name: Resolve and reserve release version
       id: bump
       working-directory: ./workload
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        set -e
+        set -euo pipefail
+        SDK="${{ github.event.inputs.net_sdk_version }}"
+        eval "$(sed -n '/# BEGIN VERSION BAND DETECTION/,/# END VERSION BAND DETECTION/p' scripts/workload-install.sh)"
+        BAND="$(compute_target_version_band "$SDK")"
+        MANIFEST_ID="Samsung.NET.Sdk.Tizen.Manifest-$BAND"
+        PACKAGES="$MANIFEST_ID,Samsung.NETCore.App.Runtime.tizen,Samsung.Tizen.Sdk,Samsung.Tizen.Templates"
+        BRANCH="${GITHUB_REF_NAME}"
+        {
+          echo "band=$BAND"
+          echo "manifest_id=$MANIFEST_ID"
+          echo "packages=$PACKAGES"
+        } >> "$GITHUB_OUTPUT"
+
         OLD=$(grep -oP '(?<=<TizenWorkloadVersion>)[^<]+(?=</TizenWorkloadVersion>)' build/Versions.props)
-        NEW=$(python3 scripts/next-workload-version.py)
-        echo "Current: $OLD"
-        echo "Next:    $NEW"
-        if [ "$OLD" = "$NEW" ]; then
-            echo "ERROR: computed next == current. NuGet already has this version published."
-            exit 1
+        echo "Branch version at the checked-out commit: $OLD"
+
+        # A reference-only run publishes no manifest: fully non-mutating, no reservation.
+        if [ "${{ github.event.inputs.release_manifest }}" != "true" ]; then
+          echo "::notice ::Reference-only run: leaving TizenWorkloadVersion at $OLD (non-mutating)."
+          echo "workload_version=$OLD" >> "$GITHUB_OUTPUT"
+          echo "release_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          exit 0
         fi
-        python3 scripts/next-workload-version.py --apply --verbose
+
+        # ------------------------------------------------------------------
+        # Find an outstanding reservation to resume.
+        #
+        # Resuming used to be decided from $OLD - the version in Versions.props at the
+        # commit this job checked out. That is the wrong source of truth for a re-run:
+        # `Re-run jobs` checks out the SHA of the ORIGINAL event, which is the commit
+        # BEFORE the bump, so $OLD is the previous, already-released version. The re-run
+        # therefore saw "nothing to resume", computed the same candidate again, found its
+        # own reservation ref and aborted as though a stranger held it - leaving the
+        # interrupted release permanently unfinishable.
+        #
+        # The reservation refs are the durable record, so they are enumerated directly and
+        # matched against THIS run's inputs. The checked-out SHA no longer matters.
+        # ------------------------------------------------------------------
+        git fetch --force origin "+refs/tizen-release/*:refs/tizen-release/*" || true
+
+        RESUME_VER=""
+        RESUME_SHA=""
+        for ref in $(git for-each-ref --format='%(refname)' 'refs/tizen-release/v*'); do
+          V="${ref##*/v}"
+          git cat-file -p "$ref" > "$RUNNER_TEMP/payload.txt" 2>/dev/null || continue
+
+          # Only consider reservations made for these exact release inputs. A reservation
+          # for another branch, SDK or band belongs to a different release and must never
+          # be adopted by this one.
+          if ! python3 scripts/release-reservation.py verify \
+                 --payload-file "$RUNNER_TEMP/payload.txt" \
+                 --expect-version "$V" \
+                 --expect-sdk "$SDK" \
+                 --expect-band "$BAND" \
+                 --expect-branch "$BRANCH" \
+                 --expect-manifest-id "$MANIFEST_ID" \
+                 --expect-packages "$PACKAGES" >/dev/null 2>&1; then
+            continue
+          fi
+
+          # It is ours. Is it finished?
+          STATE_OUT="$(python3 scripts/release-state.py --version "$V" --band "$BAND")"
+          STATE="$(echo "$STATE_OUT" | sed -n 's/^state=//p')"
+          if gh release view "v$V" >/dev/null 2>&1; then RELEASED=true; else RELEASED=false; fi
+          if [ "$STATE" = "published" ] && [ "$RELEASED" = "true" ]; then
+            continue
+          fi
+
+          if [ -n "$RESUME_VER" ]; then
+            echo "::error::More than one unfinished reservation matches these inputs (v$RESUME_VER and v$V). Resolve this by hand."
+            exit 1
+          fi
+          RESUME_VER="$V"
+          RESUME_SHA="$(python3 scripts/release-reservation.py verify \
+                          --payload-file "$RUNNER_TEMP/payload.txt" --print-field sha)"
+          echo "::warning ::Reservation v$V is unfinished (state=$STATE, released=$RELEASED). Resuming it."
+        done
+
+        if [ -n "$RESUME_VER" ]; then
+          echo "Resuming v$RESUME_VER from reserved commit $RESUME_SHA"
+          echo "workload_version=$RESUME_VER" >> "$GITHUB_OUTPUT"
+          echo "release_sha=$RESUME_SHA" >> "$GITHUB_OUTPUT"
+          echo "resumed=true" >> "$GITHUB_OUTPUT"
+          exit 0
+        fi
+
+        # ------------------------------------------------------------------
+        # Fresh release. Compute the candidate ONCE and write that exact value; calling
+        # the script again with --apply would re-query the feed and could persist a
+        # different version if another release landed in between.
+        # ------------------------------------------------------------------
+        NEW=$(python3 scripts/next-workload-version.py)
+        echo "Candidate: $NEW"
+
+        if git ls-remote --exit-code origin "refs/tizen-release/v$NEW" >/dev/null 2>&1; then
+          echo "::error::Version $NEW is already reserved by a release with different inputs. Aborting."
+          exit 1
+        fi
+
+        # An explicit --set-version equal to the value already on disk is a no-op, not a
+        # failure: a previous run bumped the file but never reached the reservation. This
+        # runs OUTSIDE a condition under `set -e`, so a non-zero exit here would kill the
+        # step and make the recovery path below unreachable.
+        python3 scripts/next-workload-version.py --apply --set-version "$NEW" --verbose
+        cd ..
+        git config user.name  "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git add workload/build/Versions.props
+        if git diff --cached --quiet; then
+          echo "::notice ::TizenWorkloadVersion is already $NEW; reserving the current commit."
+        else
+          git commit -m "chore: bump TizenWorkloadVersion to ${NEW}"
+        fi
+        RELEASE_SHA="$(git rev-parse HEAD)"
+
+        # The reservation carries the complete release input set, so a later run can prove
+        # it is entitled to continue this exact release and cannot adopt it for a different
+        # SDK/band/branch.
+        PAYLOAD="$(python3 workload/scripts/release-reservation.py encode \
+                     --version "$NEW" --sha "$RELEASE_SHA" --sdk "$SDK" --band "$BAND" \
+                     --manifest-id "$MANIFEST_ID" --packages "$PACKAGES" --branch "$BRANCH")"
+        git tag -f -a "tizen-reserve-$NEW" -m "tizen-release reservation v$NEW
+
+        $PAYLOAD" "$RELEASE_SHA"
+
+        # Atomic compare-and-swap CREATE: an empty expected value requires the ref to not
+        # exist yet, so if two runs race exactly one wins and the loser aborts here rather
+        # than publishing over someone else's version.
+        if ! git push origin "refs/tags/tizen-reserve-$NEW:refs/tizen-release/v$NEW" \
+               --force-with-lease="refs/tizen-release/v$NEW:"; then
+          echo "::error::Failed to reserve $NEW (another release won the race). Aborting."
+          exit 1
+        fi
+        git push origin "HEAD:${GITHUB_REF_NAME}" || true
+
         echo "workload_version=$NEW" >> "$GITHUB_OUTPUT"
-        echo "::notice ::Bumped TizenWorkloadVersion: $OLD -> $NEW"
+        echo "release_sha=$RELEASE_SHA" >> "$GITHUB_OUTPUT"
+        echo "resumed=false" >> "$GITHUB_OUTPUT"
+        echo "::notice ::Reserved and bumped TizenWorkloadVersion: $OLD -> $NEW at $RELEASE_SHA"
+
+    # Build from the RESERVED commit, never from whatever the branch or the re-run event
+    # happens to point at.
+    - name: Check out the reserved release commit
+      run: |
+        set -euo pipefail
+        SHA="${{ steps.bump.outputs.release_sha }}"
+        if [ -z "$SHA" ]; then
+          echo "::error::No release SHA was resolved."
+          exit 1
+        fi
+        git fetch origin "$SHA" --depth=1 2>/dev/null || git fetch origin
+        git checkout --detach "$SHA"
+        ACTUAL="$(git rev-parse HEAD)"
+        if [ "$ACTUAL" != "$SHA" ]; then
+          echo "::error::Checked out $ACTUAL but expected $SHA."
+          exit 1
+        fi
+        # The released sources must carry the released version.
+        VER="${{ steps.bump.outputs.workload_version }}"
+        ON_DISK=$(grep -oP '(?<=<TizenWorkloadVersion>)[^<]+(?=</TizenWorkloadVersion>)' workload/build/Versions.props)
+        if [ "${{ github.event.inputs.release_manifest }}" = "true" ] && [ "$ON_DISK" != "$VER" ]; then
+          echo "::error::Source drift: $SHA carries $ON_DISK but this release is $VER."
+          exit 1
+        fi
+        echo "Building from $SHA (TizenWorkloadVersion=$ON_DISK)"
 
     - name: Install Wix toolset
       run: sudo apt-get install -y wixl
+
+    # A release must never publish a half-built or stale set of packages. The tree is
+    # cleaned first so the output directory can only contain this run's artifacts, and
+    # the build is NOT continue-on-error: a failed build must abort the release.
+    - name: Clean previous output
+      run: make clean
+      working-directory: ./workload
 
     - name: Build
       env:
         PRERELEASE_TAG: "stable"
       run: make install -d DOTNET_VERSION=${{ github.event.inputs.net_sdk_version }}
       working-directory: ./workload
-      continue-on-error: true
 
-    - name: Push Manifest/SDK/Runtime packs
+    # Stage into an isolated directory and verify the expected artifacts exist, so the
+    # push steps operate on an explicit, audited list rather than a glob over whatever
+    # happens to be on disk.
+    - name: Stage and verify packages
+      id: stage
+      run: |
+        set -euo pipefail
+        STAGING="$RUNNER_TEMP/staging"
+        rm -rf "$STAGING" && mkdir -p "$STAGING"
+        shopt -s nullglob
+        pkgs=(./workload/out/nuget-unsigned/*.nupkg)
+        if [ ${#pkgs[@]} -eq 0 ]; then
+          echo "::error::Build produced no packages."
+          exit 1
+        fi
+        cp "${pkgs[@]}" "$STAGING/"
+        # Single source: the band the resolve step already computed (via the installer's
+        # own function). Recomputing it here would be a second place to drift.
+        BAND="${{ steps.bump.outputs.band }}"
+        if [ -z "$BAND" ]; then
+          echo "::error::Resolve step did not publish a band output."
+          exit 1
+        fi
+        echo "Resolved SDK feature band: $BAND"
+        if ! ls "$STAGING/Samsung.NET.Sdk.Tizen.Manifest-$BAND."*.nupkg >/dev/null 2>&1; then
+          echo "::error::No Samsung.NET.Sdk.Tizen.Manifest-$BAND package was produced."
+          ls -1 "$STAGING"
+          exit 1
+        fi
+        MANIFEST_PKG="$(basename "$(ls "$STAGING/Samsung.NET.Sdk.Tizen.Manifest-$BAND."*.nupkg | head -1)")"
+        echo "staging=$STAGING" >> "$GITHUB_OUTPUT"
+        echo "band=$BAND" >> "$GITHUB_OUTPUT"
+        echo "manifest_id=Samsung.NET.Sdk.Tizen.Manifest-$BAND" >> "$GITHUB_OUTPUT"
+        echo "manifest_pkg=$MANIFEST_PKG" >> "$GITHUB_OUTPUT"
+        # Every package embeds +sha.<short> (see Directory.Build.targets). They must all
+        # carry the SAME commit, and it must be the reserved release commit - otherwise a
+        # resumed run could publish a pack built from a different tree alongside packs
+        # already on the feed, and --skip-duplicate would happily preserve the mixture.
+        EXPECTED_SHA="$(git rev-parse --short "${{ steps.bump.outputs.release_sha }}")"
+        BAD=0
+        for pkg in "$STAGING"/*.nupkg; do
+          name="$(basename "$pkg")"
+          # Ref packs are versioned by TizenFX, not the workload version; skip them.
+          case "$name" in Samsung.Tizen.Ref.*) continue ;; esac
+          if [[ "$name" != *"+sha."* && "$name" != *"sha"* ]]; then
+            # Version metadata is stripped from the file name by NuGet; read the nuspec.
+            embedded="$(unzip -p "$pkg" '*.nuspec' 2>/dev/null | grep -oE '<version>[^<]+' | sed 's/<version>//' | head -1)"
+          else
+            embedded="$name"
+          fi
+          case "$embedded" in
+            *"+sha.$EXPECTED_SHA"*) ;;
+            *)
+              echo "::error::$name embeds '$embedded', expected +sha.$EXPECTED_SHA"
+              BAD=1
+              ;;
+          esac
+        done
+        if [ $BAD -ne 0 ]; then
+          echo "::error::Staged packages do not all originate from the reserved release commit."
+          exit 1
+        fi
+        echo "All staged packages carry +sha.$EXPECTED_SHA"
+        echo "Staged packages:"; ls -1 "$STAGING"
+
+    # Publish every versioned pack. `--skip-duplicate` makes each push idempotent: NuGet
+    # packages are immutable, so an id+version that already exists IS the intended artifact
+    # and is simply skipped. That is what allows a partially published version to be resumed
+    # by re-running with the same version.
+    #
+    # The pushes are ordered so the MANIFEST GOES LAST. The manifest is what
+    # next-workload-version.py keys off, so publishing it only after its companion packs
+    # means an interruption cannot leave a version that looks advanceable while its packs are
+    # missing. Combined with the resume detection above, an interrupted release re-runs
+    # cleanly from any point.
+    - name: Push SDK/Runtime/Templates packs
       if: ${{ github.event.inputs.release_manifest == 'true' }}
       run: |
-        echo "Pushing Manifest packs for version ${{ github.event.inputs.net_sdk_version }}"...
-        dotnet nuget push ./workload/out/nuget-unsigned/Samsung.NET.Sdk.Tizen.Manifest-*.nupkg \
+        set -euo pipefail
+        VER="${{ steps.bump.outputs.workload_version }}"
+        echo "Publishing companion packs for workload version $VER..."
+        for pattern in Samsung.Tizen.Sdk Samsung.NETCore.App.Runtime Samsung.Tizen.Templates; do
+          dotnet nuget push ${{ steps.stage.outputs.staging }}/$pattern.*.nupkg \
+                        -k ${{ secrets.NUGET_APIKEY }} \
+                        -s https://api.nuget.org/v3/index.json \
+                        -t 3000 \
+                        --skip-duplicate
+        done
+
+    - name: Push Manifest pack
+      if: ${{ github.event.inputs.release_manifest == 'true' }}
+      run: |
+        set -euo pipefail
+        echo "Publishing manifest for band ${{ steps.bump.outputs.band }}..."
+        dotnet nuget push ${{ steps.stage.outputs.staging }}/Samsung.NET.Sdk.Tizen.Manifest-*.nupkg \
                       -k ${{ secrets.NUGET_APIKEY }} \
                       -s https://api.nuget.org/v3/index.json \
                       -t 3000 \
                       --skip-duplicate
-        dotnet nuget push ./workload/out/nuget-unsigned/Samsung.Tizen.Sdk.*.nupkg \
-                      -k ${{ secrets.NUGET_APIKEY }} \
-                      -s https://api.nuget.org/v3/index.json \
-                      -t 3000 \
-                      --skip-duplicate
-        dotnet nuget push ./workload/out/nuget-unsigned/Samsung.NETCore.App.Runtime.*.nupkg \
-                      -k ${{ secrets.NUGET_APIKEY }} \
-                      -s https://api.nuget.org/v3/index.json \
-                      -t 3000 \
-                      --skip-duplicate
-        dotnet nuget push ./workload/out/nuget-unsigned/Samsung.Tizen.Templates.*.nupkg \
-                      -k ${{ secrets.NUGET_APIKEY }} \
-                      -s https://api.nuget.org/v3/index.json \
-                      -t 3000 \
-                      --skip-duplicate
+
+    # Confirm the full expected set is actually on the feed before tagging, so a release is
+    # never created for an incomplete publication.
+    - name: Verify publication is complete
+      if: ${{ github.event.inputs.release_manifest == 'true' }}
+      working-directory: ./workload
+      run: |
+        set -euo pipefail
+        VER="${{ steps.bump.outputs.workload_version }}"
+        BAND="${{ steps.bump.outputs.band }}"
+        for attempt in 1 2 3 4 5; do
+          OUT="$(python3 scripts/release-state.py --version "$VER" --band "$BAND")"
+          STATE="$(echo "$OUT" | sed -n 's/^state=//p')"
+          [ "$STATE" = "published" ] && { echo "All expected packages present for $VER."; exit 0; }
+          echo "Attempt $attempt: state=$STATE ($(echo "$OUT" | sed -n 's/^missing=//p')); feed may lag, retrying..."
+          sleep 30
+        done
+        echo "::error::Publication incomplete for $VER; not tagging. Re-run this workflow to resume."
+        exit 1
 
     - name: Push Ref pack
       if: ${{ github.event.inputs.release_reference == 'true' }}
       run: |
         echo "Pushing Manifest packs for version ${{ github.event.inputs.net_sdk_version }}"...
-        dotnet nuget push ./workload/out/nuget-unsigned/Samsung.Tizen.Ref.*.nupkg \
+        dotnet nuget push ${{ steps.stage.outputs.staging }}/Samsung.Tizen.Ref.*.nupkg \
                       -k ${{ secrets.NUGET_APIKEY }} \
                       -s https://api.nuget.org/v3/index.json \
                       -t 3000 \
                       --skip-duplicate
 
+    # Idempotent: a resumed run whose tag already exists must not fail the whole release.
     - name: Create GitHub Release
       if: ${{ github.event.inputs.release_manifest == 'true' }}
       env:
@@ -106,14 +388,19 @@ jobs:
       run: |
         VER="${{ steps.bump.outputs.workload_version }}"
         SDK="${{ github.event.inputs.net_sdk_version }}"
-        BAND="${SDK%%-*}"
+        # Canonical feature band and manifest id, as resolved and VERIFIED against the
+        # staged artifacts. Do not recompute here: '${SDK%%-*}' yields '11.0.100' for
+        # 11.0.100-preview.7.* and '10.0.404' for a servicing band, linking to packages
+        # that were never published.
+        BAND="${{ steps.stage.outputs.band }}"
+        MANIFEST_ID="${{ steps.stage.outputs.manifest_id }}"
         MAJOR_MINOR="$(echo "$BAND" | cut -d. -f1-2)"
         {
           echo "### Target .NET SDK: .NET ${SDK}"
           echo ""
           echo "## NuGet Packages"
           echo ""
-          echo "- https://www.nuget.org/packages/Samsung.NET.Sdk.Tizen.Manifest-${BAND}/${VER}"
+          echo "- https://www.nuget.org/packages/${MANIFEST_ID}/${VER}"
           echo "- https://www.nuget.org/packages/Samsung.NETCore.App.Runtime.tizen/${VER}"
           echo "- https://www.nuget.org/packages/Samsung.Tizen.Sdk/${VER}"
           echo "- https://www.nuget.org/packages/Samsung.Tizen.Templates/${VER}"
@@ -122,8 +409,28 @@ jobs:
             [ -n "$v" ] && echo "- https://www.nuget.org/packages/Samsung.Tizen.Ref.API${api}/${v}"
           done
         } > "$RUNNER_TEMP/release-notes.md"
+        SHA="${{ steps.bump.outputs.release_sha }}"
+        if gh release view "v${VER}" >/dev/null 2>&1; then
+          # An existing tag is only the intended artifact if it points at the reserved
+          # commit. Blindly treating "the tag exists" as done would bless a release whose
+          # tag targets a different tree than the packages that were published - exactly
+          # the mixed-provenance state the reservation exists to prevent.
+          git fetch origin "refs/tags/v${VER}:refs/tags/v${VER}" --force >/dev/null 2>&1 || true
+          TAG_SHA="$(git rev-parse "refs/tags/v${VER}^{commit}" 2>/dev/null || echo "")"
+          if [ -z "$TAG_SHA" ]; then
+            echo "::error::Release v${VER} exists but its tag could not be resolved to a commit."
+            exit 1
+          fi
+          if [ "$TAG_SHA" != "$SHA" ]; then
+            echo "::error::Release v${VER} is tagged at $TAG_SHA but this version was reserved at $SHA."
+            echo "::error::Refusing to accept a release whose tag does not match the reserved release commit."
+            exit 1
+          fi
+          echo "::notice ::Release v${VER} already exists at the reserved commit $SHA; nothing to do."
+          exit 0
+        fi
         gh release create "v${VER}" \
-          --target "${GITHUB_REF_NAME}" \
+          --target "$SHA" \
           --title "Tizen Workload ${VER} - .Net ${MAJOR_MINOR}" \
           --notes-file "$RUNNER_TEMP/release-notes.md" \
           --generate-notes

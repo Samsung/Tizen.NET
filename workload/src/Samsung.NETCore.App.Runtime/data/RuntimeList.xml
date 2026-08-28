@@ -1,5 +1,17 @@
-<FileList TargetFrameworkIdentifier=".NETCoreApp" TargetFrameworkVersion="6.0" FrameworkName="Microsoft.NETCore.App" Name=".NET Runtime 6" />
-<FileList TargetFrameworkIdentifier=".NETCoreApp" TargetFrameworkVersion="7.0" FrameworkName="Microsoft.NETCore.App" Name=".NET Runtime 7" />
-<FileList TargetFrameworkIdentifier=".NETCoreApp" TargetFrameworkVersion="8.0" FrameworkName="Microsoft.NETCore.App" Name=".NET Runtime 8" />
-<FileList TargetFrameworkIdentifier=".NETCoreApp" TargetFrameworkVersion="9.0" FrameworkName="Microsoft.NETCore.App" Name=".NET Runtime 9" />
-<FileList TargetFrameworkIdentifier=".NETCoreApp" TargetFrameworkVersion="10.0" FrameworkName="Microsoft.NETCore.App" Name=".NET Runtime 10" />
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Runtime pack manifest for Samsung.NETCore.App.Runtime.tizen.
+
+  This is a PLACEHOLDER runtime pack: it ships no runtime binaries (its only payload is
+  lib/net6.0-tizen/_._). Tizen applications run against the runtime provided by the device
+  platform, so there are no files to enumerate and the FileList is intentionally empty.
+
+  It must nonetheless be well-formed XML with a SINGLE root element. ResolveRuntimePackAssets
+  parses this file whenever runtime pack assets are resolved - notably for SelfContained=true -
+  and previously threw a raw XmlException because the file carried one <FileList> root per
+  .NET version, which is not valid XML.
+
+  Self-contained Tizen publishing is rejected up front with a clear TIZENSDK001 error
+  (see Samsung.Tizen.Sdk.targets) rather than silently producing an app with no runtime.
+-->
+<FileList Name=".NET Runtime - Tizen" TargetFrameworkIdentifier=".NETCoreApp" FrameworkName="Microsoft.NETCore.App" />

@@ -137,6 +137,30 @@ Please add these markers around the existing LatestVersionMap block, then rerun.
     return $replaced
 }
 
+function Test-ScriptIntegrity {
+    <#
+        Guards against the file-truncation / NUL-padding corruption that silently landed
+        in workload-install.sh (see git history around the version-map SSOT change).
+        The version-map drift check alone cannot catch it: it only compares the
+        auto-generated block, so a script whose *tail* is missing still reports "OK".
+    #>
+    param([string]$Path, [string]$ExpectedTail)
+
+    $bytes = [System.IO.File]::ReadAllBytes($Path)
+    if ($bytes -contains 0) {
+        Write-Host "  CORRUPT: $Path contains NUL bytes." -ForegroundColor Red
+        return $false
+    }
+    $text = [System.Text.Encoding]::UTF8.GetString($bytes)
+    if ($text.TrimEnd() -notmatch ([regex]::Escape($ExpectedTail) + '\s*$')) {
+        Write-Host "  TRUNCATED: $Path does not end with '$ExpectedTail'." -ForegroundColor Red
+        Write-Host ("    actual tail: " + ($text.TrimEnd() -split "`r?`n" | Select-Object -Last 1))
+        return $false
+    }
+    Write-Host "  OK: $Path integrity (no NULs, expected tail)." -ForegroundColor Green
+    return $true
+}
+
 function Detect-LineEnding {
     param([string]$Path)
     $bytes = [System.IO.File]::ReadAllBytes($Path)
@@ -196,6 +220,16 @@ $ps1New    = Replace-Block -FilePath $Ps1Path -NewBlock $ps1Block -LineEnding $p
 
 $okSh  = Write-Or-Check -Path $ShPath  -NewContent $shNew  -CheckOnly:$Check
 $okPs1 = Write-Or-Check -Path $Ps1Path -NewContent $ps1New -CheckOnly:$Check
+
+$intactSh  = Test-ScriptIntegrity -Path $ShPath  -ExpectedTail 'echo "DONE"'
+$intactPs1 = Test-ScriptIntegrity -Path $Ps1Path -ExpectedTail 'Write-Host "`nDone"'
+
+if (-not $intactSh -or -not $intactPs1) {
+    Write-Host ""
+    Write-Host "An install script is corrupt (truncated or NUL-padded)." -ForegroundColor Red
+    Write-Host "Restore it from git history before regenerating the version map."
+    exit 1
+}
 
 if ($Check -and (-not $okSh -or -not $okPs1)) {
     Write-Host ""

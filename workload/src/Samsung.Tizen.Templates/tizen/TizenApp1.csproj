@@ -5,7 +5,41 @@
     <OutputType>Exe</OutputType>
   </PropertyGroup>
 
-  <ItemGroup>
+  <!--
+    Tizen.UI.Components.Material ships assets for the tizen 10.0 platform band only, so
+    it is restorable from tizen 10.0 and later but not from the 8.0 / 9.0 bands.
+
+    The platform version must be parsed out of $(TargetFramework) rather than read from
+    $(TargetPlatformVersion): PackageReference items are evaluated with the project body,
+    which runs BEFORE the SDK infers TargetPlatformVersion from the TFM. Reading it here
+    yields an empty string, which would silently fall back to the default and pull in an
+    incompatible Material for e.g. net11.0-tizen9.0.
+    BEGIN TIZEN UI PLATFORM DETECTION (covered by scripts/test-template-conditions.sh)
+  -->
+  <PropertyGroup>
+    <_TizenUIPlatformVersion>$([System.Text.RegularExpressions.Regex]::Match($(TargetFramework), '-tizen([0-9]+(\.[0-9]+)?)$').Groups[1].Value)</_TizenUIPlatformVersion>
+    <!-- Unversioned '-tizen' (or an outer multi-targeting build): assume the SDK default. -->
+    <_TizenUIPlatformVersion Condition="'$(_TizenUIPlatformVersion)' == ''">10.0</_TizenUIPlatformVersion>
+    <_TizenUIMaterialSupported>$([MSBuild]::VersionGreaterThanOrEquals('$(_TizenUIPlatformVersion)', '10.0'))</_TizenUIMaterialSupported>
+  </PropertyGroup>
+  <!-- END TIZEN UI PLATFORM DETECTION -->
+
+  <ItemGroup Condition="'$(_TizenUIMaterialSupported)' == 'true'">
     <PackageReference Include="Tizen.UI.Components.Material" Version="1.0.0-*" />
   </ItemGroup>
+
+  <!--
+    Re-check against the authoritative TargetPlatformVersion, which is available by the
+    time targets run. This both reports the real value and catches any drift between the
+    parsed and inferred platform version.
+  -->
+  <Target Name="_ErrorIfTizenUIUnavailable" BeforeTargets="BeforeBuild">
+    <PropertyGroup>
+      <_TizenUIEffectivePlatformVersion Condition="'$(TargetPlatformVersion)' != ''">$(TargetPlatformVersion)</_TizenUIEffectivePlatformVersion>
+      <_TizenUIEffectivePlatformVersion Condition="'$(_TizenUIEffectivePlatformVersion)' == ''">$(_TizenUIPlatformVersion)</_TizenUIEffectivePlatformVersion>
+    </PropertyGroup>
+    <Error Code="TIZENTMPL001"
+           Condition="!$([MSBuild]::VersionGreaterThanOrEquals('$(_TizenUIEffectivePlatformVersion)', '10.0'))"
+           Text="This template's sources use Tizen.UI.Components.Material, which only ships assets for the tizen 10.0 platform band and later (resolved TargetPlatformVersion: $(_TizenUIEffectivePlatformVersion)). Retarget the project to a tizen 10.0 or later platform version, or replace the Tizen.UI sources with a plain Tizen.NUI implementation." />
+  </Target>
 </Project>

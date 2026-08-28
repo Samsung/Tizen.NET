@@ -28,6 +28,35 @@ Copyright (c) Samsung All rights reserved.
     />
   </ItemGroup>
 
+  <!--
+    Samsung.NETCore.App.Runtime.tizen is a placeholder runtime pack: it ships no runtime
+    binaries, because Tizen applications run against the runtime provided by the device
+    platform. A self-contained publish therefore cannot produce a working application - it
+    would emit an app with no runtime alongside it.
+
+    Fail with an actionable error instead of letting the build proceed. Set
+    SkipTizenSelfContainedCheck=true to bypass this if you are supplying a runtime by
+    other means.
+
+    Gate on _SelfContainedWasSpecified, NOT on the final $(SelfContained) value. The .NET SDK
+    (Microsoft.NET.RuntimeIdentifierInference.targets) still *infers* SelfContained=true from a
+    present RuntimeIdentifier on pre-8.0 TFMs, and the Tizen SDK supplies an implicit RID
+    (tizen-x86) for MAUI apps. So an ordinary framework-dependent net6.0-tizen / net7.0-tizen
+    build - what every existing .NET MAUI Tizen consumer does - would have $(SelfContained)
+    inferred to 'true' and wrongly trip this guard. _SelfContainedWasSpecified is set by the SDK
+    only when SelfContained was *explicitly* requested (-p:SelfContained=true, or
+    PublishSelfContained=true during publish, which the SDK copies onto SelfContained before
+    computing _SelfContainedWasSpecified). Both are evaluated during project evaluation, before
+    this target runs. Verified empirically: net6.0/net7.0 infer SelfContained=true with
+    _SelfContainedWasSpecified empty; net8.0+ infer false; explicit requests set both true.
+  -->
+  <Target Name="_TizenErrorOnSelfContained"
+          BeforeTargets="ProcessFrameworkReferences;ResolveRuntimePackAssets"
+          Condition=" '$(TargetPlatformIdentifier)' == 'tizen' And '$(SelfContained)' == 'true' And '$(_SelfContainedWasSpecified)' == 'true' And '$(SkipTizenSelfContainedCheck)' != 'true' ">
+    <Error Code="TIZENSDK001"
+           Text="Self-contained publishing is not supported for Tizen. Samsung.NETCore.App.Runtime.tizen is a placeholder runtime pack that contains no runtime binaries; Tizen applications run against the runtime provided by the device platform. Remove SelfContained=true (or set PublishSelfContained=false) and publish framework-dependent." />
+  </Target>
+
   <ItemGroup>
     <FrameworkReference Update="Microsoft.NETCore.App" RuntimePackLabels="Tizen" />
     <KnownRuntimePack Remove="Microsoft.NETCore.App" />
@@ -65,6 +94,14 @@ Copyright (c) Samsung All rights reserved.
                       />
     <KnownRuntimePack Include="Microsoft.NETCore.App"
                       TargetFramework="net10.0"
+                      RuntimeFrameworkName="Microsoft.NETCore.App"
+                      LatestRuntimeFrameworkVersion="**FromWorkload**"
+                      RuntimePackNamePatterns="Samsung.NETCore.App.Runtime.**RID**"
+                      RuntimePackRuntimeIdentifiers="tizen"
+                      RuntimePackLabels="Tizen"
+                      />
+    <KnownRuntimePack Include="Microsoft.NETCore.App"
+                      TargetFramework="net11.0"
                       RuntimeFrameworkName="Microsoft.NETCore.App"
                       LatestRuntimeFrameworkVersion="**FromWorkload**"
                       RuntimePackNamePatterns="Samsung.NETCore.App.Runtime.**RID**"
