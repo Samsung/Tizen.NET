@@ -70,7 +70,11 @@ while [ $# -ne 0 ]; do
             DOTNET_TARGET_VERSION_BAND=$1
             ;;
         -u|--update-all-workloads)
-            shift
+            # No `shift` here: this flag takes no argument and the loop shifts once at the
+            # end. Shifting twice swallowed the following argument (`-u -d <dir>` reported
+            # "Unknown argument <dir>"), and for a trailing `-u` the extra shift on an empty
+            # argument list returns 1, which the `#!/bin/bash -e` shebang turned into a
+            # silent exit before any work was done.
             UPDATE_ALL_WORKLOADS="true"
             ;;
         -h|--help)
