@@ -98,20 +98,29 @@ fi
 echo ""
 echo "-- fallback resolves package id --"
 
-# Load the shipped map + function without executing the installer body.
+# Load the shipped map + resolver without executing the installer body. The resolver
+# depends on band_sort_key from the VERSION BAND DETECTION block; loading getLatestVersion
+# alone left that undefined, every key came back empty, and the resolver silently degraded
+# to "last map entry wins" - which happened to match the expected answers below, so the
+# closest-band logic was never actually tested. stderr is captured into the result so any
+# such "command not found" fails the case instead of being swallowed.
 fallback_probe() {
     bash -c '
         eval "$(sed -n "/^MANIFEST_BASE_NAME=/p" '"$SH_SCRIPT"')"
         eval "$(sed -n "/# BEGIN AUTO-GENERATED VERSION MAP/,/# END AUTO-GENERATED VERSION MAP/p" '"$SH_SCRIPT"' | grep -v "^#")"
-        eval "$(sed -n "/^function getLatestVersion/,/^}/p" '"$SH_SCRIPT"')"
+        eval "$(sed -n "/# BEGIN VERSION BAND DETECTION/,/# END VERSION BAND DETECTION/p" '"$SH_SCRIPT"')"
+        eval "$(sed -n "/# BEGIN FALLBACK RESOLVER/,/# END FALLBACK RESOLVER/p" '"$SH_SCRIPT"')"
         getLatestVersion "$1"
-    ' _ "$1"
+    ' _ "$1" 2>&1
 }
 
 # "<requested band>|<expected id band>|<expected version>"  ('' = must resolve to nothing)
+# 10.0.200 is the case that separates "closest band <= requested" from "last entry wins":
+# the map has 10.0.100 and 10.0.300, and only the former is valid for a 10.0.200 SDK.
 FALLBACK_CASES=(
     "10.0.400|10.0.300|10.0.127"
     "10.0.300|10.0.300|10.0.127"
+    "10.0.200|10.0.100|10.0.123"
     "9.0.400|9.0.300|10.0.121"
     "11.0.100-preview.7||"
     "12.0.100||"
@@ -159,27 +168,25 @@ if command -v pwsh >/dev/null 2>&1 && [[ -f "$PS1_SCRIPT" ]]; then
         pass=$((pass + 1))
     fi
 
+    # Probe the SHIPPED Get-LatestVersion, not a re-implementation: a hand-written stand-in
+    # cannot detect drift in the real function (it used to be one that returned the last
+    # map entry - the very algorithm the closest-band fix replaced). The feed is stubbed
+    # out so the map fallback is exercised offline and without the retry sleeps.
     cat > "$TMPROOT/ps-probe.ps1" <<'PSEOF'
 param([string]$ScriptPath)
+Set-StrictMode -Version Latest
 $src = Get-Content -Raw $ScriptPath
 $ManifestBaseName = 'Samsung.NET.Sdk.Tizen.Manifest'
 Invoke-Expression ([regex]::Match($src,'(?s)# BEGIN AUTO-GENERATED VERSION MAP.*?# END AUTO-GENERATED VERSION MAP').Value -replace '(?m)^#.*$','')
 Invoke-Expression ([regex]::Match($src,'(?s)# BEGIN VERSION BAND DETECTION.*?# END VERSION BAND DETECTION').Value)
-function Resolve-Offline([string]$Id) {
-    if ($LatestVersionMap.Contains($Id)) { return "$Id=$($LatestVersionMap.$Id)" }
-    $p = Get-BandFamilyPrefix -ManifestId $Id
-    if ($p) {
-        $ids = @(); $vs = @()
-        foreach ($k in $LatestVersionMap.Keys) {
-            if ($k -like "$p*") { $ids += $k; $vs += $LatestVersionMap[$k] }
-        }
-        if ($vs) { return "$($ids[-1])=$($vs[-1])" }
-    }
-    return ''
-}
-# Mixed-band sequence: a 10.x fallback must not bleed into the 11.x iteration.
-foreach ($b in @('10.0.400','11.0.100-preview.7','9.0.400')) {
-    Write-Output "$b=>$(Resolve-Offline "$ManifestBaseName-$b")"
+Invoke-Expression ([regex]::Match($src,'(?ms)^function Get-LatestVersion\(.*?^\}').Value)
+function Invoke-WebRequest { throw "offline" }
+function Start-Sleep {}
+# Mixed-band sequence: a 10.x fallback must not bleed into the 11.x iteration, and
+# 10.0.200 must resolve to the closest LOWER band (10.0.100), not the newest (10.0.300).
+foreach ($b in @('10.0.400','10.0.200','11.0.100-preview.7','9.0.400')) {
+    $r = Get-LatestVersion -Id "$ManifestBaseName-$b" 6>$null
+    Write-Output "$b=>$r"
 }
 PSEOF
     ps_out="$(pwsh -NoProfile -File "$TMPROOT/ps-probe.ps1" -ScriptPath "$PS1_SCRIPT" 2>/dev/null | tr -d '\r')"
@@ -196,6 +203,7 @@ PSEOF
     }
     B=Samsung.NET.Sdk.Tizen.Manifest
     check_ps "10.0.400" "10.0.400=>$B-10.0.300=10.0.127"
+    check_ps "10.0.200" "10.0.200=>$B-10.0.100=10.0.123"
     check_ps "11.0.100-preview.7" "11.0.100-preview.7=>"
     check_ps "9.0.400" "9.0.400=>$B-9.0.300=10.0.121"
 else
@@ -457,6 +465,237 @@ STUB
             fail=$((fail + 1))
         fi
     done
+fi
+
+# --- 12. upgrading an existing install must not expose a second manifest --------
+#
+# The transaction parked the previous manifest at sdk-manifests/<band>/.samsung...old.<pid>
+# while `dotnet workload install` ran. The SDK loads EVERY subdirectory of the band
+# directory as a manifest, so it saw the 'tizen' workload defined twice and failed with a
+# manifest-composition error - on every upgrade. The stub below models that resolver rule.
+
+echo ""
+echo "-- upgrade over an existing manifest --"
+
+UPDIR="$TMPROOT/upgrade"
+UPBAND="$UPDIR/sdk-manifests/10.0.100"
+mkdir -p "$UPBAND/samsung.net.sdk.tizen"
+echo '{"version":"SENTINEL","packs":{}}' > "$UPBAND/samsung.net.sdk.tizen/WorkloadManifest.json"
+cat > "$UPDIR/dotnet" <<'STUB'
+#!/bin/bash
+case "$1" in
+    --version)   echo "10.0.100" ;;
+    --list-sdks) echo "10.0.100 [$(dirname "$0")/sdk]" ;;
+    workload)
+        # SdkDirectoryWorkloadManifestProvider: every subdirectory of the band directory,
+        # dot-prefixed or not, is a manifest. Two copies of the tizen manifest conflict.
+        band="$(dirname "$0")/sdk-manifests/10.0.100"
+        n=0
+        for d in "$band"/*/ "$band"/.*/; do
+            [ -d "$d" ] || continue
+            case "$(basename "$d")" in .|..) continue ;; esac
+            n=$((n + 1))
+        done
+        if [ "$n" -ne 1 ]; then
+            echo "Workload definition 'tizen' conflicts: $n manifest directories in $band"
+            exit 1
+        fi
+        exit 0 ;;
+    *)           exit 0 ;;
+esac
+STUB
+chmod +x "$UPDIR/dotnet"
+
+if curl -sSf -m 20 -o /dev/null https://api.nuget.org/v3/index.json 2>/dev/null; then
+    mkdir -p "$TMPROOT/upgrade-cwd"
+    up_out="$(cd "$TMPROOT/upgrade-cwd" && bash "$SH_SCRIPT" -d "$UPDIR" 2>&1)"; up_rc=$?
+    leftovers="$(cd "$UPBAND" && ls -A | grep -v '^samsung.net.sdk.tizen$')"
+    if [[ $up_rc -eq 0 ]] && grep -q "^DONE$" <<< "$up_out" \
+       && ! grep -q SENTINEL "$UPBAND/samsung.net.sdk.tizen/WorkloadManifest.json" \
+       && [[ -z "$leftovers" ]]; then
+        printf "  %sPASS%s  upgrade replaces the manifest with no second manifest dir\n" "$c_green" "$c_reset"
+        pass=$((pass + 1))
+    else
+        printf "  %sFAIL%s  upgrade over existing manifest (exit %s)\n" "$c_red" "$c_reset" "$up_rc"
+        [[ -n "$leftovers" ]] && echo "        | extra entries in band dir: $leftovers"
+        grep -q SENTINEL "$UPBAND/samsung.net.sdk.tizen/WorkloadManifest.json" 2>/dev/null && echo "        | manifest was NOT replaced"
+        echo "$up_out" | tail -6 | sed 's/^/        | /'
+        fail=$((fail + 1))
+    fi
+else
+    printf "  %sSKIP%s  upgrade over existing manifest (no network)\n" "$c_yellow" "$c_reset"
+fi
+
+# --- 13. SDK pin must disable roll-forward ---------------------------------------
+#
+# A global.json without rollForward uses latestPatch: with 10.0.100 and 10.0.105 both
+# installed, pinning 10.0.100 activates 10.0.105 and the exact-version check failed on
+# every such machine. The stub models that resolver rule.
+
+echo ""
+echo "-- SDK pin disables roll-forward --"
+
+RFDIR="$TMPROOT/rollfwd"
+mkdir -p "$RFDIR"
+cat > "$RFDIR/dotnet" <<'STUB'
+#!/bin/bash
+case "$1" in
+    --version)
+        if [ -f "$PWD/global.json" ] && ! grep -q '"rollForward": *"disable"' "$PWD/global.json"; then
+            echo "10.0.105"
+        else
+            echo "10.0.100"
+        fi ;;
+    --list-sdks) printf '10.0.100 [x]\n10.0.105 [x]\n' ;;
+    new)
+        # `dotnet new globaljson --sdk-version X` writes NO rollForward, exactly as the
+        # real template does; the installer must not rely on it.
+        printf '{"sdk":{"version":"%s"}}' "$4" > "$PWD/global.json" ;;
+    *)           exit 0 ;;
+esac
+STUB
+chmod +x "$RFDIR/dotnet"
+
+if curl -sSf -m 20 -o /dev/null https://api.nuget.org/v3/index.json 2>/dev/null; then
+    mkdir -p "$TMPROOT/rollfwd-cwd"
+    rf_out="$(cd "$TMPROOT/rollfwd-cwd" && bash "$SH_SCRIPT" -d "$RFDIR" 2>&1)"; rf_rc=$?
+    if [[ $rf_rc -eq 0 ]] && grep -q "^DONE$" <<< "$rf_out"; then
+        printf "  %sPASS%s  pin holds when a newer patch of the band is installed\n" "$c_green" "$c_reset"
+        pass=$((pass + 1))
+    else
+        printf "  %sFAIL%s  pin lost to roll-forward (exit %s)\n" "$c_red" "$c_reset" "$rf_rc"
+        echo "$rf_out" | tail -5 | sed 's/^/        | /'
+        fail=$((fail + 1))
+    fi
+else
+    printf "  %sSKIP%s  SDK pin roll-forward (no network)\n" "$c_yellow" "$c_reset"
+fi
+
+# --- 14. permission failure must leave the caller's global.json untouched ---------
+#
+# ensure_directory exits the script outright on a permission error. It ran after the
+# caller's global.json had been moved to global.json.bak and replaced by the pin, and that
+# exit path never restores it. Fails closed only when the check runs before the pin.
+
+echo ""
+echo "-- permission failure leaves global.json untouched --"
+
+if [[ $EUID -eq 0 ]]; then
+    printf "  %sSKIP%s  permission failure (running as root)\n" "$c_yellow" "$c_reset"
+else
+    PERMDIR="$TMPROOT/perm"
+    mkdir -p "$PERMDIR/sdk-manifests/10.0.100"
+    cat > "$PERMDIR/dotnet" <<'STUB'
+#!/bin/bash
+case "$1" in
+    --version)   echo "10.0.100" ;;
+    --list-sdks) echo "10.0.100 [$(dirname "$0")/sdk]" ;;
+    *)           exit 0 ;;
+esac
+STUB
+    chmod +x "$PERMDIR/dotnet"
+    chmod 555 "$PERMDIR/sdk-manifests/10.0.100"
+    PERMCWD="$TMPROOT/perm-cwd"
+    mkdir -p "$PERMCWD"
+    echo '{"sdk":{"version":"SENTINEL"}}' > "$PERMCWD/global.json"
+
+    perm_out="$(cd "$PERMCWD" && bash "$SH_SCRIPT" -d "$PERMDIR" 2>&1)"; perm_rc=$?
+    chmod 755 "$PERMDIR/sdk-manifests/10.0.100"
+    if [[ $perm_rc -ne 0 ]] && grep -q SENTINEL "$PERMCWD/global.json" && [[ ! -e "$PERMCWD/global.json.bak" ]]; then
+        printf "  %sPASS%s  unwritable band dir -> exit %s, global.json untouched\n" "$c_green" "$c_reset" "$perm_rc"
+        pass=$((pass + 1))
+    else
+        printf "  %sFAIL%s  unwritable band dir (exit %s)\n" "$c_red" "$c_reset" "$perm_rc"
+        grep -q SENTINEL "$PERMCWD/global.json" 2>/dev/null || echo "        | caller's global.json is missing or replaced"
+        [[ -e "$PERMCWD/global.json.bak" ]] && echo "        | global.json.bak left behind"
+        echo "$perm_out" | tail -4 | sed 's/^/        | /'
+        fail=$((fail + 1))
+    fi
+fi
+
+# --- 15. ps1: a failed download must restore the previous manifest ---------------
+#
+# The PowerShell "transaction" took its backup AFTER the previous manifest and packs had
+# been removed, so on an upgrade there was nothing to restore and a failed download left
+# the SDK with no Tizen workload at all. A 404 on the manifest package models the failure.
+
+if command -v pwsh >/dev/null 2>&1 && [[ -f "$PS1_SCRIPT" ]]; then
+    echo ""
+    echo "-- ps1: failed download restores the previous manifest --"
+
+    if curl -sSf -m 20 -o /dev/null https://api.nuget.org/v3/index.json 2>/dev/null; then
+        RBDIR="$TMPROOT/ps-rollback"
+        RBSEED="$RBDIR/sdk-manifests/10.0.100/samsung.net.sdk.tizen"
+        mkdir -p "$RBSEED"
+        echo '{"version":"SENTINEL","packs":{}}' > "$RBSEED/WorkloadManifest.json"
+        cat > "$RBDIR/dotnet" <<'STUB'
+#!/bin/bash
+case "$1" in
+    --version)   echo "10.0.100" ;;
+    --list-sdks) echo "10.0.100 [$(dirname "$0")/sdk]" ;;
+    *)           exit 0 ;;
+esac
+STUB
+        chmod +x "$RBDIR/dotnet"
+
+        rb_out="$(pwsh -NoProfile -File "$PS1_SCRIPT" -d "$RBDIR" -Version "0.0.0-does-not-exist" 2>&1)"; rb_rc=$?
+        if [[ $rb_rc -ne 0 ]] && grep -q SENTINEL "$RBSEED/WorkloadManifest.json" 2>/dev/null; then
+            printf "  %sPASS%s  404 on the manifest -> exit %s, previous manifest restored\n" "$c_green" "$c_reset" "$rb_rc"
+            pass=$((pass + 1))
+        else
+            printf "  %sFAIL%s  404 on the manifest (exit %s)\n" "$c_red" "$c_reset" "$rb_rc"
+            grep -q SENTINEL "$RBSEED/WorkloadManifest.json" 2>/dev/null || echo "        | previous manifest was NOT restored"
+            echo "$rb_out" | tail -5 | sed 's/^/        | /'
+            fail=$((fail + 1))
+        fi
+    else
+        printf "  %sSKIP%s  ps1 rollback (no network)\n" "$c_yellow" "$c_reset"
+    fi
+fi
+
+# --- 16. -u must skip, not fail, an SDK band that has no Tizen manifest ------------
+#
+# --update-all-workloads walks every installed SDK. A band with no published manifest
+# (a preview SDK, or one newer than the last release) is not an install failure; failing
+# the whole run for it made -u unusable the day a preview SDK was installed. A single-SDK
+# run for such a band still fails (case 2 above).
+
+echo ""
+echo "-- -u skips SDK bands with no manifest --"
+
+SKDIR="$TMPROOT/skipband"
+mkdir -p "$SKDIR"
+cat > "$SKDIR/dotnet" <<'STUB'
+#!/bin/bash
+case "$1" in
+    --version)   echo "99.0.100" ;;
+    --list-sdks) echo "99.0.100 [$(dirname "$0")/sdk]" ;;
+    *)           exit 0 ;;
+esac
+STUB
+chmod +x "$SKDIR/dotnet"
+
+mkdir -p "$TMPROOT/skipband-cwd"
+sk_out="$(cd "$TMPROOT/skipband-cwd" && bash "$SH_SCRIPT" -d "$SKDIR" -u 2>&1)"; sk_rc=$?
+if [[ $sk_rc -eq 0 ]] && grep -q "^DONE$" <<< "$sk_out" && grep -q "SKIPPED" <<< "$sk_out"; then
+    printf "  %sPASS%s  sh: -u with an unpublished band -> exit 0, reported as skipped\n" "$c_green" "$c_reset"
+    pass=$((pass + 1))
+else
+    printf "  %sFAIL%s  sh: -u with an unpublished band (exit %s)\n" "$c_red" "$c_reset" "$sk_rc"
+    echo "$sk_out" | tail -4 | sed 's/^/        | /'
+    fail=$((fail + 1))
+fi
+
+if command -v pwsh >/dev/null 2>&1 && [[ -f "$PS1_SCRIPT" ]]; then
+    psk_out="$(pwsh -NoProfile -File "$PS1_SCRIPT" -d "$SKDIR" -UpdateAllWorkloads 2>&1)"; psk_rc=$?
+    if [[ $psk_rc -eq 0 ]] && grep -q "SKIPPED" <<< "$psk_out"; then
+        printf "  %sPASS%s  ps1: -UpdateAllWorkloads with an unpublished band -> exit 0, skipped\n" "$c_green" "$c_reset"
+        pass=$((pass + 1))
+    else
+        printf "  %sFAIL%s  ps1: -UpdateAllWorkloads with an unpublished band (exit %s)\n" "$c_red" "$c_reset" "$psk_rc"
+        echo "$psk_out" | tail -4 | sed 's/^/        | /'
+        fail=$((fail + 1))
+    fi
 fi
 
 echo ""

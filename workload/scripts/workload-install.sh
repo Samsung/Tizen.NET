@@ -83,6 +83,7 @@ while [ $# -ne 0 ]; do
             echo "  -v,--version <VERSION>                     Use specific VERSION, Defaults to \`$MANIFEST_VERSION\`."
             echo "  -d,--dotnet-install-dir <DIR>              Dotnet SDK Location installed, Defaults to \`$DOTNET_INSTALL_DIR\`."
             echo "  -t,--dotnet-target-version-band <VERSION>  Use specific dotnet version band for install location, Defaults to \`$DOTNET_TARGET_VERSION_BAND\`."
+            echo "  -u,--update-all-workloads                  Install for every installed SDK (6.0+). SDK bands with no Tizen manifest are skipped."
             exit 0
             ;;
         *)
@@ -323,6 +324,16 @@ function install_tizenworkload() {
                 MANIFEST_VERSION="${RESOLVED_MANIFEST#*=}"
                 echo "Return cached latest version: $MANIFEST_NAME/$MANIFEST_VERSION"
             else
+                if [[ "$UPDATE_ALL_WORKLOADS" == "true" ]]; then
+                    # -u walks every installed SDK. A band with no Tizen manifest yet (a
+                    # preview SDK, or one newer than the last release) is not an install
+                    # failure - there is nothing to install - so it is skipped and reported
+                    # instead of failing the whole run. A single-SDK run still fails: the
+                    # caller asked for exactly this SDK.
+                    echo "No Tizen workload manifest is available for band $DOTNET_TARGET_VERSION_BAND; skipping sdk $DOTNET_VERSION."
+                    SKIPPED_SDKS="$SKIPPED_SDKS $DOTNET_VERSION"
+                    return 0
+                fi
                 echo "Failed to get the latest version of $MANIFEST_NAME."
                 return 1
             fi
@@ -333,6 +344,13 @@ function install_tizenworkload() {
         echo "Refusing to install: resolved an empty manifest id/version for $DOTNET_VERSION."
         return 1
     fi
+
+    # Check workload manifest directory. This must run BEFORE global.json is touched:
+    # ensure_directory exits the whole script on a permission error, and an exit taken after
+    # the pin below would leave the caller's global.json replaced by ours, with the original
+    # stranded in global.json.bak.
+    SDK_MANIFESTS_DIR="$DOTNET_INSTALL_DIR/sdk-manifests/$DOTNET_TARGET_VERSION_BAND"
+    ensure_directory "$SDK_MANIFESTS_DIR"
 
     # Pin and validate the SDK BEFORE touching anything on disk.
     #
@@ -356,7 +374,7 @@ function install_tizenworkload() {
     # are not present, or - when a download failed - with global.json still pinned and the
     # user's real global.json sitting in global.json.bak, which the next loop iteration
     # would then overwrite and destroy.
-    TX_TMPDIR=""
+    TX_WORK_DIR=""
     TX_MANIFEST_DEST=""
     TX_MANIFEST_NEW=""
     TX_MANIFEST_OLD=""
@@ -375,7 +393,7 @@ function install_tizenworkload() {
         fi
         [ -n "$TX_MANIFEST_NEW" ] && rm -fr "$TX_MANIFEST_NEW"
         [ -n "$TX_MANIFEST_OLD" ] && rm -fr "$TX_MANIFEST_OLD"
-        [ -n "$TX_TMPDIR" ] && rm -fr "$TX_TMPDIR"
+        [ -n "$TX_WORK_DIR" ] && rm -fr "$TX_WORK_DIR"
         restore_global_json
     }
 
@@ -384,7 +402,14 @@ function install_tizenworkload() {
 
     # This function is invoked under `if !`, which disables errexit for everything it calls,
     # so every command here is checked explicitly.
-    if ! "$DOTNET_INSTALL_DIR/dotnet" new globaljson --sdk-version "$DOTNET_VERSION" --force >/dev/null; then
+    #
+    # Pin the SDK by writing global.json directly, with roll-forward DISABLED. `dotnet new
+    # globaljson --sdk-version X` writes no rollForward, so the SDK's default (latestPatch)
+    # applied and resolution picked the HIGHEST installed patch of X's feature band: with
+    # 10.0.100 and 10.0.101 both installed, pinning 10.0.100 activated 10.0.101 and the
+    # exact-version check below failed on every such machine. With "disable" the requested
+    # SDK is used as-is, or resolution fails and the check below reports it.
+    if ! printf '{\n  "sdk": {\n    "version": "%s",\n    "rollForward": "disable"\n  }\n}\n' "$DOTNET_VERSION" > global.json; then
         echo "Failed to pin SDK $DOTNET_VERSION via global.json."
         tx_rollback
         return 1
@@ -410,17 +435,22 @@ function install_tizenworkload() {
         echo "Installing into explicitly requested band $DOTNET_TARGET_VERSION_BAND (active SDK $EFFECTIVE_VERSION)."
     fi
 
-    # Check workload manifest directory.
-    SDK_MANIFESTS_DIR="$DOTNET_INSTALL_DIR/sdk-manifests/$DOTNET_TARGET_VERSION_BAND"
-    ensure_directory "$SDK_MANIFESTS_DIR"
-
-    TMPDIR=$(mktemp -d)
-    TX_TMPDIR="$TMPDIR"
+    # Scratch space for the download and for the previous manifest while the swap is in
+    # flight. Deliberately NOT stored in TMPDIR: that name is exported on macOS (and many CI
+    # images), so assigning it here re-pointed mktemp itself - and every dotnet child - at a
+    # directory this function deletes on exit, and the next -u iteration's mktemp failed.
+    WORK_DIR="$(mktemp -d)"
+    if [ -z "$WORK_DIR" ] || [ ! -d "$WORK_DIR" ]; then
+        echo "Failed to create a temporary directory."
+        tx_rollback
+        return 1
+    fi
+    TX_WORK_DIR="$WORK_DIR"
 
     echo "Installing $MANIFEST_NAME/$MANIFEST_VERSION to $SDK_MANIFESTS_DIR..."
 
     # Download and extract the manifest nuget package.
-    curl -sfL -o "$TMPDIR/manifest.zip" "https://www.nuget.org/api/v2/package/$MANIFEST_NAME/$MANIFEST_VERSION"
+    curl -sfL -o "$WORK_DIR/manifest.zip" "https://www.nuget.org/api/v2/package/$MANIFEST_NAME/$MANIFEST_VERSION"
     CURL_STATUS=$?
     if [ $CURL_STATUS -ne 0 ]; then
         echo "Failed to download $MANIFEST_NAME/$MANIFEST_VERSION (curl exit $CURL_STATUS)."
@@ -428,22 +458,22 @@ function install_tizenworkload() {
         return 1
     fi
 
-    if ! unzip -qq -d "$TMPDIR/unzipped" "$TMPDIR/manifest.zip"; then
+    if ! unzip -qq -d "$WORK_DIR/unzipped" "$WORK_DIR/manifest.zip"; then
         echo "Failed to extract $MANIFEST_NAME/$MANIFEST_VERSION."
         tx_rollback
         return 1
     fi
-    if [ ! -d "$TMPDIR/unzipped/data" ]; then
+    if [ ! -d "$WORK_DIR/unzipped/data" ]; then
         echo "No such files to install."
         tx_rollback
         return 1
     fi
-    chmod 744 "$TMPDIR"/unzipped/data/*
+    chmod 744 "$WORK_DIR"/unzipped/data/*
 
     # Verify the STAGED payload before replacing anything. Checking the destination instead
     # meant a leftover manifest from a previous install could satisfy the check even when
     # this download had produced nothing usable.
-    if [ ! -f "$TMPDIR/unzipped/data/WorkloadManifest.json" ]; then
+    if [ ! -f "$WORK_DIR/unzipped/data/WorkloadManifest.json" ]; then
         echo "Downloaded package does not contain WorkloadManifest.json."
         tx_rollback
         return 1
@@ -452,15 +482,23 @@ function install_tizenworkload() {
     # Replace the destination atomically: build the new directory alongside the old one,
     # swap, and roll the previous contents back if any step fails. An interrupted in-place
     # copy previously left a half-replaced manifest directory.
+    #
+    # The previous manifest is parked OUTSIDE sdk-manifests/ while the pack install runs.
+    # The SDK loads EVERY subdirectory of sdk-manifests/<band>/ as a manifest, dot-prefixed
+    # or not, so parking it next to the new one made `dotnet workload install` see the
+    # 'tizen' workload defined twice and fail with a manifest-composition error - on every
+    # upgrade of an existing install. For the same reason, staging directories left behind
+    # by an interrupted earlier run are cleared before ours is created: each one would be
+    # loaded as a manifest and break every build against this band.
     MANIFEST_DEST="$SDK_MANIFESTS_DIR/samsung.net.sdk.tizen"
     MANIFEST_NEW="$SDK_MANIFESTS_DIR/.samsung.net.sdk.tizen.new.$$"
-    MANIFEST_OLD="$SDK_MANIFESTS_DIR/.samsung.net.sdk.tizen.old.$$"
-    rm -fr "$MANIFEST_NEW" "$MANIFEST_OLD"
+    MANIFEST_OLD="$WORK_DIR/manifest-old"
+    rm -fr "$SDK_MANIFESTS_DIR"/.samsung.net.sdk.tizen.new.* "$SDK_MANIFESTS_DIR"/.samsung.net.sdk.tizen.old.* "$MANIFEST_OLD"
     TX_MANIFEST_DEST="$MANIFEST_DEST"
     TX_MANIFEST_NEW="$MANIFEST_NEW"
     TX_MANIFEST_OLD="$MANIFEST_OLD"
 
-    if ! mkdir -p "$MANIFEST_NEW" || ! cp -f "$TMPDIR"/unzipped/data/* "$MANIFEST_NEW/"; then
+    if ! mkdir -p "$MANIFEST_NEW" || ! cp -f "$WORK_DIR"/unzipped/data/* "$MANIFEST_NEW/"; then
         echo "Failed to stage manifest files."
         tx_rollback
         return 1
@@ -482,12 +520,16 @@ function install_tizenworkload() {
         TX_HAD_PREVIOUS="true"
     fi
 
+    # From here on the destination is ours to clean up: it is either about to receive the
+    # new manifest or, if the move fails, is missing and must get the previous one back.
+    # Marking the swap only AFTER the move meant a failed move skipped the restore and the
+    # cleanup then deleted the only copy of the previous manifest.
+    TX_SWAPPED="true"
     if ! mv "$MANIFEST_NEW" "$MANIFEST_DEST"; then
         echo "Failed to install the new manifest; rolling back."
         tx_rollback
         return 1
     fi
-    TX_SWAPPED="true"
 
     # The pack install is part of the transaction. If it fails, the new manifest must not
     # be left behind: it advertises packs that are not on disk, so every subsequent build
@@ -517,6 +559,7 @@ else
 fi
 
 FAILED_SDKS=""
+SKIPPED_SDKS=""
 
 if [ -z "$INSTALLED_DOTNET_SDKS" ]; then
     echo ".NET SDK version 6 or later is required to install Tizen Workload."
@@ -529,6 +572,10 @@ for DOTNET_SDK in $INSTALLED_DOTNET_SDKS; do
         FAILED_SDKS="$FAILED_SDKS $DOTNET_SDK"
     fi
 done
+
+if [ -n "$SKIPPED_SDKS" ]; then
+    echo "SKIPPED sdk(s) with no Tizen workload manifest for their band:$SKIPPED_SDKS"
+fi
 
 if [ -n "$FAILED_SDKS" ]; then
     echo "FAILED to install Tizen workload for sdk(s):$FAILED_SDKS"

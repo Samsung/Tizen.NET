@@ -158,7 +158,11 @@ function Get-LatestVersion([string]$Id) {
         }
     }
 
-    Write-Error "Wrong Id: $Id"
+    # Nothing on the feed and nothing in the map for this band's family. Reported, not
+    # thrown: the caller decides whether that is a failure (single-SDK run) or a skip
+    # (-UpdateAllWorkloads walking an SDK band that has no Tizen manifest yet).
+    Write-Host "No manifest package is known for $Id."
+    return ""
 }
 
 function Get-Package([string]$Id, [string]$Version, [string]$Destination, [string]$FileExt = "nupkg") {
@@ -309,6 +313,15 @@ function Install-TizenWorkload([string]$DotnetVersion)
     if ($Version -eq "<latest>" -or $UpdateAllWorkloads.IsPresent) {
         $Resolved = Get-LatestVersion -Id $ManifestName
         if (-not $Resolved -or -not $Resolved.Contains("=")) {
+            if ($UpdateAllWorkloads.IsPresent) {
+                # -UpdateAllWorkloads walks every installed SDK. A band with no Tizen
+                # manifest yet (a preview SDK, or one newer than the last release) is not
+                # an install failure - there is nothing to install - so it is skipped and
+                # reported instead of failing the whole run. Matches workload-install.sh.
+                Write-Host "No Tizen workload manifest is available for band $DotnetTargetVersionBand; skipping sdk $DotnetVersion."
+                $script:SkippedSdks += $DotnetVersion
+                return
+            }
             throw "Failed to resolve a manifest package for $ManifestName."
         }
         $ResolvedId      = $Resolved.Substring(0, $Resolved.LastIndexOf("="))
@@ -341,10 +354,13 @@ function Install-TizenWorkload([string]$DotnetVersion)
     $TizenManifestDir = Join-Path -Path $ManifestDir -ChildPath "samsung.net.sdk.tizen"
     $TizenManifestFile = Join-Path -Path $TizenManifestDir -ChildPath "WorkloadManifest.json"
 
-    # Check and remove already installed old version.
+    # Check the already installed version. Its removal is deferred into the transaction
+    # below; nothing is deleted before the previous manifest has been backed up.
+    $OldManifestJson = $null
+    $OldVersion = $null
     if (Test-Path $TizenManifestFile) {
-        $ManifestJson = $(Get-Content $TizenManifestFile | ConvertFrom-Json)
-        $OldVersion = $ManifestJson.version
+        $OldManifestJson = $(Get-Content $TizenManifestFile | ConvertFrom-Json)
+        $OldVersion = $OldManifestJson.version
         if ($OldVersion -eq $Version) {
             $DotnetWorkloadList = Invoke-Expression "& '$DotnetCommand' workload list | Select-String -Pattern '^tizen'"
             if ($DotnetWorkloadList)
@@ -353,37 +369,38 @@ function Install-TizenWorkload([string]$DotnetVersion)
                 Continue
             }
         }
-
-        Ensure-Directory $ManifestDir
-        Write-Host "Removing $ManifestName/$OldVersion from $ManifestDir..."
-        Remove-Pack -Id $ManifestName -Version $OldVersion -Kind "manifest"
-        $ManifestJson.packs.PSObject.Properties | ForEach-Object {
-            Write-Host "Removing $($_.Name)/$($_.Value.version)..."
-            Remove-Pack -Id $_.Name -Version $_.Value.version -Kind $_.Value.kind
-        }
     }
 
     Ensure-Directory $ManifestDir
     $TempDir = $(New-TemporaryDirectory)
 
-    # The remove-then-install sequence below is destructive: the previous manifest and its
-    # packs are deleted BEFORE the new ones are fetched, so any failure in between used to
-    # leave the SDK with no Tizen workload at all - a worse state than before the run. The
-    # whole sequence is therefore one transaction, and the previous manifest is restored on
-    # any failure. Matches the tx_rollback handling in workload-install.sh.
+    # The install is one transaction. The previous manifest is backed up BEFORE anything is
+    # touched, and the previous packs stay on disk until the new manifest and all of its
+    # packs are installed, so a failure at any point (download 404, disk full, ...) restores
+    # the previous manifest and leaves the SDK exactly as it was. This script used to delete
+    # the previous manifest and packs first, so any failure in between left the SDK with no
+    # Tizen workload at all - a worse state than before the run. Matches the tx_rollback
+    # handling in workload-install.sh.
     $TxBackupDir = $null
     if (Test-Path $TizenManifestDir) {
         $TxBackupDir = Join-Path -Path $TempDir -ChildPath "manifest-backup"
         Copy-Item -Path $TizenManifestDir -Destination $TxBackupDir -Recurse -Force
     }
     $TxCommitted = $false
+    $NewManifestJson = $null
 
     try {
+        if ($null -ne $OldManifestJson) {
+            Write-Host "Removing $ManifestName/$OldVersion from $ManifestDir..."
+            Remove-Pack -Id $ManifestName -Version $OldVersion -Kind "manifest"
+        }
+
         # Install workload manifest.
         Write-Host "Installing $ManifestName/$Version to $ManifestDir..."
         Install-Pack -Id $ManifestName -Version $Version -Kind "manifest"
 
-        # Download and install workload packs.
+        # Download and install workload packs. Install-Pack overwrites in place, so a pack
+        # version the previous manifest also referenced is simply refreshed.
         $NewManifestJson = $(Get-Content $TizenManifestFile | ConvertFrom-Json)
         $NewManifestJson.packs.PSObject.Properties | ForEach-Object {
             Write-Host "Installing $($_.Name)/$($_.Value.version)..."
@@ -412,6 +429,25 @@ function Install-TizenWorkload([string]$DotnetVersion)
         }
         # Clean up
         if (Test-Path $TempDir) { Remove-Item -Path $TempDir -Force -Recurse }
+    }
+
+    # Committed. Now drop the previous packs that the new manifest no longer references;
+    # anything it still references was refreshed in place above and must stay. This runs
+    # outside the transaction because the install is already complete and valid - a pack
+    # that cannot be removed is reported, not treated as an install failure.
+    if ($null -ne $OldManifestJson) {
+        foreach ($OldPack in $OldManifestJson.packs.PSObject.Properties) {
+            $StillReferenced = $NewManifestJson.packs.PSObject.Properties |
+                Where-Object { $_.Name -eq $OldPack.Name -and $_.Value.version -eq $OldPack.Value.version }
+            if ($StillReferenced) { continue }
+            Write-Host "Removing $($OldPack.Name)/$($OldPack.Value.version)..."
+            try {
+                Remove-Pack -Id $OldPack.Name -Version $OldPack.Value.version -Kind $OldPack.Value.kind
+            }
+            catch {
+                Write-Host "Warning: could not remove $($OldPack.Name)/$($OldPack.Value.version): $_"
+            }
+        }
     }
 
     Write-Host "Done installing Tizen workload $Version"
@@ -458,6 +494,7 @@ if (-Not $InstalledDotnetSdks)
 # Track per-SDK failures. -UpdateAllWorkloads keeps going across the remaining SDKs,
 # but the overall run must still report failure to the caller.
 $FailedSdks = @()
+$SkippedSdks = @()
 
 foreach ($DotnetSdk in $InstalledDotnetSdks)
 {
@@ -471,6 +508,11 @@ foreach ($DotnetSdk in $InstalledDotnetSdks)
         $FailedSdks += $DotnetSdk
         Continue
     }
+}
+
+if ($SkippedSdks.Count -gt 0)
+{
+    Write-Host "`nSKIPPED sdk(s) with no Tizen workload manifest for their band: $($SkippedSdks -join ', ')"
 }
 
 if ($FailedSdks.Count -gt 0)

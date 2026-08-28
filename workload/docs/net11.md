@@ -136,7 +136,9 @@ arbitrary package. Both installers fall through to the version map and then fail
 The SDK pin is verified before anything is installed. `install_tizenworkload` is invoked under
 `if !`, which disables `errexit` for everything it calls, so an unchecked
 `dotnet new globaljson` previously let the install proceed against whatever SDK `PATH` resolved.
-The pin now uses the dotnet under test, its exit status is checked, and the **effective**
+The pin is now written directly as a `global.json` with `rollForward` **disabled** - a pin
+without it rolls forward to the newest installed patch of the band, so on a machine with
+`10.0.100` and `10.0.101` a pin of `10.0.100` activated `10.0.101` - and the **effective**
 `dotnet --version` and feature band are re-verified against the requested ones before any pack
 is installed.
 
@@ -453,20 +455,39 @@ auto-derived band. An explicitly requested band is honoured, and all inputs are 
 
 **SDK pinning is validated before any mutation.** `install_tizenworkload` is invoked under `if !`,
 which suppresses `errexit` for everything it calls, so an unchecked `dotnet new globaljson` could
-fail and let the install proceed against the wrong SDK. Every pin command is now checked
-explicitly and the effective `dotnet --version` is re-read and compared before download.
+fail and let the install proceed against the wrong SDK. The pin is now a directly written
+`global.json` with `rollForward: disable` (the template's default `latestPatch` resolved to the
+newest patch of the band, not the requested SDK), and the effective `dotnet --version` is re-read
+and compared before download. The manifest directory's writability is checked *before* the
+caller's `global.json` is set aside, since that check exits the script outright.
 
 **Atomic manifest replacement.** The payload is staged and verified in a temporary directory
 alongside the destination, then swapped in atomically, with rollback of the previous manifest on
 any failure. Previously a partial copy could destroy a working manifest, and the leftover
-directory made a subsequent existence check pass.
+directory made a subsequent existence check pass. While the pack install runs, the previous
+manifest is parked **outside** `sdk-manifests/`: the SDK loads every subdirectory of the band
+directory as a manifest, dot-prefixed or not, so a copy parked alongside the new one made the
+`tizen` workload appear twice and failed every upgrade with a manifest-composition error.
+Staging directories left behind by an interrupted run are cleared for the same reason. The
+PowerShell installer backs the previous manifest up before anything is removed and defers
+removal of the previous packs until the new manifest and packs are all in place.
 
 **SDK bootstrap is keyed by full SDK version.** `DOTNET_DESTDIR` and the install stamp include
 the exact SDK version (`10.0.100` vs `10.0.101` vs a preview build), so `make install` no longer
 reuses a stale SDK that merely shares a feature band. Manifest paths remain band-based.
 
+**`-u` / `-UpdateAllWorkloads` skips bands that have no manifest.** Walking every installed
+SDK, a band with no Tizen manifest yet (a preview SDK, or one newer than the last release) is
+reported as `SKIPPED` rather than failing the whole run; a single-SDK run for such a band still
+fails, since the caller asked for exactly that SDK. Real install failures still exit non-zero.
+
 Shell tests run under stock macOS Bash 3.2 (no `${var,,}`), and cover spaced paths, empty and
-transport-failed version queries, and mixed-band `UpdateAllWorkloads`.
+transport-failed version queries, mixed-band `UpdateAllWorkloads`, upgrades over an existing
+manifest, pins on a machine with several patches of one band, permission failures, `-u` over an
+unpublished band, and (with `pwsh`) PowerShell rollback of a failed download. The fallback
+probes exercise the shipped resolvers - `getLatestVersion` with its `band_sort_key` dependency
+loaded, and the real `Get-LatestVersion` with the feed stubbed out - including the `10.0.200`
+case that separates "closest band ≤ requested" from "last map entry wins".
 
 
 ## Deriving the next version from the feed
