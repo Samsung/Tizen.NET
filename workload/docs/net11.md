@@ -486,8 +486,9 @@ transport-failed version queries, mixed-band `UpdateAllWorkloads`, upgrades over
 manifest, pins on a machine with several patches of one band, permission failures, `-u` over an
 unpublished band, and (with `pwsh`) PowerShell rollback of a failed download. The fallback
 probes exercise the shipped resolvers - `getLatestVersion` with its `band_sort_key` dependency
-loaded, and the real `Get-LatestVersion` with the feed stubbed out - including the `10.0.200`
-case that separates "closest band ≤ requested" from "last map entry wins".
+loaded, and the real `Get-LatestVersion` with the feed stubbed out - including the
+`10.0.100-rtm` case (not in the map; closest lower band is the `10.0.100-rc.2` pre-release)
+that separates "closest band ≤ requested" from "last map entry wins".
 
 
 ## Deriving the next version from the feed

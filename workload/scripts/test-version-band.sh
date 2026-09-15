@@ -159,10 +159,12 @@ M="samsung.net.sdk.tizen.manifest"
 RESOLVER_CASES=(
     # exact hits come straight from the map
     "$M-10.0.100|$M-10.0.100=10.0.123"
+    "$M-10.0.200|$M-10.0.200=10.0.128"
+    "$M-10.0.400|$M-10.0.400=10.0.129"
     "$M-6.0.400|$M-6.0.400=9.0.104"
     # closest band AT OR BELOW the request - never a newer one
-    "$M-10.0.200|$M-10.0.100=10.0.123"
-    "$M-10.0.400|$M-10.0.300=10.0.127"
+    "$M-10.0.500|$M-10.0.400=10.0.129"
+    "$M-10.0.100-rtm|$M-10.0.100-rc.2=10.0.118"
     "$M-9.0.400|$M-9.0.300=10.0.121"
     # must never cross the major.minor family
     "$M-11.0.100-preview.7|"
