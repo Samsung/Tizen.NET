@@ -365,7 +365,11 @@ jobs:
         set -euo pipefail
         VER="${{ steps.bump.outputs.workload_version }}"
         BAND="${{ steps.bump.outputs.band }}"
-        for attempt in 1 2 3 4 5; do
+        # nuget.org's flatcontainer index usually lags a push by a few minutes; the old
+        # 5 x 30 s budget expired before that on a slow day and forced a full re-run
+        # (rebuild from the reserved SHA) just to reach the tag step. Waiting is free
+        # when the feed is fast, so allow up to 10 minutes.
+        for attempt in $(seq 1 20); do
           # A transport error (release-state.py exit 2) must be retried like a lagging
           # feed. Under `set -e` a failed command substitution in an assignment aborts the
           # step immediately, so the query is checked explicitly.
