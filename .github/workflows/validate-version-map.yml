@@ -10,12 +10,13 @@ name: Validate Version Map
 
 on:
   push:
-    branches: [ main, net7.0, net8.0, net9.0, net10.0 ]
+    branches: [ main, net7.0, net8.0, net9.0, net10.0, net11.0 ]
     paths:
       - 'workload/scripts/version-map.json'
       - 'workload/scripts/workload-install.sh'
       - 'workload/scripts/workload-install.ps1'
       - 'workload/scripts/Generate-InstallScripts.ps1'
+      - 'workload/scripts/test-install-failure.sh'
       - '.github/workflows/validate-version-map.yml'
   pull_request:
     paths:
@@ -23,6 +24,7 @@ on:
       - 'workload/scripts/workload-install.sh'
       - 'workload/scripts/workload-install.ps1'
       - 'workload/scripts/Generate-InstallScripts.ps1'
+      - 'workload/scripts/test-install-failure.sh'
       - '.github/workflows/validate-version-map.yml'
   workflow_dispatch:
 
@@ -37,6 +39,12 @@ jobs:
         shell: pwsh
         run: |
           ./workload/scripts/Generate-InstallScripts.ps1 -Check
+
+      # Behavioural guard for the installers themselves (exit codes, fallback band
+      # selection, transaction/rollback, -u handling). Stub dotnet only; no SDK needed.
+      - name: Run installer behaviour tests
+        shell: bash
+        run: bash ./workload/scripts/test-install-failure.sh
 
       - name: Failure hint
         if: failure()
