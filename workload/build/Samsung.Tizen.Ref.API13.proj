@@ -48,9 +48,20 @@ by projects that use the Tizen .NET framework in .NET 5.
 
     <ItemGroup>
       <_TizenFXNugetPathItem Include="$(TizenFXNuGetPathVariable)" />
-      <_TizenRefPackAssemblies Include="$(%(_TizenFXNugetPathItem.Identity))\ref\net6.0\*.dll" />
+      <!-- Tizen.NET.API* packages have shipped their reference assemblies under ref/net8.0/
+           (e.g. Tizen.NET.API14 14.0.0.19368, Tizen.NET.API15) or under ref/net6.0/ (Tizen.NET.API11-13,
+           Tizen.NET.API14 up to 14.0.0.19302). Globbing one fixed folder is how Samsung.Tizen.Ref.API14
+           14.0.0.19300/19301 shipped empty. Take ref/net8.0 when it has assemblies, else ref/net6.0; the
+           produced pack always lays them out under ref/net8.0 (see _PackageFiles below). -->
+      <_TizenRefPackAssemblies Include="$(%(_TizenFXNugetPathItem.Identity))\ref\net8.0\*.dll" />
+      <_TizenRefPackAssemblies Include="$(%(_TizenFXNugetPathItem.Identity))\ref\net6.0\*.dll" Condition="'@(_TizenRefPackAssemblies)' == ''" />
       <FrameworkListFileClass Include="@(_TizenRefPackAssemblies->'%(Filename)%(Extension)')" Profile="Tizen" />
     </ItemGroup>
+
+    <!-- An empty glob silently produced a reference pack with no assemblies (Samsung.Tizen.Ref.API14
+         14.0.0.19300 and 14.0.0.19301 on nuget.org). Fail the pack instead. -->
+    <Error Condition="'@(_TizenRefPackAssemblies)' == ''"
+           Text="$(TizenFXPackageName) $(TizenFXAPI13Version): no reference assemblies matched the ref/ glob in $(TizenFXNuGetPathVariable); the pack would ship empty." />
 
     <ItemGroup>
       <_PackageFiles Include="@(_TizenRefPackAssemblies)" PackagePath="ref\net6.0" TargetPath="ref\net6.0" />
