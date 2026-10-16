@@ -67,6 +67,7 @@ CASES=(
     "11.0.100-preview.7.26381.103|11.0.100-preview.7"
     "11.0.100-preview.6.26359.118|11.0.100-preview.6"
     "11.0.100-rc.1.26500.1|11.0.100-rc.1"
+    "11.0.100-rc.2.26504.105|11.0.100-rc.2"
     "11.0.100|11.0.100"
     "11.0.200|11.0.200"
     # Future majors must keep working without another code change.

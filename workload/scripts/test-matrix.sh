@@ -47,10 +47,11 @@ done
 #   (e.g. workload/scripts/fixtures/legacy/) keyed off the row's TFM.
 #
 # NOTE on net11.0-*:
-#   .NET 11 is a preview SDK band. A row is SKIPPED (not failed) when the dotnet
-#   under test cannot build that .NET major, so the default `make test-matrix`
-#   run against the .NET 10 band stays green. To exercise these rows:
-#       make test-matrix DOTNET_VERSION=11.0.100-preview.7.26381.103
+#   .NET 11 is a pre-release SDK band (rc.2 at time of writing). A row is SKIPPED
+#   (not failed) when the dotnet under test cannot build that .NET major, so the
+#   default `make test-matrix` run against the .NET 10 band stays green. To
+#   exercise these rows:
+#       make test-matrix DOTNET_VERSION=11.0.100-rc.2.26504.105
 MATRIX=(
     # net8.0: oldest .NET major still exercised, across every current platform band.
     "net8.0-tizen10.0|10"

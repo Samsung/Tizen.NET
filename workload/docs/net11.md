@@ -2,8 +2,8 @@
 
 This branch builds the `tizen` workload for the .NET 11 SDK band in addition to .NET 10.
 
-At the time of writing .NET 11 is in **preview**: the newest SDK is
-`11.0.100-preview.7.26381.103` (released 2026-08-11). Everything below therefore describes a
+At the time of writing .NET 11 is at **release candidate**: the newest SDK is
+`11.0.100-rc.2.26504.105` (go-live, released 2026-10-13). Everything below therefore describes a
 band that is real and buildable, but whose manifest package has **not been published to
 nuget.org yet**.
 
@@ -38,11 +38,11 @@ resolves to `_DefaultTargetPlatformVersion` (`10.0`), which is rarely what a cal
 `MicrosoftDotnetSdkInternalPackageVersion` in `build/Versions.props` (currently the .NET 10 band).
 
 ```sh
-# Produce the packs, including Samsung.NET.Sdk.Tizen.Manifest-11.0.100-preview.7
-make packs DOTNET_VERSION=11.0.100-preview.7.26381.103
+# Produce the packs, including Samsung.NET.Sdk.Tizen.Manifest-11.0.100-rc.2
+make packs DOTNET_VERSION=11.0.100-rc.2.26504.105
 
 # Install into the locally bootstrapped SDK and run the full TFM matrix
-make test-matrix DOTNET_VERSION=11.0.100-preview.7.26381.103
+make test-matrix DOTNET_VERSION=11.0.100-rc.2.26504.105
 ```
 
 The exact SDK version CI uses lives in `build/Versions.props` as `<DotNet11SdkVersion>`.
@@ -212,7 +212,7 @@ behaviour across 13 TFMs.
 `version-map.json` is deliberately **not** updated. That table is a fallback cache of *already
 published* manifest versions, consulted only when the NuGet lookup fails. Adding an entry for a
 band that has never been released would make `workload-install.sh` download a 404. The
-`11.0.100-preview.7` entry should be added in a follow-up commit *after* the first release, the
+`11.0.100-rc.2` entry should be added in a follow-up commit *after* the first release, the
 same way `10.0.300` was.
 
 ## External blockers
@@ -220,12 +220,12 @@ same way `10.0.300` was.
 These artifacts are owned by other repositories. Nothing in Samsung/Tizen.NET can fix them, and
 they are not faked here.
 
-### 1. `Samsung.NET.Sdk.Tizen.Manifest-11.0.100-preview.7` is unpublished
+### 1. `Samsung.NET.Sdk.Tizen.Manifest-11.0.100-rc.2` is unpublished
 
 - **Owner:** Samsung/Tizen.NET maintainers (this repo's `Release Workload` workflow).
-- **Action:** run `Release Workload` with `net_sdk_version = 11.0.100-preview.7.26381.103`.
+- **Action:** run `Release Workload` with `net_sdk_version = 11.0.100-rc.2.26504.105`.
 - **Until then:** `workload-install.sh` on an 11.x SDK finds no manifest. Local development works
-  via `make install DOTNET_VERSION=11.0.100-preview.7.26381.103`, which installs into the
+  via `make install DOTNET_VERSION=11.0.100-rc.2.26504.105`, which installs into the
   bootstrapped SDK under `workload/out/dotnet`.
 
 ### 2. `Tizen.UIExtensions.NUI` has no modern assets
