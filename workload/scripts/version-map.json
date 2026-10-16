@@ -46,6 +46,7 @@
     { "sdkBand": "10.0.100",           "workloadVersion": "10.0.123" },
     { "sdkBand": "10.0.200",           "workloadVersion": "10.0.128" },
     { "sdkBand": "10.0.300",           "workloadVersion": "10.0.127" },
-    { "sdkBand": "10.0.400",           "workloadVersion": "10.0.129" }
+    { "sdkBand": "10.0.400",           "workloadVersion": "10.0.130" },
+    { "sdkBand": "11.0.100-rc.2",      "workloadVersion": "10.0.131" }
   ]
 }
