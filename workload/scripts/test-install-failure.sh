@@ -119,13 +119,15 @@ fallback_probe() {
 # "closest band <= requested" from "last entry wins": the closest lower band for 10.0.100-rtm
 # is the 10.0.100-rc.2 pre-release, and every stable 10.0.x00 entry sorts above it.
 FALLBACK_CASES=(
-    "10.0.500|10.0.400|10.0.129"
-    "10.0.400|10.0.400|10.0.129"
+    "10.0.500|10.0.400|10.0.130"
+    "10.0.400|10.0.400|10.0.130"
     "10.0.300|10.0.300|10.0.127"
     "10.0.200|10.0.200|10.0.128"
     "10.0.100-rtm|10.0.100-rc.2|10.0.118"
     "9.0.400|9.0.300|10.0.121"
     "11.0.100-preview.7||"
+    "11.0.100-rc.2|11.0.100-rc.2|10.0.131"
+    "11.0.100|11.0.100-rc.2|10.0.131"
     "12.0.100||"
 )
 
@@ -187,7 +189,7 @@ function Invoke-WebRequest { throw "offline" }
 function Start-Sleep {}
 # Mixed-band sequence: a 10.x fallback must not bleed into the 11.x iteration, and
 # 10.0.100-rtm must resolve to the closest LOWER band (10.0.100-rc.2), not the newest.
-foreach ($b in @('10.0.500','10.0.200','10.0.100-rtm','11.0.100-preview.7','9.0.400')) {
+foreach ($b in @('10.0.500','10.0.200','10.0.100-rtm','11.0.100-preview.7','11.0.100','9.0.400')) {
     $r = Get-LatestVersion -Id "$ManifestBaseName-$b" 6>$null
     Write-Output "$b=>$r"
 }
@@ -205,10 +207,11 @@ PSEOF
         fi
     }
     B=Samsung.NET.Sdk.Tizen.Manifest
-    check_ps "10.0.500" "10.0.500=>$B-10.0.400=10.0.129"
+    check_ps "10.0.500" "10.0.500=>$B-10.0.400=10.0.130"
     check_ps "10.0.200" "10.0.200=>$B-10.0.200=10.0.128"
     check_ps "10.0.100-rtm" "10.0.100-rtm=>$B-10.0.100-rc.2=10.0.118"
     check_ps "11.0.100-preview.7" "11.0.100-preview.7=>"
+    check_ps "11.0.100" "11.0.100=>$B-11.0.100-rc.2=10.0.131"
     check_ps "9.0.400" "9.0.400=>$B-9.0.300=10.0.121"
 else
     echo ""
