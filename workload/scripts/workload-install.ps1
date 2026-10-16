@@ -68,7 +68,8 @@ $LatestVersionMap = [ordered]@{
     "$ManifestBaseName-10.0.100"          = "10.0.123";
     "$ManifestBaseName-10.0.200"          = "10.0.128";
     "$ManifestBaseName-10.0.300"          = "10.0.127";
-    "$ManifestBaseName-10.0.400"          = "10.0.129"
+    "$ManifestBaseName-10.0.400"          = "10.0.130";
+    "$ManifestBaseName-11.0.100-rc.2"     = "10.0.131"
 }
 # END AUTO-GENERATED VERSION MAP
 
